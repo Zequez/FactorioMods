@@ -1,0 +1,117 @@
+@mixin light-box-shadow($amount: 0.1)
+  +box-shadow(inset 0px 1px 0px rgba(#fff, $amount))
+
+@mixin dark-box-shadow($amount: 0.1)
+  +box-shadow(inset 0px -1px 0px rgba(#000, $amount))
+
+@mixin light-background-gradient($color: false, $amount: 5%)
+  @if not $color
+    $color: rgba(#fff, $amount/100)
+    +background-image(linear-gradient($color, rgba(#fff, 0)))
+  @else
+    +background-image(linear-gradient(lighten($color, $amount), $color))
+
+@mixin dark-background-gradient($color: false, $amount: 5%)
+  @if not $color
+    $color: rgba(#000, $amount/100)
+    +background-image(linear-gradient($color, rgba(#000, 0)))
+  @else
+    +background-image(linear-gradient(darken($color, $amount), $color))
+
+@mixin absolute($top: false, $right: false, $bottom: false, $left: false)
+  position: absolute
+  @if $top
+    top: $top
+  @if $right
+    right: $right
+  @if $left
+    left: $left
+  @if $bottom
+    bottom: $bottom
+
+@mixin absolute($top: false, $right: false, $bottom: false, $left: false)
+  +position(absolute, $top, $right, $bottom, $left)
+
+@mixin relative($top: false, $right: false, $bottom: false, $left: false)
+  +position(relative, $top, $right, $bottom, $left)
+
+@mixin fixed($top: false, $right: false, $bottom: false, $left: false)
+  +position(relative, $top, $right, $bottom, $left)
+
+@mixin position($type, $top: false, $right: false, $bottom: false, $left: false)
+  position: $type
+  @if $top
+    top: $top
+  @if $right
+    right: $right
+  @if $left
+    left: $left
+  @if $bottom
+    bottom: $bottom
+
+@mixin triangle($size, $side, $color: false)
+  margin-#{$side}: - $size
+  border-width: $size/2
+  border-style: solid
+  @if $side != top
+    border-bottom-color: transparent
+  @if $side != right
+    border-left-color: transparent
+  @if $side != bottom
+    border-top-color: transparent
+  @if $side != left
+    border-right-color: transparent
+
+  @if $side == top
+    margin-left: -$size/2
+    border-bottom-color: $color
+  @if $side == right
+    margin-top: -$size/2
+    border-left-color: $color
+  @if $side == bottom
+    margin-left: -$size/2
+    border-top-color: $color
+  @if $side == left
+    margin-top: -$size/2
+    border-right-color: $color
+
+  @if $color
+    @if $side == top
+      border-bottom-color: $color
+    @if $side == right
+      border-left-color: $color
+    @if $side == bottom
+      border-top-color: $color
+    @if $side == left
+      border-right-color: $color
+
+
+
+@function space($font-size: false, $multi: 0.5)
+  @if $font-size
+    @return rhythm(1, $font-size)*$multi
+  @else
+    @return rhythm(1)*$multi
+
+@mixin size($height, $width)
+  height: $height
+  width: $width
+
+@mixin block
+  display: block
+
+@mixin inline
+  display: inline
+
+@mixin inline-block
+  display: inline-block
+
+@mixin hidden
+  display: none
+
+@mixin nowrap
+  white-space: nowrap
+
+@mixin content-icon($icon-name)
+  content: map-get($icons, $icon-name)
+  font-family: FontAwesome

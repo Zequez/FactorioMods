@@ -1,0 +1,42 @@
+.mods-show
+  .mod
+    .mod-thumbnail-container<
+      %a.mod-thumbnail(href='http://placekitten.com/750/750')
+        %img.asset-thumbnail(src='http://placekitten.com/300/300')
+    .mod-info-container
+      %h2.mod-title Super mod name
+      .mod-subtitle
+        on
+        %a{href: '#'} Vehicles
+      %table.mod-data
+        %tbody
+          %tr.mod-data-row
+            %td.mod-data-row-name Game version
+            %td.mod-data-row-value v1.3
+            %td.mod-data-row-name Author
+            %td.mod-data-row-value Zequez
+          %tr.mod-data-row
+            %td.mod-data-row-name Source code
+            %td.mod-data-row-value Github URL
+            %td.mod-data-row-name Tags
+            %td.mod-data-row-value List, of, tags
+          %tr.mod-data-row
+            %td.mod-data-row-name First version
+            %td.mod-data-row-value v0.9
+            %td.mod-data-row-name Last version
+            %td.mod-data-row-value v1.3
+          %tr.mod-data-row
+            %td.mod-data-row-name First release
+            %td.mod-data-row-value 13 August 2013
+            %td.mod-data-row-name Last release
+            %td.mod-data-row-value 17 July 2014
+          %tr.mod-data-row
+            %td.mod-data-row-name License
+            %td.mod-data-row-value GPLv2
+            %td.mod-data-row-name Official forum post
+            %td.mod-data-row-value 42 comments
+          %tr.mod-data-row
+            %td.mod-data-row-name Official site
+            %td.mod-data-row-value(colspan=3) github.com/zequez/factorio-super-mod-name
+    .mod-description
+      = Forgery(:lorem_ipsum).words(20)

@@ -1,0 +1,2 @@
+$img-arrow-data: url('data:image/svg+xml; charset=utf-8; base64,
+  #{base64_encode('<svg height="8" width="20" version="1.1" xmlns="http://www.w3.org/2000/svg"><polygon points="0,2 0,0 12,0 12,2 7,8 5,8" style="fill:#{$color-black}" /></svg>')}');

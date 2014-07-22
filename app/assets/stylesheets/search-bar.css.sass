@@ -1,0 +1,76 @@
+.search-bar
+  +span(full)
+  margin-bottom: rhythm(1)
+  height: rhythm(2)
+  border-radius: 0px 0px $border-radius $border-radius
+  .sorter:first-child a
+    border-radius: 0px 0px 0px $border-radius
+  background: $color-teal
+  +light-box-shadow
+  +background-image(linear-gradient(lighten($color-teal, 5%), $color-teal))
+  +adjust-leading-to(2)
+
+  .sorters
+    +span(9 of 12)
+    +nowrap
+    .sorter
+      $color-orangered: lighten($color-washed-orange, 3%)
+      $arrow-size: rhythm()*0.75
+      +inline
+      a
+        +inline-block
+        padding: 0 space()
+        color: inherit
+        font-weight: bold
+
+        &:hover
+          background: $color-washed-orange
+          +light-background-gradient
+          // +background-image(linear-gradient(lighten($color-washed-orange, 5%), $color-washed-orange))
+          +light-box-shadow(0.2)
+          color: $color-white
+          +white-text-shadow
+
+        &.active
+          +relative
+          color: $color-white
+          background-color: $color-orangered
+          +light-background-gradient
+          +box-shadow(none) // Override :hover
+          +white-text-shadow
+          // Little bar on to
+          &:before
+            content: ''
+            +absolute(-0.3em, false, false, 0px)
+            +size(0.3em, 100%)
+            background: lighten($color-orangered, 4%)
+            border-radius: $border-radius $border-radius 0px 0px
+            border: 0px solid lighten($color-orangered, 6.5%)
+              left-width: 5px
+              right-width: 5px
+          // Little arrow below
+          &:after
+            content: ""
+            +absolute(false, false, 0, 50%)
+            +triangle($arrow-size, bottom, $color-orangered)
+            // border-top-color: $color-orangered
+            // margin-left: -$arrow-size
+          // We must override some values because the asshat has precedence
+
+  .text-filter
+    position: relative
+    padding-right: rhythm(1)*0.5
+    margin-top: -2px // vertical-align: middle is fucked up
+    +span(3 omega of 12)
+    .input
+      display: inline-block
+      width: 100%
+    &:after
+      content: "\f002"
+      position: absolute
+      left: rhythm(1)*0.35
+      top: 50%
+      margin-top: - rhythm(1)*0.55
+      font-family: FontAwesome
+      color: $color-dark-gray
+      +font-x-smaller

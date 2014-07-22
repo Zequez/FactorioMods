@@ -1,0 +1,165 @@
+$filter-size: 3
+$mods-list-size: 12-$filter-size
+
+
+.filter-bar
+  +span($filter-size of 12)
+  padding: space() 0
+  border-radius: $border-radius
+  background: $color-white
+
+  h2
+    text-align: right
+    padding: 0 space($font-larger)
+
+
+  .version-filter
+    padding: 0 space()
+    &-input
+      width: 100%
+
+  .category-filter
+    text-align: right
+
+    // .category-count
+    //   float: right
+    // direction: rtl
+    a
+      +block
+      width: 100%
+
+      padding-right: space()
+      padding-left: space(false, 0.1)
+
+      // text-overflow: ellipsis
+      // white-space: nowrap
+      // overflow: hidden
+
+    &.active, &:hover
+      background: $color-washed-orange
+
+      +white-text-shadow
+      a
+        color: $color-white
+
+    &.active
+      +relative
+      &:after
+        content: ' '
+        +absolute(50%, 0)
+        +triangle(rhythm(1), right, $color-washed-orange)
+
+
+.mod
+  margin-bottom: rhythm()
+  background: $color-white
+  &-thumbnail
+    @extend %thumbnail-hover
+    .asset-thumbnail
+      display: block
+      max-width: 100%
+
+  &-title
+
+.mods-index
+  +span($mods-list-size omega of 12)
+
+  .mod
+    +pie-clearfix
+    // border-radius: 5px
+
+    // .mod-thumbnail .asset-thumbnail
+    //   border-radius: 5px 0px 0px 5px
+
+    &:first-child
+      border-radius: $border-radius $border-radius 0px 0px
+      .mod-thumbnail .asset-thumbnail
+        border-radius: $border-radius 0px 0px 0px
+
+    &:last-child
+      border-radius: 0px 0px $border-radius $border-radius
+      .mod-thumbnail .asset-thumbnail
+        border-radius: 0px 0px 0px $border-radius
+
+    //-- Thumbnail --//
+    &-thumbnail-container
+      +span(2 of no-gutter $mods-list-size)
+
+
+    //-- Info --//
+    &-info-container
+      +span(5 of $mods-list-size wider no-gutter)
+      padding: space()
+
+
+
+    &-subtitle
+      +font-smaller
+
+    &-tag
+      +inline-block
+      +font-x-smaller
+      padding: 0 0.25em
+      border-radius: 2px
+      background: $color-blue
+      line-height: rhythm(1, $font-x-smaller)*0.8
+
+    &-summary
+
+
+    //-- Links --//
+    &-links
+      +span(2 omega of $mods-list-size)
+      padding: space()
+      text-align: right
+      +nowrap
+
+      .btn-download
+        +relative
+      //   bottom: rhythm(1)*0.5
+      //   right: rhythm(1)*0.5
+        z-index: 999
+
+    &-link
+      display: block
+
+.mods-show
+  .mod
+    +span(full)
+    border-radius: $border-radius
+
+    &-thumbnail-container
+      +span(4 of 12 no-gutter)
+      padding: space()
+        right: 0
+
+
+    &-info-container
+      +span(8 omega of 12 wide)
+      padding: space()
+
+    &-title
+      +font-xx-larger
+      font-weight: bold
+
+    &-subtitle
+
+    &-data
+      width: 100%
+      &-row
+        // &:nth-child(odd)
+        //   +span(4 of 8)
+        // &:nth-child(even)
+        //   +span(4 omega of 8 no-gutter)
+        &-name
+          // +inline-block
+          font-weight: bold
+          &:after
+            content: ':'
+
+        &-value
+          // +inline-block
+
+    &-description
+      +span(full)
+      padding: space()

@@ -1,0 +1,64 @@
+.filter-bar
+  .filter-bar-item
+    .version-filter
+      %select.input.version-filter-input
+        %option Any version
+        %option{value: '1.3'} v1.3
+        %option{value: '1.1'} v1.1
+        %option{value: '1.0'} v1.0
+  .filter-bar-item
+    %h2.categories-filter-title Categories
+    %ul.categories-filter
+      - @categories.each do |category|
+        %li.category-filter
+          %a{href: url_for([category, :mods])}
+            %i{class: category.icon_class}
+            = category.name
+            = "(#{category.mods_count})"
+
+.mods-index
+  - @mods.each do |mod|
+    .mod
+      .mod-thumbnail-container<
+        %a.mod-thumbnail{href: '#'}
+          %img.asset-thumbnail(src='http://placekitten.com/150/150')
+      .mod-info-container
+        %h2.mod-title
+          = link_to mod.name, [mod.category, mod]
+        .mod-subtitle
+          on
+          = link_to mod.category.name, [mod.category, :mods]
+        /   .mod-subtitle-data.mod-subtitle-version(title="Factorio version") [v1.3]
+        /   .mod-subtitle-data.mod-subtitle-date(title="Last updated") [13 July 2014]
+        /   .mod-subtitle-data.mod-subtitle-author [Developer name]
+        /   / %ul.mod-subtitle-tags
+        /   /   %li.mod-tag Potato
+        /   /   %li.mod-tag Face
+        /   /   %li.mod-tag Banana
+        .mod-summary= mod.summary
+      .mod-links
+        - unless mod.forum_post_url.blank?
+          %a.mod-link{href: mod.forum_post_url, title: 'Post on the official Factorio forum'}
+            = mod.forum_comments_count
+            = icon 'comments'
+        %span.mod-link(title='Date of the latest version of this mod')
+          = mod.versions.last.released_at.to_s(:rfc822)
+          = icon 'history'
+        %span.mod-link(title='Last Factorio version this mod works with')
+          v0.3.3.3.3.3
+          = icon 'cog'
+        %a.mod-link{href: mod.official_url, title: 'The awesome person behind this mod'}
+          = mod.author_name
+          = icon 'user'
+        / %a.mod-link.mod-official-site{href: '#'}
+        /   Official mod site
+        .mod-link.btn.btn-download
+          %a{href: mod.files.first.attachment.url}
+            = icon 'download'
+            Download
+          %ul.btn-download-versions
+            - mod.files.each do |file|
+              %li
+                %a{href: file.attachment.url}
+                  For
+                  = "v#{file.mod_version.game_version_start.number}"

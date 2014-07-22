@@ -1,0 +1,57 @@
+!!!
+%html
+  %head
+    %title Factorio Mods
+    %link(href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet")
+    = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true
+    = javascript_include_tag 'application', 'data-turbolinks-track' => true
+    = csrf_meta_tags
+  %body
+    .page-wrap
+      .container
+        .header
+          %h1.logo
+            %a{href: '/'}
+              Fact
+              %i.o-cog<>
+                %i.hidden-o<> o
+              rio
+              M
+              %i.o-cog<>
+                %i.hidden-o<> o
+              ds
+          / .sign-in Login
+          .instructions
+            %a.instructions-button{href: '#'} How do I install mods?
+            %a.instructions-button{href: '#'} How do I <strong>make</strong> mods?
+        .search-bar
+          %ul.sorters
+            %li.sorter<>
+              %a{href: '#'}
+                = icon 'sort-alpha-asc'
+                Alphabetically
+            %li.sorter<>
+              %a{href: '#'}
+                = icon 'sort-amount-desc'
+                Most downloaded
+            %li.sorter<>
+              %a{href: '#'}
+                = icon 'comments-o'
+                Most comments
+            %li.sorter<>
+              %a.active{href: '#'}
+                = icon 'history'
+                Recently updated
+          .text-filter
+            %input.input.input-text.input-text-search{type: 'text', placeholder: 'Search'}
+        .content
+          = yield
+      .footer-spacer
+
+    .footer
+      :markdown
+        &copy; FactorioMods 2014
+        - Not affiliated with that [awesome game about automation, Factorio](http://www.factorio.com/ "'dat SEO juice")
+        - Checkout the [Factorio subreddit](http://reddit.com/r/factorio 'Reddit community is best community')
+        and the [Factorio forums](http://www.factorioforums.com/forum/)
+    / = yield

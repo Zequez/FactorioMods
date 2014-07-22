@@ -1,0 +1,32 @@
+input, select
+  padding: 0
+  margin: 0
+  border: solid 0.15em $color-gray
+  border-radius: 3px
+  color: $color-black
+  font-size: $font-x-smaller
+  line-height: rhythm(1, $font-x-smaller) - 0.15em
+  &:focus
+    border-color: $color-orange
+    outline: none
+
+input
+  padding: 0 rhythm(1, $font-smaller)
+  background: $color-white
+
+select
+  padding: 0 rhythm(1, $font-smaller)*0.25
+  +appearance(none)
+  // height: rhythm(1)
+  background: $color-white
+  +box-shadow(inset 0px -10px 10px rgba(#000, 0.06))
+  background:
+    image: $img-arrow-data
+    repeat: no-repeat
+    position: right 60%
+  // +background-image(linear-gradient($color-white, darken($color-white, 10%)))
+
+.input
+  &-text
+    &-search
+      border-radius: 15px

@@ -1,0 +1,67 @@
+// @-webkit-keyframes rotate
+//   0%
+//     -webkit-transform: rotate(0deg)
+//     transform: rotate(0deg)
+//   100%
+//     -webkit-transform: rotate(360deg)
+//     transform: rotate(360deg)
+
+.header
+  +span(12 of 12)
+  +relative
+  background: $color-blue
+  // +light-background-gradient($color-blue)
+  +box-shadow(inset 0px -0.20em 0px rgba(#000, 0.1)) // Bar on the bottom
+  background-image: url(checkered-pattern.png)
+
+  .logo
+    +span(9 of 12)
+    height: rhythm(3, $font-xxx-larger) // TODO: Shouldn't need to set this. Investigate what's causing the header to increase the height
+    padding-left: rhythm(3, $font-xxx-larger)*0.50 // H1 font-size
+    font-weight: bold
+    +dark-text-shadow
+    a
+      color: inherit
+    .o-cog
+      .hidden-o
+        color: transparent
+        text-shadow: none
+      &:after
+        +inline-block
+        +content-icon(cog)
+        width: 1em
+        margin-left: -0.83em // Magic number
+        font-size: 0.68em // Magic number
+        text-align: center
+        // +transform(rotate(0deg))
+        // +transition(transform 3s linear)
+        // -webkit-animation: rotate 3s linear infinite
+        // -webkit-animation-play-state: paused
+        // -webkit-filter: blur(0) // Fix wiggling
+      // &:hover:after
+        // +transform(rotate(360deg))
+        // -webkit-animation-play-state: running
+
+
+
+
+  .sign-in
+    +span(3 omega of 12)
+    text-align: right
+
+  .instructions
+    +block
+    +span(3 omega of 12)
+    +absolute(false, 0px, 0px)
+
+    text-align: center
+    &-button
+      +block
+      background: $color-teal-blue
+      color: inherit
+      &:hover
+        background: $color-orange-teal
+        color: $color-white
+        +white-text-shadow
+      &:first-child
+        border-radius: $border-radius 0px 0px 0px

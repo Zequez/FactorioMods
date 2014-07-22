@@ -1,0 +1,44 @@
+FactoryGirl.define do
+  factory :mod do
+    sequence(:name) { |n| "Mod name #{n}" }
+    author_name 'Foo Barinto'
+    association :category, factory: :category
+    description ''
+    forum_comments_count 12
+    downloads_count 15
+  end
+
+  factory :category do
+    sequence(:name) { |n| "Category #{n}#{n}#{n}" }
+  end
+
+  factory :mod_asset do
+    image { File.new(Rails.root.join('spec', 'fixtures', 'test.jpg')) }
+  end
+
+  factory :mod_video_asset, class: 'ModAsset' do
+    video_url 'http://www.youtube.com/watch?v=C0DPdy98e4c'
+  end
+
+  factory :mod_version do
+    number '3.5.4'
+    released_at 3.weeks.ago
+    association :game_version_start, factory: :game_version
+    association :game_version_end, factory: :game_version
+    game_version '1.2.3'
+  end
+
+  factory :game_version do
+    number '0.10.2'
+  end
+
+  factory :game_version_end do
+    number '0.11.4'
+  end
+
+  factory :mod_file do
+    sequence(:name) { |n| "Mod File Name #{n}#{n}" }
+    attachment { File.new(Rails.root.join('spec', 'fixtures', 'test.zip')) }
+    mod_version
+  end
+end
