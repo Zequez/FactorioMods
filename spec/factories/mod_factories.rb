@@ -30,15 +30,21 @@ FactoryGirl.define do
 
   factory :game_version do
     number '0.10.2'
+     sequence(:sort_order) { |n| n.to_i }
   end
 
   factory :game_version_end do
     number '0.11.4'
+    sequence(:sort_order) { |n| n.to_i }
   end
 
   factory :mod_file do
     sequence(:name) { |n| "Mod File Name #{n}#{n}" }
     attachment { File.new(Rails.root.join('spec', 'fixtures', 'test.zip')) }
     mod_version
+  end
+
+  factory :game do
+    sequence(:name) { |n| "GameName #{n}#{n}" }
   end
 end

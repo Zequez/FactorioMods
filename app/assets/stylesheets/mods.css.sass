@@ -66,20 +66,20 @@ $mods-list-size: 12-$filter-size
 
   .mod
     +pie-clearfix
-    // border-radius: 5px
+    border-radius: $border-radius
 
     // .mod-thumbnail .asset-thumbnail
     //   border-radius: 5px 0px 0px 5px
 
-    &:first-child
-      border-radius: $border-radius $border-radius 0px 0px
-      .mod-thumbnail .asset-thumbnail
-        border-radius: $border-radius 0px 0px 0px
+    // &:first-child
+    //   border-radius: $border-radius $border-radius 0px 0px
+    //   .mod-thumbnail .asset-thumbnail
+    //     border-radius: $border-radius 0px 0px 0px
 
-    &:last-child
-      border-radius: 0px 0px $border-radius $border-radius
-      .mod-thumbnail .asset-thumbnail
-        border-radius: 0px 0px 0px $border-radius
+    // &:last-child
+    //   border-radius: 0px 0px $border-radius $border-radius
+    //   .mod-thumbnail .asset-thumbnail
+    //     border-radius: 0px 0px 0px $border-radius
 
     //-- Thumbnail --//
     &-thumbnail-container

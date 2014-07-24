@@ -35,15 +35,15 @@ RSpec.describe ModVersion, :type => :model do
   end
 
   describe '#game_version' do
-    it { expect(version).to respond_to :game_version }
-    it { expect(version.game_version).to be_kind_of String }
+    # it { expect(version).to respond_to :game_version }
+    # it { expect(version.game_version).to be_kind_of String }
 
-    context 'on save' do
-      it 'should read the #game_version_start.range_string(#game_version_end) and save it as #game_version' do
-        expect(version.game_version_start).to receive(:range_string).with(version.game_version_end).and_return('10.x')
-        version.save!
-        expect(version.game_version).to eq '10.x'
-      end
-    end
+    # context 'on save' do
+    #   it 'should read the #game_version_start.range_string(#game_version_end) and save it as #game_version' do
+    #     expect(version.game_version_start).to receive(:range_string).with(version.game_version_end).and_return('10.x')
+    #     version.save!
+    #     expect(version.game_version).to eq '10.x'
+    #   end
+    # end
   end
 end

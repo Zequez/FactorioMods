@@ -1,0 +1,3 @@
+module VersionRangeCalculator
+
+end

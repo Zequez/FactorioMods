@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140721222538) do
+ActiveRecord::Schema.define(version: 20140724000416) do
 
   create_table "active_admin_comments", force: true do |t|
     t.string   "namespace"
@@ -61,6 +61,18 @@ ActiveRecord::Schema.define(version: 20140721222538) do
   create_table "game_versions", force: true do |t|
     t.string   "number"
     t.datetime "released_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "sort_order"
+    t.integer  "group_id"
+    t.boolean  "is_group",    default: false, null: false
+    t.integer  "game_id"
+  end
+
+  add_index "game_versions", ["game_id"], name: "index_game_versions_on_game_id"
+
+  create_table "games", force: true do |t|
+    t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

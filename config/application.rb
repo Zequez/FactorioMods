@@ -21,5 +21,6 @@ module FactorioMods
     # config.i18n.default_locale = :de
 
     config.autoload_paths << Rails.root.join('lib')
+    config.watchable_dirs['lib'] = [:rb]
   end
 end

@@ -8,10 +8,32 @@
 // $sidebar-width: 242px;
 
 // Active Admin's got SASS!
-@import "active_admin/mixins";
-@import "active_admin/base";
+@import "active_admin/mixins"
+@import "active_admin/base"
 
 // Overriding any non-variable SASS must be done after the fact.
 // For example, to change the default status-tag color:
 //
 //   .status_tag { background: #6090DB; }
+
+.admin_games
+  .formtastic.game
+    .has_many_container.versions
+      li
+        float: left
+        padding: 0px
+        overflow: hidden
+      li:not(.boolean) label
+        display: none
+
+      li.has_many_delete, li.ui-sortable-handle
+        position: static
+        float: right
+
+      li.boolean
+        height: 3em
+        line-height: 3em
+
+      label
+        width: auto
+        padding: 0

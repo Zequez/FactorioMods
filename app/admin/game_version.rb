@@ -14,7 +14,9 @@ ActiveAdmin.register GameVersion do
   form do |f|
     f.inputs do
       f.input :number
-      f.input :released_at, as: :datepicker, input_html: { value: f.object.released_at.strftime('%Y-%m-%d') }
+      f.input :group
+      f.input :released_at, as: :datepicker,
+                            input_html: { value: (f.object.released_at.strftime('%Y-%m-%d') if f.object.released_at) }
     end
 
     f.actions

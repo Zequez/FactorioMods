@@ -1,11 +1,16 @@
 class GameVersion < ActiveRecord::Base
+  belongs_to :game
+  belongs_to :group, class_name: 'GameVersion'
+  has_many :sub_versions, class_name: 'GameVersion', foreign_key: :group_id
+
   ### Scoping / Selectors
   #######################
 
-  scope :select_older_versions, ->(game_version) { where('number < ?', game_version.number) }
-  scope :select_newer_versions, ->(game_version) { where('number > ?', game_version.number) }
-  scope :sort_by_older_to_newer, -> { order('number asc') }
-  scope :sort_by_newer_to_older, -> { order('number desc') }
+  scope :select_older_versions, ->(game_version) { where('sort_order < ?', game_version.sort_order) }
+  scope :select_newer_versions, ->(game_version) { where('sort_order > ?', game_version.sort_order) }
+  scope :groups, -> { where(is_group: true) }
+  scope :sort_by_older_to_newer, -> { order('sort_order asc') }
+  scope :sort_by_newer_to_older, -> { order('sort_order desc') }
 
   def get_previous_version
     GameVersion.select_older_versions(self).sort_by_newer_to_older.first
@@ -15,84 +20,42 @@ class GameVersion < ActiveRecord::Base
     GameVersion.select_newer_versions(self).sort_by_older_to_newer.first
   end
 
+  ### Validations
+  #######################
+
+  validate :validate_group_nesting
+  validate :validate_non_group_grouping
+
+  def validate_group_nesting
+    if group_id and is_group?
+      errors[:group] << "Can't nest groups"
+    end
+  end
+
+  def validate_non_group_grouping
+    if group_id and not group.is_group?
+      errors[:group] << "That version is not a group"
+    end
+  end
+
+  ### Callbacks
+  #######################
+
+  before_save do
+    if sort_order.nil?
+      older = GameVersion.sort_by_newer_to_older.first
+      if older
+        self.sort_order = older.sort_order+1
+      else
+        self.sort_order = 0
+      end
+    end
+  end
+
   ### Attributes
   #######################
 
-  def level
-    @level ||= (number || '').split('.').size
-  end
-
-  def sections(picked_level = level)
-    @sections ||= (number || '').split('.').slice(0, picked_level)
-  end
-
-  def number=(_); @level = @sections = nil; super; end
-
-  def is_first_in_level?(level_to_check)
-    previous_version = get_previous_version
-    return true if previous_version.nil?
-
-    similarity_level = similarity_level(previous_version)
-
-    # p 'Previous:    ' + previous_version.sections.inspect
-    # p 'Version:     ' + sections.inspect
-    # p 'Similarity:  ' + similarity_level.inspect
-    # p 'Compare:     ' + compare_section(self.sections[similarity_level], previous_version.sections[similarity_level]).inspect
-
-    if similarity_level >= level_to_check
-      compare_section(self.sections[similarity_level], previous_version.sections[similarity_level]) < 0
-    else
-      true
-    end
-  end
-
-  def is_last_in_level?(level_to_check)
-    next_version = get_next_version
-    return true if next_version.nil?
-
-    similarity_level = similarity_level(next_version)
-
-    if similarity_level >= level_to_check
-      compare_section(self.sections[similarity_level], next_version.sections[similarity_level]) > 0
-    else
-      true
-    end
-  end
-
-  def similarity_level(game_version)
-    i = 0
-    while (sections[i] == game_version.sections[i]) and (i < sections.size) do
-      i += 1
-    end
-    i
-  end
-
-  def range_string(game_version)
-    similarity = similarity_level(game_version)
-    if is_first_in_level?(similarity) and game_version.is_last_in_level?(similarity)
-      (sections[0, similarity] + ['x']).join('.')
-    else
-      "#{number}-#{game_version.number}"
-    end
-  end
-
-  # A helper, not actually part of the model
-  def compare_section(section1, section2)
-    return 0 if section1.nil? and section2.nil?
-    return -1 if section1.nil?
-    return 1 if section2.nil?
-
-    numeric1 = section1.match(/[0-9]+/).to_s.to_i
-    numeric2 = section2.match(/[0-9]+/).to_s.to_i
-    alpha1 = section1.match(/[a-z]+/).to_s
-    alpha2 = section2.match(/[a-z]+/).to_s
-
-    if numeric1 == numeric2
-      alpha1 <=> alpha2
-    else
-      numeric1 - numeric2
-    end
-  end
+  # def number=(_); @level = @sections = nil; super; end
 
   def to_label
     number
