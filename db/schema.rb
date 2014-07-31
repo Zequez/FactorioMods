@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140724000416) do
+ActiveRecord::Schema.define(version: 20140729013409) do
 
   create_table "active_admin_comments", force: true do |t|
     t.string   "namespace"
@@ -70,6 +70,14 @@ ActiveRecord::Schema.define(version: 20140724000416) do
   end
 
   add_index "game_versions", ["game_id"], name: "index_game_versions_on_game_id"
+
+  create_table "game_versions_mods", force: true do |t|
+    t.integer "game_version_id"
+    t.integer "mods_id"
+  end
+
+  add_index "game_versions_mods", ["game_version_id"], name: "index_game_versions_mods_on_game_version_id"
+  add_index "game_versions_mods", ["mods_id"], name: "index_game_versions_mods_on_mods_id"
 
   create_table "games", force: true do |t|
     t.string   "name"
@@ -135,25 +143,29 @@ ActiveRecord::Schema.define(version: 20140724000416) do
     t.datetime "first_version_date"
     t.datetime "last_version_date"
     t.string   "github"
-    t.integer  "favorites_count",                  default: 0, null: false
-    t.integer  "comments_count",                   default: 0, null: false
+    t.integer  "favorites_count",                   default: 0, null: false
+    t.integer  "comments_count",                    default: 0, null: false
     t.string   "license"
     t.string   "license_url"
     t.string   "official_url"
     t.string   "forum_post_url"
-    t.integer  "forum_comments_count", limit: 255
-    t.integer  "downloads_count",                  default: 0, null: false
-    t.integer  "visits_count",                     default: 0, null: false
+    t.integer  "forum_comments_count",  limit: 255
+    t.integer  "downloads_count",                   default: 0, null: false
+    t.integer  "visits_count",                      default: 0, null: false
     t.integer  "category_id"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.text     "description"
     t.string   "slug"
     t.string   "summary"
+    t.integer  "game_version_start_id"
+    t.integer  "game_version_end_id"
   end
 
   add_index "mods", ["author_id"], name: "index_mods_on_author_id"
   add_index "mods", ["category_id"], name: "index_mods_on_category_id"
+  add_index "mods", ["game_version_end_id"], name: "index_mods_on_game_version_end_id"
+  add_index "mods", ["game_version_start_id"], name: "index_mods_on_game_version_start_id"
 
   create_table "mods_tags", force: true do |t|
     t.integer  "mod_id"

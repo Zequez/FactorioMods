@@ -28,7 +28,8 @@ class ModsController < ApplicationController
       @mods = @mods.sort_by_most_recent
     end
 
-    @categories = Category.all
+    @game_versions = GameVersion.groups.sort_by_newer_to_older
+    @categories = Category.order_by_mods_count
   end
 
   def show

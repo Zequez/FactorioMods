@@ -83,6 +83,39 @@ RSpec.describe Mod, :type => :model do
         expect(mod.files.first).to be_kind_of ModFile
       end
     end
+
+    describe '#game_version_string' do
+
+    end
+
+    describe '#game_version_start' do
+      it { should respond_to :game_version_start }
+      it 'should be kind of GameVersion' do
+        mod.build_game_version_start
+        expect(mod.build_game_version_start).to be_kind_of GameVersion
+      end
+
+      it 'should read it from the lowest mod version before saving' do
+        mv1 = build :mod_version, sort_order: 1
+        mv2 = build :mod_version, sort_order: 2
+        mv3 = build :mod_version, sort_order: 3
+        mv4 = build :mod_version, sort_order: 4
+
+        mod.versions = [mv1, mv2, mv3, mv4]
+        mod.save!
+
+        mod.game_version_start.should eq mv1.game_version_start
+        mod.game_version_end.should eq mv4.game_version_end
+      end
+    end
+
+    describe '#game_version_end' do
+      it { should respond_to :game_version_end }
+      it 'should be kind of GameVersion' do
+        mod.build_game_version_end
+        expect(mod.build_game_version_end).to be_kind_of GameVersion
+      end
+    end
   end
 
   describe 'scopes' do
@@ -93,6 +126,41 @@ RSpec.describe Mod, :type => :model do
         mod3 = create(:mod)
 
         Mod.in_category(mod1.category).all.should eq [mod1, mod2]
+      end
+    end
+
+    describe '.for_game_version' do
+      it 'select mods that have a version for a specific version' do
+        game_version1 = create(:game_version)
+        game_version2 = create(:game_version)
+        game_version3 = create(:game_version)
+
+        mod_version1 = build(:mod_version, game_version_start: game_version1, game_version_end: game_version2)
+        mod_version2 = build(:mod_version, game_version_start: game_version3, game_version_end: nil)
+        mod_version3 = build(:mod_version, game_version_start: game_version1, game_version_end: game_version3)
+        mod_version4 = build(:mod_version, game_version_start: game_version2, game_version_end: game_version3)
+
+        mod1 = build(:mod, versions: [mod_version1])
+        mod2 = build(:mod, versions: [mod_version2])
+        mod3 = build(:mod, versions: [mod_version3])
+        mod4 = build(:mod, versions: [mod_version4])
+
+        mod1.save!
+        mod2.save!
+        mod3.save!
+        mod4.save!
+
+        puts 'GVS#sort_order = ' + mod1.game_version_start.sort_order.to_s
+        puts 'GVE#sort_order = ' + mod1.game_version_end.sort_order.to_s
+        puts '#versions = ' + mod1.versions.inspect
+        puts 'game_version1 = ' + game_version1.inspect
+        puts 'game_version2 = ' + game_version2.inspect
+        puts 'game_version3 = ' + game_version3.inspect
+
+        expect(Mod.for_game_version(game_version1)).to eq [mod1, mod3]
+        expect(Mod.for_game_version(game_version2)).to eq [mod1, mod3, mod4]
+        expect(Mod.for_game_version(game_version3)).to eq [mod2, mod3, mod4]
+        # expect(Mod.for_game_version(game_version2)).to eq [mod2, mod3]
       end
     end
 

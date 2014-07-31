@@ -23,7 +23,13 @@ RSpec.describe ModsController, type: :controller do
   describe "GET 'index'" do
     it 'should assign all the categories to @categories' do
       get 'index'
-      expect(assigns(:categories)).to match Category.all
+      create :category
+      create :category
+      create :game_version, is_group: true
+      create :game_version
+      create :game_version, is_group: true
+      expect(assigns(:categories)).to match Category.order_by_mods_count
+      expect(assigns(:game_versions)).to match GameVersion.groups.sort_by_newer_to_older.all
     end
 
     context 'no categories, no sorting' do

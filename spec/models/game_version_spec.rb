@@ -63,6 +63,15 @@ RSpec.describe GameVersion, :type => :model do
           expect(version.errors).to have_key :group
         end
       end
+
+      context 'trying to save a GameVersion with a sort_order higher than its group' do
+        it 'should be invalid with an error on #group' do
+          group = create :game_version, sort_order: 1, is_group: true
+          version = build :game_version, group: group, sort_order: 2
+          expect(version).to be_invalid
+          expect(version.errors).to have_key :group
+        end
+      end
     end
 
     describe 'callbacks' do

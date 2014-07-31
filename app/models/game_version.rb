@@ -25,6 +25,7 @@ class GameVersion < ActiveRecord::Base
 
   validate :validate_group_nesting
   validate :validate_non_group_grouping
+  validate :validate_sort_order_lower_than_group
 
   def validate_group_nesting
     if group_id and is_group?
@@ -35,6 +36,12 @@ class GameVersion < ActiveRecord::Base
   def validate_non_group_grouping
     if group_id and not group.is_group?
       errors[:group] << "That version is not a group"
+    end
+  end
+
+  def validate_sort_order_lower_than_group
+    if group_id and group.sort_order < sort_order
+      errors[:group] << "Group cannot be a lower order"
     end
   end
 
@@ -56,6 +63,10 @@ class GameVersion < ActiveRecord::Base
   #######################
 
   # def number=(_); @level = @sections = nil; super; end
+  def <=>(version)
+    sort_order <=> version.sort_order
+  end
+  include Comparable
 
   def to_label
     number

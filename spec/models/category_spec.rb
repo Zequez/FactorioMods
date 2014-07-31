@@ -38,4 +38,17 @@ RSpec.describe Category, :type => :model do
       end
     end
   end
+
+  describe '#order_by_mods_count' do
+    it 'should return the categories by the number of mods' do
+        category1 = create :category
+        category2 = create :category
+
+        create :mod, category: category1
+        create :mod, category: category2
+        create :mod, category: category1
+
+        expect(Category.order_by_mods_count).to eq [category1, category2]
+    end
+  end
 end
