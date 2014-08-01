@@ -1,36 +1,36 @@
 class ModVersion < ActiveRecord::Base
-  belongs_to :game_version_start, class_name: 'GameVersion'
-  belongs_to :game_version_end, class_name: 'GameVersion'
   belongs_to :mod
+
+  has_many :mod_game_versions
+  has_many :game_versions, through: :mod_game_versions
 
   scope :sort_by_older_to_newer, -> { order('sort_order asc') }
   scope :sort_by_newer_to_older, -> { order('sort_order desc') }
-  scope :get_by_game_version_start, -> { joins(:game_version_start).order('game_versions.sort_order asc') }
-  scope :get_by_game_version_end, -> { joins(:game_version_end).order('game_versions.sort_order asc') }
 
-  validate :validate_existance_of_game_versions
-
-  def validate_existance_of_game_versions
-    unless (game_version_start_id and GameVersion.find_by_id(game_version_start_id)) or
-           (game_version_end_id   and GameVersion.find_by_id(game_version_end_id))
-      errors[:game_version_start] << 'Must select a game version'
-    end
-  end
-
-  before_save :remove_redundant_game_versions
-
-  def remove_redundant_game_versions
-    if game_version_end
-      if (game_version_start == game_version_end) or
-         (game_version_end.group_id and game_version_end.group_id == game_version_start_id)
-        self.game_version_end = nil
-      elsif (not game_version_start) or (game_version_start > game_version_end)
-        self.game_version_start, self.game_version_end = game_version_end, game_version_start
-      end
-    end
+  def game_versions_string
+    read_attribute(:game_versions_string) || set_game_versions_string
   end
 
   def to_label
     number
+  end
+
+  private
+
+  def set_game_versions_string
+    gvs = begin
+      last_game_version = game_versions.last
+      first_game_version = game_versions.first
+      if not last_game_version and not first_game_version
+        ''
+      elsif last_game_version == first_game_version
+        first_game_version.number
+      else
+        "#{first_game_version.number}-#{last_game_version.number}"
+      end
+    end
+
+    update_column :game_versions_string, gvs
+    self.game_versions_string = gvs
   end
 end

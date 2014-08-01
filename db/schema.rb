@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140729013409) do
+ActiveRecord::Schema.define(version: 20140801005051) do
 
   create_table "active_admin_comments", force: true do |t|
     t.string   "namespace"
@@ -64,7 +64,6 @@ ActiveRecord::Schema.define(version: 20140729013409) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "sort_order"
-    t.integer  "group_id"
     t.boolean  "is_group",    default: false, null: false
     t.integer  "game_id"
   end
@@ -73,11 +72,11 @@ ActiveRecord::Schema.define(version: 20140729013409) do
 
   create_table "game_versions_mods", force: true do |t|
     t.integer "game_version_id"
-    t.integer "mods_id"
+    t.integer "mod_id"
   end
 
   add_index "game_versions_mods", ["game_version_id"], name: "index_game_versions_mods_on_game_version_id"
-  add_index "game_versions_mods", ["mods_id"], name: "index_game_versions_mods_on_mods_id"
+  add_index "game_versions_mods", ["mod_id"], name: "index_game_versions_mods_on_mod_id"
 
   create_table "games", force: true do |t|
     t.string   "name"
@@ -118,22 +117,26 @@ ActiveRecord::Schema.define(version: 20140729013409) do
   add_index "mod_files", ["mod_id"], name: "index_mod_files_on_mod_id"
   add_index "mod_files", ["mod_version_id"], name: "index_mod_files_on_mod_version_id"
 
+  create_table "mod_game_versions", force: true do |t|
+    t.integer "game_version_id"
+    t.integer "mod_version_id"
+    t.integer "mod_id"
+  end
+
+  add_index "mod_game_versions", ["game_version_id"], name: "index_mod_game_versions_on_game_version_id"
+  add_index "mod_game_versions", ["mod_id"], name: "index_mod_game_versions_on_mod_id"
+  add_index "mod_game_versions", ["mod_version_id"], name: "index_mod_game_versions_on_mod_version_id"
+
   create_table "mod_versions", force: true do |t|
     t.integer  "mod_id"
     t.string   "number"
-    t.integer  "game_version_id"
     t.date     "released_at"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "game_version_start_id"
-    t.integer  "game_version_end_id"
-    t.integer  "sort_order",            default: 0, null: false
-    t.string   "game_version"
+    t.integer  "sort_order",           default: 0, null: false
+    t.string   "game_versions_string"
   end
 
-  add_index "mod_versions", ["game_version_end_id"], name: "index_mod_versions_on_game_version_end_id"
-  add_index "mod_versions", ["game_version_id"], name: "index_mod_versions_on_game_version_id"
-  add_index "mod_versions", ["game_version_start_id"], name: "index_mod_versions_on_game_version_start_id"
   add_index "mod_versions", ["mod_id"], name: "index_mod_versions_on_mod_id"
 
   create_table "mods", force: true do |t|
@@ -143,29 +146,26 @@ ActiveRecord::Schema.define(version: 20140729013409) do
     t.datetime "first_version_date"
     t.datetime "last_version_date"
     t.string   "github"
-    t.integer  "favorites_count",                   default: 0, null: false
-    t.integer  "comments_count",                    default: 0, null: false
+    t.integer  "favorites_count",                  default: 0, null: false
+    t.integer  "comments_count",                   default: 0, null: false
     t.string   "license"
     t.string   "license_url"
     t.string   "official_url"
     t.string   "forum_post_url"
-    t.integer  "forum_comments_count",  limit: 255
-    t.integer  "downloads_count",                   default: 0, null: false
-    t.integer  "visits_count",                      default: 0, null: false
+    t.integer  "forum_comments_count", limit: 255
+    t.integer  "downloads_count",                  default: 0, null: false
+    t.integer  "visits_count",                     default: 0, null: false
     t.integer  "category_id"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.text     "description"
     t.string   "slug"
     t.string   "summary"
-    t.integer  "game_version_start_id"
-    t.integer  "game_version_end_id"
+    t.string   "game_versions_string"
   end
 
   add_index "mods", ["author_id"], name: "index_mods_on_author_id"
   add_index "mods", ["category_id"], name: "index_mods_on_category_id"
-  add_index "mods", ["game_version_end_id"], name: "index_mods_on_game_version_end_id"
-  add_index "mods", ["game_version_start_id"], name: "index_mods_on_game_version_start_id"
 
   create_table "mods_tags", force: true do |t|
     t.integer  "mod_id"

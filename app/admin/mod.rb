@@ -1,12 +1,11 @@
 ActiveAdmin.register Mod do
   permit_params :name, :author_name, :category_id, :author_id,
-                :first_version_date, :last_version_date, :github,
+                :first_version_date, :last_version_date, :github_url, :forum_comments_count,
                 :license, :license_url, :official_url, :forum_post_url,
                 :description, :summary, :slug,
                 assets_attributes: [:id, :video_url, :image,
                                     :sort_order, :_destroy],
-                versions_attributes: [:id, :number, :game_version_start_id, :released_at,
-                                      :game_version_end_id, :sort_order, :_destroy],
+                versions_attributes: [:id, :number, :released_at, :sort_order, :_destroy, game_version_ids: []],
                 files_attributes: [:id, :name, :attachment, :sort_order,
                                    :mod_version_id, :_destroy]
 
@@ -82,8 +81,7 @@ ActiveAdmin.register Mod do
     f.inputs do
       f.has_many :versions, allow_destroy: true, new_record: true, sortable: :sort_order do |a|
         a.input :number
-        a.input :game_version_start
-        a.input :game_version_end
+        a.input :game_versions
         a.input :released_at, as: :datepicker, input_html: { value: (a.object.released_at.strftime('%Y-%m-%d') unless a.object.released_at.nil?) }
       end
     end

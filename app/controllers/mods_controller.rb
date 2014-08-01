@@ -28,7 +28,16 @@ class ModsController < ApplicationController
       @mods = @mods.sort_by_most_recent
     end
 
-    @game_versions = GameVersion.groups.sort_by_newer_to_older
+    if params[:v]
+      @game_version = GameVersion.find_by_number(params[:v])
+      if @game_version
+        @mods = @mods.for_game_version @game_version
+      else
+        @mods = []
+      end
+    end
+
+    @game_versions = GameVersion.sort_by_newer_to_older
     @categories = Category.order_by_mods_count
   end
 

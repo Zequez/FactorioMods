@@ -16,6 +16,9 @@ class Mod < ActiveRecord::Base
   has_many :tags
   has_many :favorites
 
+  has_many :mod_game_versions
+  has_many :game_versions, -> { uniq.sort_by_older_to_newer }, through: :mod_game_versions
+
   accepts_nested_attributes_for :assets, allow_destroy: true
   accepts_nested_attributes_for :versions, allow_destroy: true
   accepts_nested_attributes_for :files, allow_destroy: true
@@ -24,28 +27,15 @@ class Mod < ActiveRecord::Base
 
   scope :in_category, ->(category) { where(category: category) }
   scope :for_game_version, ->(game_version) do
-    rsa = joins('INNER JOIN game_versions gvs ON gvs.id = mods.game_version_start_id')
-    .joins('INNER JOIN game_versions gve ON gve.id = mods.game_version_end_id')
-    .where('gvs.sort_order <= ? AND gve.sort_order >= ?', game_version.sort_order, game_version.sort_order)
-    puts rsa.to_sql
-    rsa
-    # where(versions: { game_version: game_version })
+    joins(:mod_game_versions).where(mod_game_versions: { game_version: game_version })
   end
-  scope :sort_by_most_recent, -> { order('updated_at desc') }
-  scope :sort_by_alpha, -> { order('name asc') }
-  scope :sort_by_forum_comments, -> { order('forum_comments_count desc') }
-  scope :sort_by_downloads, -> { order('downloads_count desc') }
+  scope :sort_by_most_recent, -> { order('mods.updated_at desc') }
+  scope :sort_by_alpha, -> { order('mods.name asc') }
+  scope :sort_by_forum_comments, -> { order('mods.forum_comments_count desc') }
+  scope :sort_by_downloads, -> { order('mods.downloads_count desc') }
 
-  after_save :get_game_version_from_mod_versions
-
-  def get_game_version_from_mod_versions
-    sorted_versions = versions.sort_by_older_to_newer
-    first_version = sorted_versions.first
-    last_version = sorted_versions.last
-    self.game_version_start = first_version.game_version_start if first_version
-    self.game_version_end = last_version.game_version_end || last_version.game_version_start if last_version
-    self.game_version_end = first_version.game_version_start if not last_version and first_version
-    update_columns(game_version_start_id: game_version_start_id, game_version_end_id: game_version_end_id)
+  def game_versions_string
+    read_attribute(:game_versions_string) || set_game_versions_string
   end
 
   def author_name
@@ -58,5 +48,24 @@ class Mod < ActiveRecord::Base
 
   def github_path
     github_url.match('[^/]+/[^/]+\Z').to_s
+  end
+
+  private
+
+  def set_game_versions_string
+    gvs = begin
+      last_game_version = game_versions.last
+      first_game_version = game_versions.first
+      if not last_game_version and not first_game_version
+        ''
+      elsif last_game_version == first_game_version
+        first_game_version.number
+      else
+        "#{first_game_version.number}-#{last_game_version.number}"
+      end
+    end
+
+    update_column :game_versions_string, gvs
+    self.game_versions_string = gvs
   end
 end

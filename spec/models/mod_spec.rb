@@ -84,38 +84,173 @@ RSpec.describe Mod, :type => :model do
       end
     end
 
-    describe '#game_version_string' do
+    describe '#game_versions' do
+      it { expect(mod).to respond_to :game_versions }
 
-    end
+      it 'should be able to access it through the #versions' do
+        mv1 = create :mod_version, mod: mod
+        mv2 = create :mod_version, mod: mod
+        gv1 = create :game_version
+        gv2 = create :game_version
+        gv3 = create :game_version
+        gv4 = create :game_version
+        mv1.game_versions = [gv1, gv2, gv3]
+        mv2.game_versions = [gv2, gv3, gv4]
 
-    describe '#game_version_start' do
-      it { should respond_to :game_version_start }
-      it 'should be kind of GameVersion' do
-        mod.build_game_version_start
-        expect(mod.build_game_version_start).to be_kind_of GameVersion
-      end
+        mod = Mod.first
 
-      it 'should read it from the lowest mod version before saving' do
-        mv1 = build :mod_version, sort_order: 1
-        mv2 = build :mod_version, sort_order: 2
-        mv3 = build :mod_version, sort_order: 3
-        mv4 = build :mod_version, sort_order: 4
-
-        mod.versions = [mv1, mv2, mv3, mv4]
-        mod.save!
-
-        mod.game_version_start.should eq mv1.game_version_start
-        mod.game_version_end.should eq mv4.game_version_end
+        mod.game_versions.should match [gv1, gv2, gv3, gv4]
       end
     end
 
-    describe '#game_version_end' do
-      it { should respond_to :game_version_end }
-      it 'should be kind of GameVersion' do
-        mod.build_game_version_end
-        expect(mod.build_game_version_end).to be_kind_of GameVersion
+    describe '#game_versions_string' do
+      context 'just one game version' do
+        it 'returns the lonely game_version#number' do
+          mv1 = create :mod_version, mod: mod
+          gv1 = create :game_version
+          mv1.game_versions = [gv1]
+          mod = Mod.first
+
+          expect(mod.game_versions_string).to eq gv1.number
+        end
+      end
+
+      context 'multiple game versions' do
+        it 'returns the game versions numbers separated by a dash' do
+          mv1 = create :mod_version, mod: mod
+          gv1 = create :game_version
+          gv2 = create :game_version
+          gv3 = create :game_version
+          mv1.game_versions = [gv1, gv2, gv3]
+          mod = Mod.first
+
+          expect(mod.game_versions_string).to eq "#{gv1.number}-#{gv3.number}"
+        end
       end
     end
+
+    # describe '#game_versions_string' do
+    #    it { expect(mod).to respond_to :game_versions_string }
+
+    #   context 'on saving' do
+    #     it 'should associate the correct GameVersion based on the string' do
+    #       g1 = create :game_version, number: '1.2.3'
+    #       g2 = create :game_version, number: '1.2.4'
+    #       g3 = create :game_version, number: '1.2.5'
+    #       g4 = create :game_version, number: '1.1.1'
+    #       g5 = create :game_version, number: '1.4.3'
+
+    #       mod.game_versions_string = '1.2.3, 1.2.4, 1.1.1'
+    #       mod.save!
+    #       expect(mod.game_versions).to eq [g1, g2, g4]
+    #     end
+
+    #     it 'should work with whitespace too' do
+    #       g1 = create :game_version, number: '1.2.3'
+    #       g2 = create :game_version, number: '1.2.4'
+    #       g3 = create :game_version, number: '1.2.5'
+    #       g4 = create :game_version, number: '1.1.1'
+    #       g5 = create :game_version, number: '1.4.3'
+
+    #       mod.game_versions_string = '1.2.3 1.2.4 1.1.1'
+    #       mod.save!
+    #       expect(mod.game_versions).to eq [g1, g2, g4]
+    #     end
+
+    #     it 'should associate the game versions that belong to a group' do
+    #       group = create :game_version_group, number: '1.2.x'
+    #       create :game_version, number: '1.1.1'
+    #       g1 = create :game_version, number: '1.2.0', group: group
+    #       g2 = create :game_version, number: '1.2.1', group: group
+    #       g3 = create :game_version, number: '1.2.3', group: group
+
+    #       mod.game_versions_string = '1.2.x'
+    #       mod.save!
+    #       expect(mod.game_versions).to eq [g1, g2, g3]
+    #     end
+    #   end
+
+    #   context 'on loading' do
+    #     it 'should return a list of GameVersions as strings' do
+    #       create :game_version, number:  '1.2.3', sort_order: 1
+    #       create :game_version, number:  '1.2.4', sort_order: 2
+    #       create :game_version, number:  '1.2.5', sort_order: 3
+
+    #       mod.game_versions_string = '1.2.5, 1.2.3    1.2.4'
+    #       mod.save!
+    #       mod = Mod.first
+    #       expect(mod.game_versions_string).to eq '1.2.5, 1.2.3, 1.2.4'
+    #     end
+
+    #     it 'should return a group if its composed from the whole group' do
+    #       group = create :game_version_group, number: '1.2.x'
+    #       create :game_version, number: '1.1.1'
+    #       g1 = create :game_version, number: '1.2.0', group: group
+    #       g2 = create :game_version, number: '1.2.1', group: group
+    #       g3 = create :game_version, number: '1.2.3', group: group
+
+    #       mod.game_versions_string = '1.2.x'
+    #       mod.save!
+    #       expect(mod.game_versions_string).to eq '1.2.x'
+    #     end
+    #   end
+
+    #   context 'validation' do
+    #     it 'should add an error when the game versions cannot be found' do
+    #       g1 = create :game_version, number: '1.2.3'
+    #       mod.game_versions_string = '1.2.3, 4.3.2'
+    #       expect(mod).to be_invalid
+    #       expect(mod.errors).to have_key :game_versions_string
+    #     end
+    #   end
+    # end
+
+    # describe '#game_versions' do
+    #   it { expect(mod).to respond_to :game_versions }
+      # it 'should be of type GameVersion' do
+      #   expect(mod.game_versions.build).to be_kind_of GameVersion
+      # end
+      # it 'should be able to save and load' do
+      #   create :game_version
+      #   create :game_version
+      #   create :game_version
+      #   game_versions = GameVersion.all
+      #   mod.game_versions = game_versions
+      #   mod.save!
+      #   mod = Mod.first
+      #   expect(mod.game_versions.size).to eq 3
+      #   expect(mod.game_versions).to eq game_versions
+      # end
+    # end
+
+  #   describe '#game_version_start' do
+  #     it { should respond_to :game_version_start }
+  #     it 'should be kind of GameVersion' do
+  #       mod.build_game_version_start
+  #       expect(mod.build_game_version_start).to be_kind_of GameVersion
+  #     end
+
+  #     it 'should read it from the lowest mod version before saving' do
+  #       mv1 = build :mod_version, sort_order: 1
+  #       mv2 = build :mod_version, sort_order: 2
+  #       mv3 = build :mod_version, sort_order: 3
+  #       mv4 = build :mod_version, sort_order: 4
+
+  #       mod.versions = [mv1, mv2, mv3, mv4]
+  #       mod.save!
+
+  #       mod.game_version_start.should eq mv1.game_version_start
+  #       mod.game_version_end.should eq mv4.game_version_end
+  #     end
+  #   end
+
+  #   describe '#game_version_end' do
+  #     it { should respond_to :game_version_end }
+  #     it 'should be kind of GameVersion' do
+  #       mod.build_game_version_end
+  #       expect(mod.build_game_version_end).to be_kind_of GameVersion
+  #     end
+  #   end
   end
 
   describe 'scopes' do
@@ -131,36 +266,44 @@ RSpec.describe Mod, :type => :model do
 
     describe '.for_game_version' do
       it 'select mods that have a version for a specific version' do
-        game_version1 = create(:game_version)
-        game_version2 = create(:game_version)
-        game_version3 = create(:game_version)
+        gv1 = create(:game_version)
+        gv2 = create(:game_version)
+        gv3 = create(:game_version)
 
-        mod_version1 = build(:mod_version, game_version_start: game_version1, game_version_end: game_version2)
-        mod_version2 = build(:mod_version, game_version_start: game_version3, game_version_end: nil)
-        mod_version3 = build(:mod_version, game_version_start: game_version1, game_version_end: game_version3)
-        mod_version4 = build(:mod_version, game_version_start: game_version2, game_version_end: game_version3)
+        mv1 = build(:mod_version, game_versions: [gv1, gv2])
+        mv2 = build(:mod_version, game_versions: [gv2, gv3])
+        mv3 = build(:mod_version, game_versions: [gv1, gv2, gv3])
+        mv4 = build(:mod_version, game_versions: [gv3])
 
-        mod1 = build(:mod, versions: [mod_version1])
-        mod2 = build(:mod, versions: [mod_version2])
-        mod3 = build(:mod, versions: [mod_version3])
-        mod4 = build(:mod, versions: [mod_version4])
+        mod1 = build(:mod, versions: [mv1])
+        mod2 = build(:mod, versions: [mv2])
+        mod3 = build(:mod, versions: [mv3])
+        mod4 = build(:mod, versions: [mv4])
 
         mod1.save!
         mod2.save!
         mod3.save!
         mod4.save!
 
-        puts 'GVS#sort_order = ' + mod1.game_version_start.sort_order.to_s
-        puts 'GVE#sort_order = ' + mod1.game_version_end.sort_order.to_s
-        puts '#versions = ' + mod1.versions.inspect
-        puts 'game_version1 = ' + game_version1.inspect
-        puts 'game_version2 = ' + game_version2.inspect
-        puts 'game_version3 = ' + game_version3.inspect
+        expect(Mod.for_game_version(gv1)).to eq [mod1, mod3]
+        expect(Mod.for_game_version(gv2)).to eq [mod1, mod2, mod3]
+        expect(Mod.for_game_version(gv3)).to eq [mod2, mod3, mod4]
+      end
 
-        expect(Mod.for_game_version(game_version1)).to eq [mod1, mod3]
-        expect(Mod.for_game_version(game_version2)).to eq [mod1, mod3, mod4]
-        expect(Mod.for_game_version(game_version3)).to eq [mod2, mod3, mod4]
-        # expect(Mod.for_game_version(game_version2)).to eq [mod2, mod3]
+      it 'works with this configuration too' do
+        m1 = create :mod
+        m2 = create :mod
+        m3 = create :mod
+        gv1 = create :game_version, number: '1.1.x'
+        gv2 = create :game_version, number: '1.2.x'
+        gv3 = create :game_version, number: '1.3.x'
+        mv1 = create :mod_version, game_versions: [gv1, gv2], mod: m1
+        mv2 = create :mod_version, game_versions: [gv2, gv3], mod: m2
+        mv3 = create :mod_version, game_versions: [gv3], mod: m3
+
+        expect(Mod.for_game_version(gv1)).to match [m1]
+        expect(Mod.for_game_version(gv2)).to match [m1, m2]
+        expect(Mod.for_game_version(gv3)).to match [m2, m3]
       end
     end
 

@@ -29,7 +29,7 @@ RSpec.describe ModsController, type: :controller do
       create :game_version
       create :game_version, is_group: true
       expect(assigns(:categories)).to match Category.order_by_mods_count
-      expect(assigns(:game_versions)).to match GameVersion.groups.sort_by_newer_to_older.all
+      expect(assigns(:game_versions)).to match GameVersion.sort_by_newer_to_older.all
     end
 
     context 'no categories, no sorting' do
@@ -104,6 +104,46 @@ RSpec.describe ModsController, type: :controller do
         it { expect(response).to be_success }
         it { expect(response).to render_template 'index' }
         it { expect(assigns(:mods)).to eq Mod.sort_by_most_recent }
+      end
+    end
+
+    context 'with filtering' do
+      context 'with version' do
+        before(:each) do
+          @m1 = create :mod
+          @m2 = create :mod
+          @m3 = create :mod
+          gv1 = create :game_version, number: '1.1.x'
+          gv2 = create :game_version, number: '1.2.x'
+          gv3 = create :game_version, number: '1.3.x'
+          mv1 = create :mod_version, game_versions: [gv1, gv2], mod: @m1
+          mv2 = create :mod_version, game_versions: [gv2, gv3], mod: @m2
+          mv3 = create :mod_version, game_versions: [gv3], mod: @m3
+        end
+
+        context 'version 1.1.x' do
+          before(:each) { get 'index', v: '1.1.x' }
+
+          it { expect(response).to be_success }
+          it { expect(response).to render_template 'index' }
+          it { expect(assigns(:mods)).to match_array [@m1] }
+        end
+
+        context 'version 1.2.x' do
+          before(:each) { get 'index', v: '1.2.x' }
+
+          it { expect(response).to be_success }
+          it { expect(response).to render_template 'index' }
+          it { expect(assigns(:mods)).to match_array [@m1, @m2] }
+        end
+
+        context 'version 1.3.x' do
+          before(:each) { get 'index', v: '1.3.x' }
+
+          it { expect(response).to be_success }
+          it { expect(response).to render_template 'index' }
+          it { expect(assigns(:mods)).to match_array [@m2, @m3] }
+        end
       end
     end
   end

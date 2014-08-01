@@ -23,9 +23,9 @@ FactoryGirl.define do
   factory :mod_version do
     number '3.5.4'
     released_at 3.weeks.ago
-    association :game_version_start, factory: :game_version
-    association :game_version_end, factory: :game_version
-    game_version '1.2.3'
+    # association :game_version_start, factory: :game_version
+    # association :game_version_end, factory: :game_version
+    # game_version '1.2.3'
   end
 
   factory :game_version do
