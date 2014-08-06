@@ -1,5 +1,6 @@
 class ModFile < ActiveRecord::Base
   belongs_to :mod_version
+  belongs_to :mod
 
   has_attached_file :attachment
   validates_attachment_content_type :attachment,

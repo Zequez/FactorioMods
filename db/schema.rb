@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140801005051) do
+ActiveRecord::Schema.define(version: 20140804021455) do
 
   create_table "active_admin_comments", force: true do |t|
     t.string   "namespace"
@@ -162,6 +162,7 @@ ActiveRecord::Schema.define(version: 20140801005051) do
     t.string   "slug"
     t.string   "summary"
     t.string   "game_versions_string"
+    t.text     "description_html"
   end
 
   add_index "mods", ["author_id"], name: "index_mods_on_author_id"

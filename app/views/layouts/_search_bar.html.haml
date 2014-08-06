@@ -1,0 +1,21 @@
+.search-bar
+  %ul.sorters
+    %li.sorter<>
+      = sort_link :most_recent do
+        = icon 'history'
+        Recently updated
+    %li.sorter<>
+      = sort_link :alpha do
+        = icon 'sort-alpha-asc'
+        Alphabetically
+    -# %li.sorter<>
+    -#   = sort_link :downloads do
+    -#     = icon 'sort-amount-desc'
+    -#     Most downloaded
+    -# %li.sorter<>
+    -#   = sort_link :forum_comments do
+    -#     = icon 'comments-o'
+    -#     Most comments
+  .text-filter
+    = search_form do
+      %input.input.input-text.input-text-search#search-input{type: 'text', placeholder: 'Search', name: 'q', value: params[:q], maxlength: 30}

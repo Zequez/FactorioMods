@@ -1,0 +1,4 @@
+Made by Ezequiel Adrián "Zequez" Schwartzman, an avid Factorio fan
+With lots of love
+Very little time
+And Ruby on Rails <3

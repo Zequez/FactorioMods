@@ -21,6 +21,7 @@ ActiveAdmin.register Category do
     column :slug do |category|
       url_for [category, :mods]
     end
+    column :mods_count
     column :icon_class
 
     actions

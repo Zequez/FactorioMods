@@ -20,4 +20,20 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 en:
-  hello: "Hello world"
+  title:
+    suffix: " - Factorio Mods "
+    root: Latest Factorio mods
+    mods:
+      index:
+        version: " for Factorio v%{version} "
+        mods: ' mods '
+        category: " %{category} "
+        sort:
+          most_recent: ' recently updated '
+          alpha: ' '
+          downloads: ' most downloaded '
+          forum_comments: ' most forum comments '
+      show: '%{name}'
+    static:
+      how_to_install: How to install mods on Factorio
+      how_to_make: How to create mods for Factorio

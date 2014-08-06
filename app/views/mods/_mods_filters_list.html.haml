@@ -1,0 +1,19 @@
+.mods-filters-list
+  .mods-filters-list-item
+    %span.mods-filters-list-item-title
+      Category:
+    %span.mods-filters-list-item-value= @category ? @category.name : 'All (default)'
+    - if @category
+      %a.mods-filters-list-item-remove{href: category_filter_url(nil)}
+  .mods-filters-list-item
+    %span.mods-filters-list-item-title
+      Factorio version:
+    %span.mods-filters-list-item-value= @game_version ? @game_version.number : 'Any (default)'
+    - if @game_version
+      %a.mods-filters-list-item-remove{href: version_filter_url(nil)}
+  .mods-filters-list-item
+    %span.mods-filters-list-item-title
+      Search:
+    %span.mods-filters-list-item-value "#{@query}"
+    - if @query
+      %a.mods-filters-list-item-remove{href: search_filter_url(nil)}

@@ -41,16 +41,10 @@ ActiveAdmin.register Game do
     f.inputs :name
     f.actions
     f.inputs do
-      versions_groups = GameVersion.groups
       f.has_many :versions, allow_destroy: true, new_record: true, sortable: :sort_order do |a|
         a.input :number, placeholder: 'Number'
-        a.input :group, collection: versions_groups if not a.object.is_group?
-        k = a.input :is_group if not a.object.group_id
-        if not a.object.is_group?
-          k = a.input :released_at, as: :datepicker, placeholder: 'Released at',
-                                input_html: { value: (a.object.released_at.strftime('%Y-%m-%d') if a.object.released_at) }
-        end
-        k
+        a.input :released_at, as: :datepicker, placeholder: 'Released at',
+                              input_html: { value: (a.object.released_at.strftime('%Y-%m-%d') if a.object.released_at) }
       end
     end
 

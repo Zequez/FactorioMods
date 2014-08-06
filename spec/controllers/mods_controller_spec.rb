@@ -48,7 +48,7 @@ RSpec.describe ModsController, type: :controller do
       it { expect(response).to be_success }
       it { expect(response).to render_template 'index' }
       it { expect(assigns(:category)).to eq mods.first.category }
-      it { expect(assigns(:mods)).to match_array Mod.sort_by_most_recent.in_category(mods.first.category) }
+      it { expect(assigns(:mods)).to match_array Mod.sort_by_most_recent.filter_by_category(mods.first.category) }
     end
 
     context 'with a non-existant category' do
@@ -98,12 +98,15 @@ RSpec.describe ModsController, type: :controller do
 
     context 'with query' do
       context 'no categories, no sorting' do
-        before(:each) { mods }
+        before(:each) do
+          @m1 = create :mod, name: 'potato', versions: [create(:mod_version)]
+          @m2 = create :mod, name: 'banana', versions: [create(:mod_version)]
+        end
         before(:each) { get 'index', q: 'potato' }
 
         it { expect(response).to be_success }
         it { expect(response).to render_template 'index' }
-        it { expect(assigns(:mods)).to eq Mod.sort_by_most_recent }
+        it { expect(assigns(:mods)).to eq Mod.sort_by_most_recent.filter_by_search_query('potato') }
       end
     end
 

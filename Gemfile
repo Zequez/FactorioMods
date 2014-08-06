@@ -1,4 +1,5 @@
 source 'https://rubygems.org'
+source 'https://rails-assets.org'
 
 
 # Base
@@ -23,6 +24,8 @@ gem 'uglifier', '>= 1.3.0'      # Use Uglifier as compressor for JavaScript asse
 gem 'coffee-rails', '~> 4.0.0'  # Use CoffeeScript for .js.coffee assets and views
 gem 'jquery-rails'              # Use jquery as the JavaScript library
 gem 'turbolinks'                # Turbolinks makes following links in your web application faster
+gem 'rails-assets-zepto'
+gem 'auto_html'
 
 # Models
 ########################

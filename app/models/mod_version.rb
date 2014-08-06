@@ -1,6 +1,7 @@
 class ModVersion < ActiveRecord::Base
   belongs_to :mod
 
+  has_many :files, class_name: 'ModFile'
   has_many :mod_game_versions
   has_many :game_versions, through: :mod_game_versions
 

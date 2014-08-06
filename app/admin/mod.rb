@@ -3,11 +3,20 @@ ActiveAdmin.register Mod do
                 :first_version_date, :last_version_date, :github_url, :forum_comments_count,
                 :license, :license_url, :official_url, :forum_post_url,
                 :description, :summary, :slug,
-                assets_attributes: [:id, :video_url, :image,
-                                    :sort_order, :_destroy],
+                assets_attributes: [:id, :image, :sort_order, :_destroy],
                 versions_attributes: [:id, :number, :released_at, :sort_order, :_destroy, game_version_ids: []],
                 files_attributes: [:id, :name, :attachment, :sort_order,
                                    :mod_version_id, :_destroy]
+
+  controller do
+    def scoped_collection
+      Mod.includes(:category, :author)
+    end
+
+    def resource
+      @mod ||= Mod.includes(versions: [:game_versions]).includes(files: [:mod_version]).find(params[:id])
+    end
+  end
 
   index do
     selectable_column
@@ -78,25 +87,28 @@ ActiveAdmin.register Mod do
       f.input :summary
     end
 
+    f.actions
+
     f.inputs do
+      game_versions = GameVersion.all
       f.has_many :versions, allow_destroy: true, new_record: true, sortable: :sort_order do |a|
         a.input :number
-        a.input :game_versions
+        a.input :game_versions, collection: game_versions
         a.input :released_at, as: :datepicker, input_html: { value: (a.object.released_at.strftime('%Y-%m-%d') unless a.object.released_at.nil?) }
       end
     end
 
     f.inputs do
+      mod_versions = f.object.versions.all
       f.has_many :files, allow_destroy: true, new_record: true, sortable: :sort_order do |a|
         a.input :name
         a.input :attachment, as: :attachment
-        a.input :mod_version
+        a.input :mod_version, collection: mod_versions
       end
     end
 
     f.inputs do
       f.has_many :assets, allow_destroy: true, new_record: true, sortable: :sort_order do |a|
-        a.input :video_url
         a.input :image, as: :attachment, image: (:thumb unless a.object.video? )
       end
     end

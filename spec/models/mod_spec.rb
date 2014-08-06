@@ -129,6 +129,79 @@ RSpec.describe Mod, :type => :model do
       end
     end
 
+    describe '#latest_version' do
+      it 'returns latest mod version' do
+        mv1 = create :mod_version, mod: mod, sort_order: 1
+        mv2 = create :mod_version, mod: mod, sort_order: 2
+        mv3 = create :mod_version, mod: mod, sort_order: 3
+        expect(mod.latest_version).to eq mv3
+      end
+
+      context 'no mod versions' do
+        it 'returns nil' do
+          expect(mod.latest_version).to eq nil
+        end
+      end
+    end
+
+    describe '#second_latest_version' do
+      it 'returns second latest mod version' do
+        mv1 = create :mod_version, mod: mod, sort_order: 1
+        mv2 = create :mod_version, mod: mod, sort_order: 2
+        mv3 = create :mod_version, mod: mod, sort_order: 3
+        expect(mod.second_latest_version).to eq mv2
+      end
+
+      context 'no mod versions' do
+        it 'returns nil' do
+          expect(mod.second_latest_version).to eq nil
+        end
+      end
+    end
+
+    describe '#first_asset' do
+      it 'returns the first asset' do
+        ma1 = create :mod_asset, mod: mod, sort_order: 1
+        ma2 = create :mod_asset, mod: mod, sort_order: 2
+        ma3 = create :mod_asset, mod: mod, sort_order: 3
+
+        expect(mod.first_asset).to eq ma1
+      end
+
+      context 'no mod assets' do
+        it 'returns nil' do
+          expect(mod.first_asset).to eq nil
+        end
+      end
+    end
+
+    describe '#description_html' do
+      it 'should convert the description stuff to HTML stuff' do
+        mod = create :mod, description: 'Check out this cool vid: \n\n https://www.youtube.com/watch?v=p7kpJLC_RzM'
+        expect(mod.description_html).to include 'iframe'
+      end
+    end
+
+    # describe '.preload_latest_and_second_latest_versions' do
+    #   it 'should eager load the latest and second latest mods' do
+    #     m1 = create :mod
+    #     m2 = create :mod
+    #     ma11 = create :mod_asset, mod: m1, sort_order: 1
+    #     ma12 = create :mod_asset, mod: m1, sort_order: 2
+    #     ma13 = create :mod_asset, mod: m1, sort_order: 3
+    #     ma21 = create :mod_asset, mod: m2, sort_order: 1
+    #     ma22 = create :mod_asset, mod: m2, sort_order: 2
+    #     ma23 = create :mod_asset, mod: m2, sort_order: 3
+
+    #     Mod.preload_latest_and_second_latest_versions([m1, m2])
+
+    #     expect(m1.association(:latest_version).loaded?).to eq true
+    #     expect(m1.association(:second_latest_version).loaded?).to eq true
+    #     expect(m2.association(:latest_version).loaded?).to eq true
+    #     expect(m2.association(:second_latest_version).loaded?).to eq true
+    #   end
+    # end
+
     # describe '#game_versions_string' do
     #    it { expect(mod).to respond_to :game_versions_string }
 
@@ -254,17 +327,17 @@ RSpec.describe Mod, :type => :model do
   end
 
   describe 'scopes' do
-    describe '.in_category' do
+    describe '.filter_by_category' do
       it 'should filter results by category' do
         mod1 = create(:mod)
         mod2 = create(:mod, category: mod1.category)
         mod3 = create(:mod)
 
-        Mod.in_category(mod1.category).all.should eq [mod1, mod2]
+        Mod.filter_by_category(mod1.category).all.should eq [mod1, mod2]
       end
     end
 
-    describe '.for_game_version' do
+    describe '.filter_by_game_version' do
       it 'select mods that have a version for a specific version' do
         gv1 = create(:game_version)
         gv2 = create(:game_version)
@@ -285,9 +358,9 @@ RSpec.describe Mod, :type => :model do
         mod3.save!
         mod4.save!
 
-        expect(Mod.for_game_version(gv1)).to eq [mod1, mod3]
-        expect(Mod.for_game_version(gv2)).to eq [mod1, mod2, mod3]
-        expect(Mod.for_game_version(gv3)).to eq [mod2, mod3, mod4]
+        expect(Mod.filter_by_game_version(gv1)).to eq [mod1, mod3]
+        expect(Mod.filter_by_game_version(gv2)).to eq [mod1, mod2, mod3]
+        expect(Mod.filter_by_game_version(gv3)).to eq [mod2, mod3, mod4]
       end
 
       it 'works with this configuration too' do
@@ -301,9 +374,9 @@ RSpec.describe Mod, :type => :model do
         mv2 = create :mod_version, game_versions: [gv2, gv3], mod: m2
         mv3 = create :mod_version, game_versions: [gv3], mod: m3
 
-        expect(Mod.for_game_version(gv1)).to match [m1]
-        expect(Mod.for_game_version(gv2)).to match [m1, m2]
-        expect(Mod.for_game_version(gv3)).to match [m2, m3]
+        expect(Mod.filter_by_game_version(gv1)).to match [m1]
+        expect(Mod.filter_by_game_version(gv2)).to match [m1, m2]
+        expect(Mod.filter_by_game_version(gv3)).to match [m2, m3]
       end
     end
 
@@ -315,13 +388,29 @@ RSpec.describe Mod, :type => :model do
       end
 
       context 'there are some mods' do
-        it 'should return them by #updated_at date' do
+        it 'should return them by versions#released_at date' do
           mod1 = create(:mod)
           mod2 = create(:mod)
           mod3 = create(:mod)
-          mod2.update_attribute :updated_at, Time.now
+          create :mod_version, released_at: 1.day.ago, mod: mod1
+          create :mod_version, released_at: 1.hour.ago, mod: mod2
+          create :mod_version, released_at: 1.week.ago, mod: mod3
 
-          Mod.sort_by_most_recent.all.should eq [mod2, mod3, mod1]
+          Mod.sort_by_most_recent.all.should eq [mod2, mod1, mod3]
+        end
+      end
+
+      context 'multiple versions of the same mod' do
+        it 'shuold return only one copy of each mod in the correct order' do
+          mod1 = create(:mod)
+          mod2 = create(:mod)
+          mod3 = create(:mod)
+          create :mod_version, released_at: 3.days.ago, mod: mod1
+          create :mod_version, released_at: 1.days.ago, mod: mod1
+          create :mod_version, released_at: 2.days.ago, mod: mod2
+          create :mod_version, released_at: 4.days.ago, mod: mod3
+
+          Mod.sort_by_most_recent.all.should eq [mod1, mod2, mod3]
         end
       end
     end
@@ -360,6 +449,115 @@ RSpec.describe Mod, :type => :model do
         mods << create(:mod, downloads_count: 4)
 
         expect(Mod.sort_by_downloads).to match [mods[3], mods[4], mods[2], mods[0], mods[1]]
+      end
+    end
+
+    describe '.filter_by_search_query' do
+      it 'should search on the mod name' do
+        m1 = create(:mod, name: 'This is a potato simulator')
+        m2 = create(:mod, name: 'This is a banana simulator')
+        m3 = create(:mod, name: 'This is a coffee simulator')
+
+        expect(Mod.filter_by_search_query('banana')).to eq [m2]
+      end
+
+      it 'should search with any case' do
+        m1 = create(:mod, name: 'This is a potato simulator')
+        m2 = create(:mod, name: 'This is a BaNaNAnana simulator')
+        m3 = create(:mod, name: 'This is a coffee simulator')
+
+        expect(Mod.filter_by_search_query('BaNaNa')).to eq [m2]
+      end
+
+      it 'should search on the mod summary' do
+        m1 = create(:mod, summary: 'This is a potato simulator')
+        m2 = create(:mod, summary: 'This is a BaNaNAnana simulator')
+        m3 = create(:mod, summary: 'This is a coffee simulator')
+
+        expect(Mod.filter_by_search_query('banana')).to eq [m2]
+      end
+
+      it 'should search on the mod description' do
+        m1 = create(:mod, description: 'This is a potato simulator')
+        m2 = create(:mod, description: 'This is a BaNaNAnana simulator')
+        m3 = create(:mod, description: 'This is a coffee simulator')
+
+        expect(Mod.filter_by_search_query('banana')).to eq [m2]
+      end
+
+      context 'find on name, summary and description' do
+        it 'should return them with name > summary > description precedence' do
+          m1 = create(:mod, summary: 'This is a bananaFace! simulator')
+          m2 = create(:mod, name: 'This is a BaNaNAnana simulator')
+          m3 = create(:mod, description: 'This is a bananarama simulator')
+
+          expect(Mod.filter_by_search_query('banana')).to eq [m2, m1, m3]
+        end
+      end
+
+      context 'using other scopes' do
+        it 'should work when filtering by version' do
+          m1 = create(:mod, name: 'potato 1')
+          m2 = create(:mod, name: 'potato 2')
+          m3 = create(:mod, name: 'banana 2')
+          gv1 = create :game_version
+          gv2 = create :game_version
+          mv1 = create :mod_version, game_versions: [gv1], mod: m1
+          mv2 = create :mod_version, game_versions: [gv2], mod: m2
+          mv3 = create :mod_version, game_versions: [gv2], mod: m3
+
+          expect(Mod.filter_by_game_version(gv2).filter_by_search_query('potato')).to eq [m2]
+        end
+
+        it 'should work when filtering by category' do
+          c1 = create(:category)
+          c2 = create(:category)
+          m1 = create(:mod, name: 'manzana 1', category: c1)
+          m2 = create(:mod, name: 'potato 1', category: c1)
+          m3 = create(:mod, name: 'potato 2', category: c2)
+
+          expect(Mod.filter_by_category(c1).filter_by_search_query('potato')).to eq [m2]
+        end
+
+        context 'sorting alphabetically' do
+          it 'search should take precedence to alphabeticallity' do
+            m1 = create(:mod, name: 'C Potato')
+            m2 = create(:mod, name: 'B Potato')
+            m3 = create(:mod, name: 'A Potato')
+            m4 = create(:mod, summary: 'B Potatou', name: 'B1')
+            m5 = create(:mod, summary: 'A Potatou', name: 'A1')
+            m6 = create(:mod, summary: 'C Potatou', name: 'C1')
+            m7 = create(:mod, description: 'A Potatoeiu', name: 'A2')
+            m8 = create(:mod, description: 'C Potatoeiu', name: 'C2')
+            m9 = create(:mod, description: 'B Potatoeiu', name: 'B2')
+
+            expect(Mod.sort_by_alpha.filter_by_search_query('potato')).to eq [m3, m2, m1, m5, m4, m6, m7, m9, m8]
+          end
+        end
+
+        it 'should work when sorting by recently updated' do
+          m1 = create(:mod, name: 'C Potato', versions: [create(:mod_version, released_at: 9.days.ago)])
+          m2 = create(:mod, name: 'B Potato', versions: [create(:mod_version, released_at: 8.days.ago)])
+          m3 = create(:mod, name: 'A Potato', versions: [create(:mod_version, released_at: 7.days.ago)])
+          m4 = create(:mod, summary: 'B Potatou', versions: [create(:mod_version, released_at: 5.days.ago)])
+          m5 = create(:mod, summary: 'A Potatou', versions: [create(:mod_version, released_at: 4.days.ago)])
+          m6 = create(:mod, summary: 'C Potatou', versions: [create(:mod_version, released_at: 6.days.ago)])
+          m7 = create(:mod, description: 'A Potatoeiu', versions: [create(:mod_version, released_at: 1.days.ago)])
+          m8 = create(:mod, description: 'C Potatoeiu', versions: [create(:mod_version, released_at: 3.days.ago)])
+          m9 = create(:mod, description: 'B Potatoeiu', versions: [create(:mod_version, released_at: 2.days.ago)])
+
+
+
+          expect(Mod.sort_by_most_recent.filter_by_search_query('potato')).to eq [m3, m2, m1, m5, m4, m6, m7, m9, m8]
+        end
+
+        # it 'should work when sorting by comments' do
+
+        # end
+
+        # it 'should work when sorting by most downloaded' do
+
+        # end
       end
     end
   end

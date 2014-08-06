@@ -1,42 +1,39 @@
+- title t 'title.mods.show', name: @mod.name
+
 .mods-show
   .mod
     .mod-thumbnail-container<
-      %a.mod-thumbnail(href='http://placekitten.com/750/750')
-        %img.asset-thumbnail(src='http://placekitten.com/300/300')
+      - @mod.assets.each_with_index do |asset, i|
+        %a.mod-thumbnail{href: asset.image.url(:full), target: "_blank", 'data-thumb' => asset.id, class: ('active' if i == 0)}
+          %img.asset-thumbnail{src: asset.image.url(:medium)}
+      .mod-thumbnail-thumbnails
+        - @mod.assets.each do |asset|
+          %a.mod-thumbnail-thumbnail{href: asset.image.url(:full), target: "_blank"}
+            %img.asset-thumbnail-thumbnail{src: asset.image.url(:thumb), 'data-thumb-of' => asset.id}
     .mod-info-container
-      %h2.mod-title Super mod name
+      %h2.mod-title= @mod.name
       .mod-subtitle
         on
-        %a{href: '#'} Vehicles
-      %table.mod-data
-        %tbody
-          %tr.mod-data-row
-            %td.mod-data-row-name Game version
-            %td.mod-data-row-value v1.3
-            %td.mod-data-row-name Author
-            %td.mod-data-row-value Zequez
-          %tr.mod-data-row
-            %td.mod-data-row-name Source code
-            %td.mod-data-row-value Github URL
-            %td.mod-data-row-name Tags
-            %td.mod-data-row-value List, of, tags
-          %tr.mod-data-row
-            %td.mod-data-row-name First version
-            %td.mod-data-row-value v0.9
-            %td.mod-data-row-name Last version
-            %td.mod-data-row-value v1.3
-          %tr.mod-data-row
-            %td.mod-data-row-name First release
-            %td.mod-data-row-value 13 August 2013
-            %td.mod-data-row-name Last release
-            %td.mod-data-row-value 17 July 2014
-          %tr.mod-data-row
-            %td.mod-data-row-name License
-            %td.mod-data-row-value GPLv2
-            %td.mod-data-row-name Official forum post
-            %td.mod-data-row-value 42 comments
-          %tr.mod-data-row
-            %td.mod-data-row-name Official site
-            %td.mod-data-row-value(colspan=3) github.com/zequez/factorio-super-mod-name
+        = link_to @mod.category.name, [@mod.category, :mods]
+      = render partial: 'mod_data_table'
+      = render partial: 'download_button', locals: { mod: @mod }
     .mod-description
-      = Forgery(:lorem_ipsum).words(20)
+      %h3 Description
+      = @mod.description_html
+    .mod-downloads#downloads
+      %h3 Downloads
+      %table.mod-downloads-table
+        %thead
+          %tr
+            %th Mod version
+            %th Factorio version
+            %th File download
+            %th Release date
+        %tbody
+          - @mod.versions.reverse.each do |version|
+            - version.files.each do |file|
+              %tr
+                %td= "#{version.number} #{file.name}"
+                %td= version.game_versions_string
+                %td= link_to "#{file.attachment_file_name} (#{number_to_human_size(file.attachment_file_size)})", file.attachment.url
+                %td= version.released_at.to_s(:rfc822)

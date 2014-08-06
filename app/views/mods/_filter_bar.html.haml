@@ -1,0 +1,23 @@
+.filter-bar
+  .filter-bar-item
+    .version-filter
+      %select.input.version-filter-input
+        %option{value: version_filter_url(nil)} Any Factorio version
+        - @game_versions.each do |version|
+          = version_filter_option version
+          -#%option{value: version_filter_url(version)}
+          -#  For Factorio
+          -#  = "v#{version.number}"
+  .filter-bar-item
+    %h2.categories-filter-title Categories
+    %ul.categories-filter
+      %li.category-filter
+        = category_link nil do
+          %i.fa.fa-cog
+          All (#{all_categories_mods_count})
+      - @categories.each do |category|
+        %li.category-filter
+          = category_link category do
+            %i{class: category.icon_class}
+            = category.name
+            = "(#{category.mods_count})"

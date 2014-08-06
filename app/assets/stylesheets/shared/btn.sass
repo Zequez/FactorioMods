@@ -26,14 +26,14 @@
       color: $color-white
       padding: 0px 0.5em
     &-versions
-      +hidden
+      display: none
       +absolute(100%, false, false, 0px)
       width: 100%
       border-radius: 0px 0px 2px 2px
       background: $color-washed-orange
       +font-x-smaller
       a
-        +block
+        display: block
       a:hover
         background: rgba(#000, 0.1)
 
@@ -41,7 +41,7 @@
       border-bottom-left-radius: 0px
       border-bottom-right-radius: 0px
       .btn-download-versions
-        +block
+        display: block
     // Highlight the first version when hovering the main download link, because is the same link
     > a:hover ~ .btn-download-versions li:first-child a
       background: rgba(#000, 0.1)

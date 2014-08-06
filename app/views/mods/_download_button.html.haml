@@ -1,0 +1,16 @@
+.mod-link.btn.btn-download
+  %a{href: mod.latest_version.files.first.attachment.url}
+    = icon 'download'
+    Download
+  %ul.btn-download-versions
+    - mod.versions.last(2).reverse.each do |mod_version|
+      - mod_version.files.each do |file|
+        %li
+          %a{href: file.attachment.url}
+            %span(title='Mod version')= mod_version.number
+            %span(title='Mod file name')= file.name
+            = icon 'cog'
+            %span(title='Factorio version')= mod_version.game_versions_string
+            -#= "v#{file.mod_version.game_versions_string}"
+    %li
+      = link_to 'More versions...', category_mod_path(mod.category, mod, anchor: 'download')

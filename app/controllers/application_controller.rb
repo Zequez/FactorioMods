@@ -10,4 +10,12 @@ class ApplicationController < ActionController::Base
   def access_denied(exception = nil)
     render text: '403 Access denied', status: 403
   end
+
+  ### Helpers
+  ###############
+
+  def mod_path(mod)
+    polymorphic_path([mod.category, mod])
+  end
+  helper_method :mod_path
 end

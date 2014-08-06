@@ -1,0 +1,2 @@
+//= require zepto
+//= require turbolinks

@@ -1,10 +1,11 @@
 $filter-size: 3
 $mods-list-size: 12-$filter-size
 
-
 .filter-bar
+  @extend %content-block
   +span($filter-size of 12)
   padding: space() 0
+
   border-radius: $border-radius
   background: $color-white
 
@@ -35,11 +36,10 @@ $mods-list-size: 12-$filter-size
       // white-space: nowrap
       // overflow: hidden
 
-    &.active, &:hover
-      background: $color-washed-orange
-
-      +white-text-shadow
-      a
+    a
+      &.active, &:hover
+        background: $color-washed-orange
+        +white-text-shadow
         color: $color-white
 
     &.active
@@ -49,15 +49,38 @@ $mods-list-size: 12-$filter-size
         +absolute(50%, 0)
         +triangle(rhythm(1), right, $color-washed-orange)
 
+.mods-filters-list
+  @extend %content-block
+
+  +span($mods-list-size omega of 12)
+  margin-bottom: rhythm()
+  line-height: rhythm(2)
+  background: $color-teal
+  +adjust-leading-to(2)
+  &-item
+    float: left
+    margin: 0 space()
+    &-title
+      font-weight: bold
+    &-value
+
+    &-remove:before
+      color: $color-washed-orange
+      content: '✖'
+
+.info-box
+  +span($mods-list-size omega of 12)
+  padding: 0 space()
+  margin-bottom: rhythm()
 
 .mod
+  @extend %content-block
   margin-bottom: rhythm()
-  background: $color-white
   &-thumbnail
     @extend %thumbnail-hover
     .asset-thumbnail
       display: block
-      max-width: 100%
+      width: 100%
 
   &-title
 
@@ -66,7 +89,6 @@ $mods-list-size: 12-$filter-size
 
   .mod
     +pie-clearfix
-    border-radius: $border-radius
 
     // .mod-thumbnail .asset-thumbnail
     //   border-radius: 5px 0px 0px 5px
@@ -90,8 +112,6 @@ $mods-list-size: 12-$filter-size
     &-info-container
       +span(5 of $mods-list-size wider no-gutter)
       padding: space()
-
-
 
     &-subtitle
       +font-smaller
@@ -126,14 +146,34 @@ $mods-list-size: 12-$filter-size
 .mods-show
   .mod
     +span(full)
-    border-radius: $border-radius
+    h3
+      font-weight: bold
 
+    //-- Thumbnail --//
     &-thumbnail-container
       +span(4 of 12 no-gutter)
       padding: space()
         right: 0
 
+      .mod-thumbnail
+        display: none
+        &.active
+          display: block
 
+      .mod-thumbnail-thumbnails
+        margin-top: space()
+
+      .mod-thumbnail-thumbnail
+        float: left
+        width: 20%
+
+      .asset-thumbnail-thumbnail
+        width: 100%
+        padding: 2px
+        +box-shadow(0 1px 2px rgba(#000,0.2))
+
+
+    //-- Info container --//
     &-info-container
       +span(8 omega of 12 wide)
       padding: space()
@@ -160,6 +200,33 @@ $mods-list-size: 12-$filter-size
         &-value
           // +inline-block
 
+    .btn-download
+      float: right
+      margin-top: rhythm()
+      +font-x-larger
+
+
+    //-- Downloads table --//
+    &-downloads
+      +span(full)
+      // +push(2 of 12)
+      // +span(8 of 12 wide)
+      padding: space()
+      &-table
+        width: 100%
+        thead th
+          font-weight: bold
+        tbody tr
+          border-top: rgba($color-black, 0.1) solid 1px
+          line-height: $base-line-height - 1px
+
+    //-- Description --//
     &-description
       +span(full)
       padding: space()
+      p, .p
+        margin-bottom: space()
+        &:last-child
+          margin-bottom: 0
+      .video
+        line-height: 0
