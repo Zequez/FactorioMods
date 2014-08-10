@@ -5,21 +5,20 @@ class ModsController < ApplicationController
     @mods = @mods.includes([:first_asset, :category, :author, versions: :files])
 
     if params[:category_id]
-      begin
-        @category = Category.find(params[:category_id])
-      rescue ActiveRecord::RecordNotFound
-        begin
-          @mod = Mod.find(params[:category_id])
+      @category = Category.find_by_slug params[:category_id]
+      if @category
+        @mods = @mods.filter_by_category @category
+      else
+        @mod = Mod.find_by_slug(params[:category_id])
+        if @mod
           redirect_to category_mod_url(@mod.category, @mod), status: :moved_permanently
-        rescue ActiveRecord::RecordNotFound
+        else
           not_found
         end
       end
-
-      @mods = @mods.filter_by_category @category
     end
 
-    @sort = params[:sort]
+    @sort = params[:sort].to_sym
     case @sort
     when :alpha
       @mods = @mods.sort_by_alpha
@@ -27,8 +26,10 @@ class ModsController < ApplicationController
       @mods = @mods.sort_by_forum_comments
     when 'downloads'
       @mods = @mods.sort_by_downloads
-    else
+    when :most_recent
       @mods = @mods.sort_by_most_recent
+    else
+      @mods = @mods.sort_by_alpha
     end
 
     unless params[:v].blank?
@@ -53,10 +54,38 @@ class ModsController < ApplicationController
   end
 
   def show
-    begin
-      @mod = Mod.includes(versions: :files).find(params[:id])
-    rescue ActiveRecord::RecordNotFound
+    @mod = Mod.includes(versions: :files).find_by_slug(params[:id])
+    if @mod
+      @category = Category.find_by_slug params[:category_id]
+      if @category and @mod.category == @category
+        # Do nothing, everything is alright
+      else
+        redirect_to category_mod_url(@mod.category, @mod), status: :moved_permanently
+      end
+    else
       not_found
     end
   end
+
+
+  private
+
+  # def category
+  #   @category ||= if params[:category_id]
+  #     begin
+  #       @category = Category.find(params[:category_id])
+  #     rescue ActiveRecord::RecordNotFound
+  #       begin
+  #         @mod = Mod.find(params[:category_id])
+  #         redirect_to category_mod_url(@mod.category, @mod), status: :moved_permanently
+  #       rescue ActiveRecord::RecordNotFound
+  #         not_found
+  #       end
+  #     end
+
+  #     @mods = @mods.filter_by_category @category
+  #   end
+  # else
+  #   nil
+  # end
 end

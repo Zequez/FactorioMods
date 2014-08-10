@@ -3,7 +3,7 @@ class ModAsset < ActiveRecord::Base
   belongs_to :mod_version
   belongs_to :mod
 
-  has_attached_file :image, styles: { medium: '300x300>', thumb: '150x150>', full: '1920x1080>' }
+  has_attached_file :image, styles: { medium: '300x300^', thumb: '150x150#', full: '1920x1080>' }
   validates_attachment_content_type :image, :content_type => /\Aimage\/.*\Z/
 
   ### Scopes

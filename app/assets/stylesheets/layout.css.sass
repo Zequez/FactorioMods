@@ -9,7 +9,8 @@ $gutterSize: ($base-line-height) / ($base-line-height*40.7 / 12) // One rhythm, 
 $susy: (gutters: $gutterSize*1.25)// Gutter size is wrong because it's calculated with percentage//, math: static, column-width: rhythm(1)*3)
 
 .container
-  +container(12 $base-line-height*40.7 show overlay)
+  // +container(12 $base-line-height*40.7 show overlay) // Debug
+  +container(12 $base-line-height*40.7)
 
 .content
   +span(full)

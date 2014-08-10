@@ -22,9 +22,13 @@
 .mods-index
   - @mods.each do |mod|
     .mod
-      .mod-thumbnail-container<
-        %a.mod-thumbnail{href: mod.first_asset.image.url(:full)}
-          %img.asset-thumbnail{src: mod.first_asset.image.url(:thumb), width: '100%'}
+      .mod-thumbnail<
+        - if mod.first_asset
+          %a.mod-thumbnail-link{href: mod.first_asset.image.url(:full)}
+            %img.mod-thumbnail-img{src: mod.first_asset.image.url(:thumb)}
+        - else
+          .mod-thumbnail-link
+            %img.mod-thumbnail-img{src: mod_asset_missing_image(:thumb)}
       .mod-info-container
         %h2.mod-title
           = link_to mod.name, mod, class: 'highlight-query'

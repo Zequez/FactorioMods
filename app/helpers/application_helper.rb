@@ -11,6 +11,14 @@ module ApplicationHelper
     @categories.map(&:mods_count).reduce(&:+)
   end
 
+  ### Misc helpers:
+  ####################
+
+  def mod_asset_missing_image(size)
+    @empty_asset ||= ModAsset.new
+    @empty_asset.image.url(size)
+  end
+
   ### Content helpers:
   ####################
 

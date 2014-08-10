@@ -4,13 +4,13 @@ Devise.setup do |config|
   # The secret key used by Devise. Devise uses this key to generate
   # random tokens. Changing this key will render invalid all existing
   # confirmation, reset password and unlock tokens in the database.
-  # config.secret_key = '02a6a06c29196c9cba0f8f914f160d2da2561b23d684d0d1d20af682bcdf62e386890f379e432b1e27eb8ec704c7591c955885c7c2c0e9dc05b7c22b004b228b'
+  config.secret_key = '02a6a06c29196c9cba0f8f914f160d2da2561b23d684d0d1d20af682bcdf62e386890f379e432b1e27eb8ec704c7591c955885c7c2c0e9dc05b7c22b004b228b'
 
   # ==> Mailer Configuration
   # Configure the e-mail address which will be shown in Devise::Mailer,
   # note that it will be overwritten if you use your own mailer class
   # with default "from" parameter.
-  config.mailer_sender = 'please-change-me-at-config-initializers-devise@example.com'
+  config.mailer_sender = 'no-reply@factoriomods.com'
 
   # Configure the class responsible to send e-mails.
   # config.mailer = 'Devise::Mailer'
@@ -39,7 +39,7 @@ Devise.setup do |config|
   # config.request_keys = []
 
   # Configure which authentication keys should be case-insensitive.
-  # These keys will be downcased upon creating or modifying a user and when used
+  # These keys will be downcased upon creating or modifying a user and when useddd
   # to authenticate or find a user. Default is :email.
   config.case_insensitive_keys = [ :email ]
 

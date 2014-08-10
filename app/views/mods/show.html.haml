@@ -2,14 +2,30 @@
 
 .mods-show
   .mod
-    .mod-thumbnail-container<
-      - @mod.assets.each_with_index do |asset, i|
-        %a.mod-thumbnail{href: asset.image.url(:full), target: "_blank", 'data-thumb' => asset.id, class: ('active' if i == 0)}
-          %img.asset-thumbnail{src: asset.image.url(:medium)}
-      .mod-thumbnail-thumbnails
+    .mod-images<
+      %ul.mod-medium-images
+        - if @mod.assets.empty?
+          .mod-medium-image.active
+            .mod-medium-image-link
+              %img.mod-medium-image-img{src: mod_asset_missing_image(:medium)}
+        - @mod.assets.each_with_index do |asset, i|
+          %li.mod-medium-image{'data-thumb' => asset.id, class: ('active' if i == 0)}
+            %a.mod-medium-image-link{href: asset.image.url(:full), target: '_blank'}
+              %img.mod-medium-image-img{src: asset.image.url(:medium)}
+      %ul.mod-thumb-images{class: ('many-thumbs' if @mod.assets.size > 3)}
         - @mod.assets.each do |asset|
-          %a.mod-thumbnail-thumbnail{href: asset.image.url(:full), target: "_blank"}
-            %img.asset-thumbnail-thumbnail{src: asset.image.url(:thumb), 'data-thumb-of' => asset.id}
+          %li.mod-thumb-image{'data-thumb-of' => asset.id}<>
+            %a.mod-thumb-image-link{href: asset.image.url(:full), target: "_blank"}
+              %img.mod-thumb-image-img{src: asset.image.url(:thumb)}
+
+    / .mod-thumbnail-container<
+    /   - @mod.assets.each_with_index do |asset, i|
+    /     %a.mod-thumbnail{href: asset.image.url(:full), target: "_blank", 'data-thumb' => asset.id, class: ('active' if i == 0)}
+    /       %img.asset-thumbnail{src: asset.image.url(:medium)}
+    /   .mod-thumbnail-thumbnails
+    /     - @mod.assets.each do |asset|
+    /       %a.mod-thumbnail-thumbnail{href: asset.image.url(:full), target: "_blank"}
+    /         %img.asset-thumbnail-thumbnail{src: asset.image.url(:thumb), 'data-thumb-of' => asset.id}
     .mod-info-container
       %h2.mod-title= @mod.name
       .mod-subtitle

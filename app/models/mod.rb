@@ -20,7 +20,7 @@ class Mod < ActiveRecord::Base
   has_many :visits
   has_many :files, class_name: 'ModFile'
   has_many :versions, class_name: 'ModVersion'
-  has_many :assets, class_name: 'ModAsset'
+  has_many :assets, ->{ order 'sort_order asc' }, class_name: 'ModAsset'
   has_many :tags
   has_many :favorites
 
@@ -110,6 +110,20 @@ class Mod < ActiveRecord::Base
 
   def github_path
     github_url.match('[^/]+/[^/]+\Z').to_s
+  end
+
+  def latest_mod_file_and_version(number)
+    result = []
+    versions.last(number).reverse.each do |version|
+      version.files.each do |file|
+        if block_given?
+          yield version, file
+        else
+          result << [version, file]
+        end
+      end
+    end
+    result
   end
 
   private
