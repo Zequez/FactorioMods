@@ -85,8 +85,6 @@
     @if $side == left
       border-right-color: $color
 
-
-
 @function space($font-size: false, $multi: 0.5)
   @if $font-size
     @return rhythm(1, $font-size)*$multi
@@ -112,6 +110,3 @@
 @mixin nowrap
   white-space: nowrap
 
-@mixin content-icon($icon-name)
-  content: map-get($icons, $icon-name)
-  font-family: FontAwesome

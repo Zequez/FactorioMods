@@ -1,11 +1,12 @@
 // .btn-download
 //   +font-x-larger // I have to do it here so it doesn't override the .btn line-height
 
-.btn
+.btn, [type=submit]
   // $color-dark-orange: darken($color-washed-orange, 5%)
   // $color-light-orange: lighten($color-washed-orange, 5%)
   +inline-block
   padding: 0px 0.5em
+  border: none
   border-radius: 2px
   background: $color-washed-orange
   +light-background-gradient
@@ -19,29 +20,29 @@
   // line-height: rhythm(2, $font-x-larger) - 0.1em // From the borders
   cursor: pointer
 
-  &-download
-    +relative
-    padding: 0px
+.btn-download
+  +relative
+  padding: 0px
+  a
+    color: $color-white
+    padding: 0px 0.5em
+  &-versions
+    display: none
+    +absolute(100%, false, false, 0px)
+    width: 100%
+    border-radius: 0px 0px 2px 2px
+    background: $color-washed-orange
+    +font-x-smaller
     a
-      color: $color-white
-      padding: 0px 0.5em
-    &-versions
-      display: none
-      +absolute(100%, false, false, 0px)
-      width: 100%
-      border-radius: 0px 0px 2px 2px
-      background: $color-washed-orange
-      +font-x-smaller
-      a
-        display: block
-      a:hover
-        background: rgba(#000, 0.1)
-
-    &:hover
-      border-bottom-left-radius: 0px
-      border-bottom-right-radius: 0px
-      .btn-download-versions
-        display: block
-    // Highlight the first version when hovering the main download link, because is the same link
-    > a:hover ~ .btn-download-versions li:first-child a
+      display: block
+    a:hover
       background: rgba(#000, 0.1)
+
+  &:hover
+    border-bottom-left-radius: 0px
+    border-bottom-right-radius: 0px
+    .btn-download-versions
+      display: block
+  // Highlight the first version when hovering the main download link, because is the same link
+  > a:hover ~ .btn-download-versions li:first-child a
+    background: rgba(#000, 0.1)

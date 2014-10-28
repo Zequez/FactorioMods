@@ -3,12 +3,18 @@ class ApplicationController < ActionController::Base
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
 
+  rescue_from CanCan::AccessDenied, with: :authentication_error
+
   def not_found
     render 'errors/404', status: 404
   end
 
   def access_denied(exception = nil)
     render text: '403 Access denied', status: 403
+  end
+
+  def authentication_error(exception = nil)
+    render text: '401 Authentication error, you need to log in', status: 401
   end
 
   ### Helpers

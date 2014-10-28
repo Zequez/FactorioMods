@@ -12,7 +12,9 @@
 //
 // require jquery
 // require jquery_ujs
-//= require zepto
+// require zepto
+// require jquery-ui/slider
+//= require cocoon
 //= require turbolinks
 //= require_tree ./lib
 //= require_tree ./shared

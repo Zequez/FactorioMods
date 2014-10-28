@@ -1,0 +1,24 @@
+.mods-edit
+  %h2 Create new mod
+  = semantic_form_for @mod do |f|
+    = f.inputs do
+      = f.input :name
+      = f.input :category
+      = f.input :github
+      = f.input :official_url
+      = f.input :forum_post_url
+      / = f.input :forum_subforum_url
+      = f.input :description, hint: "Markdown"
+      = f.input :summary
+      = f.input :media_links_string, as: :text, hint: "URLs for pictures or gifs. Domains allowed: imgur.com, gfycat.com"
+      %li.nested-form.mod-versions
+        = f.semantic_fields_for :versions do |ff|
+          = render 'version_fields', f: ff
+        .nested-form-links.mod-versions-links
+          = link_to_add_association "Add version", f, :versions
+
+    // Nested mod versions
+    // Nested mod files
+    // Nested mod files
+    = f.actions do
+      = f.action :submit

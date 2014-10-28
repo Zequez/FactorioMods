@@ -1,0 +1,6 @@
+.nested-fields.mod-version-file
+  = f.inputs name: "File" do
+    = f.input :attachment
+    = f.input :name, placeholder: "File name (only if multiple files)"
+    %li.nested-fields-remove
+      = link_to_remove_association "&times;".html_safe, f

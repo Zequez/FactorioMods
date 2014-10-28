@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140804021455) do
+ActiveRecord::Schema.define(version: 20141003142707) do
 
   create_table "active_admin_comments", force: true do |t|
     t.string   "namespace"
@@ -57,6 +57,25 @@ ActiveRecord::Schema.define(version: 20140804021455) do
 
   add_index "favorites", ["mod_id"], name: "index_favorites_on_mod_id"
   add_index "favorites", ["user_id"], name: "index_favorites_on_user_id"
+
+  create_table "forum_posts", force: true do |t|
+    t.integer  "comments_count", default: 0, null: false
+    t.integer  "views_count",    default: 0, null: false
+    t.datetime "published_at"
+    t.datetime "last_post_at"
+    t.string   "url"
+    t.string   "title"
+    t.string   "author_name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.datetime "edited_at"
+    t.integer  "mod_id"
+    t.integer  "post_number"
+    t.boolean  "title_changed"
+  end
+
+  add_index "forum_posts", ["mod_id"], name: "index_forum_posts_on_mod_id"
+  add_index "forum_posts", ["post_number"], name: "index_forum_posts_on_post_number"
 
   create_table "game_versions", force: true do |t|
     t.string   "number"
@@ -133,8 +152,9 @@ ActiveRecord::Schema.define(version: 20140804021455) do
     t.date     "released_at"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "sort_order",           default: 0, null: false
+    t.integer  "sort_order",                   default: 0, null: false
     t.string   "game_versions_string"
+    t.string   "precise_game_versions_string"
   end
 
   add_index "mod_versions", ["mod_id"], name: "index_mod_versions_on_mod_id"
@@ -163,10 +183,15 @@ ActiveRecord::Schema.define(version: 20140804021455) do
     t.string   "summary"
     t.string   "game_versions_string"
     t.text     "description_html"
+    t.integer  "forum_post_id"
+    t.string   "forum_subforum_url"
+    t.string   "forum_url"
+    t.text     "media_links"
   end
 
   add_index "mods", ["author_id"], name: "index_mods_on_author_id"
   add_index "mods", ["category_id"], name: "index_mods_on_category_id"
+  add_index "mods", ["forum_post_id"], name: "index_mods_on_forum_post_id"
 
   create_table "mods_tags", force: true do |t|
     t.integer  "mod_id"

@@ -16,10 +16,12 @@ RSpec.describe Mod, :type => :model do
     it { should respond_to :first_version_date }
     it { should respond_to :last_version_date }
 
+    it { should respond_to :media_links }
+
     # URLs
     it { should respond_to :license_url }
     it { should respond_to :official_url }
-    it { should respond_to :forum_post_url }
+    it { should respond_to :forum_url }
 
     # External counters
     it { should respond_to :forum_comments_count }
@@ -182,149 +184,76 @@ RSpec.describe Mod, :type => :model do
       end
     end
 
-    # describe '.preload_latest_and_second_latest_versions' do
-    #   it 'should eager load the latest and second latest mods' do
-    #     m1 = create :mod
-    #     m2 = create :mod
-    #     ma11 = create :mod_asset, mod: m1, sort_order: 1
-    #     ma12 = create :mod_asset, mod: m1, sort_order: 2
-    #     ma13 = create :mod_asset, mod: m1, sort_order: 3
-    #     ma21 = create :mod_asset, mod: m2, sort_order: 1
-    #     ma22 = create :mod_asset, mod: m2, sort_order: 2
-    #     ma23 = create :mod_asset, mod: m2, sort_order: 3
-
-    #     Mod.preload_latest_and_second_latest_versions([m1, m2])
-
-    #     expect(m1.association(:latest_version).loaded?).to eq true
-    #     expect(m1.association(:second_latest_version).loaded?).to eq true
-    #     expect(m2.association(:latest_version).loaded?).to eq true
-    #     expect(m2.association(:second_latest_version).loaded?).to eq true
-    #   end
-    # end
-
-    # describe '#game_versions_string' do
-    #    it { expect(mod).to respond_to :game_versions_string }
-
-    #   context 'on saving' do
-    #     it 'should associate the correct GameVersion based on the string' do
-    #       g1 = create :game_version, number: '1.2.3'
-    #       g2 = create :game_version, number: '1.2.4'
-    #       g3 = create :game_version, number: '1.2.5'
-    #       g4 = create :game_version, number: '1.1.1'
-    #       g5 = create :game_version, number: '1.4.3'
-
-    #       mod.game_versions_string = '1.2.3, 1.2.4, 1.1.1'
-    #       mod.save!
-    #       expect(mod.game_versions).to eq [g1, g2, g4]
-    #     end
-
-    #     it 'should work with whitespace too' do
-    #       g1 = create :game_version, number: '1.2.3'
-    #       g2 = create :game_version, number: '1.2.4'
-    #       g3 = create :game_version, number: '1.2.5'
-    #       g4 = create :game_version, number: '1.1.1'
-    #       g5 = create :game_version, number: '1.4.3'
-
-    #       mod.game_versions_string = '1.2.3 1.2.4 1.1.1'
-    #       mod.save!
-    #       expect(mod.game_versions).to eq [g1, g2, g4]
-    #     end
-
-    #     it 'should associate the game versions that belong to a group' do
-    #       group = create :game_version_group, number: '1.2.x'
-    #       create :game_version, number: '1.1.1'
-    #       g1 = create :game_version, number: '1.2.0', group: group
-    #       g2 = create :game_version, number: '1.2.1', group: group
-    #       g3 = create :game_version, number: '1.2.3', group: group
-
-    #       mod.game_versions_string = '1.2.x'
-    #       mod.save!
-    #       expect(mod.game_versions).to eq [g1, g2, g3]
-    #     end
-    #   end
-
-    #   context 'on loading' do
-    #     it 'should return a list of GameVersions as strings' do
-    #       create :game_version, number:  '1.2.3', sort_order: 1
-    #       create :game_version, number:  '1.2.4', sort_order: 2
-    #       create :game_version, number:  '1.2.5', sort_order: 3
-
-    #       mod.game_versions_string = '1.2.5, 1.2.3    1.2.4'
-    #       mod.save!
-    #       mod = Mod.first
-    #       expect(mod.game_versions_string).to eq '1.2.5, 1.2.3, 1.2.4'
-    #     end
-
-    #     it 'should return a group if its composed from the whole group' do
-    #       group = create :game_version_group, number: '1.2.x'
-    #       create :game_version, number: '1.1.1'
-    #       g1 = create :game_version, number: '1.2.0', group: group
-    #       g2 = create :game_version, number: '1.2.1', group: group
-    #       g3 = create :game_version, number: '1.2.3', group: group
-
-    #       mod.game_versions_string = '1.2.x'
-    #       mod.save!
-    #       expect(mod.game_versions_string).to eq '1.2.x'
-    #     end
-    #   end
-
-    #   context 'validation' do
-    #     it 'should add an error when the game versions cannot be found' do
-    #       g1 = create :game_version, number: '1.2.3'
-    #       mod.game_versions_string = '1.2.3, 4.3.2'
-    #       expect(mod).to be_invalid
-    #       expect(mod.errors).to have_key :game_versions_string
-    #     end
-    #   end
-    # end
-
-    # describe '#game_versions' do
-    #   it { expect(mod).to respond_to :game_versions }
-      # it 'should be of type GameVersion' do
-      #   expect(mod.game_versions.build).to be_kind_of GameVersion
-      # end
-      # it 'should be able to save and load' do
-      #   create :game_version
-      #   create :game_version
-      #   create :game_version
-      #   game_versions = GameVersion.all
-      #   mod.game_versions = game_versions
-      #   mod.save!
-      #   mod = Mod.first
-      #   expect(mod.game_versions.size).to eq 3
-      #   expect(mod.game_versions).to eq game_versions
-      # end
-    # end
-
-  #   describe '#game_version_start' do
-  #     it { should respond_to :game_version_start }
-  #     it 'should be kind of GameVersion' do
-  #       mod.build_game_version_start
-  #       expect(mod.build_game_version_start).to be_kind_of GameVersion
-  #     end
-
-  #     it 'should read it from the lowest mod version before saving' do
-  #       mv1 = build :mod_version, sort_order: 1
-  #       mv2 = build :mod_version, sort_order: 2
-  #       mv3 = build :mod_version, sort_order: 3
-  #       mv4 = build :mod_version, sort_order: 4
-
-  #       mod.versions = [mv1, mv2, mv3, mv4]
-  #       mod.save!
-
-  #       mod.game_version_start.should eq mv1.game_version_start
-  #       mod.game_version_end.should eq mv4.game_version_end
-  #     end
-  #   end
-
-  #   describe '#game_version_end' do
-  #     it { should respond_to :game_version_end }
-  #     it 'should be kind of GameVersion' do
-  #       mod.build_game_version_end
-  #       expect(mod.build_game_version_end).to be_kind_of GameVersion
-  #     end
-  #   end
+    describe '#forum_post' do
+      it { expect(mod).to respond_to :forum_post }
+      it { expect(mod.build_forum_post).to be_kind_of ForumPost }
+    end
   end
+
+  describe '#media_links_string' do
+    it 'should be valid with imgur' do
+      mod = build :mod, media_links_string: 'http://imgur.com/gallery/qLpt6gI'
+      expect(mod).to be_valid
+    end
+
+    it 'should be valid gfycat' do
+      mod = build :mod, media_links_string: 'http://gfycat.com/EthicalZanyHuman'
+      expect(mod).to be_valid
+    end
+
+    it 'should not be valid with a random domain' do
+      mod = build :mod, media_links_string: 'http://potatosalad.com'
+      expect(mod).to be_invalid
+    end
+
+    it 'should allow 10 images' do
+      mod = build :mod, media_links_string: (['http://imgur.com/gallery/qLpt6gI']*10).join("\n")
+      expect(mod).to be_valid
+    end
+
+    it 'should not allow 11 images' do
+      mod = build :mod, media_links_string: (['http://imgur.com/gallery/qLpt6gI']*11).join("\n")
+      expect(mod).to be_invalid
+    end
+
+    it "should return the same value if it doesn't exist" do
+      mod = build :mod, media_links_string: "http://imgur.com/gallery/qLpt6gI\nhttp://potatosalad.com\nhttp://gfycat.com/EthicalZanyHuman"
+      mod.media_links_string.should eq "http://imgur.com/gallery/qLpt6gI\nhttp://potatosalad.com\nhttp://gfycat.com/EthicalZanyHuman"
+    end
+
+    it "should return the same as #media_links#to_string if it doesn't exist" do
+      mod = build :mod, media_links_string: "http://imgur.com/gallery/qLpt6gI\nhttp://gfycat.com/EthicalZanyHuman"
+      mod.save!
+      mod = Mod.first
+      mod.media_links_string.should eq "http://imgur.com/gallery/qLpt6gI\nhttp://gfycat.com/EthicalZanyHuman"
+    end
+  end
+
+  describe '#media_links' do
+    it 'should load the #media_links correctly before save' do
+      mod = build :mod, media_links_string: "http://imgur.com/gallery/qLpt6gI\nhttp://gfycat.com/EthicalZanyHuman"
+      expect(mod.media_links.size).to eq 2
+      expect(mod.media_links[0]).to be_kind_of MediaLinks::Imgur
+      expect(mod.media_links[1]).to be_kind_of MediaLinks::Gfycat
+    end
+
+    it 'should load the #media_links correctly after save' do
+      mod = build :mod, media_links_string: "http://imgur.com/gallery/qLpt6gI\nhttp://gfycat.com/EthicalZanyHuman"
+      mod.save!
+      mod = Mod.first
+      expect(mod.media_links.size).to eq 2
+      expect(mod.media_links[0]).to be_kind_of MediaLinks::Imgur
+      expect(mod.media_links[1]).to be_kind_of MediaLinks::Gfycat
+    end
+  end
+
+  # describe '#media_links_thumbnails' do
+
+  # end
+
+  # describe '#media_links_tag' do
+
+  # end
 
   describe 'scopes' do
     describe '.filter_by_category' do

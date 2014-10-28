@@ -26,6 +26,7 @@ FactoryGirl.define do
     # association :game_version_start, factory: :game_version
     # association :game_version_end, factory: :game_version
     # game_version '1.2.3'
+    precise_game_versions_string '1.3.5'
   end
 
   factory :game_version do

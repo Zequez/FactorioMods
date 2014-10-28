@@ -1,0 +1,122 @@
+.mods-show
+  .mod
+    @extend %content-block
+    +span(full)
+
+    h3
+      font-weight: bold
+
+    //-- Images --//
+    &-images
+      +span(4 of 12 no-gutter)
+      padding: space()
+        right: 0
+
+    &-no-image
+
+
+    &-medium-images
+      width: 100%
+      height: rhythm(12)
+      margin-bottom: space()
+
+    &-medium-image
+      @extend %pretty-border
+      display: none
+      height: 100%
+      width: 100%
+      overflow: hidden
+      &.active
+        display: block
+      &-link
+        //@extend %thumbnail-hover
+        display: block
+        width: 100%
+        height: 100%
+        overflow: hidden
+      &-img
+        min-height: 100%
+        min-width: 100%
+
+    &-thumb-images
+      text-align: center
+
+      &.many-thumbs
+        .mod-thumb-image
+          width: rhythm(2)
+          height: rhythm(2)
+
+    &-thumb-image
+      @extend %pretty-border
+      padding: 2px
+      display: inline-block
+      width: rhythm(3)
+      height: rhythm(3)
+      margin: 0 space()/2 space() space()/2
+      &-link
+        display: block
+        width: 100%
+        height: 100%
+        overflow: hidden
+      &-img
+        width: 100%
+
+
+    //-- Info container --//
+    &-info-container
+      +span(8 omega of 12 wide)
+      padding: space()
+
+    &-title
+      +font-xx-larger
+      font-weight: bold
+
+    &-subtitle
+
+    &-data
+      width: 100%
+      &-row
+        // &:nth-child(odd)
+        //   +span(4 of 8)
+        // &:nth-child(even)
+        //   +span(4 omega of 8 no-gutter)
+        &-name
+          // +inline-block
+          font-weight: bold
+          &:after
+            content: ':'
+
+        &-value
+          // +inline-block
+
+    .btn-download
+      float: right
+      margin-top: rhythm(1, $font-x-larger)
+      +font-x-larger
+
+
+    //-- Downloads table --//
+    &-downloads
+      +span(full)
+      // +push(2 of 12)
+      // +span(8 of 12 wide)
+      padding: space()
+      &-table
+        width: 100%
+        thead th
+          font-weight: bold
+        tbody tr
+          border-top: rgba($color-black, 0.1) solid 1px
+          line-height: $base-line-height - 1px
+
+    //-- Description --//
+    &-description
+      +span(full)
+      padding: space()
+        top: 0
+      p, .p
+        margin-bottom: space()
+        &:last-child
+          margin-bottom: 0
+      .video
+        line-height: 0

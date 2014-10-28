@@ -1,0 +1,12 @@
+.nested-fields.mod-version
+  = f.inputs name: "Mod version" do
+    = f.input :number
+    = f.input :released_at, as: :date_picker, input_html: { value: (f.object.released_at.strftime('%Y-%m-%d') unless f.object.released_at.nil?) }
+    = f.input :game_versions, collection: @game_versions
+    %li.nested-fields-remove
+      = link_to_remove_association "&times;".html_safe, f
+    %li.nested-form.mod-version-files
+      = f.semantic_fields_for :files do |ff|
+        = render 'file_fields', f: ff
+      .nested-form-links.mod-version-files-links
+        = link_to_add_association "Add file", f, :files

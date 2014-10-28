@@ -8,8 +8,14 @@ class ModVersion < ActiveRecord::Base
   scope :sort_by_older_to_newer, -> { order('sort_order asc') }
   scope :sort_by_newer_to_older, -> { order('sort_order desc') }
 
+  accepts_nested_attributes_for :files, allow_destroy: true
+
   def game_versions_string
-    read_attribute(:game_versions_string) || set_game_versions_string
+    if precise_game_versions_string.blank?
+      read_attribute(:game_versions_string) || set_game_versions_string
+    else
+      precise_game_versions_string
+    end
   end
 
   def to_label

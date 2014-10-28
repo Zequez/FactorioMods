@@ -5,6 +5,11 @@ require File.expand_path('../config/application', __FILE__)
 
 Rails.application.load_tasks
 
+desc 'Open custom log file'
+task :log do
+  `tail -f log/custom.log`
+end
+
 desc 'Clean assets, the straightforward way'
 task :assets_clean do
   `rm -r public/assets`# && rm -r tmp/cache/assets`
@@ -17,7 +22,7 @@ end
 
 desc 'Clean assets and precompile them'
 task :assets_precompile => [:assets_clean] do
-  `rake assets:precompile RAILS_ENV=production`
+  `rake assets:precompile RAILS_ENV=production RAILS_GROUPS=assets`
 end
 
 desc 'Clean assets, precompile them, and start Rails in production'
@@ -112,6 +117,14 @@ task fake_data: :environment do
       ### Mod Assets
       ##################
       rand(1..3).times do |i|
+        links = ['http://i.imgur.com/b9VDd2E.jpg', 
+                 'http://i.imgur.com/6TIfdyR.jpg',
+                 'http://i.imgur.com/6DS3LT6.jpg',
+                 'http://i.imgur.com/jRBKTqv.jpg',
+                 'http://gfycat.com/HorribleUnkemptBeaver',
+                 'http://gfycat.com/ExcellentUnsightlyAfricanporcupine',
+                 'http://gfycat.com/SharpGiganticEchidna']
+                 
         image = Dir[Rails.root.join('spec', 'fixtures', 'sample_images', '*')]
         ModAsset.create! mod: mod,
                          sort_order: i,

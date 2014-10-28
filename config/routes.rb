@@ -12,6 +12,13 @@ Rails.application.routes.draw do
     get '/:category_id',      to: 'mods#index', as: :category_mods
   end
 
+  scope 'mods' do
+    get '/new', to: 'mods#new'
+    get '/:id/edit', to: 'mods#edit'
+    post '/', to: 'mods#create'
+    put '/', to: 'mods#update'
+  end
+
   # alpha_mods_url          => 'mods/'
   # alpha_category_mods_url => 'mods/<category_id>'
   scope 'mods', sort: 'alpha', as: :alpha do

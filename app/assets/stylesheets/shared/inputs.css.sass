@@ -1,21 +1,21 @@
-input, select
+input, select, textarea
   padding: 0
+  height: $base-line-height
   margin: 0
   border: solid 0.15em $color-gray
   border-radius: 3px
   color: $color-black
   font-size: $font-x-smaller
-  line-height: rhythm(1, $font-x-smaller) - 0.15em
   &:focus
     border-color: $color-orange
     outline: none
 
-input
-  padding: 0 rhythm(1, $font-smaller)
-  background: $color-white
+input, textarea, select[multiple]
+  padding: 0px 3px
+  background: lighten($color-white, 100%) // Yeah.
 
 select
-  padding: 0 rhythm(1, $font-smaller)*0.25
+  padding: 0 $base-line-height*0.25
   +appearance(none)
   // height: rhythm(1)
   background: $color-white
@@ -24,9 +24,11 @@ select
     image: $img-arrow-data
     repeat: no-repeat
     position: right 60%
+  vertical-align: top
   // +background-image(linear-gradient($color-white, darken($color-white, 10%)))
 
 .input
   &-text
     &-search
       border-radius: 15px
+      padding-left: rhythm(1, $font-smaller)

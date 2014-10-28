@@ -11,21 +11,29 @@ gem 'sqlite3'         # Use sqlite3 as the database for Active Record
 # Assets
 ########################
 
-gem 'sass-rails', github: 'rails/sass-rails'  # SASS bindins for Rails
-gem 'sass', '~> 3.3.0'          # CSS with superpowers
-gem 'compass', github: 'Compass/compass'              # SASS on steroids
-gem 'compass-rails', github: 'Compass/compass-rails'  # Compass bindings for Rails
-gem 'breakpoint'                # Media queries sugar
-gem 'susy', '~> 2.0'            # Grids for SASS
+group :development, :test, :assets do
+  gem 'sass-rails', github: 'rails/sass-rails'  # SASS bindins for Rails
+  gem 'sass', '~> 3.3.0'          # CSS with superpowers
+  gem 'compass', github: 'Compass/compass'              # SASS on steroids
+  gem 'compass-rails', github: 'Compass/compass-rails'  # Compass bindings for Rails
+  gem 'breakpoint'                # Media queries sugar
+  gem 'susy', '~> 2.0'            # Grids for SASS
+  gem 'redcarpet'                 # Markdown
+  gem 'uglifier', '>= 1.3.0'      # Use Uglifier as compressor for JavaScript assets
+  gem 'coffee-rails', '~> 4.0.0'  # Use CoffeeScript for .js.coffee assets and views
+  gem 'jquery-rails'              # Use jquery as the JavaScript library
+  gem 'turbolinks'                # Turbolinks makes following links in your web application faster
+  gem 'rails-assets-zepto'
+end
+gem 'font-awesome-sass'         # View helper for font-awesome, not really neccesary, but handy
 gem 'haml-rails'                # HAML
-gem 'font-awesome-sass'         # View helper for font-awesome, not really neccesary
-gem 'redcarpet'                 # Markdown
-gem 'uglifier', '>= 1.3.0'      # Use Uglifier as compressor for JavaScript assets
-gem 'coffee-rails', '~> 4.0.0'  # Use CoffeeScript for .js.coffee assets and views
-gem 'jquery-rails'              # Use jquery as the JavaScript library
-gem 'turbolinks'                # Turbolinks makes following links in your web application faster
-gem 'rails-assets-zepto'
 gem 'auto_html'
+gem 'rack-zippy'
+gem 'jquery-ui-rails'
+
+group :production do
+  gem 'aws-sdk'
+end
 
 # Models
 ########################
@@ -40,9 +48,10 @@ gem 'cocoon'
 
 gem 'activeadmin', github: 'gregbell/active_admin'    # Administration panel for Rails. Fantastic.
 gem 'devise'                    # Authentication system
-gem 'cancan'                    # Authorization adapter
-gem 'jbuilder', '~> 2.0'        # Build JSON APIs with ease
-gem 'sdoc', '~> 0.4.0', group: :doc  # bundle exec rake doc:rails generates the API under doc/api.
+gem 'cancancan'                    # Authorization adapter
+# gem 'jbuilder', '~> 2.0'        # Build JSON APIs with ease
+# gem 'sdoc', '~> 0.4.0', group: :doc  # bundle exec rake doc:rails generates the API under doc/api.
+gem 'simple_form'
 
 group :development do
   gem 'spring'                  # Spring speeds up development by keeping your application running in the background
@@ -56,7 +65,14 @@ group :development, :test do
   gem 'guard-rspec', require: false # Guard plugin for Rspec
   gem 'factory_girl_rails'      # Models factories for Rspec
   gem 'forgery'                 # Create random text for testing, like lorem ipsum or random names
+  gem 'capybara'
 end
+
+group :test do
+  gem 'webmock'                 # To fake web requests on tests
+end
+
+gem 'nokogiri'                  # To parse HTML, for the scrapper
 
 # gem 'bcrypt', '~> 3.1.7'      # Use ActiveModel has_secure_password
 # gem 'unicorn'                 # Use unicorn as the app server

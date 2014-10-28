@@ -1,0 +1,69 @@
+.mods-edit
+  @extend %content-block
+  +span(full)
+  margin-bottom: rhythm(1)
+
+  h2
+    margin-bottom: $base-line-height
+    +font-xx-larger
+    font-weight: bold
+    text-align: center
+
+  .mod 
+    +span(8 of 12 no-gutters wider)
+    margin-left: span(2 of 12)
+
+  .mod-version
+    select[multiple]
+      +span(5 omega of 8)
+      height: $base-line-height*3
+      padding: 0px
+      option
+        float: left
+        line-height: $base-line-height
+        border-right: solid 1px $color-gray
+        border-bottom: solid 1px $color-gray
+
+    &>fieldset>legend
+      font-weight: bold
+
+  .mod-version-file
+    li
+      margin-bottom: 0
+    li.file
+      +span(5 of 8 no-gutters wide)
+      label
+        +span(3 of 5)
+      input
+        +span(2 omega of 5)
+        border-radius: $border-radius 0 0 $border-radius
+        border-right: 0
+       
+
+    li.string
+      +span(3 omega of 8)
+      label
+        display: none
+      input
+        +span(full)
+        
+        border-radius: 0 $border-radius $border-radius 0
+
+
+  #mod_description_input
+    position: relative
+
+    .label
+      +absolute(0px, false, false, 0px)
+    .inline-hints
+      +absolute($base-line-height, false, false, 0px)
+    textarea
+      position: relative
+      z-index: 10
+      +transition-property(width height)
+      +transition-duration(0.5s)
+
+    textarea:focus
+      width: span(full)
+      height: $base-line-height*12
+      

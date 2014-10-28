@@ -1,0 +1,150 @@
+$filter-size: 3
+$mods-list-size: 12-$filter-size
+
+.filter-bar
+  @extend %content-block
+  +span($filter-size of 12)
+  padding: space() 0
+  margin-bottom: rhythm()
+
+  border-radius: $border-radius
+  background: $color-white
+
+  h2
+    text-align: right
+    padding: 0 space($font-larger)
+
+
+  .version-filter
+    padding: 0 space()
+    &-input
+      width: 100%
+
+  .category-filter
+    text-align: right
+
+    // .category-count
+    //   float: right
+    // direction: rtl
+    a
+      +block
+      width: 100%
+
+      padding-right: space()
+      padding-left: space(false, 0.1)
+
+      // text-overflow: ellipsis
+      // white-space: nowrap
+      // overflow: hidden
+
+    a
+      &.active, &:hover
+        background: $color-washed-orange
+        +white-text-shadow
+        color: $color-white
+
+    &.active
+      +relative
+      &:after
+        content: ' '
+        +absolute(50%, 0)
+        +triangle(rhythm(1), right, $color-washed-orange)
+
+.mods-filters-list
+  @extend %content-block
+
+  +span($mods-list-size omega of 12)
+  margin-bottom: rhythm()
+  line-height: rhythm(2)
+  background: $color-teal
+  +adjust-leading-to(2)
+  &-item
+    float: left
+    margin: 0 space()
+    &-title
+      font-weight: bold
+    &-value
+
+    &-remove:before
+      color: $color-washed-orange
+      content: '✖'
+
+.info-box
+  +span($mods-list-size omega of 12)
+  padding: 0 space()
+  margin-bottom: rhythm()
+
+.mods-index
+  +span($mods-list-size omega of 12)
+
+  .mod
+    @extend %content-block
+    margin-bottom: rhythm()
+    +pie-clearfix
+
+    // .mod-thumbnail .asset-thumbnail
+    //   border-radius: 5px 0px 0px 5px
+
+    // &:first-child
+    //   border-radius: $border-radius $border-radius 0px 0px
+    //   .mod-thumbnail .asset-thumbnail
+    //     border-radius: $border-radius 0px 0px 0px
+
+    // &:last-child
+    //   border-radius: 0px 0px $border-radius $border-radius
+    //   .mod-thumbnail .asset-thumbnail
+    //     border-radius: 0px 0px 0px $border-radius
+
+    //-- Thumbnail --//
+    &-thumbnail
+      @extend %pretty-border
+      +span(2 of no-gutter $mods-list-size)
+      height: rhythm(6)
+      overflow: hidden
+
+      &-link
+        //@extend %thumbnail-hover
+        display: block
+        width: 100%
+        height: 100%
+        overflow: hidden
+
+      &-img
+        height: 100%
+        width: 100%
+
+
+    //-- Info --//
+    &-info-container
+      +span(5 of $mods-list-size wider no-gutter)
+      padding: space()
+
+    &-subtitle
+      +font-smaller
+
+    &-tag
+      +inline-block
+      +font-x-smaller
+      padding: 0 0.25em
+      border-radius: 2px
+      background: $color-blue
+      line-height: rhythm(1, $font-x-smaller)*0.8
+
+    &-summary
+
+
+    //-- Links --//
+    &-links
+      +span(2 omega of $mods-list-size)
+      padding: space()
+      text-align: right
+      +nowrap
+
+      .btn-download
+        +relative
+      //   bottom: rhythm(1)*0.5
+      //   right: rhythm(1)*0.5
+        z-index: 999
+
+    &-link
+      display: block

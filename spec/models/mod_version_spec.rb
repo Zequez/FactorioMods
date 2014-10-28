@@ -17,6 +17,11 @@ RSpec.describe ModVersion, :type => :model do
     it { expect(version).to respond_to :mod }
   end
 
+  describe '#precise_game_versions_string' do
+    it { expect(version).to respond_to :precise_game_versions_string }
+    it { expect(version.precise_game_versions_string).to be_kind_of String }
+  end
+
   describe '#game_versions' do
     it { expect(version).to respond_to :game_versions }
     it { expect(version.game_versions.build).to be_kind_of GameVersion }

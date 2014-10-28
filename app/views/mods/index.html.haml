@@ -17,7 +17,7 @@
 
 - if @query
   .info-box
-    Huh? Trying to search? Search is pretty basic and plain for now. I apologize the inconvinience.
+    Huh? Trying to search? Search is pretty basic and plain for now. I apologize the inconvenience.
 
 .mods-index
   - @mods.each do |mod|
@@ -42,7 +42,7 @@
             = mod.forum_comments_count unless mod.forum_comments_count.blank?
             = icon 'comments'
         %span.mod-link{title: "#{mod.latest_version.released_at.to_s(:rfc822)} - Date of the latest version of this mod"}
-          = time_ago_in_words mod.latest_version.released_at
+          = mod_date mod.latest_version.released_at
           = icon 'history'
         %span.mod-link(title='Last Factorio version this mod works with')
           = "v#{mod.game_versions_string}"

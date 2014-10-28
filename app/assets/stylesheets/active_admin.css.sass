@@ -16,6 +16,16 @@
 //
 //   .status_tag { background: #6090DB; }
 
+
+@-webkit-keyframes rotate
+  0%
+    -webkit-transform: rotate(0deg)
+  100%
+    -webkit-transform: rotate(360deg)
+
+.icon.rotate
+  -webkit-animation: rotate 1s infinite linear
+
 .admin_games
   .formtastic.game
     .has_many_container.versions

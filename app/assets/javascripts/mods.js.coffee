@@ -1,40 +1,3 @@
-class ModImages
-  constructor: (@modImages)->
-    @findElements()
-    @bindEvents()
-    @imageMovers = {}
-    @generateImageMover(@mediumImages.index(@activeImage))
-
-  findElements: ->
-    @mediumImages = @modImages.find('.mod-medium-image')
-    @thumbImages = @modImages.find('.mod-thumb-image')
-    @mediumImagesLinks = @mediumImages.find('.mod-medium-image-link')
-    @mediumImagesImg = @mediumImages.find('.mod-medium-image-img')
-    @activeImage = @mediumImages.filter('.active')
-
-  bindEvents: ->
-    # Thumbnail switching
-    for thumbImage, i in @thumbImages
-      thumbImage = $(thumbImage)
-      mediumImage = $(@mediumImages[i])
-      do (mediumImage, i)=>
-        thumbImage.on 'mouseover', =>
-          @activateThumbnail(mediumImage, i)
-
-  activateThumbnail: (mediumImage, i)->
-    @activeImage.removeClass 'active'
-    mediumImage.addClass 'active'
-    @activeImage = mediumImage
-    @generateImageMover(i)
-
-
-  generateImageMover: (i)->
-    if not @imageMovers[i]
-      imageLink =  $(@mediumImagesLinks[i])
-      imageImg  = $(@mediumImagesImg[i])
-      @imageMovers[i] = new ImageMover imageLink, imageImg
-
-
 $(document).on 'page:change', ->
   # Mods#show thumbnails hover
   do ->
@@ -59,8 +22,6 @@ $(document).on 'page:change', ->
     $('[image-mover]').each (i, elem)->
       new ImageMover elem, elem.firstElementChild
 
-
-
   # Version filter query maker
   do ->
     versionFilterInput = $('.version-filter-input')
@@ -81,3 +42,29 @@ $(document).on 'page:change', ->
         elem.innerHTML = elem.innerHTML.replace regexQuery, (match)->
           '<span class="query-highlight">'+match+'</span>'
       return
+
+  # Edit mod mod version on fieldset legend
+  do ->
+    form = $('.mods-edit')
+    if form.length
+      initialMessage = null
+      setFieldsetLegend = ->
+        legend = $(this).closest('fieldset').children('legend')
+        if this.value
+          initialMessage ||= legend.text()
+          legend.text(this.value)
+        else if initialMessage
+          legend.text(initialMessage)
+
+      inputs =  $('.mods-edit .string.input input')
+      inputs.each setFieldsetLegend
+      $(document).on 'keyup', '.mods-edit .string.input input', setFieldsetLegend
+      $(document).one 'page:change', ->
+        $(document).off 'keyup', '.mods-edit .string.input input', setFieldsetLegend
+
+
+  # Edit mod textarea expansion
+  # do ->
+  #   li = $('#mod_description_input')
+  #   input = li.find('textarea')
+  #   input.focus(-> li.addClass('focused')).blur(-> li.removeClass('focused'))

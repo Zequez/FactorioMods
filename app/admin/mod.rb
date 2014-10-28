@@ -1,10 +1,13 @@
 ActiveAdmin.register Mod do
   permit_params :name, :author_name, :category_id, :author_id,
                 :first_version_date, :last_version_date, :github_url, :forum_comments_count,
-                :license, :license_url, :official_url, :forum_post_url,
+                :license, :license_url, :official_url, :forum_subforum_url,
+                :forum_post_id, :forum_posts_ids,
                 :description, :summary, :slug,
                 assets_attributes: [:id, :image, :sort_order, :_destroy],
-                versions_attributes: [:id, :number, :released_at, :sort_order, :_destroy, game_version_ids: []],
+                versions_attributes: [:id, :number, :released_at,
+                                      :sort_order, :precise_game_versions_string,
+                                      :_destroy, game_version_ids: []],
                 files_attributes: [:id, :name, :attachment, :sort_order,
                                    :mod_version_id, :_destroy]
 
@@ -15,7 +18,39 @@ ActiveAdmin.register Mod do
 
     def resource
       @mod ||= Mod.includes(versions: [:game_versions]).includes(files: [:mod_version]).find(params[:id])
+      if params[:forum_post_id]
+        forum_post = ForumPost.find(params[:forum_post_id])
+        @mod.forum_post = forum_post
+        @mod.forum_posts = [forum_post]
+      end
+      @mod
     end
+  end
+
+  show do |mod|
+    h2 link_to url_for([mod.category, mod]), [mod.category, mod]
+
+    attributes_table :name,
+                     :slug,
+                     :author_name,
+                     :category,
+                     :author_name,
+                     :author,
+                     :first_version_date,
+                     :last_version_date,
+                     :github_url,
+                     :forum_comments_count,
+                     :license,
+                     :license_url,
+                     :official_url,
+                     :forum_url,
+                     :summary,
+                     :description,
+                     :description_html
+
+
+
+    active_admin_comments
   end
 
   index do
@@ -82,7 +117,9 @@ ActiveAdmin.register Mod do
       f.input :license_url
       f.input :official_url
       f.input :forum_post_url
-      f.input :forum_comments_count
+      # f.input :forum_subforum_url
+      # f.input :forum_post
+      # f.input :forum_posts, collection: ForumPost.order('title')
       f.input :description
       f.input :summary
     end
@@ -94,6 +131,7 @@ ActiveAdmin.register Mod do
       f.has_many :versions, allow_destroy: true, new_record: true, sortable: :sort_order do |a|
         a.input :number
         a.input :game_versions, collection: game_versions
+        a.input :precise_game_versions_string, placeholder: '1.1.3[-1.1.4]'
         a.input :released_at, as: :datepicker, input_html: { value: (a.object.released_at.strftime('%Y-%m-%d') unless a.object.released_at.nil?) }
       end
     end

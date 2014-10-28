@@ -4,7 +4,7 @@ class ModFile < ActiveRecord::Base
 
   has_attached_file :attachment
   validates_attachment_content_type :attachment,
-                                    :content_type => ['application/zip', 'application/octet-stream/']
+                                    :content_type => ['application/zip', 'application/x-zip-compressed', 'application/octet-stream/']
 
 
   validates :mod_version, presence: true

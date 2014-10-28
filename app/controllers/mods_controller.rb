@@ -1,8 +1,10 @@
 class ModsController < ApplicationController
+  load_and_authorize_resource
+
   def index
     @mods = Mod
 
-    @mods = @mods.includes([:first_asset, :category, :author, versions: :files])
+    @mods = @mods.includes([:category, :author, versions: :files])
 
     if params[:category_id]
       @category = Category.find_by_slug params[:category_id]
@@ -67,8 +69,34 @@ class ModsController < ApplicationController
     end
   end
 
+  def new
+    @mod = Mod.new
+    @categories = Category.all
+  end
+
+  def create
+    @mod = Mod.new mod_params
+    if @mod.save
+      redirect_to category_mod_url(@mod.category, @mod)
+    else
+      @categories = Category.all
+      render :new
+    end
+  end
+
+  def edit
+
+  end
+
+  def update
+
+  end
 
   private
+
+  def mod_params
+    params.require(:mod).permit(:name)
+  end
 
   # def category
   #   @category ||= if params[:category_id]

@@ -1,13 +1,11 @@
 .search-bar
   %ul.sorters
-    %li.sorter<>
+    %li.sorter><
       = sort_link :most_recent do
-        = icon 'history'
-        Recently updated
-    %li.sorter<>
+        = icon 'history', 'Recently updated'
+    %li.sorter><
       = sort_link :alpha do
-        = icon 'sort-alpha-asc'
-        Alphabetically
+        = icon 'sort-alpha-asc', 'Alphabetically'
     -# %li.sorter<>
     -#   = sort_link :downloads do
     -#     = icon 'sort-amount-desc'
