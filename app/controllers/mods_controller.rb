@@ -1,5 +1,5 @@
 class ModsController < ApplicationController
-  load_and_authorize_resource
+  # load_and_authorize_resource
 
   def index
     @mods = Mod
@@ -94,8 +94,8 @@ class ModsController < ApplicationController
 
   private
 
-  def mod_params
-    params.require(:mod).permit(:name)
+  def mod_params 
+    params.require(:mod).permit(:name, :category_id)
   end
 
   # def category

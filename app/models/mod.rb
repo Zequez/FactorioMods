@@ -52,6 +52,7 @@ class Mod < ActiveRecord::Base
   scope :sort_by_alpha, -> { order('mods.name asc') }
   scope :sort_by_forum_comments, -> { order('mods.forum_comments_count desc') }
   scope :sort_by_downloads, -> { order('mods.downloads_count desc') }
+  
   def self.filter_by_search_query(query)
     s1 = s2 = s3 = self
 
@@ -80,6 +81,9 @@ class Mod < ActiveRecord::Base
     simple_format
   end
 
+  ### Validations
+  #################
+
   validate do
     manager = MediaLinks::Manager.new media_links_string
     if not manager.valid?
@@ -90,6 +94,10 @@ class Mod < ActiveRecord::Base
       self.errors[:media_links_string].push "No more than 10 links please"
     end
   end
+
+  validates :name, presence: true
+  # validates :author, presence: true
+  validates :category, presence: true
 
   ### Attributes
   #################
@@ -146,6 +154,10 @@ class Mod < ActiveRecord::Base
       end
     end
     result
+  end
+
+  def has_versions?
+    versions.size > 0
   end
 
   private

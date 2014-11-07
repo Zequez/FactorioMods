@@ -7,7 +7,7 @@ class Ability
     user ||= User.new # guest user (not logged in)
     if user.is_admin?
       can :manage, :all
-    elsif not user.new_record?
+    else
       can :read, :all
       can :manage, Mod, author_id: user.id
     end

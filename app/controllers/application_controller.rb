@@ -4,6 +4,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
 
   rescue_from CanCan::AccessDenied, with: :authentication_error
+  rescue_from ActiveRecord::RecordNotFound, with: :not_found
 
   def not_found
     render 'errors/404', status: 404

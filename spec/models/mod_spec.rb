@@ -45,15 +45,37 @@ RSpec.describe Mod, :type => :model do
     it { should respond_to :favorites }
     it { should respond_to :favorites_count }
 
-    describe '#author_name' do
-      subject { mod.author_name }
-      it { should be_kind_of String }
+    describe 'validation' do
+      it 'should be valid by default' do 
+        mod = build :mod
+        expect(mod).to be_valid
+      end
 
+      it 'should be invalid without name' do
+        mod = build :mod, name: ''
+        expect(mod).to be_invalid
+      end 
+
+      # it 'should be invalid without author' do
+      #   mod = build :mod, author: nil
+      #   expect(mod).to be_invalid
+      # end
+
+      it 'should be invalid without category' do
+        mod = build :mod, category: nil
+        expect(mod).to be_invalid
+      end
+
+      it 'should be invalid with a non existant category' do
+        mod = build :mod, category_id: 123123
+        expect(mod).to be_invalid
+      end
+    end
+
+    describe '#author_name' do
       context 'there is an #author' do
         it 'should be delegated to #author.name' do
-          mod.author_name = 'Hello There'
-          mod.author_name.should eq 'Hello There'
-          mod.author = build :developer, name: 'Bye Macumbo'
+          mod.author = build :user, name: 'Bye Macumbo'
           mod.author_name.should eq 'Bye Macumbo'
         end
       end
@@ -76,6 +98,20 @@ RSpec.describe Mod, :type => :model do
       it 'should be ModVersion type' do
         mod.versions.build
         expect(mod.versions.first).to be_kind_of ModVersion
+      end
+    end
+
+    describe '#has_versions?' do
+      it 'should return false if the mod has no versions' do
+        mod = create :mod, versions: []
+        mod.has_versions?.should eq false
+      end
+
+      it 'should return true if the mod has a version' do
+        mod = create :mod, versions: []
+        create :mod_version, mod: mod
+        mod = Mod.first
+        mod.has_versions?.should eq true
       end
     end
 
@@ -247,14 +283,6 @@ RSpec.describe Mod, :type => :model do
     end
   end
 
-  # describe '#media_links_thumbnails' do
-
-  # end
-
-  # describe '#media_links_tag' do
-
-  # end
-
   describe 'scopes' do
     describe '.filter_by_category' do
       it 'should filter results by category' do
@@ -321,9 +349,9 @@ RSpec.describe Mod, :type => :model do
           mod1 = create(:mod)
           mod2 = create(:mod)
           mod3 = create(:mod)
-          create :mod_version, released_at: 1.day.ago, mod: mod1
-          create :mod_version, released_at: 1.hour.ago, mod: mod2
-          create :mod_version, released_at: 1.week.ago, mod: mod3
+          create :mod_version, released_at: 2.day.ago, mod: mod1
+          create :mod_version, released_at: 1.day.ago, mod: mod2
+          create :mod_version, released_at: 3.day.ago, mod: mod3
 
           Mod.sort_by_most_recent.all.should eq [mod2, mod1, mod3]
         end
@@ -474,8 +502,6 @@ RSpec.describe Mod, :type => :model do
           m7 = create(:mod, description: 'A Potatoeiu', versions: [create(:mod_version, released_at: 1.days.ago)])
           m8 = create(:mod, description: 'C Potatoeiu', versions: [create(:mod_version, released_at: 3.days.ago)])
           m9 = create(:mod, description: 'B Potatoeiu', versions: [create(:mod_version, released_at: 2.days.ago)])
-
-
 
           expect(Mod.sort_by_most_recent.filter_by_search_query('potato')).to eq [m3, m2, m1, m5, m4, m6, m7, m9, m8]
         end

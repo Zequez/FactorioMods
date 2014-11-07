@@ -19,6 +19,14 @@ module ApplicationHelper
     @empty_asset.image.url(size)
   end
 
+  def if_na(condition, result = nil)
+    if !result and block_given?
+      condition ? yield : 'N/A'
+    else
+      condition ? result : 'N/A'
+    end
+  end
+
   ### Content helpers:
   ####################
 

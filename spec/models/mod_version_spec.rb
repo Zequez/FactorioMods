@@ -10,7 +10,7 @@ RSpec.describe ModVersion, :type => :model do
 
   describe '#released_at' do
     it { expect(version).to respond_to :released_at }
-    it { expect(version.released_at).to be_kind_of Date }
+    it { expect(version.released_at).to be_kind_of Time }
   end
 
   describe '#mod' do

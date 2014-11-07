@@ -1,7 +1,7 @@
 FactoryGirl.define do
   factory :mod do
     sequence(:name) { |n| "Mod name #{n}" }
-    author_name 'Foo Barinto'
+    association :author, factory: :user
     association :category, factory: :category
     description ''
     forum_comments_count 12
