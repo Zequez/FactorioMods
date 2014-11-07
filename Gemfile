@@ -23,8 +23,10 @@ group :development, :test, :assets do
   gem 'coffee-rails', '~> 4.0.0'  # Use CoffeeScript for .js.coffee assets and views
   gem 'jquery-rails'              # Use jquery as the JavaScript library
   gem 'turbolinks'                # Turbolinks makes following links in your web application faster
-  gem 'rails-assets-zepto'
+  gem 'selenium-webdriver'
+  # gem 'selenium-phantomjs'
 end
+
 gem 'font-awesome-sass'         # View helper for font-awesome, not really neccesary, but handy
 gem 'haml-rails'                # HAML
 gem 'auto_html'

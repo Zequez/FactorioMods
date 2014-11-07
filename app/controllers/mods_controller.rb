@@ -1,5 +1,5 @@
 class ModsController < ApplicationController
-  # load_and_authorize_resource
+  load_and_authorize_resource
 
   def index
     @mods = Mod
@@ -76,6 +76,7 @@ class ModsController < ApplicationController
 
   def create
     @mod = Mod.new mod_params
+    @mod.author = current_user
     if @mod.save
       redirect_to category_mod_url(@mod.category, @mod)
     else
@@ -95,7 +96,7 @@ class ModsController < ApplicationController
   private
 
   def mod_params 
-    params.require(:mod).permit(:name, :category_id)
+    params.require(:mod).permit(:name, :category_id, :github, :forum_url, :description, :summary, :media_links_string)
   end
 
   # def category

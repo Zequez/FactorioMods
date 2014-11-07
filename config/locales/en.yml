@@ -37,3 +37,8 @@ en:
     static:
       how_to_install: How to install mods on Factorio
       how_to_make: How to create mods for Factorio
+
+  formtastic:
+    labels:
+      mod:
+        forum_url: 'Forum URL'

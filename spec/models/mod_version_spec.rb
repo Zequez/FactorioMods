@@ -66,6 +66,42 @@ RSpec.describe ModVersion, :type => :model do
     end
   end
 
+  describe 'validations' do
+    it 'should be invalid with empty number' do
+      expect(build(:mod_version, number: nil)).to be_invalid
+    end
+
+    # context 'no game versions were selected' do
+    #    it { expect(build(:mod_version, game_versions: [])).to be_invalid }
+    # end
+
+    it 'should be invalid with an invalid file' do
+      invalid_file = build(:mod_file, attachment: File.new(Rails.root.join('spec', 'fixtures', 'test.jpg')))
+
+      expect(build(:mod_version, files: [invalid_file])).to be_invalid
+    end
+
+    it 'should be invalid when selecting 2 non consecutive game versions' do
+      gv1 = create :game_version
+      gv2 = create :game_version
+      gv3 = create :game_version
+
+      mod_version = build :mod_version, game_versions: [gv1, gv3]
+
+      expect(mod_version).to be_invalid
+    end
+
+    it 'should be valid when selecting consecutive game versions' do
+      gv1 = create :game_version
+      gv2 = create :game_version
+      gv3 = create :game_version
+
+      mod_version = build :mod_version, game_versions: [gv2, gv3]
+
+      expect(mod_version).to be_valid
+    end
+  end
+
   # describe '#game_versions_string' do
   #   it { expect(version).to respond_to :game_versions_string }
 

@@ -19,6 +19,10 @@ module MediaLinks
       raise 'Not implemented'
     end
 
+    def to_string
+      canonical_url
+    end
+
     def canonical_url
       raise 'Not implemented'
     end
