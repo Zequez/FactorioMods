@@ -42,3 +42,6 @@ en:
     labels:
       mod:
         forum_url: 'Forum URL'
+
+      mod_version:
+        released_at: 'Release day'

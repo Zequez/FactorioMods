@@ -75,22 +75,49 @@ feature 'Modder creates a new mod' do
     expect(page).to have_content 'Invalid media links'
   end
 
-  # Fuck this. I'm not gonna install a headless Selenium server today.
-  # scenario 'user submits mod with a version', js: true do
-  #   sign_in
-  #   create_category 'Potato'
-  #   visit '/mods/new'
-  #   fill_in 'Name', with: 'Valid mod name'
-  #   click_link 'Add version'
-  #   find('.mod-version').fill_in 'Number', with: '123'
-  #   # within '.mod-version:nth-child(1)' do
-      
-  #   # end
-  #   submit_form
-  #   mod = Mod.first
-  #   expect(current_path).to eq '/mods/potato/valid-mod-name'
-  #   expect(mod.versions[0].number).to eq '123'
-  # end
+  scenario 'user submits mod with a version and file', js: true do
+    sign_in
+    create_category 'Potato'
+    create :game_version, number: '1.1.x'
+    create :game_version, number: '1.2.x'
+    attachment = File.new(Rails.root.join('spec', 'fixtures', 'test.zip'))
+    visit '/mods/new'
+    fill_in 'Name', with: 'Valid mod name'
+    select 'Potato', from: 'Category'
+    click_link 'Add version'
+    within('.mod-version:nth-child(1)') do
+      fill_in 'Number', with: '123'
+      fill_in 'Release day', with: '2014-11-09'  
+      select '1.1.x', from: 'Game versions'
+      select '1.2.x', from: 'Game versions'
+      click_link 'Add file'
+      within('.mod-version-file:nth-child(1)') do
+        attach_file 'Attachment', attachment.path
+      end
+    end
+    submit_form
+    mod = Mod.first
+    expect(current_path).to eq '/mods/potato/valid-mod-name'
+    expect(page).to have_content 'Valid mod name'
+    expect(mod.versions[0].number).to eq '123'
+    expect(mod.versions[0].released_at).to eq Time.zone.parse('2014-11-09')
+    expect(mod.versions[0].game_versions[0].number).to eq '1.1.x'
+    expect(mod.versions[0].game_versions[1].number).to eq '1.2.x'
+    expect(mod.versions[0].files[0].attachment_file_size).to eq attachment.size
+  end
+
+  scenario 'admin user submits a mod selecting an author' do
+    sign_in_admin
+    create_category 'Potato'
+    visit '/mods/new'
+    fill_in 'Name', with: 'Mod Name'
+    select 'Potato', from: 'Category'
+    fill_in 'Author name', with: 'MangoDev'
+    submit_form
+    mod = Mod.first
+    expect(current_path).to eq '/mods/potato/mod-name'
+    expect(mod.author_name).to eq 'MangoDev'
+  end
 
   def submit_form
     click_button 'Create Mod'
@@ -98,6 +125,11 @@ feature 'Modder creates a new mod' do
 
   def sign_in
     @user = create :user
+    login_as @user
+  end
+
+  def sign_in_admin
+    @user = create :user, is_admin: true
     login_as @user
   end
 

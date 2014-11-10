@@ -9,7 +9,7 @@
       %td.mod-data-row-name Source code
       %td.mod-data-row-value= if_na(@mod.github_url) { link_to(@mod.github_path, @mod.github_url) }
       %td.mod-data-row-name Tags
-      %td.mod-data-row-value
+      %td.mod-data-row-value N/A
     %tr.mod-data-row
       %td.mod-data-row-name First version
       %td.mod-data-row-value= if_na(@mod.has_versions?) { @mod.versions.first.number }
@@ -21,14 +21,16 @@
       %td.mod-data-row-name Last release
       %td.mod-data-row-value= if_na(@mod.has_versions? && @mod.versions.last.released_at) { @mod.versions.last.released_at.to_s(:rfc822) }
     %tr.mod-data-row
-      %td.mod-data-row-name License
-      %td.mod-data-row-value= if_na(@mod.license) { link_to(@mod.license, @mod.license_url) }
+      / %td.mod-data-row-name License
+      / %td.mod-data-row-value= if_na(@mod.license) { link_to(@mod.license, @mod.license_url) }
       %td.mod-data-row-name Official forum post
       %td.mod-data-row-value
-        = if_na(!@mod.forum_post_url.blank?) do
+        = if_na(@mod.forum_post_url.present?) do
           %a{href: @mod.forum_post_url}
-            = @mod.forum_comments_count unless @mod.forum_comments_count.blank?
-            comments
+            On the Factorio forums
+            / = @mod.forum_comments_count unless @mod.forum_comments_count.blank?
+            / comments
     %tr.mod-data-row
       %td.mod-data-row-name Official site
-      %td.mod-data-row-value{colspan: 3}= @mod.official_url if @mod.official_url
+      %td.mod-data-row-value{colspan: 3}
+        = link_to @mod.official_url, @mod.official_url

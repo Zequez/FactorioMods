@@ -104,14 +104,29 @@ RSpec.describe Mod, :type => :model do
     describe '#has_versions?' do
       it 'should return false if the mod has no versions' do
         mod = create :mod, versions: []
-        mod.has_versions?.should eq false
+        expect(mod.has_versions?).to eq false
       end
 
       it 'should return true if the mod has a version' do
         mod = create :mod, versions: []
         create :mod_version, mod: mod
         mod = Mod.first
-        mod.has_versions?.should eq true
+        expect(mod.has_versions?).to eq true
+      end
+    end
+
+    describe '#has_files?' do
+      it 'should return false if the mod has no files' do
+        mod = create :mod, versions: []
+        expect(mod.has_files?).to eq false
+      end
+
+      it 'should return true if the mod has at least a file' do
+        mod = create :mod, versions: []
+        mod_version = create :mod_version, mod: mod
+        mod_file = create :mod_file, mod_version: mod_version
+        mod = Mod.first
+        expect(mod.has_files?).to eq true
       end
     end
 
@@ -493,15 +508,15 @@ RSpec.describe Mod, :type => :model do
         end
 
         it 'should work when sorting by recently updated' do
-          m1 = create(:mod, name: 'C Potato', versions: [create(:mod_version, released_at: 9.days.ago)])
-          m2 = create(:mod, name: 'B Potato', versions: [create(:mod_version, released_at: 8.days.ago)])
-          m3 = create(:mod, name: 'A Potato', versions: [create(:mod_version, released_at: 7.days.ago)])
-          m4 = create(:mod, summary: 'B Potatou', versions: [create(:mod_version, released_at: 5.days.ago)])
-          m5 = create(:mod, summary: 'A Potatou', versions: [create(:mod_version, released_at: 4.days.ago)])
-          m6 = create(:mod, summary: 'C Potatou', versions: [create(:mod_version, released_at: 6.days.ago)])
-          m7 = create(:mod, description: 'A Potatoeiu', versions: [create(:mod_version, released_at: 1.days.ago)])
-          m8 = create(:mod, description: 'C Potatoeiu', versions: [create(:mod_version, released_at: 3.days.ago)])
-          m9 = create(:mod, description: 'B Potatoeiu', versions: [create(:mod_version, released_at: 2.days.ago)])
+          m1 = create(:mod, name: 'C Potato', versions: [build(:mod_version, released_at: 9.days.ago)])
+          m2 = create(:mod, name: 'B Potato', versions: [build(:mod_version, released_at: 8.days.ago)])
+          m3 = create(:mod, name: 'A Potato', versions: [build(:mod_version, released_at: 7.days.ago)])
+          m4 = create(:mod, summary: 'B Potatou', versions: [build(:mod_version, released_at: 5.days.ago)])
+          m5 = create(:mod, summary: 'A Potatou', versions: [build(:mod_version, released_at: 4.days.ago)])
+          m6 = create(:mod, summary: 'C Potatou', versions: [build(:mod_version, released_at: 6.days.ago)])
+          m7 = create(:mod, description: 'A Potatoeiu', versions: [build(:mod_version, released_at: 1.days.ago)])
+          m8 = create(:mod, description: 'C Potatoeiu', versions: [build(:mod_version, released_at: 3.days.ago)])
+          m9 = create(:mod, description: 'B Potatoeiu', versions: [build(:mod_version, released_at: 2.days.ago)])
 
           expect(Mod.sort_by_most_recent.filter_by_search_query('potato')).to eq [m3, m2, m1, m5, m4, m6, m7, m9, m8]
         end

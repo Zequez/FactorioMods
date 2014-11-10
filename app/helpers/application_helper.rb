@@ -19,9 +19,9 @@ module ApplicationHelper
     @empty_asset.image.url(size)
   end
 
-  def if_na(condition, result = nil)
+  def if_na(condition, result = nil, &block)
     if !result and block_given?
-      condition ? yield : 'N/A'
+      condition ? capture(&block) : 'N/A'
     else
       condition ? result : 'N/A'
     end
@@ -65,6 +65,10 @@ module ApplicationHelper
 
   def search_filter_url(query)
     polymorphic_path([@sort, @category, :mods], filter_params.merge(q: query))
+  end
+
+  def edit_mod_url(mod)
+    edit_category_mod_url(mod.category, mod)
   end
 
   ### Links helpers

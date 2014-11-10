@@ -14,6 +14,7 @@ class ModVersion < ActiveRecord::Base
   #################
 
   validates :number, presence: true
+
   # validates :game_versions, presence: true
   validate :validate_non_consecutive_game_versions
   def validate_non_consecutive_game_versions

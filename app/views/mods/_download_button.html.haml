@@ -1,4 +1,4 @@
-- if mod.has_versions?
+- if mod.has_versions? and mod.has_files?
   .mod-link.btn.btn-download
     %a{href: mod.latest_version.files.first.attachment.url}
       = icon 'download'

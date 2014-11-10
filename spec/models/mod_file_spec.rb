@@ -65,10 +65,12 @@ RSpec.describe ModFile, :type => :model do
     end
 
     context 'empty #mod_version' do
-      it 'should not be valid' do
+      it 'should be valid' do
         file.mod_version = nil
         file.name = nil
-        expect(file).to be_invalid
+        expect(file).to be_valid
+        expect(file.name).to eq nil
+        expect(file.delegated_name).to eq nil
       end
     end
   end

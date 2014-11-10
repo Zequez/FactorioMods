@@ -23,14 +23,14 @@ class Mod < ActiveRecord::Base
 
   has_many :downloads
   has_many :visits
-  has_many :files, class_name: 'ModFile'
-  has_many :versions, class_name: 'ModVersion'
-  has_many :assets, ->{ order 'sort_order asc' }, class_name: 'ModAsset'
+  has_many :files, class_name: 'ModFile', dependent: :destroy
+  has_many :versions, class_name: 'ModVersion', dependent: :destroy
+  has_many :assets, ->{ order 'sort_order asc' }, class_name: 'ModAsset', dependent: :destroy
   has_many :tags
   has_many :favorites
   has_many :forum_posts
 
-  has_many :mod_game_versions, -> { uniq }
+  has_many :mod_game_versions, -> { uniq }, dependent: :destroy
   has_many :game_versions, -> { uniq.sort_by_older_to_newer }, through: :mod_game_versions
 
   # has_one :latest_version, -> { sort_by_newer_to_older.limit(1) }, class_name: 'ModVersion'
@@ -130,11 +130,7 @@ class Mod < ActiveRecord::Base
   end
 
   def author_name
-    if author
-      author.name
-    else
-      read_attribute :author_name
-    end
+    super || (author ? author.name : nil)
   end
 
   def github_path
@@ -158,6 +154,10 @@ class Mod < ActiveRecord::Base
 
   def has_versions?
     versions.size > 0
+  end
+
+  def has_files?
+    files.size > 0
   end
 
   private

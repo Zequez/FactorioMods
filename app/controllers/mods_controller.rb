@@ -75,8 +75,7 @@ class ModsController < ApplicationController
   end
 
   def create
-    @mod = Mod.new mod_params
-    @mod.author = current_user
+    @mod = Mod.new(current_user.is_admin? ? mod_params_admin : mod_params)
     if @mod.save
       redirect_to category_mod_url(@mod.category, @mod)
     else
@@ -95,8 +94,28 @@ class ModsController < ApplicationController
 
   private
 
-  def mod_params 
-    params.require(:mod).permit(:name, :category_id, :github, :forum_url, :description, :summary, :media_links_string)
+  def mod_params
+    params.require(:mod).permit(:name,
+                                :category_id,
+                                :github,
+                                :forum_url,
+                                :description,
+                                :summary,
+                                :media_links_string, 
+                                versions_attributes: [
+                                  :number,
+                                  :released_at,
+                                  game_version_ids: [],
+                                  files_attributes: [
+                                    :attachment,
+                                    :name
+                                  ]
+                                ])
+    .merge(author_id: current_user.id)
+  end
+
+  def mod_params_admin
+    mod_params.merge params.require(:mod).permit(:author_name)
   end
 
   # def category

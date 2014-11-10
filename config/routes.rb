@@ -5,37 +5,51 @@ Rails.application.routes.draw do
     get '/', to: 'admin/dashboard#index'
   end
 
-  # most_recent_mods_url          => 'recently-updated-mods/'
-  # most_recent_category_mods_url => 'recently-updated-mods/<category_id>'
-  scope 'recently-updated-mods', sort: 'most_recent', as: :most_recent do
-    get '/',                  to: 'mods#index', as: :mods
-    get '/:category_id',      to: 'mods#index', as: :category_mods
+  # / == /mods/recently-updated
+  #
+  # /mods/new
+  # 
+  # /mods
+  # /mods/:category_id
+  # /mods/:category_id/:id
+  # /mods/:category_id/:id/edit
+  #
+  # /mods/recently-updated
+  # /mods/recently-updated/:category_id
+  # /mods/most-downloaded
+  # /mods/most-downloaded/:category_id
+
+  def category_scope
+    resources :categories, path: '/', only: [] do
+      yield
+    end
+  end
+
+  def sort_scope(name, path = nil, as_name = false)
+    scope path, sort: name.to_s, as: (name if as_name) do
+      yield
+    end
+  end
+
+  def new_sorting_section(name, path = nil, as_name = false)
+    sort_scope(name, path, as_name) do
+      resources :mods, path: '/', only: :index
+      category_scope do
+        resources :mods, path: '/', only: :index
+      end
+    end
   end
 
   scope 'mods' do
-    get '/new', to: 'mods#new'
-    get '/:id/edit', to: 'mods#edit'
-    post '/', to: 'mods#create'
-    put '/', to: 'mods#update'
-  end
+    resources :mods, path: '/', except: [:index, :show, :edit]
 
-  # alpha_mods_url          => 'mods/'
-  # alpha_category_mods_url => 'mods/<category_id>'
-  scope 'mods', sort: 'alpha', as: :alpha do
-    get '/',                  to: 'mods#index', as: :mods
-    get '/:category_id',      to: 'mods#index', as: :category_mods
-  end
+    new_sorting_section(:most_recent, 'recently-updated', true)
+    new_sorting_section(:alpha, nil, true) # This is to generate the helper URL
+    new_sorting_section(:alpha) # The default sorting
 
-  # mods_url          => 'mods/'
-  # category_mods_url => 'mods/<category_id>'
-  scope 'mods', sort: 'alpha' do
-    get '/',                  to: 'mods#index', as: :mods
-    get '/:category_id',      to: 'mods#index', as: :category_mods
-  end
-
-  # category_mod_url => 'mods/<category_id>/<mod_id>'
-  scope 'mods' do
-    get '/:category_id/:id',  to: 'mods#show',  as: :category_mod
+    category_scope do
+      resources :mods, path: '/', only: [:show, :edit]
+    end
   end
 
   get '/how-to-install' => 'static#how_to_install', as: :how_to_install_static

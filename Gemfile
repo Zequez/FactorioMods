@@ -24,7 +24,7 @@ group :development, :test, :assets do
   gem 'jquery-rails'              # Use jquery as the JavaScript library
   gem 'turbolinks'                # Turbolinks makes following links in your web application faster
   gem 'selenium-webdriver'
-  # gem 'selenium-phantomjs'
+  gem 'database_cleaner'
 end
 
 gem 'font-awesome-sass'         # View helper for font-awesome, not really neccesary, but handy
