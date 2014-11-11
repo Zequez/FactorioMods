@@ -15,13 +15,30 @@ module MediaLinks
         expect(Imgur.match?('http://imgur.com/a/h5Ne0')).to eq false
       end
 
+      it 'should match reddit-like link' do
+        expect(Imgur.match?('http://imgur.com/r/cats/6DS3LT6')).to eq true
+      end
+
+      it 'should match old links' do
+        expect(Imgur.match?('http://imgur.com/0EOwT6E')).to eq true
+      end
+
+      it 'should match link with a query parameter' do
+        expect(Imgur.match?('http://imgur.com/0EOwT6E?tags')).to eq true
+      end
+
       it 'should not match whatever else' do
         expect(Imgur.match?('http://google.com')).to eq false
       end
+    end
 
-      # http://imgur.com/0EOwT6E?tags
-      # http://imgur.com/0EOwT6E
-      # http://imgur.com/r/cats/6DS3LT6
+    describe '#key' do
+      it { expect(Imgur.new('http://imgur.com/gallery/qLpt6gI').key).to eq 'qLpt6gI' }
+      it { expect(Imgur.new('http://i.imgur.com/O9va9xd.jpg').key).to eq 'O9va9xd' }
+      it { expect(Imgur.new('http://imgur.com/a/h5Ne0').key).to eq 'h5Ne0' }
+      it { expect(Imgur.new('http://imgur.com/r/cats/6DS3LT6').key).to eq '6DS3LT6' }
+      it { expect(Imgur.new('http://imgur.com/0EOwT6E').key).to eq '0EOwT6E' }
+      it { expect(Imgur.new('http://imgur.com/0EOwT6E?tags').key).to eq '0EOwT6E' }
     end
 
     describe '#canonical_url' do
