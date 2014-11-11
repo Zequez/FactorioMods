@@ -49,14 +49,20 @@ $(document).on 'page:change', ->
   do ->
     form = $('.mods-edit')
     if form.length
-      initialMessage = null
       setFieldsetLegend = ->
-        legend = $(this).closest('fieldset').children('legend')
+        $this = $(this)
+        $legend = $(this).closest('fieldset').children('legend')
+
+        initialMessage = $legend.data('initialMessage')
+        if not initialMessage
+          initialMessage = $legend.text()
+          $legend.data('initialMessage', initialMessage)
+
+       
         if this.value
-          initialMessage ||= legend.text()
-          legend.text(this.value)
-        else if initialMessage
-          legend.text(initialMessage)
+          $legend.text(initialMessage + ' / ' + this.value)
+        else
+          $legend.text(initialMessage)
 
       inputs =  $('.mods-edit .string.input input')
       inputs.each setFieldsetLegend

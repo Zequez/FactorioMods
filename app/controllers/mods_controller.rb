@@ -71,7 +71,6 @@ class ModsController < ApplicationController
 
   def new
     @mod = Mod.new
-    @categories = Category.all
   end
 
   def create
@@ -79,17 +78,22 @@ class ModsController < ApplicationController
     if @mod.save
       redirect_to category_mod_url(@mod.category, @mod)
     else
-      @categories = Category.all
       render :new
     end
   end
 
   def edit
-
+    @mod = Mod.find params[:id]
+    render :new
   end
 
   def update
-
+    @mod = Mod.find params[:id]
+    if @mod.update current_user.is_admin? ? mod_params_admin : mod_params
+      redirect_to category_mod_url(@mod.category, @mod)
+    else
+      render :new
+    end
   end
 
   private

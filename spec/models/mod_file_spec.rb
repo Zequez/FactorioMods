@@ -17,12 +17,17 @@ RSpec.describe ModFile, :type => :model do
     end
   end
 
-  describe '#attached_file' do
+  describe '#attachment' do
     it { expect(file).to respond_to :attachment }
 
     it 'should save with the attachment' do
       file.attachment = fixture('test.zip')
       expect(file.save).to eq true
+    end
+
+    it 'should not save without an attachment' do
+      file.attachment = nil
+      expect(file.save).to eq false
     end
   end
 

@@ -1,5 +1,5 @@
 .nested-fields.mod-version
-  = f.inputs name: "Mod version" do
+  = f.inputs name: mod_version_title(f.object) do
     = f.input :number
     = f.input :released_at, as: :date_picker, input_html: { value: (f.object.released_at.strftime('%Y-%m-%d') unless f.object.released_at.nil?) }
     = f.input :game_versions, collection: @game_versions

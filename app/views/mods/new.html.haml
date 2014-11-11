@@ -1,5 +1,8 @@
 .mods-edit
-  %h2 Create new mod
+  - if @mod.new_record?
+    %h2 Create new mod
+  - else
+    %h2 Edit #{@mod.name}
   = semantic_form_for @mod do |f|
     = f.inputs do
       = f.input :name

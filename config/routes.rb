@@ -41,14 +41,14 @@ Rails.application.routes.draw do
   end
 
   scope 'mods' do
-    resources :mods, path: '/', except: [:index, :show, :edit]
+    resources :mods, path: '/', except: [:index, :show, :edit, :update]
 
     new_sorting_section(:most_recent, 'recently-updated', true)
     new_sorting_section(:alpha, nil, true) # This is to generate the helper URL
     new_sorting_section(:alpha) # The default sorting
 
     category_scope do
-      resources :mods, path: '/', only: [:show, :edit]
+      resources :mods, path: '/', only: [:show, :edit, :update]
     end
   end
 

@@ -6,6 +6,7 @@ class ModFile < ActiveRecord::Base
   validates_attachment_content_type :attachment,
                                     :content_type => ['application/zip', 'application/x-zip-compressed', 'application/octet-stream/']
 
+  validates :attachment, presence: true
 
   before_save do
     self.mod = mod_version.mod if mod_version
