@@ -3,20 +3,21 @@
 .mods-show
   .mod
     .mod-images<
-      %ul.mod-medium-images
-        - if @mod.media_links.empty?
-          .mod-medium-image.active
-            .mod-medium-image-container
-              %img.mod-medium-image-img{src: mod_asset_missing_image(:medium)}
-        - @mod.media_links.each_with_index do |media_link, i|
-          %li.mod-medium-image{class: ('active' if i == 0)}
-            = media_link.embed
-            / %a.mod-medium-image-link{href: media_link.direct_url, target: '_blank'}
-            /   %img.mod-medium-image-img{src: asset.direct_url}
-      %ul.mod-thumb-images{class: ('many-thumbs' if @mod.media_links.size > 3)}
+      / %ul.mod-medium-images
+      /   - if @mod.media_links.empty?
+      /     %li.mod-medium-image.active
+      /       .mod-medium-image-container
+      /         %img.media-link{src: mod_asset_missing_image(:medium)}
+      /   - @mod.media_links.each_with_index do |media_link, i|
+      /     %li.mod-medium-image{class: ('active' if i == 0)}
+      /       .mod-medium-image-container
+      /         = media_link.embed
+      /       / %a.mod-medium-image-link{href: media_link.direct_url, target: '_blank'}
+      /       /   %img.mod-medium-image-img{src: asset.direct_url}
+      %ul.mod-thumb-images{class: ('many-thumbs' if @mod.media_links.size > 9)}
         - @mod.media_links.each do |media_link|
           %li.mod-thumb-image{'data-thumb-of' => media_link.direct_url}<>
-            %span.mod-thumb-image-container
+            %a.mod-thumb-image-container{href: media_link.direct_url}
               %img.mod-thumb-image-img{src: media_link.thumbnail_url}
 
     / .mod-thumbnail-container<

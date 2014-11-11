@@ -5,31 +5,33 @@ $(document).on 'page:change', ->
     if modImages.length
       new ModImages(modImages)
 
+  # mods#show
   # Images galleries
   do ->
-    for gallery in $('.mod-medium-images, .mod-thumb-images')
-      do (gallery = $(gallery))->
-        imagesSrc = (link.href for link in gallery.find('a'))
-        $(gallery).on 'click', 'a', (ev)->
-          if ev.button == 0 and not (ev.altKey || ev.shiftKey || ev.ctrlKey)
-            ev.preventDefault()
-            currentSrc = ev.currentTarget.href
-            console.log currentSrc
-            ImageModal.setImages(imagesSrc, imagesSrc.indexOf(currentSrc), ev)
+    # for gallery in $('.mod-medium-images [src], .mod-thumb-images [src]')
+    #   do (gallery = $(gallery))->
+    #     imagesSrc = (link.href for link in gallery.find('a'))
+    #     $(gallery).on 'click', 'a', (ev)->
+    #       if ev.button == 0 and not (ev.altKey || ev.shiftKey || ev.ctrlKey)
+    #         ev.preventDefault()
+    #         currentSrc = ev.currentTarget.href
+    #         console.log currentSrc
+    #         ImageModal.setImages(imagesSrc, imagesSrc.indexOf(currentSrc), ev)
 
+  # mods#show
   # Imagemover for missing images mod-thumbnail
-  do ->
-    $('[image-mover]').each (i, elem)->
-      new ImageMover elem, elem.firstElementChild
+  # do ->
+  #   $('[image-mover]').each (i, elem)->
+  #     new ImageMover elem, elem.firstElementChild
 
-  # Version filter query maker
-  do ->
-    versionFilterInput = $('.version-filter-input')
-    if versionFilterInput.length
-      options = versionFilterInput[0].options
-      versionFilterInput.on 'change', (ev)->
-        index = versionFilterInput[0].selectedIndex
-        Turbolinks.visit options[index].value
+  # # Version filter query maker
+  # do ->
+  #   versionFilterInput = $('.version-filter-input')
+  #   if versionFilterInput.length
+  #     options = versionFilterInput[0].options
+  #     versionFilterInput.on 'change', (ev)->
+  #       index = versionFilterInput[0].selectedIndex
+  #       Turbolinks.visit options[index].value
 
   # Search results highlighter
   do ->

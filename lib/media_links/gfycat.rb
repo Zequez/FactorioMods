@@ -6,7 +6,7 @@ module MediaLinks
     end
 
     def embed
-      tag :iframe, src: direct_url, class: ['media-link', 'media-link-gfycat']
+      content_tag(:iframe, '', src: direct_url, class: ['media-link', 'media-link-gfycat'])
     end
 
     def canonical_url

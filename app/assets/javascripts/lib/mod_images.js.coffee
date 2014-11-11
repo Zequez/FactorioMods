@@ -1,4 +1,4 @@
-class ModImages
+class window.ModImages
   constructor: (@modImages)->
     @findElements()
     @bindEvents()
@@ -8,9 +8,23 @@ class ModImages
   findElements: ->
     @mediumImages = @modImages.find('.mod-medium-image')
     @thumbImages = @modImages.find('.mod-thumb-image')
-    @mediumImagesLinks = @mediumImages.find('.mod-medium-image-link')
-    @mediumImagesImg = @mediumImages.find('.mod-medium-image-img')
+    @mediumImagesContainers = @mediumImages.find('.mod-medium-image-container')
+    @mediumImagesImg = @mediumImages.find('img')
     @activeImage = @mediumImages.filter('.active')
+
+    # if @mediumImages.length == 0
+    #   console.error '[ModImages] Could not find images'
+    # if !(@mediumImages.length == @thumbImages.length == @mediumImagesContainers.length == @mediumImagesImg)
+    #   console.error '[ModImages] Images count missmatch'
+    #   console.table
+    #     mediumImages: @mediumImages.length,
+    #     thumbImages: @thumbImages.length,
+    #     mediumImagesContainers: @mediumImagesContainers.length,
+    #     mediumImagesImg: @mediumImagesImg.length
+    # if @activeImage.length == 0
+    #   console.log '[ModImages] No active image'
+
+
 
   bindEvents: ->
     # Thumbnail switching
@@ -30,6 +44,6 @@ class ModImages
 
   generateImageMover: (i)->
     if not @imageMovers[i]
-      imageLink =  $(@mediumImagesLinks[i])
+      imageLink =  $(@mediumImagesContainers[i])
       imageImg  = $(@mediumImagesImg[i])
       @imageMovers[i] = new ImageMover imageLink, imageImg

@@ -37,7 +37,7 @@ module MediaLinks
       it 'should return an <iframe> tag with the direct URL' do
         m = Gfycat.new('http://gfycat.com/EthicalZanyHuman')
         # Pretty brittle test, but I couldn't think on anything better, sorry
-        expect(m.embed.split(/\s/)).to match_array '<iframe src="http://gfycat.com/ifr/EthicalZanyHuman" class="media-link media-link-gfycat" />'.split(/\s+/)
+        expect(m.embed.split(/\s/)).to match_array '<iframe class="media-link media-link-gfycat" src="http://gfycat.com/ifr/EthicalZanyHuman"></iframe>'.split(/\s+/)
       end
     end
   end
