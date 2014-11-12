@@ -27,7 +27,7 @@
           - if mod.media_links.size > 0
             %img.mod-thumbnail-img{src: mod.media_links.first.thumbnail_url}
           - else
-            %img.mod-thumbnail-img{src: mod_asset_missing_image(:thumb)}
+            %img.mod-thumbnail-img{src: mod_asset_missing_image(:thumb), title: 'No image available'}
       .mod-info-container
         %h2.mod-title
           = link_to mod.name, mod, class: 'highlight-query'
@@ -36,16 +36,19 @@
           = link_to mod.category.name, [mod.category, :mods]
         .mod-summary.highlight-query= mod.summary
       .mod-links
-        - unless mod.forum_post_url.blank?
+        - if mod.forum_url.present?
           %a.mod-link{href: mod.forum_post_url, title: 'Post on the official Factorio forum'}
             = mod.forum_comments_count unless mod.forum_comments_count.blank?
             = icon 'comments'
-        %span.mod-link{title: "#{mod.latest_version.released_at.to_s(:rfc822)} - Date of the latest version of this mod"}
-          = mod_date mod.latest_version.released_at
-          = icon 'history'
-        %span.mod-link(title='Last Factorio version this mod works with')
-          = "v#{mod.game_versions_string}"
-          = icon 'cog'
+
+        - if mod.latest_version.present? and mod.latest_version.released_at.present?
+          %span.mod-link{title: "#{mod.latest_version.released_at.to_s(:rfc822)} - Date of the latest version of this mod"}
+            = mod_date mod.latest_version.released_at
+            = icon 'history'
+        - if mod.game_versions_string.present?
+          %span.mod-link(title='Last Factorio version this mod works with')
+            = "v#{mod.game_versions_string}"
+            = icon 'cog'
         %span.mod-link{title: 'The awesome person behind this mod'}
           = mod.author_name
           = icon 'user'

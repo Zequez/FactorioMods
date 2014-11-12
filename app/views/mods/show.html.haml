@@ -15,10 +15,15 @@
       /       / %a.mod-medium-image-link{href: media_link.direct_url, target: '_blank'}
       /       /   %img.mod-medium-image-img{src: asset.direct_url}
       %ul.mod-thumb-images{class: ('many-thumbs' if @mod.media_links.size > 9)}
-        - @mod.media_links.each do |media_link|
-          %li.mod-thumb-image{'data-thumb-of' => media_link.direct_url}<>
-            %a.mod-thumb-image-container{href: media_link.direct_url}
-              %img.mod-thumb-image-img{src: media_link.thumbnail_url}
+        - if @mod.media_links.size > 0
+          - @mod.media_links.each do |media_link|
+            %li.mod-thumb-image{'data-thumb-of' => media_link.direct_url}<>
+              %a.mod-thumb-image-container{href: media_link.direct_url, target: '_blank'}
+                %img.mod-thumb-image-img{src: media_link.thumbnail_url}
+        - else
+          %li.mod-thumb-image
+            %span.mod-thumb-image-container
+              %img.mod-thumb-image-img{src: mod_asset_missing_image(:thumb), title: 'No image available'}
 
     / .mod-thumbnail-container<
     /   - @mod.assets.each_with_index do |asset, i|
@@ -42,24 +47,24 @@
       - if @mod.description.present?
         %h3 Description
         = @mod.description_html
-      .mod-downloads#downloads
-        - if @mod.has_files?
-          %h3 Downloads
-          %table.mod-downloads-table
-            %thead
+    .mod-downloads#downloads
+      - if @mod.has_files?
+        %h3 Downloads
+        %table.mod-downloads-table
+          %thead
+            %tr
+              %th Mod version
+              %th Factorio version
+              %th File download
+              %th Release date
+          %tbody
+            - @mod.latest_mod_file_and_version do |version, file|
               %tr
-                %th Mod version
-                %th Factorio version
-                %th File download
-                %th Release date
-            %tbody
-              - @mod.latest_mod_file_and_version do |version, file|
-                %tr
-                  %td= "#{version.number} #{file.name}"
-                  %td= version.game_versions_string
-                  %td= link_to "#{file.attachment_file_name} (#{number_to_human_size(file.attachment_file_size)})", file.attachment.url
-                  //%td= pretty_date version.released_at.to_s(:rfc822)
-                  %td= mod_date version.released_at
-        - else
-          %h3 This mod doesn't anything to download :(
-      
+                %td= "#{version.number} #{file.name}"
+                %td= version.game_versions_string
+                %td= link_to "#{file.attachment_file_name} (#{number_to_human_size(file.attachment_file_size)})", file.attachment.url
+                //%td= pretty_date version.released_at.to_s(:rfc822)
+                %td= mod_date version.released_at
+      - else
+        %h3 This mod doesn't anything to download :(
+    

@@ -26,7 +26,7 @@ class ModsController < ApplicationController
       @mods = @mods.sort_by_alpha
     when :forum_comments
       @mods = @mods.sort_by_forum_comments
-    when 'downloads'
+    when :downloads
       @mods = @mods.sort_by_downloads
     when :most_recent
       @mods = @mods.sort_by_most_recent

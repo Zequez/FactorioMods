@@ -79,8 +79,11 @@ $mods-list-size: 12-$filter-size
 
   .mod
     @extend %content-block
+    +relative()
     margin-bottom: rhythm()
     +pie-clearfix
+    &:hover
+      z-index: 100
 
     // .mod-thumbnail .asset-thumbnail
     //   border-radius: 5px 0px 0px 5px
@@ -141,7 +144,7 @@ $mods-list-size: 12-$filter-size
       +nowrap
 
       .btn-download
-        +relative
+        +absolute(false, space(), space(), false)
       //   bottom: rhythm(1)*0.5
       //   right: rhythm(1)*0.5
         z-index: 999

@@ -7,10 +7,12 @@
       - mod.latest_mod_file_and_version(2) do |version, file|
         %li
           %a{href: file.attachment.url}
-            %span(title='Mod version')= version.number
-            %span(title='Mod file name')= file.name
             = icon 'cog'
             %span(title='Factorio version')= version.game_versions_string
+            \/
+            %span(title='Mod version')= version.number
+            %span(title='Mod file name')= file.name
+            
             -#= "v#{file.mod_version.game_versions_string}"
       - if mod.versions.size > 2
         %li

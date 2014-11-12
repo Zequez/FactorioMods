@@ -23,6 +23,8 @@
 .btn-download
   +relative
   padding: 0px
+  > a
+    display: block
   a
     color: $color-white
     padding: 0px 0.5em
@@ -33,6 +35,15 @@
     border-radius: 0px 0px 2px 2px
     background: $color-washed-orange
     +font-x-smaller
+    text-align: left
+    li
+      overflow: hidden
+      background: $color-washed-orange
+      min-width: 100%
+      border-radius: 0 $border-radius $border-radius 0
+    li:hover
+      display: inline-block
+      overflow: initial
     a
       display: block
     a:hover
