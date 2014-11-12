@@ -90,7 +90,7 @@ class Mod < ActiveRecord::Base
       self.errors[:media_links_string].push "Invalid media links: " + manager.invalid_urls.join(', ')
     end
 
-    if manager.size > 10
+    if manager.size > 6
       self.errors[:media_links_string].push "No more than 10 links please"
     end
   end

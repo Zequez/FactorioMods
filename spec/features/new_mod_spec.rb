@@ -48,7 +48,7 @@ feature 'Modder creates a new mod' do
     fill_in 'Forum URL', with: 'http://www.factorioforums.com/forum/viewtopic.php?f=14&t=5971&sid=1786856d6a687e92f6a12ad9425aeb9e'
     fill_in 'Description', with: 'Lorem ipsum description potato salad simulator'
     fill_in 'Summary', with: 'This is a small mod for testing'
-    fill_in 'Media links string', with: "http://imgur.com/gallery/qLpt6gI\nhttp://gfycat.com/EthicalZanyHuman"
+    fill_in 'Pictures or gifs links', with: "http://imgur.com/gallery/qLpt6gI\nhttp://gfycat.com/EthicalZanyHuman"
     submit_form
     expect(current_path).to eq '/mods/potato-category/mah-super-mod'
     mod = Mod.first
@@ -69,7 +69,7 @@ feature 'Modder creates a new mod' do
     visit '/mods/new'
     fill_in 'Name', with: 'Invalid media link'
     select 'Potato', from: 'Category'
-    fill_in 'Media links string', with: "http://imgur.com/gallery/qLpt6gI\nhttp://caca.com\nhttp://gfycat.com/EthicalZanyHuman"
+    fill_in 'Pictures or gifs links', with: "http://imgur.com/gallery/qLpt6gI\nhttp://caca.com\nhttp://gfycat.com/EthicalZanyHuman"
     submit_form
     expect(current_path).to eq '/mods'
     expect(page).to have_content 'Invalid media links'

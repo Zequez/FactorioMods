@@ -70,6 +70,16 @@ RSpec.describe Mod, :type => :model do
         mod = build :mod, category_id: 123123
         expect(mod).to be_invalid
       end
+
+      it 'should be invalid with more than 6 media links' do
+        mod = build :mod, media_links_string: 7.times.map{|i| "http://imgur.com/gallery/qLpt6#{i}gI"}.join("\n")
+        expect(mod).to be_invalid
+      end
+
+      it 'should be valid with at most 6 media links' do
+        mod = build :mod, media_links_string: 6.times.map{|i| "http://imgur.com/gallery/qLpt6#{i}gI"}.join("\n")
+        expect(mod).to be_valid
+      end
     end
 
     describe '#author_name' do
@@ -254,16 +264,6 @@ RSpec.describe Mod, :type => :model do
 
     it 'should not be valid with a random domain' do
       mod = build :mod, media_links_string: 'http://potatosalad.com'
-      expect(mod).to be_invalid
-    end
-
-    it 'should allow 10 images' do
-      mod = build :mod, media_links_string: (['http://imgur.com/gallery/qLpt6gI']*10).join("\n")
-      expect(mod).to be_valid
-    end
-
-    it 'should not allow 11 images' do
-      mod = build :mod, media_links_string: (['http://imgur.com/gallery/qLpt6gI']*11).join("\n")
       expect(mod).to be_invalid
     end
 
