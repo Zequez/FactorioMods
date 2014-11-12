@@ -36,8 +36,9 @@
         .mod-summary.highlight-query= mod.summary
       .mod-links
         - if mod.forum_url.present?
-          %a.mod-link{href: mod.forum_post_url, title: 'Post on the official Factorio forum'}
-            = mod.forum_comments_count unless mod.forum_comments_count.blank?
+          %a.mod-link{href: mod.forum_url, title: 'Post on the official Factorio forum'}
+            Forum
+            /= mod.forum_comments_count unless mod.forum_comments_count.blank?
             = icon 'comments'
 
         - if mod.latest_version.present? and mod.latest_version.released_at.present?

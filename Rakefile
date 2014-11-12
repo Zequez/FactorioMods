@@ -87,7 +87,7 @@ task fake_data: :environment do
                   official_url: rand > 75 ? nil : "http://" + Forgery(:internet).domain_name,
                   favorites_count: rand(0..100),
                   comments_count: rand(0..150),
-                  forum_post_url: 'http://www.factorioforums.com/forum/viewtopic.php?f=14&t=' + rand(1000..4000).to_s,
+                  forum_url: 'http://www.factorioforums.com/forum/viewtopic.php?f=14&t=' + rand(1000..4000).to_s,
                   forum_comments_count: rand(0..150),
                   downloads_count: rand(0..25000),
                   visits_count: rand(0..100000),

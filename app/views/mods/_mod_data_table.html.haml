@@ -20,8 +20,8 @@
       / %td.mod-data-row-value= if_na(@mod.license) { link_to(@mod.license, @mod.license_url) }
       %td.mod-data-row-name Official forum post
       %td.mod-data-row-value
-        = if_na(@mod.forum_post_url.present?) do
-          %a{href: @mod.forum_post_url}
+        = if_na(@mod.forum_url.present?) do
+          %a{href: @mod.forum_url}
             On the Factorio forums
             / = @mod.forum_comments_count unless @mod.forum_comments_count.blank?
             / comments
