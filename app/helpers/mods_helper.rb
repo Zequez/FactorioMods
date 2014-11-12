@@ -34,4 +34,10 @@ module ModsHelper
     time_ago = time_ago_in_words(mod_version.released_at)
     "Mod version / #{mod_version.game_versions_string} / #{time_ago} ago"
   end
+
+  def mod_category_link(mod)
+    link_to [mod.category, :mods] do
+      content_tag(:i, '', class: mod.category.icon_class) + ' ' + mod.category.name
+    end
+  end
 end
