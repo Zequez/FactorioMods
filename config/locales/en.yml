@@ -57,6 +57,7 @@ en:
     labels:
       mod:
         forum_url: 'Forum URL'
+        official_url: 'Official URL'
         media_links_string: 'Pictures or gifs links'
 
       mod_version:

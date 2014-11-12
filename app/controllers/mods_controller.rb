@@ -102,6 +102,7 @@ class ModsController < ApplicationController
     params.require(:mod).permit(:name,
                                 :category_id,
                                 :github,
+                                :official_url,
                                 :forum_url,
                                 :description,
                                 :summary,

@@ -61,7 +61,6 @@ RSpec.describe ModsController, type: :controller do
       context "the category_id doesn't match a mod_id" do
         before(:each) { get_index category_id: 'banana-split' }
         it { expect(response.status).to eq 404 }
-        it { expect(response).to render_template 'errors/404' }
       end
 
       context 'the category_id matches a mod_id' do
@@ -170,7 +169,6 @@ RSpec.describe ModsController, type: :controller do
       before(:each) { get 'show', category_id: 'banana', id: 'split' }
 
       it { expect(response.status).to eq 404 }
-      it { expect(response).to render_template 'errors/404' }
     end
 
     context "category doesn't match the mod category" do
