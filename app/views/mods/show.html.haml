@@ -43,7 +43,7 @@
         %h3 Description
         = @mod.description_html
       .mod-downloads#downloads
-        - if false and @mod.has_files?
+        - if @mod.has_files?
           %h3 Downloads
           %table.mod-downloads-table
             %thead

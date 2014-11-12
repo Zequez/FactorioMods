@@ -1,3 +1,4 @@
+# Binds Mod - ModVersion - GameVersion so we can get all the GameVersion from Mod directly
 class ModGameVersion < ActiveRecord::Base
   belongs_to :game_version
   belongs_to :mod_version

@@ -66,4 +66,15 @@ RSpec.configure do |config|
   # The different available types are documented in the features, such as in
   # https://relishapp.com/rspec/rspec-rails/docs
   config.infer_spec_type_from_file_location!
+
+
+  def sign_in
+    @user = create :user
+    login_as @user
+  end
+
+  def sign_in_admin
+    @user = create :user, is_admin: true
+    login_as @user
+  end
 end

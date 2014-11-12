@@ -107,10 +107,12 @@ class ModsController < ApplicationController
                                 :summary,
                                 :media_links_string, 
                                 versions_attributes: [
+                                  :id,
                                   :number,
                                   :released_at,
                                   game_version_ids: [],
                                   files_attributes: [
+                                    :id,
                                     :attachment,
                                     :name
                                   ]
