@@ -64,6 +64,14 @@ task fake_data: :environment do
 
     ### Mods
     ##################
+    links = ['http://i.imgur.com/b9VDd2E.jpg', 
+           'http://i.imgur.com/6TIfdyR.jpg',
+           'http://i.imgur.com/6DS3LT6.jpg',
+           'http://i.imgur.com/jRBKTqv.jpg',
+           'http://gfycat.com/HorribleUnkemptBeaver',
+           'http://gfycat.com/ExcellentUnsightlyAfricanporcupine',
+           'http://gfycat.com/SharpGiganticEchidna']
+
     categories = Category.all
     rand(30..50).times do |i|
       github_url = Forgery(:lorem_ipsum).words(1, random: true) + '/' + Forgery(:lorem_ipsum).words(1, random: true)
@@ -84,7 +92,8 @@ task fake_data: :environment do
                   downloads_count: rand(0..25000),
                   visits_count: rand(0..100000),
                   description: Forgery(:lorem_ipsum).paragraphs(rand(3..6), random: true),
-                  summary: Forgery(:lorem_ipsum).words(rand(10..100), random: true)
+                  summary: Forgery(:lorem_ipsum).words(rand(10..100), random: true),
+                  media_links_string: links.sample(rand(4)).join("\n")
 
     end
 
@@ -116,21 +125,13 @@ task fake_data: :environment do
 
       ### Mod Assets
       ##################
-      rand(1..3).times do |i|
-        links = ['http://i.imgur.com/b9VDd2E.jpg', 
-                 'http://i.imgur.com/6TIfdyR.jpg',
-                 'http://i.imgur.com/6DS3LT6.jpg',
-                 'http://i.imgur.com/jRBKTqv.jpg',
-                 'http://gfycat.com/HorribleUnkemptBeaver',
-                 'http://gfycat.com/ExcellentUnsightlyAfricanporcupine',
-                 'http://gfycat.com/SharpGiganticEchidna']
-                 
-        image = Dir[Rails.root.join('spec', 'fixtures', 'sample_images', '*')]
-        ModAsset.create! mod: mod,
-                         sort_order: i,
-                         image: File.new(image.sample)
+      # rand(1..3).times do |i|       
+      #   image = Dir[Rails.root.join('spec', 'fixtures', 'sample_images', '*')]
+      #   ModAsset.create! mod: mod,
+      #                    sort_order: i,
+      #                    image: File.new(image.sample)
 
-      end
+      # end
     end
   end
 end
