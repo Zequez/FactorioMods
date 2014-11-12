@@ -2,24 +2,19 @@
   %tbody
     %tr.mod-data-row
       %td.mod-data-row-name Game version
-      %td.mod-data-row-value= @mod.game_versions_string
+      %td.mod-data-row-value= if_na(@mod.game_versions_string.present?) { @mod.game_versions_string }
       %td.mod-data-row-name Author
       %td.mod-data-row-value= @mod.author_name
     %tr.mod-data-row
       %td.mod-data-row-name Source code
-      %td.mod-data-row-value= if_na(@mod.github_url) { link_to(@mod.github_path, @mod.github_url) }
+      %td.mod-data-row-value= if_na(@mod.github_url.present?) { link_to(@mod.github_path, @mod.github_url) }
       %td.mod-data-row-name Tags
       %td.mod-data-row-value N/A
     %tr.mod-data-row
       %td.mod-data-row-name First version
-      %td.mod-data-row-value= if_na(@mod.has_versions?) { @mod.versions.first.number }
+      %td.mod-data-row-value= if_na(@mod.has_versions?) { mod_release(@mod.versions.first) }
       %td.mod-data-row-name Last version
-      %td.mod-data-row-value= if_na(@mod.has_versions?) { @mod.versions.last.number }
-    %tr.mod-data-row
-      %td.mod-data-row-name First release
-      %td.mod-data-row-value= if_na(@mod.has_versions? && @mod.versions.first.released_at) { @mod.versions.first.released_at.to_s(:rfc822) }
-      %td.mod-data-row-name Last release
-      %td.mod-data-row-value= if_na(@mod.has_versions? && @mod.versions.last.released_at) { @mod.versions.last.released_at.to_s(:rfc822) }
+      %td.mod-data-row-value= if_na(@mod.has_versions?) { mod_release(@mod.versions.last) }
     %tr.mod-data-row
       / %td.mod-data-row-name License
       / %td.mod-data-row-value= if_na(@mod.license) { link_to(@mod.license, @mod.license_url) }
@@ -33,4 +28,5 @@
     %tr.mod-data-row
       %td.mod-data-row-name Official site
       %td.mod-data-row-value{colspan: 3}
-        = link_to @mod.official_url, @mod.official_url
+        = if_na(@mod.official_url.present?) do
+          = link_to @mod.official_url, @mod.official_url

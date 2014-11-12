@@ -33,26 +33,33 @@
       .mod-subtitle
         on
         = link_to @mod.category.name, [@mod.category, :mods]
-        %a.edit-mod-link{href: edit_mod_url(@mod)} Edit mod
+        %a.mod-subtitle-edit-link{href: edit_mod_url(@mod)} Edit mod
+      .mod-summary
+        = @mod.summary
       = render partial: 'mod_data_table'
       = render partial: 'download_button', locals: { mod: @mod }
     .mod-description
-      %h3 Description
-      = @mod.description_html
-    .mod-downloads#downloads
-      %h3 Downloads
-      %table.mod-downloads-table
-        %thead
-          %tr
-            %th Mod version
-            %th Factorio version
-            %th File download
-            %th Release date
-        %tbody
-          - @mod.latest_mod_file_and_version do |version, file|
-            %tr
-              %td= "#{version.number} #{file.name}"
-              %td= version.game_versions_string
-              %td= link_to "#{file.attachment_file_name} (#{number_to_human_size(file.attachment_file_size)})", file.attachment.url
-              //%td= pretty_date version.released_at.to_s(:rfc822)
-              %td= mod_date version.released_at
+      - if @mod.description.present?
+        %h3 Description
+        = @mod.description_html
+      .mod-downloads#downloads
+        - if false and @mod.has_files?
+          %h3 Downloads
+          %table.mod-downloads-table
+            %thead
+              %tr
+                %th Mod version
+                %th Factorio version
+                %th File download
+                %th Release date
+            %tbody
+              - @mod.latest_mod_file_and_version do |version, file|
+                %tr
+                  %td= "#{version.number} #{file.name}"
+                  %td= version.game_versions_string
+                  %td= link_to "#{file.attachment_file_name} (#{number_to_human_size(file.attachment_file_size)})", file.attachment.url
+                  //%td= pretty_date version.released_at.to_s(:rfc822)
+                  %td= mod_date version.released_at
+        - else
+          %h3 This mod doesn't anything to download :(
+      

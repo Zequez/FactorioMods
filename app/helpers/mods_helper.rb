@@ -2,10 +2,16 @@ module ModsHelper
   def mod_date(date)
     if date
       string = time_ago_in_words(date) + ' ago'
-      content_tag :span, string, title: date.to_s(:rfc822)
+      time_tag(date, string, title: date.to_s(:rfc822)).html_safe
     else
       ''
     end
+  end
+
+  def mod_release(mod_version)
+    string = h mod_version.number
+    string += (' (' + mod_date(mod_version.released_at) + ')').html_safe if mod_version.released_at
+    string
   end
 
   def attachment_label(mod, name)

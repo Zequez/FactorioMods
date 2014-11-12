@@ -130,7 +130,11 @@ class Mod < ActiveRecord::Base
   end
 
   def author_name
-    super || (author ? author.name : nil)
+    if super.present?
+      super
+    else 
+      author ? author.name : nil
+    end
   end
 
   def github_path
