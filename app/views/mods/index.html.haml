@@ -23,11 +23,10 @@
   - @mods.each do |mod|
     .mod
       .mod-thumbnail<
-        - if mod.first_asset
-          %a.mod-thumbnail-link{href: mod.first_asset.image.url(:full)}
-            %img.mod-thumbnail-img{src: mod.first_asset.image.url(:thumb)}
-        - else
-          .mod-thumbnail-link
+        %a.mod-thumbnail-link{href: mod_url(mod)}
+          - if mod.media_links.size > 0
+            %img.mod-thumbnail-img{src: mod.media_links.first.thumbnail_url}
+          - else
             %img.mod-thumbnail-img{src: mod_asset_missing_image(:thumb)}
       .mod-info-container
         %h2.mod-title
