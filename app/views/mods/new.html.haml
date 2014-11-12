@@ -11,9 +11,9 @@
       = f.input :github
       = f.input :official_url
       = f.input :forum_url
-      = f.input :description, hint: 'Markdown'
+      = f.input :description
       = f.input :summary
-      = f.input :media_links_string, as: :text, hint: 'URLs for pictures or gifs. Domains allowed: imgur.com, gfycat.com'
+      = f.input :media_links_string, as: :text, hint: t('formtastic.hints.mod.media_links_string').html_safe
       %li.nested-form.mod-versions
         = f.semantic_fields_for :versions do |ff|
           = render 'version_fields', f: ff

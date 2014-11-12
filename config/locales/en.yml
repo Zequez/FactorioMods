@@ -42,6 +42,12 @@ en:
     labels:
       mod:
         forum_url: 'Forum URL'
+        media_links_string: 'Pictures or gifs links'
 
       mod_version:
         released_at: 'Release day'
+
+    hints:
+      mod:
+        description: Markdown
+        media_links_string: 'URLs for pictures or "gifs". Domains allowed: <a href="http://imgur.com">imgur.com</a>, <a href="http://gfycat.com">gfycat.com</a>. Maximum: 6 links.'
