@@ -9,15 +9,24 @@ class ApplicationController < ActionController::Base
   rescue_from ActiveRecord::RecordNotFound, with: :not_found
 
   def not_found
-    render 'errors/404', status: 404
+    params[:controller] = 'errors'
+    params[:action] = 'error-404'
+    @error_code = 404
+    render 'errors/base', status: 404
   end
 
   def access_denied(exception = nil)
-    render text: '403 Access denied', status: 403
+    params[:controller] = 'errors'
+    params[:action] = 'error-403'
+    @error_code = 403
+    render 'errors/base', status: 403
   end
 
   def authentication_error(exception = nil)
-    render text: '401 Authentication error, you need to log in', status: 401
+    params[:controller] = 'errors'
+    params[:action] = 'error-401'
+    @error_code = 401
+    render 'errors/base', status: 401
   end
 
   ### Helpers

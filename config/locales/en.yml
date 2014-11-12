@@ -38,6 +38,21 @@ en:
       how_to_install: How to install mods on Factorio
       how_to_make: How to create mods for Factorio
 
+  error_pages:
+    '401':
+      title: 401 Authentication error
+      header: 401 Authentication error
+      content: "You need to log in (not open to the public for now, sorry)"
+    '403':
+      title: 403 Access denied
+      header: 403 Access denied
+      content: "You are not supposed to be here"
+    '404':
+      title: 404 Not found
+      header: 404
+      content: This is not the page you are looking for.
+
+
   formtastic:
     labels:
       mod:
