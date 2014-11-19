@@ -10,7 +10,7 @@ feature 'Display an index of mods in certain order' do
 
   context 'with multiple mods' do
 
-    before(:all) do
+    before(:each) do
       create_mod 'SuperMod2', 2.days.ago, 1000
       create_mod 'SuperMod4', 5.days.ago, 800
       create_mod 'superMod0', 10.days.ago, 1200
