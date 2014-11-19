@@ -47,7 +47,7 @@ module ApplicationHelper
   ####################
 
   def sort_url(sort)
-    polymorphic_path([sort, @category, :mods], filter_params)
+    polymorphic_path([sort, (@category if params[:action] == 'index'), :mods], filter_params)
   end
 
   def category_filter_url(category)
