@@ -6,10 +6,9 @@
     %li.sorter><
       = sort_link :alpha do
         = icon 'sort-alpha-asc', 'Alphabetically'
-    -# %li.sorter<>
-    -#   = sort_link :downloads do
-    -#     = icon 'sort-amount-desc'
-    -#     Most downloaded
+    %li.sorter<>
+      = sort_link :popular do
+        = icon 'star-o', 'Most Popular'
     -# %li.sorter<>
     -#   = sort_link :forum_comments do
     -#     = icon 'comments-o'

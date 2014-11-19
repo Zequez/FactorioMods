@@ -32,6 +32,7 @@ en:
           most_recent: ' recently updated '
           alpha: ' '
           downloads: ' most downloaded '
+          popular: ' most popular'
           forum_comments: ' most forum comments '
       show: '%{name}'
     static:

@@ -36,10 +36,14 @@
         .mod-summary.highlight-query= mod.summary
       .mod-links
         - if mod.forum_url.present?
-          %a.mod-link{href: mod.forum_url, title: 'Post on the official Factorio forum'}
-            Forum
-            /= mod.forum_comments_count unless mod.forum_comments_count.blank?
-            = icon 'comments'
+          - if mod.forum_post
+            %a.mod-link{href: mod.forum_url, title: "#{mod.forum_post.views_count} views and #{mod.forum_post.comments_count} comments on the official Factorio forum"}
+              #{mod.forum_post.views_count}<abbr title="Views">V</abbr> / #{mod.forum_post.comments_count}<abbr title="Comments">C</abbr>
+              = icon 'comments'
+          - else
+            %a.mod-link{href: mod.forum_url, title: 'Post on the official Factorio forum'}
+              Forum
+              = icon 'comments'
 
         - if mod.latest_version.present? and mod.latest_version.released_at.present?
           %span.mod-link{title: "#{mod.latest_version.released_at.to_s(:rfc822)} - Date of the latest version of this mod"}

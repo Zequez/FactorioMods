@@ -4,7 +4,7 @@ class ModsController < ApplicationController
   def index
     @mods = Mod
 
-    @mods = @mods.includes([:category, :author, versions: :files])
+    @mods = @mods.includes([:category, :author, :forum_post, versions: :files])
 
     if params[:category_id]
       @category = Category.find_by_slug params[:category_id]
@@ -24,6 +24,8 @@ class ModsController < ApplicationController
     case @sort
     when :alpha
       @mods = @mods.sort_by_alpha
+    when :popular
+      @mods = @mods.sort_by_popular
     when :forum_comments
       @mods = @mods.sort_by_forum_comments
     when :downloads

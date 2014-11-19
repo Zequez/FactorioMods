@@ -5,7 +5,7 @@ $fa-version: "4.1.0" !default;
 // $('.fa').map(function(i, e){return e.className.replace(/\s*fa-?\s*/g, '')}).toArray().filter(function(value, index, self){ return self.indexOf(value) == index })
 // TODO: Port uncss to Ruby. Or better, just make a binding.
 
-$fa-used-icons: "gears", "history", "sort-alpha-asc", "cog", "cogs", "android", "headphones", "desktop", "flask", "cube", "question-circle", "gamepad", "bomb", "globe", "flag", "indent", "archive", "automobile", "picture-o", "comments", "user", "download";
+$fa-used-icons: "gears", "history", "sort-alpha-asc", "cog", "cogs", "android", "headphones", "desktop", "flask", "cube", "question-circle", "gamepad", "bomb", "globe", "flag", "indent", "archive", "automobile", "picture-o", "comments", "user", "download", "star-o";
 
 .fa {
   display: inline-block;

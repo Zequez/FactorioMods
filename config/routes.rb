@@ -44,6 +44,7 @@ Rails.application.routes.draw do
     resources :mods, path: '/', except: [:index, :show, :edit, :update]
 
     new_sorting_section(:most_recent, 'recently-updated', true)
+    new_sorting_section(:popular, 'most-popular', true)
     new_sorting_section(:alpha, nil, true) # This is to generate the helper URL
     new_sorting_section(:alpha) # The default sorting
 

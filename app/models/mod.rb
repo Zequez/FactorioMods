@@ -48,10 +48,11 @@ class Mod < ActiveRecord::Base
   scope :filter_by_game_version, ->(game_version) do
     select('DISTINCT mods.*').joins(:mod_game_versions).where(mod_game_versions: { game_version: game_version })
   end
-  scope :sort_by_most_recent, -> { group('mod_versions.mod_id').joins(:versions).order('mod_versions.released_at desc') }
-  scope :sort_by_alpha, -> { order('mods.name asc') }
+  scope :sort_by_most_recent, -> { group('mod_versions.mod_id').includes(:versions).order('mod_versions.released_at desc') }
+  scope :sort_by_alpha, -> { order('LOWER(mods.name) asc') }
   scope :sort_by_forum_comments, -> { order('mods.forum_comments_count desc') }
   scope :sort_by_downloads, -> { order('mods.downloads_count desc') }
+  scope :sort_by_popular, -> { includes(:forum_post).order('forum_posts.views_count desc') }
   
   def self.filter_by_search_query(query)
     s1 = s2 = s3 = self
