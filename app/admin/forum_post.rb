@@ -26,6 +26,8 @@ ActiveAdmin.register ForumPost do
   end
 
   scope :title_changed
+  scope :without_mod
+  scope :with_mod
 
   index do
     selectable_column
@@ -52,9 +54,9 @@ ActiveAdmin.register ForumPost do
 
     column :mod do |post|
       if post.mod
-        link_to post.mod.id, [:edit, :admin, post.mod]
+        link_to post.mod.name, [:edit, post.mod.category, post.mod]
       else
-        link_to 'Create', [:new, :admin, :mod, forum_post_id: post.id]
+        link_to 'Create', [:new, :mod, forum_post_id: post.id]
       end
     end
 

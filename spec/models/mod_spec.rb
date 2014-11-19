@@ -248,6 +248,15 @@ RSpec.describe Mod, :type => :model do
     describe '#forum_post' do
       it { expect(mod).to respond_to :forum_post }
       it { expect(mod.build_forum_post).to be_kind_of ForumPost }
+
+      it 'should associate with a #forum_post based on the forum_url if it can find it' do
+        forum_post = create :forum_post, url: 'http://www.factorioforums.com/forum/viewtopic.php?f=14&t=6742'
+        mod = create :mod, forum_url: 'http://www.factorioforums.com/forum/viewtopic.php?f=14&t=6742'
+        forum_post.reload
+
+        expect(mod.forum_post).to eq forum_post
+        expect(forum_post.mod).to eq mod
+      end
     end
   end
 

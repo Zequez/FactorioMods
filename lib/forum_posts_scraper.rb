@@ -18,7 +18,7 @@ class ForumPostsScraper < Scraper::Base
 
         ### Title
         title = row.search('.topictitle').text
-        post.title_changed = post.title != title
+        post.title_changed = post.title != title if not post.title_changed
         post.title = title
 
         ### Published Date At

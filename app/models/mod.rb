@@ -81,6 +81,19 @@ class Mod < ActiveRecord::Base
     simple_format
   end
 
+  before_save do
+    if forum_url
+      self.forum_post = ForumPost.find_by_url(forum_url)
+    end
+  end
+
+  after_save do
+    if forum_post
+      forum_post.mod = self
+      forum_post.save
+    end
+  end
+
   ### Validations
   #################
 
@@ -91,7 +104,7 @@ class Mod < ActiveRecord::Base
     end
 
     if manager.size > 6
-      self.errors[:media_links_string].push "No more than 10 links please"
+      self.errors[:media_links_string].push "No more than 6 links please"
     end
   end
 

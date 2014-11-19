@@ -121,6 +121,21 @@ feature 'Modder creates a new mod' do
     expect(mod.author_name).to eq 'MangoDev'
   end
 
+  scenario 'admin tries to create a mod from the forum_posts dashboard, so it has pre-filled attributes' do
+    sign_in_admin
+    create_category 'Potato'
+    released_at = 5.days.ago
+    forum_post = create :forum_post, title: '[0.11.x] Potato mod',
+                                     author_name: 'SuperGuy', 
+                                     published_at: released_at, 
+                                     url: 'http://www.factorioforums.com/forum/viewtopic.php?f=14&t=6742'
+    visit "/mods/new?forum_post_id=#{forum_post.id}"
+    expect(find('#mod_name').value).to eq '[0.11.x] Potato mod'
+    expect(find('#mod_author_name').value).to eq 'SuperGuy'
+    expect(find('#mod_forum_url').value).to eq 'http://www.factorioforums.com/forum/viewtopic.php?f=14&t=6742'
+    expect(find('[id$=released_at]').value).to eq released_at.strftime('%Y-%m-%d')
+  end
+
   def submit_form
     click_button 'Create Mod'
   end
