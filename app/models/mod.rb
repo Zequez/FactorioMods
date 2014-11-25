@@ -113,6 +113,16 @@ class Mod < ActiveRecord::Base
   # validates :author, presence: true
   validates :category, presence: true
 
+  # name uniqueness with link
+  validate do
+    if ( mod = Mod.where(name: name).first )
+      if mod.id != id
+        url = Rails.application.routes.url_helpers.category_mod_path mod.category, mod
+        self.errors[:name].push I18n.t('activerecord.errors.models.mod.attributes.name.taken_with_link', url: url)
+      end
+    end
+  end
+
   ### Attributes
   #################
 

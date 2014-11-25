@@ -53,6 +53,13 @@ en:
       header: 404
       content: This is not the page you are looking for.
 
+  activerecord:
+    errors:
+      models:
+        mod:
+          attributes:
+            name:
+              taken_with_link: "There is already <a href='%{url}''>another mod</a> with that name"
 
   formtastic:
     labels:

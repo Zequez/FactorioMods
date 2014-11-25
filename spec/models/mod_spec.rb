@@ -56,6 +56,12 @@ RSpec.describe Mod, :type => :model do
         expect(mod).to be_invalid
       end 
 
+      it 'should be invalid with the same name as an existing mod' do
+        mod1 = create :mod, name: 'PotatoMod'
+        mod2 = build :mod, name: 'PotatoMod'
+        expect(mod2).to be_invalid
+      end
+
       # it 'should be invalid without author' do
       #   mod = build :mod, author: nil
       #   expect(mod).to be_invalid
