@@ -53,7 +53,7 @@ class ModsController < ApplicationController
     end
 
     @game_versions = GameVersion.sort_by_newer_to_older
-    @categories = Category.order_by_mods_count
+    @categories = Category.order_by_mods_count.order_by_name
     # TODO: latest_files
   end
 

@@ -7,4 +7,5 @@ class Category < ActiveRecord::Base
   validates :name, uniqueness: true
 
   scope :order_by_mods_count, -> { order('mods_count desc') }
+  scope :order_by_name, -> { order('name asc') }
 end
