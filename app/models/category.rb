@@ -4,5 +4,7 @@ class Category < ActiveRecord::Base
 
   has_many :mods
 
+  validates :name, uniqueness: true
+
   scope :order_by_mods_count, -> { order('mods_count desc') }
 end

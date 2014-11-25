@@ -7,7 +7,7 @@
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
 
-User.create!(email: 'zequez@gmail.com', name: 'Zequez', password: 'qwfpqwfp', password_confirmation: 'qwfpqwfp', is_admin: true)
+# User.create!(email: 'zequez@gmail.com', name: 'Zequez', password: 'qwfpqwfp', password_confirmation: 'qwfpqwfp', is_admin: true)
 
 Category.create! name: 'Uncategorized',     icon_class: 'fa fa-question-circle'
 Category.create! name: 'Sound',             icon_class: 'fa fa-headphones'
@@ -15,6 +15,8 @@ Category.create! name: 'Terrain',           icon_class: 'fa fa-globe'
 Category.create! name: 'Campaigns',         icon_class: 'fa fa-flag'
 Category.create! name: 'Gameplay',          icon_class: 'fa fa-gamepad'
 Category.create! name: 'Equipment',         icon_class: 'fa fa-briefcase'
+Category.create! name: 'Defense',           icon_class: 'fa fa-shield'
+Category.create! name: 'Energy',            icon_class: 'fa fa-bolt'
 Category.create! name: 'GUI',               icon_class: 'fa fa-desktop'
 Category.create! name: 'Manufacturing',     icon_class: 'fa fa-cogs'
 Category.create! name: 'Weapons',           icon_class: 'fa fa-bomb'
