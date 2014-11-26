@@ -76,10 +76,10 @@ class Mod < ActiveRecord::Base
 
   auto_html_for :description do
     html_escape
+    redcarpet
     image
     youtube(autoplay: false)
     link rel: 'nofollow'
-    simple_format
   end
 
   before_save do

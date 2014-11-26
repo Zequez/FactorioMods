@@ -6,7 +6,7 @@
       %td.mod-data-row-name Author
       %td.mod-data-row-value= @mod.author_name
     %tr.mod-data-row
-      %td.mod-data-row-name Source code
+      %td.mod-data-row-name Github
       %td.mod-data-row-value= if_na(@mod.github_url.present?) { link_to(@mod.github_path, @mod.github_url) }
       %td.mod-data-row-name Tags
       %td.mod-data-row-value N/A
