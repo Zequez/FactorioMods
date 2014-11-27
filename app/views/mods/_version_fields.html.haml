@@ -1,3 +1,4 @@
+- f.object.files.build unless f.object.has_files? # This is so the cocoon gem generates the default version fields with an initial file. It's a horrible hack, but I didn't find any other way.
 .nested-fields.mod-version
   = f.inputs name: mod_version_title(f.object) do
     = f.input :number

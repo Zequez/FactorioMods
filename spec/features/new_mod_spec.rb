@@ -28,8 +28,9 @@ feature 'Modder creates a new mod' do
     sign_in
     create_category 'Terrain'
     visit '/mods/new'
-    fill_in 'Name', with: 'Super Mod'
+    fill_in 'mod_name', with: 'Super Mod'
     select 'Terrain', from: 'Category'
+    fill_in_first_version_and_file
     submit_form
     expect(current_path).to eq '/mods/terrain/super-mod'
     mod = Mod.first
@@ -42,7 +43,7 @@ feature 'Modder creates a new mod' do
     sign_in
     create_category 'Potato category'
     visit '/mods/new'
-    fill_in 'Name', with: 'Mah super mod'
+    fill_in 'mod_name', with: 'Mah super mod'
     select 'Potato category', from: 'Category'
     fill_in 'Github', with: 'http://github.com/factorio-mods/mah-super-mod'
     fill_in 'Forum URL', with: 'http://www.factorioforums.com/forum/viewtopic.php?f=14&t=5971&sid=1786856d6a687e92f6a12ad9425aeb9e'
@@ -50,6 +51,7 @@ feature 'Modder creates a new mod' do
     fill_in 'Description', with: 'Lorem ipsum description potato salad simulator'
     fill_in 'Summary', with: 'This is a small mod for testing'
     fill_in 'Pictures or gifs links', with: "http://imgur.com/gallery/qLpt6gI\nhttp://gfycat.com/EthicalZanyHuman"
+    fill_in_first_version_and_file
     submit_form
     expect(current_path).to eq '/mods/potato-category/mah-super-mod'
     mod = Mod.first
@@ -69,24 +71,24 @@ feature 'Modder creates a new mod' do
     sign_in
     category = create :category, name: 'Potato'
     visit '/mods/new'
-    fill_in 'Name', with: 'Invalid media link'
+    fill_in 'mod_name', with: 'Invalid media link'
     select 'Potato', from: 'Category'
+    fill_in_first_version_and_file
     fill_in 'Pictures or gifs links', with: "http://imgur.com/gallery/qLpt6gI\nhttp://caca.com\nhttp://gfycat.com/EthicalZanyHuman"
     submit_form
     expect(current_path).to eq '/mods'
     expect(page).to have_content 'Invalid media links'
   end
 
-  scenario 'user submits mod with a version and file', js: true do
+  scenario 'user submits mod with a version and file' do
     sign_in
     create_category 'Potato'
     create :game_version, number: '1.1.x'
     create :game_version, number: '1.2.x'
     attachment = File.new(Rails.root.join('spec', 'fixtures', 'test.zip'))
     visit '/mods/new'
-    fill_in 'Name', with: 'Valid mod name'
+    fill_in 'mod_name', with: 'Valid mod name'
     select 'Potato', from: 'Category'
-    click_link 'Add version'
     within('.mod-version:nth-child(1)') do
       fill_in 'Number', with: '123'
       fill_in 'Release day', with: '2014-11-09'  
@@ -112,9 +114,10 @@ feature 'Modder creates a new mod' do
     sign_in_admin
     create_category 'Potato'
     visit '/mods/new'
-    fill_in 'Name', with: 'Mod Name'
+    fill_in 'mod_name', with: 'Mod Name'
     select 'Potato', from: 'Category'
     fill_in 'Author name', with: 'MangoDev'
+    fill_in_first_version_and_file
     submit_form
     mod = Mod.first
     expect(current_path).to eq '/mods/potato/mod-name'
@@ -141,12 +144,23 @@ feature 'Modder creates a new mod' do
     create_category 'Potato'
     mod = create :mod, name: 'SuperMod', category: @category
     visit "/mods/new"
-    fill_in 'Name', with: 'SuperMod'  
+    fill_in 'mod_name', with: 'SuperMod'  
     select 'Potato', from: 'Category'
+    fill_in_first_version_and_file
     submit_form
     expect(current_path).to eq '/mods'
     expect(page).to have_content "There is already another mod with that name"
     expect(page).to have_link "another mod", "/mods/potato/supermod"
+  end
+
+  def fill_in_first_version_and_file
+    attachment = File.new(Rails.root.join('spec', 'fixtures', 'test.zip'))
+    within('.mod-version:nth-child(1)') do
+      fill_in 'Number', with: '123'
+      within('.mod-version-file:nth-child(1)') do
+        attach_file 'Attachment', attachment.path
+      end
+    end
   end
 
   def submit_form

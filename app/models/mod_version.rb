@@ -10,6 +10,12 @@ class ModVersion < ActiveRecord::Base
 
   accepts_nested_attributes_for :files, allow_destroy: true
 
+  # def build
+  #   result = super
+  #   this.files.build
+  #   result
+  # end
+
   ### Validations
   #################
 

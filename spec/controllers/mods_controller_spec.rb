@@ -34,7 +34,7 @@ RSpec.describe ModsController, type: :controller do
       create :game_version, is_group: true
       create :game_version
       create :game_version, is_group: true
-      expect(assigns(:categories)).to match Category.order_by_mods_count
+      expect(assigns(:categories)).to match Category.order_by_mods_count.order_by_name
       expect(assigns(:game_versions)).to match GameVersion.sort_by_newer_to_older.all
     end
 

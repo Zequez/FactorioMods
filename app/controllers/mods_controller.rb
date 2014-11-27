@@ -73,22 +73,27 @@ class ModsController < ApplicationController
 
   def new
     @mod = Mod.new
+    mod_version = @mod.versions.build
+    mod_file = mod_version.files.build
+
     if params[:forum_post_id]
       forum_post = ForumPost.find params[:forum_post_id]
       @mod.name = forum_post.title
       @mod.author_name = forum_post.author_name
       @mod.forum_url = forum_post.url
       if forum_post.published_at
-        @mod.versions << ModVersion.new(released_at: forum_post.published_at)
+        mod_version.released_at = forum_post.published_at
       end
     end
   end
 
   def create
+    L params
     @mod = Mod.new(current_user.is_admin? ? mod_params_admin : mod_params)
     if @mod.save
       redirect_to category_mod_url(@mod.category, @mod)
     else
+      L @mod.errors
       render :new
     end
   end
