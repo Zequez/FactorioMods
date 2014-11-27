@@ -7,7 +7,7 @@
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
 
-# User.create!(email: 'zequez@gmail.com', name: 'Zequez', password: 'qwfpqwfp', password_confirmation: 'qwfpqwfp', is_admin: true)
+User.create!(email: 'zequez@gmail.com', name: 'Zequez', password: 'qwfpqwfp', password_confirmation: 'qwfpqwfp', is_admin: true)
 
 Category.create! name: 'Uncategorized',     icon_class: 'fa fa-question-circle'
 Category.create! name: 'Sound',             icon_class: 'fa fa-headphones'

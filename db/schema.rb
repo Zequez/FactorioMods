@@ -150,8 +150,6 @@ ActiveRecord::Schema.define(version: 20141029002644) do
     t.integer  "mod_id"
     t.string   "number"
     t.datetime "released_at"
-    t.datetime "created_at"
-    t.datetime "updated_at"
     t.integer  "sort_order",                   default: 0, null: false
     t.string   "game_versions_string"
     t.string   "precise_game_versions_string"

@@ -57,10 +57,10 @@ ActiveAdmin.register Mod do
     selectable_column
     id_column
 
-    column :name do |mod|
-      link_to(mod.name, [mod.category, mod]) +
-      link_to(' [Official &#11016;]'.html_safe, mod.official_url)
-    end
+    # column :name do |mod|
+    #   link_to(mod.name, [mod.category, mod]) +
+    #   link_to(' [Official &#11016;]'.html_safe, mod.official_url)
+    # end
 
     column :category do |mod|
       link_to mod.category.name, [mod.category, :mods]

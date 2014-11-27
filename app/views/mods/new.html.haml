@@ -1,3 +1,4 @@
+- title @mod.new_record? ? t('title.mods.new') : t('title.mods.edit', name: @mod.name)
 .mods-edit
   - if @mod.new_record?
     %h2 Create new mod

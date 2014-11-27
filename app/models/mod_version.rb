@@ -43,6 +43,10 @@ class ModVersion < ActiveRecord::Base
     number
   end
 
+  def has_files?
+    files.size > 0
+  end
+
   private
 
   def set_game_versions_string

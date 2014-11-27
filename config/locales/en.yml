@@ -24,6 +24,8 @@ en:
     suffix: " - Factorio Mods "
     root: Latest Factorio mods
     mods:
+      new: Create new mod
+      edit: Edit %{name}
       index:
         version: " for Factorio v%{version} "
         mods: ' mods '

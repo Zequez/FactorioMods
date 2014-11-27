@@ -75,7 +75,6 @@ class Mod < ActiveRecord::Base
   #################
 
   auto_html_for :description do
-    html_escape
     redcarpet
     image
     youtube(autoplay: false)
@@ -162,7 +161,7 @@ class Mod < ActiveRecord::Base
   end
 
   def github_path
-    github_url.match('[^/]+/[^/]+\Z').to_s
+    github_url.match('[^/]+/[^/]+\/?\Z').to_s
   end
 
   def latest_mod_file_and_version(number = nil)
