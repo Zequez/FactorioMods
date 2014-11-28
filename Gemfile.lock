@@ -259,6 +259,8 @@ GEM
     redcarpet (3.1.2)
     responders (1.0.0)
       railties (>= 3.2, < 5)
+    reverse_markdown (0.6.0)
+      nokogiri
     rinku (1.5.1)
     rspec (3.0.0)
       rspec-core (~> 3.0.0)
@@ -362,6 +364,7 @@ DEPENDENCIES
   rack-zippy
   rails (= 4.1.1)
   redcarpet
+  reverse_markdown
   rspec-rails
   sass (~> 3.3.0)
   sass-rails!

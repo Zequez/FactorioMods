@@ -132,11 +132,17 @@ feature 'Modder creates a new mod' do
                                      author_name: 'SuperGuy', 
                                      published_at: released_at, 
                                      url: 'http://www.factorioforums.com/forum/viewtopic.php?f=14&t=6742'
+
+    # We mock the forum post page here
+    mocked_page = File.read File.expand_path("../../fixtures/forum_post/basic_post.html", __FILE__)
+    stub_request(:get, forum_post.url).to_return body: mocked_page
+
     visit "/mods/new?forum_post_id=#{forum_post.id}"
     expect(find('#mod_name').value).to eq '[0.11.x] Potato mod'
     expect(find('#mod_author_name').value).to eq 'SuperGuy'
     expect(find('#mod_forum_url').value).to eq 'http://www.factorioforums.com/forum/viewtopic.php?f=14&t=6742'
     expect(find('[id$=released_at]').value).to eq released_at.strftime('%Y-%m-%d')
+    expect(find('#mod_description').value).to eq "### Hey there\n**I'm here to kill you!**\n- And a list of stuff!\n- And more stuff!\n"
   end
 
   scenario 'tries to submit mod with the same name as an existing mod, is shown an error and a link to the existing mod' do
