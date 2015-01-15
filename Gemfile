@@ -1,5 +1,5 @@
 source 'https://rubygems.org'
-source 'https://rails-assets.org'
+source 'http://rails-assets.org'
 
 
 # Base
@@ -81,3 +81,6 @@ gem 'nokogiri'                  # To parse HTML, for the scrapper
 # gem 'unicorn'                 # Use unicorn as the app server
 # gem 'capistrano-rails', group: :development # Use Capistrano for deployment
 # gem 'debugger', group: [:development, :test]  # Use debugger
+
+
+gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw]
