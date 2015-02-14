@@ -1,6 +1,8 @@
 source 'https://rubygems.org'
 source 'http://rails-assets.org'
 
+ruby "2.1.5"
+
 
 # Base
 ########################
@@ -33,14 +35,15 @@ gem 'auto_html'
 gem 'rack-zippy'
 gem 'jquery-ui-rails'
 
-group :production do
-  gem 'aws-sdk'
-end
+# group :production do
+#   gem 'aws-sdk'
+# end
 
 # Models
 ########################
 
 gem 'paperclip', github: 'thoughtbot/paperclip'
+#gem 'ruby-imgur', github: 'ehowe/ruby-imgur'
 gem 'friendly_id'
 gem 'youtube_addy'
 gem 'cocoon'

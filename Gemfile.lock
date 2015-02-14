@@ -96,11 +96,6 @@ GEM
     auto_html (1.6.4)
       redcarpet (~> 3.1)
       rinku (~> 1.5.0)
-    aws-sdk (1.52.0)
-      aws-sdk-v1 (= 1.52.0)
-    aws-sdk-v1 (1.52.0)
-      json (~> 1.4)
-      nokogiri (>= 1.4.4)
     bcrypt (3.1.9)
     bcrypt (3.1.9-x64-mingw32)
     bourbon (4.0.2)
@@ -353,7 +348,6 @@ PLATFORMS
 DEPENDENCIES
   activeadmin!
   auto_html
-  aws-sdk
   breakpoint
   cancancan
   capybara
