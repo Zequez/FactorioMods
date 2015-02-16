@@ -102,13 +102,48 @@ RSpec.describe Mod, :type => :model do
       it { expect(subject.slug).to eq 'banana-split-canaleta-cosmica-123-pepep' }
     end
 
-    describe '#github_path' do
-      it 'should return the last part of the #github URL' do
+    describe '#github' do
+      it 'should read it from a Github URL and save it as a path' do
         mod.github = 'http://github.com/zequez/something'
-        expect(mod.github_path).to eq 'zequez/something'
+        expect(mod.github).to eq 'zequez/something'
+      end
+
+      it 'should read it as a path and save it cleaned up' do
+        mod.github = '/zequez/something/'
+        expect(mod.github).to eq 'zequez/something'
+      end
+
+      describe 'validation' do
+        it 'should be valid with a valid path' do
+          mod.github = 'zequez/something'
+          expect(mod).to be_valid
+        end
+
+        it 'should not be valid with a different domain' do
+          mod.github = 'http://potato.com/zequez/something'
+          expect(mod).to be_invalid
+        end
+
+        it 'should not be valid with multiple bars' do
+          mod.github = 'zequez/something/else'
+          expect(mod).to be_invalid
+        end
+      end
+
+      describe '#github_path' do
+        it 'should return the github path, same as #github' do
+          mod.github = 'http://github.com/zequez/something'
+          expect(mod.github_path).to eq 'zequez/something'
+        end
+      end
+
+      describe '#github_url' do 
+        it 'should use the path to generate a URL' do
+          mod.github = 'zequez/something'
+          expect(mod.github_url).to eq 'http://github.com/zequez/something'
+        end
       end
     end
-
 
     describe '#versions' do
       it 'should be ModVersion type' do
@@ -288,28 +323,28 @@ RSpec.describe Mod, :type => :model do
     end
 
     it "should return the same as #media_links#to_string if it doesn't exist" do
-      mod = build :mod, media_links_string: "http://imgur.com/gallery/qLpt6gI\nhttp://gfycat.com/EthicalZanyHuman"
+      mod = build :mod, media_links_string: "http://imgur.com/gallery/qLpt6gI\nhttp://imgur.com/gallery/123123"
       mod.save!
       mod = Mod.first
-      mod.media_links_string.should eq "http://imgur.com/gallery/qLpt6gI\nhttp://gfycat.com/EthicalZanyHuman"
+      mod.media_links_string.should eq "http://imgur.com/gallery/qLpt6gI\nhttp://imgur.com/gallery/123123"
     end
   end
 
   describe '#media_links' do
     it 'should load the #media_links correctly before save' do
-      mod = build :mod, media_links_string: "http://imgur.com/gallery/qLpt6gI\nhttp://gfycat.com/EthicalZanyHuman"
+      mod = build :mod, media_links_string: "http://imgur.com/gallery/qLpt6gI\nhttp://imgur.com/potato"
       expect(mod.media_links.size).to eq 2
       expect(mod.media_links[0]).to be_kind_of MediaLinks::Imgur
-      expect(mod.media_links[1]).to be_kind_of MediaLinks::Gfycat
+      expect(mod.media_links[1]).to be_kind_of MediaLinks::Imgur
     end
 
     it 'should load the #media_links correctly after save' do
-      mod = build :mod, media_links_string: "http://imgur.com/gallery/qLpt6gI\nhttp://gfycat.com/EthicalZanyHuman"
+      mod = build :mod, media_links_string: "http://imgur.com/gallery/qLpt6gI\nhttp://imgur.com/potato"
       mod.save!
       mod = Mod.first
       expect(mod.media_links.size).to eq 2
       expect(mod.media_links[0]).to be_kind_of MediaLinks::Imgur
-      expect(mod.media_links[1]).to be_kind_of MediaLinks::Gfycat
+      expect(mod.media_links[1]).to be_kind_of MediaLinks::Imgur
     end
   end
 

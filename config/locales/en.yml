@@ -62,6 +62,8 @@ en:
           attributes:
             name:
               taken_with_link: "There is already <a href='%{url}''>another mod</a> with that name"
+            github:
+              invalid: Invalid Github path or URL
 
   formtastic:
     labels:
@@ -76,4 +78,4 @@ en:
     hints:
       mod:
         description: Markdown
-        media_links_string: 'URLs for pictures or "gifs". Domains allowed: <a href="http://imgur.com">imgur.com</a>, <a href="http://gfycat.com">gfycat.com</a>. Maximum: 6 links.'
+        media_links_string: '<a href="http://imgur.com">Imgur.com</a> URLs of pictures of animated gifs. Maximum: 6 links.'

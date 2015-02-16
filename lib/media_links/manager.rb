@@ -6,7 +6,8 @@ module MediaLinks
 
     attr_reader :media_links, :invalid_urls, :valid_urls
 
-    def initialize(media_links_string_or_array)
+    def initialize(media_links_string_or_array, types = @@types)
+      @types = types
       @media_links = self
       @valid_urls = []
       @invalid_urls = []
@@ -50,7 +51,7 @@ module MediaLinks
       array.each do |arr|
         klass_name = arr[0]
         key = arr[1]
-        klass = @@types.find{|klass| klass.last_name == klass_name}
+        klass = @types.find{|klass| klass.last_name == klass_name}
         @media_links.push klass.new(nil, key) 
       end
     end
@@ -58,7 +59,7 @@ module MediaLinks
     def parse_string_links(string)
       media_links_array = string.to_s.strip.split(/\s+/)
       media_links_array.map do |url|
-        klass = @@types.find{|klass| klass.match? url}
+        klass = @types.find{|klass| klass.match? url}
         if klass
           @media_links.push klass.new(url)
           @valid_urls.push url

@@ -122,17 +122,24 @@ class Mod < ActiveRecord::Base
     end
   end
 
+  # Github URL
+  validate do
+    if github.present? and not extract_github_path(github)
+      self.errors[:github].push I18n.t('activerecord.errors.models.mod.attributes.github.invalid')
+    end
+  end
+
   ### Attributes
   #################
 
   attr_accessor :media_links_string
-  alias_attribute :github_url, :github
+  alias_attribute :github_path, :github
 
   serialize :media_links, MediaLinks::Manager
 
   def media_links_string=(val)
     @media_links_string = val 
-    self.media_links = MediaLinks::Manager.new val
+    self.media_links = MediaLinks::Manager.new val, [MediaLinks::Imgur]
     val
   end
 
@@ -160,8 +167,13 @@ class Mod < ActiveRecord::Base
     end
   end
 
-  def github_path
-    github_url.match('[^/]+/[^/]+\/?\Z').to_s
+  def github_url
+    "http://github.com/#{github_path}"
+    # github_url.match('[^/]+/[^/]+\/?\Z').to_s
+  end
+
+  def github=(val)
+    write_attribute :github, extract_github_path(val) || val
   end
 
   def latest_mod_file_and_version(number = nil)
@@ -204,5 +216,19 @@ class Mod < ActiveRecord::Base
 
     update_column :game_versions_string, gvs
     self.game_versions_string = gvs
+  end
+
+  def extract_github_path(val)
+    uri = URI(val)
+    if uri.host == 'github.com' or uri.host == nil
+      path = uri.path.gsub(/^\/|\/$/, '')
+      if path.scan('/').size == 1
+        path
+      else
+        nil
+      end
+    else
+      nil
+    end
   end
 end
