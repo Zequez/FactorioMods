@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141029002644) do
+ActiveRecord::Schema.define(version: 20150303061050) do
 
   create_table "active_admin_comments", force: true do |t|
     t.string   "namespace"
@@ -150,6 +150,8 @@ ActiveRecord::Schema.define(version: 20141029002644) do
     t.integer  "mod_id"
     t.string   "number"
     t.datetime "released_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.integer  "sort_order",                   default: 0, null: false
     t.string   "game_versions_string"
     t.string   "precise_game_versions_string"
@@ -185,6 +187,7 @@ ActiveRecord::Schema.define(version: 20141029002644) do
     t.string   "forum_subforum_url"
     t.string   "forum_url"
     t.text     "media_links"
+    t.string   "imgur"
   end
 
   add_index "mods", ["author_id"], name: "index_mods_on_author_id"

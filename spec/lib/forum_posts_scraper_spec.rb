@@ -15,7 +15,7 @@ describe ForumPostsScraper do
 
   def stub_forum_page(number)
     from = (number-1)*25
-    stub_page "http://www.factorioforums.com/forum/viewforum.php?f=14&start=#{from}", "page_#{number}"
+    stub_page "http://www.factorioforums.com/forum/viewforum.php?f=87&start=#{from}", "page_#{number}"
   end
 
   it 'should be created without any argument' do

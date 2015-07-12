@@ -1,0 +1,163 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: http://imgur.com/asrtniearsthneirasth
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+      Host:
+      - imgur.com
+  response:
+    status:
+      code: 404
+      message: Not Found
+    headers:
+      Content-Type:
+      - text/html
+      Cache-Control:
+      - no-store, no-cache, must-revalidate, post-check=0, pre-check=0
+      Content-Length:
+      - '2582'
+      Accept-Ranges:
+      - bytes
+      Date:
+      - Tue, 03 Mar 2015 09:07:45 GMT
+      Age:
+      - '0'
+      Connection:
+      - keep-alive
+      X-Served-By:
+      - cache-iad2126-IAD
+      X-Cache:
+      - MISS
+      X-Cache-Hits:
+      - '0'
+      Vary:
+      - Accept-Encoding
+      Server:
+      - cat factory 1.0
+    body:
+      encoding: UTF-8
+      string: "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Strict//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd\">\n<html
+        lang=\"en\" xmlns=\"http://www.w3.org/1999/xhtml\">\n<head>\n    <title>    imgur:
+        the simple 404 page</title>\n    <meta http-equiv=\"content-type\" content=\"text/html;charset=utf-8\"
+        />\n        <meta name=\"robots\" content=\"noindex,nofollow\" />\n    <meta
+        name=\"keywords\" content=\"images, funny, image host, image sharing, reaction
+        gif, viral images, current events, cute, visual storytelling, gif\" />\n    <meta
+        name=\"description\" content=\"The Internet's visual storytelling community.
+        Explore, share, and discuss the best visual stories the Internet has to offer.\"
+        />\n    <meta name=\"copyright\" content=\"Copyright 2015 Imgur, Inc.\" />\n
+        \   <meta http-equiv=\"X-UA-Compatible\" content=\"IE=Edge;\" />\n    \n    <link
+        rel=\"alternate\" type=\"application/rss+xml\" title=\"Imgur Gallery\" href=\"http://feeds.feedburner.com/ImgurGallery?format=xml\"
+        />\n    <link rel=\"icon\" type=\"image/png\" href=\"//s.imgur.com/images/favicon-32x32.png\"
+        sizes=\"32x32\">\n    <link rel=\"icon\" type=\"image/png\" href=\"//s.imgur.com/images/favicon-96x96.png\"
+        sizes=\"96x96\">\n    <link rel=\"icon\" type=\"image/png\" href=\"//s.imgur.com/images/favicon-16x16.png\"
+        sizes=\"16x16\">\n    <link rel=\"apple-touch-icon-precomposed\" href=\"//s.imgur.com/images/favicon-152.png\">\n
+        \   <meta name=\"msapplication-TileColor\" content=\"#2cd63c\">\n    <meta
+        name=\"msapplication-TileImage\" content=\"//s.imgur.com/images/favicon-144.png\">\n
+        \   \n        <link rel=\"stylesheet\" type=\"text/css\" href=\"//s.imgur.com/min/404.css?1425352862\"
+        />\n\n            <!--[if IE 9]><link rel=\"stylesheet\" href=\"//s.imgur.com/include/css/ie-sucks.css?0\"
+        type=\"text/css\" /><![endif]-->\n    \n            <link rel=\"canonical\"
+        href=\"http://imgur.com/asrtniearsthneirasth\" />\n        <meta property=\"og:url\"
+        content=\"http://imgur.com/asrtniearsthneirasth\" />\n    \n    <meta property=\"og:site_name\"
+        content=\"Imgur\" />\n    <meta property=\"fb:admins\" content=\"12331492,12301369\"
+        />\n    <meta name=\"twitter:site\" content=\"@imgur\" />\n    <meta name=\"twitter:domain\"
+        content=\"imgur.com\" />\n    <meta name=\"twitter:creator\" content=\"@imgur\"
+        />\n    <meta name=\"twitter:app:id:googleplay\" content=\"com.imgur.mobile\"
+        />\n            <meta property=\"og:title\" content=\"Imgur\" />\n        <meta
+        property=\"og:type\" content=\"website\" />\n        <meta property=\"og:description\"
+        content=\"The Internet's visual storytelling community. Explore, share, and
+        discuss the best visual stories the Internet has to offer.\" />\n        <meta
+        property=\"og:image\" content=\"http://s.imgur.com/images/logo-1200-630.jpg?2\"
+        />\n        <meta property=\"og:image:height\" content=\"630\" />\n        <meta
+        property=\"og:image:width\" content=\"1200\" />\n        <meta name=\"twitter:card\"
+        content=\"summary_large_image\" />\n        <meta name=\"twitter:title\" content=\"Imgur\"
+        />\n        <meta name=\"twitter:description\" content=\"The Internet's visual
+        storytelling community. Explore, share, and discuss the best visual stories
+        the Internet has to offer.\" />\n        <meta name=\"twitter:image:src\"
+        content=\"//s.imgur.com/images/logo-1200-630.jpg?2\" />\n        <meta name=\"twitter:image:height\"
+        content=\"630\" />\n        <meta name=\"twitter:image:width\" content=\"1200\"
+        />\n    \n    <!--[if lte IE 8]><script type=\"text/javascript\" src=\"//s.imgur.com/min/iepoly.js?1425352862\"></script>\n<![endif]-->\n
+        \   \n    \n</head>\n<body>\n            \n            <noscript>\n                <iframe
+        src=\"//www.googletagmanager.com/ns.html?id=GTM-W9LTJC\" height=\"0\" width=\"0\"
+        style=\"display:none;visibility:hidden\"></iframe>\n            </noscript>\n
+        \           <script type=\"text/javascript\">\n                (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new
+        Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-W9LTJC');\n
+        \           </script>\n        \n    \n\n            \n    \n\n    \n\n    \n\n
+        \   \n\n        <div id=\"hallway\">\n        <div class=\"container\">\n
+        \           <div id=\"cat1\" class=\"painting\">\n                <img src=\"//s.imgur.com/images/404/cat1weyes.png\">\n
+        \               <div class=\"eye-container\">\n                    <div class=\"eye
+        left\">\n                        <div class=\"pupil\"></div>\n                    </div>\n
+        \                   <div class=\"eye right\">\n                        <div
+        class=\"pupil\"></div>\n                    </div>\n                </div>\n
+        \           </div>\n            <div id=\"cat2\" class=\"painting\">\n                <img
+        src=\"//s.imgur.com/images/404/cat2weyes.png\">\n                <div class=\"eye-container\">\n
+        \                   <div class=\"eye\">\n                        <div class=\"pupil\"></div>\n
+        \                   </div>\n                </div>\n            </div>\n            <div
+        id=\"giraffe\" class=\"painting\">\n                <img src=\"//s.imgur.com/images/404/giraffeweyes.png\">\n
+        \               <div class=\"eye-container\">\n                    <div class=\"eye
+        left\">\n                        <div class=\"pupil\"></div>\n                    </div>\n
+        \                   <div class=\"eye right\">\n                        <div
+        class=\"pupil\"></div>\n                    </div>\n                </div>\n
+        \               <img class=\"monocle\" src=\"//s.imgur.com/images/404/monocle.png\"
+        />\n            </div>\n            <div id=\"cat3\" class=\"painting\">\n
+        \               <img src=\"//s.imgur.com/images/404/cat3weyes.png\">\n                <div
+        class=\"eye-container\">\n                    <div class=\"eye left\">\n                        <div
+        class=\"pupil\"></div>\n                    </div>\n                    <div
+        class=\"eye right\">\n                        <div class=\"pupil\"></div>\n
+        \                   </div>\n                </div>\n            </div>\n            <div
+        id=\"cat4\" class=\"painting\">\n                <img src=\"//s.imgur.com/images/404/cat4weyes.png\">\n
+        \               <div class=\"eye-container\">\n                    <div class=\"eye
+        left\">\n                        <div class=\"pupil\"></div>\n                    </div>\n
+        \                   <div class=\"eye right\">\n                        <div
+        class=\"pupil\"></div>\n                    </div>\n                </div>\n
+        \           </div>\n        </div>\n    </div>\n    <div class=\"footer textbox\">\n
+        \       <h1>Zoinks! You've taken a wrong turn.</h1>\n        <p>Let's split
+        up, gang. If you're looking for an image, it's probably been deleted or may
+        not have existed at all.</p>\n        <p>If you are looking for groovy images,
+        <a href=\"//imgur.com\">visit our gallery!</a></p>\n        <a href=\"//imgur.com\"
+        class=\"footer-logo\"><img src=\"//s.imgur.com/images/imgurlogo-header.png\"></a>\n
+        \   </div>\n    \n\n    \n\n            \n    \n    \n    \n\n    \n    \n
+        \   \n\n        <script type=\"text/javascript\" src=\"//s.imgur.com/min/404.js?1425352862\"></script>\n\n
+        \   <script type=\"text/javascript\">\n        \n            var e404 = E404.getInstance();\n
+        \           e404.generalInit();\n        \n    </script>\n    \n    \n\n            <script
+        type=\"text/javascript\">\n        (function(widgetFactory) {\n            widgetFactory.produceSearch();\n
+        \       })(_widgetFactory);\n        </script>\n    \n\n        \n    \n\n
+        \                       <script type=\"text/javascript\">\n                (function(widgetFactory)
+        {\n                    var inIframe = false;\n                    try {\n
+        \                       inIframe = window.self !== window.top;\n                    }
+        catch (e) {\n                        inIframe = true;\n                    }\n
+        \                   if(!inIframe) {\n                        $.getScript('//cdn.optimizely.com/js/1507425748.js',
+        function(){\n                            \n                            Imgur.Util.getGoogleTracker();\n
+        \                           __ga('send', 'pageview');\n                            Imgur.Util.jafoLog({\n
+        \                               event: 'mattPageView'\n                            });\n
+        \                           \n                            if(_.keys(window.optimizely.data.state.variationNamesMap).length){\n
+        \                               Imgur.Util.jafoLog({\n                                    event:
+        'optExperimentLoaded',\n                                    meta: window.optimizely.data.state.variationNamesMap\n
+        \                               });\n                            }\n                            \n
+        \                       });\n                    } else {\n                        Imgur.Util.getGoogleTracker();\n
+        \                       __ga('send', 'pageview');\n                        Imgur.Util.jafoLog({\n
+        \                           event: 'mattPageView'\n                        });\n
+        \                   }\n                })(_widgetFactory);\n            </script>\n
+        \       \n        \n        \n        <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document,
+        'script', 'twitter-wjs');</script>\n        \n\n        \n\n        \n    \n\n
+        \       <script type='text/javascript'>\n        \n        (function(){\n
+        \           try{\n                var msg = '\\n      _\\n     (_)\\n      _
+        _ __ ___   __ _ _   _ _ __\\n     | | \\'_ ` _ \\\\ / _` | | | | \\'__|\\n
+        \    | | | | | | | (_| | |_| | |\\n     |_|_| |_| |_|\\\\__, |\\\\__,_|_|\\n
+        \                  __/ |\\n                  |___/\\n';\n                msg
+        += '========================================\\nYou opened the console! Know
+        some code,\\ndo you? Want to work for one of the best\\nstartups around? http://imgur.com/jobs\\n========================================\\n';\n
+        \               console.log(msg);\n            }catch(e){}\n        })()\n
+        \       \n    </script>\n    \n\n    \n</body>\n</html>\n"
+    http_version: 
+  recorded_at: Tue, 03 Mar 2015 09:07:45 GMT
+recorded_with: VCR 2.9.3

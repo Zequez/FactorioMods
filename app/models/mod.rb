@@ -133,6 +133,7 @@ class Mod < ActiveRecord::Base
   #################
 
   attr_accessor :media_links_string
+  attr_accessor :imgur_url
   alias_attribute :github_path, :github
 
   serialize :media_links, MediaLinks::Manager

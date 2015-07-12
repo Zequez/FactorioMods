@@ -17,6 +17,8 @@ RSpec.describe Mod, :type => :model do
     it { should respond_to :last_version_date }
 
     it { should respond_to :media_links }
+    it { should respond_to :imgur }
+    it { should respond_to :imgur_url }
 
     # URLs
     it { should respond_to :license_url }

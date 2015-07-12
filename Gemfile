@@ -76,6 +76,7 @@ end
 
 group :test do
   gem 'webmock'                 # To fake web requests on tests
+  gem 'vcr'
 end
 
 gem 'nokogiri'                  # To parse HTML, for the scrapper

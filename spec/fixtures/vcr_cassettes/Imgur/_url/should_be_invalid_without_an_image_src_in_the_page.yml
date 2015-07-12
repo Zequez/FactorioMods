@@ -1,0 +1,719 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: http://imgur.com/ai0XTid
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+      Host:
+      - imgur.com
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - text/html
+      Cache-Control:
+      - max-age=60, s-maxage=60, public, must-revalidate
+      Content-Length:
+      - '13282'
+      Accept-Ranges:
+      - bytes
+      Date:
+      - Tue, 03 Mar 2015 09:02:58 GMT
+      Age:
+      - '46'
+      Connection:
+      - keep-alive
+      X-Served-By:
+      - cache-iad2124-IAD
+      X-Cache:
+      - HIT
+      X-Cache-Hits:
+      - '1'
+      Vary:
+      - Accept-Encoding
+      Server:
+      - cat factory 1.0
+    body:
+      encoding: UTF-8
+      string: "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Strict//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd\">\n<html
+        lang=\"en\" xmlns=\"http://www.w3.org/1999/xhtml\">\n<head>\n    <title>                        \n
+        \       \n    \n\n    I had to. - Imgur</title>\n    <meta http-equiv=\"content-type\"
+        content=\"text/html;charset=utf-8\" />\n    <meta name=\"robots\" content=\"follow,index\"
+        />\n    <meta name=\"keywords\" content=\"images, funny, image host, image
+        sharing, reaction gif, viral images, current events, cute, visual storytelling,
+        gif\" />\n                            <meta name=\"description\" content=\"Images
+        uploaded by EvilSanta\" />\n        \n    \n    <meta name=\"copyright\" content=\"Copyright
+        2015 Imgur, Inc.\" />\n    <meta http-equiv=\"X-UA-Compatible\" content=\"IE=Edge;\"
+        />\n    \n    <link rel=\"alternate\" type=\"application/rss+xml\" title=\"Imgur
+        Gallery\" href=\"http://feeds.feedburner.com/ImgurGallery?format=xml\" />\n
+        \   <link rel=\"icon\" type=\"image/png\" href=\"//s.imgur.com/images/favicon-32x32.png\"
+        sizes=\"32x32\">\n    <link rel=\"icon\" type=\"image/png\" href=\"//s.imgur.com/images/favicon-96x96.png\"
+        sizes=\"96x96\">\n    <link rel=\"icon\" type=\"image/png\" href=\"//s.imgur.com/images/favicon-16x16.png\"
+        sizes=\"16x16\">\n    <link rel=\"apple-touch-icon-precomposed\" href=\"//s.imgur.com/images/favicon-152.png\">\n
+        \   <meta name=\"msapplication-TileColor\" content=\"#2cd63c\">\n    <meta
+        name=\"msapplication-TileImage\" content=\"//s.imgur.com/images/favicon-144.png\">\n
+        \           <link rel=\"stylesheet\" type=\"text/css\" href=\"//s.imgur.com/min/global.css?1425352862\"
+        />\n\n        \n        \n    \n        <link rel=\"stylesheet\" type=\"text/css\"
+        href=\"//s.imgur.com/min/gallery.css?1425352862\" />\n\n    \n    <link rel=\"alternate\"
+        type=\"application/json+oembed\" href=\"http://api.imgur.com/oembed.json?url=http://imgur.com/gallery/ai0XTid\"
+        title=\"I had to. - Imgur\" />\n    <link rel=\"alternate\" type=\"application/xml+oembed\"
+        href=\"http://api.imgur.com/oembed.xml?url=http://imgur.com/gallery/ai0XTid\"
+        title=\"I had to. - Imgur\" />\n            <!--[if IE 9]><link rel=\"stylesheet\"
+        href=\"//s.imgur.com/include/css/ie-sucks.css?0\" type=\"text/css\" /><![endif]-->\n
+        \   \n        <link rel=\"canonical\" href=\"http://imgur.com/gallery/ai0XTid\"
+        />\n    <meta property=\"og:url\" content=\"http://imgur.com/gallery/ai0XTid\"
+        />\n    <meta property=\"og:site_name\" content=\"Imgur\" />\n    <meta property=\"fb:admins\"
+        content=\"12331492,12301369\" />\n    <meta name=\"twitter:site\" content=\"@imgur\"
+        />\n    <meta name=\"twitter:domain\" content=\"imgur.com\" />\n    <meta
+        name=\"twitter:creator\" content=\"@imgur\" />\n    <meta name=\"twitter:app:id:googleplay\"
+        content=\"com.imgur.mobile\" />\n                <meta name=\"twitter:title\"
+        content=\"I had to.\"/>\n        <meta property=\"og:title\" content=\"I had
+        to.\"/>\n    \n    \n    <meta property=\"author\" content=\"Imgur\" />\n
+        \   <meta property=\"article:author\" content=\"Imgur\" />\n
+        \           <meta name=\"twitter:card\"         content=\"photo\"/>\n            <meta
+        name=\"twitter:image\"        content=\"https://i.imgur.com/ai0XTid.jpg\"/>\n
+        \           <meta name=\"twitter:image:src\"    content=\"https://i.imgur.com/ai0XTid.jpg\"/>\n
+        \           <meta name=\"twitter:image:width\"  content=\"900\"/>\n            <meta
+        name=\"twitter:image:height\" content=\"1200\"/>\n            <meta property=\"og:type\"
+        \         content=\"article\" />\n            <meta property=\"og:image\"
+        \        content=\"http://i.imgur.com/ai0XTid.jpg?fb\" />\n            <meta
+        property=\"og:image:width\"   content=\"900\" />\n            <meta property=\"og:image:height\"
+        \ content=\"1200\" />\n        \n    \n    \n            <meta property=\"og:description\"
+        content=\"hey not very good with Photoshop, but I tried\"/>\n        <meta
+        name=\"twitter:description\" content=\"hey not very good with Photoshop, but
+        I tried\" />\n    \n    \n    \n    <!--[if lte IE 8]><script type=\"text/javascript\"
+        src=\"//s.imgur.com/min/iepoly.js?1425352862\"></script>\n<![endif]-->\n    \n
+        \       \n    \n</head>\n<body>\n            \n            <noscript>\n                <iframe
+        src=\"//www.googletagmanager.com/ns.html?id=GTM-W9LTJC\" height=\"0\" width=\"0\"
+        style=\"display:none;visibility:hidden\"></iframe>\n            </noscript>\n
+        \           <script type=\"text/javascript\">\n                (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new
+        Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-W9LTJC');\n
+        \           </script>\n        \n    \n\n                        <div id=\"topbar\">\n
+        \   <div class=\"header-center\">\n        <div id=\"header-logo\">\n\n            <a
+        href=\"//imgur.com\" class=\"logo \" data-jafo=\"{@@event@@:@@header@@,@@meta@@:{@@link@@:@@logo@@}}\">\n
+        \               \n                <span class=\"logo-icon\"></span>\n            </a>\n
+        \       </div>\n        <div id=\"main-nav\">\n            <ul>\n                <li
+        class=\"menu-btn\">\n                    <div class=\"menu-icon\">\n                        <div
+        class=\"bar\"></div>\n                        <div class=\"bar\"></div>\n
+        \                       <div class=\"bar\"></div>\n                                                    <div
+        class=\"pulse-dot\">\n                                <div class=\"expanding-circle\"></div>\n
+        \                           </div>\n                        \n                    </div>\n
+        \                   <div class=\"link-menu\">\n                        <ul>\n
+        \                           <li><a href=\"//imgur.com/jobs\" class=\"new\"
+        data-jafo=\"{@@event@@:@@header@@,@@meta@@:{@@link@@:@@jobs@@}}\">we're hiring!</a></li>\n
+        \                                                           <li class=\"title-w\"
+        title=\"NASA Confirmed for Camp Imgur!\"><a href=\"http://imgur.com/blog/\"
+        data-jafo=\"{@@event@@:@@header@@,@@meta@@:{@@link@@:@@blog@@,@@new@@:true}}\">blog<span
+        class=\"red tiptext\">new post!</span></a></li>\n                            \n
+        \                           <li><a href=\"//imgur.com/about\"  data-jafo=\"{@@event@@:@@header@@,@@meta@@:{@@link@@:@@about@@}}\">about
+        imgur</a></li>\n                            <li><a href=\"//store.imgur.com\"
+        data-jafo=\"{@@event@@:@@header@@,@@meta@@:{@@link@@:@@store@@}}\">imgur store</a></li>\n
+        \                           <li><a href=\"//imgur.com/apps\"  data-jafo=\"{@@event@@:@@header@@,@@meta@@:{@@link@@:@@apps@@}}\">uploading
+        tools</a></li>\n                            <li><a href=\"//api.imgur.com\"
+        data-jafo=\"{@@event@@:@@header@@,@@meta@@:{@@link@@:@@api@@}}\">developer
+        api</a></li>\n                            <li><a href=\"//help.imgur.com/hc/en-us\"
+        data-jafo=\"{@@event@@:@@header@@,@@meta@@:{@@link@@:@@help@@}}\">need help?</a></li>\n
+        \                       </ul>\n                        <div class=\"clear\"></div>\n
+        \                       <div class=\"dropdown-footer hamburger-menu\">\n                            <div
+        class=\"terms-footer\">\n                                <a href=\"//imgur.com/tos\"
+        \ data-jafo=\"{@@event@@:@@header@@,@@meta@@:{@@link@@:@@terms@@}}\">terms</a>\n
+        \                               <a href=\"//imgur.com/privacy\"  data-jafo=\"{@@event@@:@@header@@,@@meta@@:{@@link@@:@@privacy@@}}\">privacy</a>\n
+        \                           </div>\n                            <iframe src=\"//www.facebook.com/plugins/like.php?href=https%3A%2F%2Ffacebook.com%2Fimgur&amp;width&amp;layout=button&amp;action=like&amp;show_faces=false&amp;share=false&amp;height=35\"
+        scrolling=\"no\" frameborder=\"0\" style=\"display:inline-block; border:none;
+        overflow:hidden; height:20px; width:50px; margin-right:7px;\" allowTransparency=\"true\"></iframe>\n
+        \                           <a href=\"https://twitter.com/imgur\" class=\"twitter-follow-button\"
+        data-show-count=\"false\" data-show-screen-name=\"false\"></a>\n                        </div>\n
+        \                   </div>\n                </li>\n                <li class=\"upload-button-container\">\n
+        \                   <a class=\"upload-button disabled\" href=\"javascript:;\">\n
+        \                       <div class=\"icon icon-upload\"></div>\n                        <span
+        class=\"upload-btn-text\">upload images</span>\n                        <span
+        class=\"upload-queue-length\">23</span>\n                        <div id=\"upload-global-top-bar-mini-progress\"></div>\n
+        \                   </a>\n                    <div class=\"creation-dropdown\">\n
+        \                       <div class=\"selection icon icon-arrow-down\"></div>\n
+        \                       <div class=\"options\">\n                            <ul>\n
+        \                               <li class=\"item\">\n                                    <a
+        class=\"creation-dropdown-upload\" href=\"javascript:;\">Upload Images</a>\n
+        \                               </li>\n                                <li
+        class=\"item\">\n                                    <a href=\"//imgur.com/vidgif\">Video
+        to GIF</a>\n                                </li>\n                                <li
+        class=\"item\">\n                                    <a href=\"//imgur.com/memegen\">Make
+        a Meme</a>\n                                </li>\n                            </ul>\n
+        \                       </div>\n                    </div>\n                </li>\n
+        \               <li class=\"random-button title-n \" title=\"random mode\">\n
+        \                   <a href=\"//imgur.com/random\" data-jafo=\"{@@event@@:@@header@@,@@meta@@:{@@link@@:@@random@@}}\">\n
+        \                       <div class=\"random-icon\"></div>\n                    </a>\n
+        \               </li>\n            </ul>\n        </div>\n        <div id=\"secondary-nav\">\n
+        \           <ul class=\"user-nav\">\n                <li id=\"global-search-container\">\n
+        \                   <form class=\"search-form\" method=\"get\" action=\"//imgur.com/search\">\n
+        \                       <input id=\"search-global-input\" type=\"text\" name=\"q\"
+        class=\"search\" blur placeholder=\"Search images\"  />\n                    </form>\n\n
+        \                   <div class=\"search-icon-container\">\n                        <div
+        class=\"search-icon-container-icon\"></div>\n                    </div>\n
+        \               </li>\n                                    <li class=\"signin-link\"><a
+        class=\"\" href=\"https://imgur.com/signin\" data-jafo=\"{@@event@@:@@signinButtonClick@@}\">sign
+        in</a></li>\n                    <li id=\"register\"><a class=\"\" href=\"https://imgur.com/register\"
+        data-jafo=\"{@@event@@:@@registerButtonClick@@}\">sign up</a></li>\n                \n
+        \           </ul>\n        </div> <!-- #secondary-nav -->\n    </div> <!--
+        .header-center -->\n</div> <!-- #topbar -->\n<div id=\"cta-container-placeholder\"></div>\n\n
+        \       \n    \n\n    \n\n            \n        \n        \n    \n\n            <a
+        href=\"javascript:;\" id=\"upload-global-album-tipsy\" class=\"title-nw nodisplay\"
+        title=\"You can't create an album with just one image\"></a>\n\n<div id=\"upload-global\"
+        class=\"popup\">\n    <form method=\"post\" id=\"upload-global-form\" enctype=\"multipart/form-data\"
+        action=\"http://imgur.com/upload\">\n        \n\n        <div id=\"upload-global-buttons\">\n
+        \           <div id=\"upload-global-upload-loader\" class=\"textbox\">\n                Loading...\n
+        \           </div>\n\n            <div id=\"upload-global-file-wrapper\">\n
+        \               <span class=\"computerIcon\"></span>\n                <span
+        class=\"green\">browse</span> your computer\n\n                <input accept=\"image/*\"
+        type=\"file\" name=\"Filedata\" multiple=\"multiple\" id=\"upload-global-file\">\n
+        \           </div>\n\n            <div class=\"left\">\n                <div
+        id=\"upload-global-url\">\n                    <span class=\"webIcon\"></span>\n
+        \                   <textarea id=\"upload-global-link-input\" class=\"placeholder-onkeydown\"
+        title=\"enter image URLs from web\" placeholder=\"enter image URLs from web\"
+        rows=\"1\"></textarea>\n                </div>\n            </div>\n\n            <div
+        class=\"clear\"></div>\n\n            <div id=\"upload-global-dragdrop\">\n
+        \               <span class=\"dragdropIcon\"></span>\n                <span
+        class=\"green\">drag and drop</span> here\n            </div>\n\n            <div
+        class=\"left\">\n                <div id=\"upload-global-clipboard\">\n                    <div
+        style=\"text-align: center\"><span class=\"clipboardIcons\">Ctrl + V</span></div>\n
+        \                   <span class=\"green\">paste</span> from your clipboard\n
+        \               </div>\n            </div>\n\n            <div class=\"clear\"></div>\n
+        \       </div>\n\n        <div class=\"textbox center\" id=\"upload-global-instructions\"></div>\n\n
+        \       <!-- gallery submit vars -->\n        <input type=\"hidden\" name=\"current_upload\"
+        value=\"0\"/>\n        <input type=\"hidden\" name=\"total_uploads\" value=\"0\"/>\n
+        \       <input type=\"hidden\" name=\"terms\" value=\"0\"/>\n        <input
+        type=\"hidden\" name=\"gallery_type\" value=\"\"/>\n\n\n        <div id=\"upload-global-errors\"
+        class=\"textbox error\" style=\"display: none;\"></div>\n\n        <div id=\"upload-global-queue-description\"
+        class=\"textbox nodisplay\"></div>\n\n        <div id=\"upload-global-start-upload\">\n
+        \           <div class=\"panel\">\n                <div>\n\n                    <table
+        id=\"upload-global-actions\">\n                        <tbody>\n                            <tr>\n\n
+        \                               <td width=\"50.4%\">\n\n                                    <div
+        id=\"upload-global-album-checkbox-div\">\n                                        <input
+        type=\"hidden\" name=\"gallery_submit\" value=\"0\"/>\n\n                                        <button
+        id=\"upload-global-gallery-checkbox\" type=\"button\">\n                                            <span
+        class=\"gallery-icon\"></span>publish to Imgur\n                                        </button>\n\n
+        \                                       <div id=\"upload-global-gallery-checkbox-overlay\"></div>\n\n
+        \                                       <input type=\"hidden\" name=\"create_album\"
+        value=\"0\"/>\n\n                                        <button id=\"upload-global-album-checkbox\"
+        type=\"button\">\n                                            <span class=\"createAlbum-icon\"></span>create
+        album\n                                        </button>\n\n                                    </div>\n\n
+        \                               </td>\n                                <td
+        width=\"49.6%\">\n                                    <button type=\"button\"
+        id=\"upload-global-start-button\" class=\"button-big green\" type=\"submit\">\n
+        \                                       <span class=\"start-btn-icon\"></span>\n
+        \                                       Start Upload\n                                    </button>\n
+        \                               </td>\n                            </tr>\n
+        \                       </tbody>\n                    </table>\n\n                </div>\n\n
+        \               <div id=\"upload-global-album-options\">\n                    \n\n\n\n\n\n\n\n<table
+        id=\"upload-global-album-layout\">\n    <tr>\n        <td id=\"upload-global-album-td\">\n
+        \           <input name=\"album_title\" type=\"text\" title=\"Optional Album
+        Title\" class=\"placeholder-onkeydown\" id=\"upload-global-album-title\" maxlength=\"55\"
+        />\n        </td>\n\n        <td class=\"center title\" title=\"<table><tr><td
+        style='vertical-align: middle'>&lt;img src=&#039;//s.imgur.com/images/album-layout-blog.png&#039;
+        style=&#039;padding-right: 2px;&#039;/&gt;</td><td>&lt;h1&gt;Blog Layout&lt;/h1&gt;Shows
+        all the images on one page in a blog post style layout. Best for albums with
+        a small to medium amount of images.</td></tr></table>\">\n            <input
+        id=\"blog-layout-upload\" type=\"radio\" name=\"layout\" value=\"b\" checked=\"checked\"/>\n
+        \           <label for=\"blog-layout-upload\">Blog</label>\n        </td>\n\n
+        \       <td class=\"center title\" title=\"<table><tr><td style='vertical-align:
+        middle'>&lt;img src=&#039;//s.imgur.com/images/album-layout-horizontal.png&#039;
+        \ style=&#039;padding-right: 6px;&#039;/&gt;</td><td>&lt;h1&gt;Horizontal
+        Layout&lt;/h1&gt;Shows one image at a time in a traditional style, with thumbnails
+        on top. Best for albums that have high resolution photos.</td></tr></table>\">\n
+        \           <input id=\"horizontal-layout-upload\" type=\"radio\" name=\"layout\"
+        value=\"h\"/>\n            <label for=\"horizontal-layout-upload\">Horizontal</label>\n
+        \       </td>\n\n        <td class=\"center title\" title=\"<table><tr><td
+        style='vertical-align: middle'>&lt;img src=&#039;//s.imgur.com/images/album-layout-grid.png&#039;
+        \ style=&#039;padding-right: 6px;&#039;/&gt;</td><td>&lt;h1&gt;Grid Layout&lt;/h1&gt;Shows
+        all the images on one page as thumbnails that expand when clicked on. Best
+        for albums with lots of images.</td></tr></table>\">\n            <input id=\"grid-layout-upload\"
+        type=\"radio\" name=\"layout\" value=\"g\"/>\n            <label for=\"grid-layout-upload\">Grid</label>\n
+        \       </td>\n\n        <td width=\"15\"></td>\n    </tr>\n</table>\n\n                </div>\n\n
+        \               <div class=\"textbox list\">\n                    <table id=\"upload-global-file-list-header\">\n
+        \                       <tr class=\"top-tr\">\n                            <td
+        width=\"45\" class=\"edit-td\"><h2>Edit</h2></td>\n                            <td><h2>Images
+        <span class=\"upload-queue-length\">(0)</span></h2></td>\n                            <td
+        width=\"40\"></td>\n                        </tr>\n                    </table>\n\n
+        \                   <table id=\"upload-global-file-list\">\n                    </table>\n
+        \                                           <div class=\"agreement-notice\">By
+        uploading, you agree to our <a href=\"//imgur.com/tos\" target=\"_blank\">terms
+        of service</a></div>\n                    \n                </div>\n            </div>\n
+        \       </div>\n\n        <div id=\"upload-global-progress-wrapper\">\n            <div
+        id=\"upload-global-progressbar\">\n                <div class=\"progressBarBG\">\n
+        \                   <div class=\"progressBar\"></div>\n                </div>\n
+        \           </div>\n            <div id=\"upload-global-upload-queue\"></div>\n\n
+        \           <div id=\"upload-global-converting\">\n                <p>\n                    Optimizing
+        your large GIFs...\n                </p>\n            </div>\n        </div>\n
+        \   </form>\n</div>\n\n<div id=\"upload-global-FF-paste-box\"></div>\n\n<div
+        id=\"hiddenDropZone\" class=\"nodisplay\"></div>\n\n<div class=\"nodisplay\">\n
+        \   <div id=\"upload-global-image-formats\">\n         That file type is not
+        supported!\n\n        <div class=\"textbox supported-formats\">\n            Supported
+        formats: JPEG, GIF, PNG, APNG, TIFF, BMP, PDF, XCF\n        </div>\n    </div>\n</div>\n\n<div
+        id=\"upload-global-flash-container\" title=\"upload images from your computer\">\n
+        \   <div id=\"upload-global-flash-browse\"></div>\n</div>\n\n    \n\n        \n\n
+        \   <div id=\"content\" class=\"two-column\">\n        \n        <div class=\"left
+        main-image\">\n            <div class=\"panel\">\n                <div class=\"fixed-share-container\">\n
+        \                   <div class=\"social\">\n    <div class=\"share-text\">share</div>\n
+        \   <ul>\n        <li class=\"title-w\" title=\"Share on Facebook\">\n            <span
+        class=\"facebook_custom icon-facebook\" data-jshook=\"facebook_custom\"></span>\n
+        \       </li>\n        <li class=\"title-w\" title=\"Share on Twitter\">\n
+        \           <span class=\"twitter_custom icon-twitter\" data-jshook=\"twitter_custom\"></span>\n
+        \       </li>\n        <li class=\"title-w\" title=\"Share on Reddit\">\n
+        \           <span class=\"reddit_custom\" data-jshook=\"reddit_custom\"><span
+        class=\"reddit-icon\"></span>\n        </li>\n        <li class=\"title-w\"
+        style=\"display: none\" title=\"Share on Google+\">\n            <span class=\"googleplus_custom
+        icon-google\" data-jshook=\"googleplus_custom\"></span>\n        </li>\n        <li
+        class=\"title-w\" style=\"display: none\" title=\"Share on Pinterest\">\n
+        \           <span class=\"pinterest_custom icon-pin\" data-jshook=\"pinterest_custom\"></span></span>\n
+        \       </li>\n        <li class=\"title-w\" title=\"More sharing options\">\n
+        \           <span class=\"addthis_button st_sharethis_custom\" data-jshook=\"addthis_custom\"><span></span></span>\n
+        \       </li>\n    </ul>\n</div>\n\n                </div>\n                <div
+        id=\"image-title-container\">\n                    <h1  id='image-title'>I
+        had to.</h1>\n                </div>\n\n                <p class=\"under-title-info\">\n
+        \                   \n                                            by\n                        <a
+        href=\"//imgur.com/user/EvilSanta\" title=\"view account of EvilSanta\">\n
+        \                           EvilSanta\n                        </a>\n                    \n\n
+        \                                           &middot; <span class=\"date\">11
+        hours ago</span>\n                    \n                </p>\n                <div
+        class=\"clear\"></div>\n\n\n                \n\n                <div id=\"image\">\n
+        \                                   \n                    \n                    \n
+        \                   \n                    <div class=\"image textbox\">\n
+        \   \n\n                        <a href=\"//i.imgur.com/ai0XTid.jpg\" class=\"zoom\">\n
+        \       \n        \n        <img src=\"//i.imgur.com/ai0XTid.jpg\" alt=\"\"
+        />\n        \n                    </a>\n        \n    \n</div>\n\n                    \n
+        \                                                                       <div
+        class=\"description small-margin-top textbox\">hey not very good with Photoshop,
+        but I tried</div>\n                        \n                    \n                \n\n
+        \               \n                </div>\n\n                <div id=\"under-image\">\n
+        \                   \n\n                    \n\n                    <div class=\"relative
+        action-bar\">\n    \n    <span id=\"mainUpArrow\" class=\"upvote-image btn
+        btn-grey left title arrow up\" data=\"ai0XTid\" type=\"image\" title=\"Like\">\n
+        \       <span class=\"icon-upvote\"></span>\n    </span>\n    \n    <span
+        \ id=\"mainDownArrow\" class=\"downvote-image btn btn-grey left title arrow
+        down\" data=\"ai0XTid\" type=\"image\" title=\"Dislike\">\n        <span class=\"icon-downvote\"></span>\n
+        \   </span>\n    \n    <span class=\"favorite-image btn btn-grey left title\"
+        href=\"javascript:;\" title=\"Favorite\">\n        <span class=\"icon-fav\"></span>\n
+        \   </span>\n\n    <div class=\"stats-link left \">\n                    <div
+        class=\"point-info left bold\">\n                <span class=\"points-ai0XTid\">7,835</span>\n
+        \               <span class=\"points-text-ai0XTid\">points</span>\n            </div>\n
+        \           <br>\n            <div class=\"views-info left\">\n                <span
+        class=\"views-ai0XTid\">945,775</span>\n                <span class=\"views-text-ai0XTid\">views</span>\n
+        \           </div>\n        \n\n        \n        \n        \n    </div>\n\n
+        \   <div class=\"taxonomy-container right no-select\">\n        <div id=\"tags-underbar\"class=\"no-topic\">Add
+        tag</div>\n    </div>\n    \n    <div class=\"image-options button-container\">\n
+        \       <div id=\"options-btn\" class=\"options-btn combobox post-menu right\"
+        name=\"more-options\">\n            <span class=\"selection\"></span>\n            <span
+        class=\"icon-menu\">\n                Post Options\n            </span>\n
+        \           <div class=\"options\">\n                <!--<div class=\"item
+        nodisplay selected\"></div>-->\n                <div id=\"report-image\" class=\"item
+        icon-flag\" data-value=\"report\"> report post</div>\n                <div
+        class=\"item album-item icon-new-window nodisplay\" data-value=\"view\"> view
+        album page</div>\n                <div class=\"item album-item icon-download
+        nodisplay\" data-value=\"download\"> download album</div>\n                <div
+        class=\"item image-item icon-download\" data-value=\"download\"> download
+        image</div>\n                <div class=\"item image-item icon-meme\" data-value=\"meme\">
+        make meme</div>\n                <div class=\"item icon-x remove-post nodisplay\"
+        data-value=\"delete\"> delete post</div>\n            </div>\n            <input
+        type=\"hidden\" name=\"options-btn\" value=\"\">\n        </div>    \n    </div>\n\n
+        \   <div class=\"clear\"></div>\n</div>\n\n\n                    <div id=\"sponsored-image-caption\">\n
+        \                       \n                    </div>\n                </div>\n
+        \           </div>\n            \n            <div id=\"comments\">\n                <div
+        id=\"submit-caption\" class=\"caption-wrapper\">\n                    <textarea
+        tabindex=\"1\" name=\"cb19425b1353c093b24b3293f0158c2e\" id=\"caption_textarea\"
+        class=\"placeholder\">Submit a comment</textarea>\n                    \n
+        \                   <div class=\"left comment-button-container\">\n                        <div
+        tabindex=\"2\" class=\"submit-caption-button\">save</div>\n\n                        <div
+        class=\"left\">\n                            <span class=\"counter left\"></span>\n
+        \                           <div id=\"save-caption-loader\"></div>\n                            <div
+        class=\"clear\"></div>\n                        </div>\n                    </div>\n
+        \               </div>\n\n                <div id=\"caption-error\" class=\"error
+        textbox\"></div>\n                <div class=\"clear\"></div>\n\n                <div
+        class=\"small textbox comments-info\">\n                    <div class=\"left\">\n
+        \                       <div class=\"inline\"><span id=\"comment-count\">-
+        comments</span> sorted by&nbsp;</div>\n\n                        <div id=\"comment-sort\"
+        class=\"left combobox inline\" title=\"sort comments by\"  name=\"comment-sort\">\n
+        \                           <div class=\"selection green\"></div>\n                            <div
+        class=\"triangle\"></div>\n                            <div class=\"options\">\n
+        \                               <div class=\"item center selected\" data-value=\"best\">best</div>\n
+        \                               <div class=\"item center \" data-value=\"new\">new</div>\n
+        \                               <div class=\"item center \" data-value=\"top\">top</div>\n
+        \                           </div>\n                        </div>\n                    </div>\n
+        \                   <div class=\"right small\">\n                                                    <a
+        href=\"javascript:;\" data=\"collapsed\" id=\"expand-comments\">expand all</a>\n
+        \                       \n                    </div>\n                    <div
+        class=\"clear\"></div>\n                </div>\n\n                <div id=\"captions\">\n
+        \                   <noscript>\n                        <div class=\"textbox
+        small-margin-top line-height-normal\">\n                            Javascript
+        is required to view comments normally.\n                        </div>\n                    </noscript>\n
+        \               </div>\n            </div>\n            \n            <div
+        class=\"fixed-share-bar css-test-show\">\n                <div class=\"controls\">\n
+        \                   <ul>\n                        <li><span class=\"upvote
+        arrow up\"></span></li>\n                        <li><span class=\"downvote
+        arrow down last-child\"></span></li>\n                        <li><span class=\"fav2
+        last-child\"></span></li>\n                    </ul>\n                </div>\n
+        \               <div class=\"thumb-image2\">\n                    <img src=\"//i.imgur.com/ai0XTids.jpg\"
+        height=\"40\" width=\"40\">\n                </div>\n                <div
+        class=\"image-title2\">\n                    <span>I had to.</span>\n                </div>\n
+        \               <div class=\"social2 social\">\n                    <ul>\n
+        \                       <li class=\"shareitem\">\n                            <span
+        class=\"facebook_custom\" data-jshook=\"facebook_custom\"></span>\n                        </li>\n
+        \                       <li class=\"shareitem\">\n                            <span
+        class=\"twitter_custom\" data-jshook=\"twitter_custom\"></span>\n                        </li>\n
+        \                       <li class=\"shareitem\">\n                            <span
+        class=\"reddit_custom\">\n                                <span class=\"reddit-icon\"
+        data-jshook=\"reddit_custom\"></span>\n                            </span>\n
+        \                       </li>\n                        <li class=\"shareitem\">\n
+        \                           <span class=\"pinterest_custom\" data-jshook=\"pinterest_custom\"></span>\n
+        \                       </li>\n                        <li class=\"shareitem\">\n
+        \                           <span class=\"addthis_button shareother_custom\"
+        data-jshook=\"addthis_custom\"></span>\n                        </li>\n                    </ul>\n
+        \               </div>\n            </div>\n        </div>\n\n        <div
+        id=\"right-content\" class=\"right\">\n            \n            \n            <div
+        class=\"next-prev-browse panel fixed\">\n                <div class=\"next-prev\">\n
+        \                   <div class=\"navPrev\">&laquo; prev</div>\n                    <div
+        class=\"navNext\">next &raquo;</div>\n                    <div class=\"clear\"></div>\n
+        \               </div>\n                \n                <div class=\"navTop\">to
+        top</div>\n                <div class=\"clear\"></div>\n            </div>\n
+        \           \n            <div id=\"side-gallery\" class=\"panel\">                \n
+        \               <div class=\"next-prev-browse\">\n                    \n                    \n
+        \                   <div class=\"next-prev\">\n                        <div
+        class=\"navPrev\">&laquo; prev</div>\n                        <div class=\"navNext\">next
+        &raquo;</div>\n                        <div class=\"clear\"></div>\n                    </div>\n
+        \                   \n                    <div class=\"navBrowse\">browse</div>\n
+        \                   <div class=\"clear\"></div>\n                </div>\n
+        \               <div id=\"side-gallery-controls\"></div>\n                <div
+        class=\"nano\">\n                    <div class=\"scroll-content content\">\n
+        \                       <div id=\"small-loader\" class=\"small-loader\"></div>\n
+        \                   </div>\n                </div>\n            </div>\n            \n
+        \           \n            \n            \n                \n    <script type=\"text/javascript\">\n
+        \       var googletag = googletag || {};\n        googletag.cmd = googletag.cmd
+        || [];\n    </script>\n\n            \n    \n        <div class=\"panel advertisement
+        \">\n            <div class=\"panel-ad\">\n                                        <iframe
+        id=\"adiframe\" class=\"adframe\" src=\"\" scrolling=\"no\" frameBorder=\"0\"></iframe>\n
+        \   <script>\n        function s(){var e=document.getElementById(\"adiframe\");var
+        t=\"//imgur.com/ads?page=inside&main=1&hot=1&time=1425332993\";if(e.src){e.src=t}else{e.location=t}}setTimeout(s,1)\n
+        \   </script>\n\n                \n            </div>\n        </div>\n    \n
+        \   \n    <script type='text/javascript'>\r\ngoogletag.cmd.push(function()
+        {\r\n    window.abp_ad = googletag.defineSlot('/4761660/abp_300x250', [300,
+        250], 'div-gpt-ad-1421193579422-0').addService(googletag.pubads());\r\n    googletag.pubads().enableSingleRequest();\r\n
+        \   googletag.pubads().disableInitialLoad();\r\n    googletag.enableServices();\r\n
+        \   googletag.display('div-gpt-ad-1421193579422-0');\r\n});\r\n</script>\r\n<div
+        id='div-gpt-ad-1421193579422-0' class=\"nodisplay\">\r\n</div>\n\n\n            \n
+        \           \n            \n            <div id=\"fixed-side-footer-links\"
+        class=\"side-footer-links css-test-hide\">\n    <a href=\"//imgur.com/jobs\"
+        id=\"jobs-sidefooter\" class=\"title\" title=\"come work at Imgur\">Love Imgur?
+        Join our team!</a>\n    <br />\n    <a href=\"//imgur.com/about\" class=\"title\"
+        title=\"about imgur\">about</a> &middot;\n    <a href=\"http://store.imgur.com\"
+        class=\"title\" title=\"the official imgur store\">store</a> &middot;\n    <a
+        href=\"http://help.imgur.com\" class=\"title\" title=\"answers to your questions\">help</a>
+        &middot;\n    <a href=\"//imgur.com/blog\" class=\"title\" title=\"the simple
+        imgur blog\">blog <span class=\"new\">new post!</span></a> &middot;\n    <a
+        href=\"//imgur.com/removalrequest\" class=\"title\" title=\"request image
+        deletion\">request deletion</a> &middot;\n    <a href=\"//imgur.com/tos\"
+        class=\"title\" title=\"terms of service\">terms</a>\n    <br />\n    <a href=\"//imgur.com/privacy\"
+        class=\"title\" title=\"privacy policy\">privacy</a> &middot;\n    <a href=\"//imgur.com/apps\"
+        class=\"title\" title=\"Imgur tools, add-ons and apps\">apps</a> &middot;\n
+        \   <a href=\"//api.imgur.com\" class=\"title\" title=\"documentation for
+        the Imgur API\">api</a> &middot;\n    <a href=\"//imgur.com/advertise\" class=\"title\"
+        title=\"advertise with us\">advertise</a> &middot;\n    <a href=\"//imgur.com/privacy#adchoices\"
+        class=\"title\" title=\"ad choices\">ad choices</a>\n    <br />\n    <div
+        class=\"sidebar-footerlinks-social-icons\">\n    <iframe src=\"//www.facebook.com/plugins/like.php?href=https%3A%2F%2Ffacebook.com%2Fimgur&amp;width&amp;layout=button&amp;action=like&amp;show_faces=false&amp;share=false&amp;height=35\"
+        scrolling=\"no\" frameborder=\"0\" style=\"display:inline-block; border:none;
+        overflow:hidden; height:20px; width:50px; margin-right:8px;\" allowTransparency=\"true\"></iframe>\n
+        \   <a href=\"https://twitter.com/imgur\" class=\"twitter-follow-button\"
+        data-show-count=\"false\" data-show-screen-name=\"false\"></a>\n    </div>\n
+        \   <div class=\"side-copyright\">&copy; 2015 Imgur, Inc.</div>\n</div>\n\n
+        \           <div class=\"fixed-share-right css-test-show\">\n                <div
+        class=\"action-bar\">\n                    <h2>Share this post</h2>\n                    <p>Share
+        this post with your family and friends.</p>\n                </div>\n                <div
+        class=\"social3 social\">\n                    <ul>\n                        <li
+        class=\"shareitem\">\n                            <span class=\"facebook_custom\"
+        data-jshook=\"facebook_custom\">\n                                <span class=\"share-text\">Facebook</span>\n
+        \                           </span>\n                        </li>\n                        <li
+        class=\"shareitem\">\n                            <span class=\"twitter_custom\"
+        data-jshook=\"twitter_custom\">\n                                <span class=\"share-text\">Twitter</span>\n
+        \                           </span>\n                        </li>\n                        <li
+        class=\"shareitem\">\n                            <span class=\"reddit_custom\"
+        data-jshook=\"reddit_custom\">\n                                <span class=\"reddit-icon\"></span>\n
+        \                               <span class=\"share-text\">Reddit</span>\n
+        \                           </span>\n                        </li>\n                        <li
+        class=\"shareitem\">\n                            <span class=\"pinterest_custom\"
+        data-jshook=\"pinterest_custom\">\n                                <span class=\"share-text\">Pinterest</span>\n
+        \                           </span>\n                        </li>\n                        <li
+        class=\"shareitem\">\n                            <span class=\"googleplus_custom\"
+        data-jshook=\"googleplus_custom\">\n                                <span
+        class=\"share-text\">Google +</span>\n                            </span>\n
+        \                       </li>\n                        <li class=\"shareitem\">\n
+        \                           <span class=\"addthis_button shareother_custom\"
+        data-jshook=\"addthis_custom\">\n                                <span class=\"share-text\">More...</span>\n
+        \                           </span>\n                        </li>\n                    </ul>\n
+        \               </div>\n            </div>\n        </div>\n        </div>\n\n
+        \       <div class=\"clear\"></div>\n    </div>\n\n    <div class=\"tag-group-selector-container\"></div>\n\n
+        \   <input id=\"sid\" type=\"hidden\" value=\"cb19425b1353c093b24b3293f0158c2e\"
+        />\n\n    <div class=\"nodisplay\">\r\n\t<div id=\"colorbox-confirm\" class=\"popup\">\r\n\t\t<h3
+        id=\"colorbox-confirm-title\"></h3>\r\n\t\t\r\n\t\t<div class=\"textbox\"
+        id=\"colorbox-confirm-message\"></div>\r\n\r\n\t\t<div class=\"margin-top\">\r\n\t\t\t<div
+        class=\"left\">\r\n\t\t\t\t<a href=\"javascript:;\" class=\"colorbox-no-confirm\"
+        id=\"colorbox-confirm-no\">No way!</a>\r\n\t\t\t</div>\r\n\t\t\t\r\n\t\t\t<div
+        class=\"right\">\r\n\t\t\t\t<div class=\"small-loader\"></div>\r\n\t\t\t\t<a
+        href=\"javascript:;\" class=\"colorbox-confirm\" id=\"colorbox-confirm-yes\">I'm
+        sure</a>\r\n\t\t\t</div>\r\n\t\t\t\r\n\t\t\t<div class=\"clear\"></div>\r\n\t\t</div>\r\n\t</div>\r\n</div>\r\n\n
+        \   <div class=\"nodisplay\">\n\t<div id=\"download-album-form\" class=\"popup\">\n\t\t<h3>Download
+        this album</h3>\n\t\t\n\t\t<div class=\"textbox\">\n\t\t\tThis album is really
+        big! It's going to take us a bit to get your download ready for you.  Enter
+        your email and we will notify you when it's ready.\n\t\t</div>\n        <form
+        id=\"download-form\" onsubmit=\"return false;\">\n\t\t\n\t\t<div>\n            <div><input
+        id=\"email\" type=\"text\" name=\"email\" title=\"Email\" /></div>\n            <div
+        id=\"message\" class=\"right\"></div>\n            <div class=\"left\">\n
+        \               <input name=\"zip-album-submit-cb19425b1353c093b24b3293f0158c2e\"
+        type=\"submit\" class=\"button-medium\" value=\"Save\" id=\"save\">\n            </div>\n
+        \           <div class=\"clear\"></div>\n        </div>\n        </form>\n\t</div>\n</div>\n\n
+        \   <div id=\"analytics-wrapper\" class=\"nodisplay proUser\">\n    <div id=\"info-analytics\">\n
+        \       <div class=\"stats-overview\">\n            <div class=\"stats-overview-info-bar\">\n
+        \               <div class=\"left gallery-title\"></div>\n                <div
+        class=\"uploaded-time right\">Uploaded <span id=\"stat-upload-time\" class=\"value\"></span></div>\n
+        \               <div class=\"clear\"></div>\n            </div>\n            <div
+        id=\"stats-overview-thumb\" class=\"left\">\n                <img src=\"data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7\"
+        alt=\"\" />\n            </div>\n            <div class=\"points-chart left\">\n
+        \               <div class=\"pie circle\">\n                    <div class=\"part-one
+        circle\"></div>\n                    <div class=\"part-two circle\"></div>\n
+        \                   <div class=\"part-three circle full-bar-color\"></div>\n
+        \                   <div class=\"part-four circle\"></div>\n                    <div
+        class=\"part-five circle full-bar-color\"></div>\n                    <div
+        class=\"pie-contents circle\">\n                        <div class=\"points-total\">\n
+        \                           <div class=\"value stat\">0</div>\n                            <br
+        />Points\n                        </div>\n                        <div class=\"ups-total\">\n
+        \                           <div class=\"value green\">0</div>\n                            <div
+        class=\"vote-text\">ups</div>\n                        </div>\n                        <div
+        class=\"downs-total\">\n                            <div class=\"value red\">0</div>\n
+        \                           <div class=\"vote-text\">downs</div>\n                        </div>\n
+        \                   </div>\n                </div>\n            </div>\n            <div>\n
+        \               <div id=\"stats-overview-views\" class=\"info-block left\">\n
+        \                   <div class=\"value\">-</div>\n                    <div>Views</div>\n
+        \               </div>\n                <div id=\"stats-overview-band\" class=\"info-block
+        left\">\n                    <div class=\"value\">-</div>\n                    <div>Bandwidth
+        usage</div>\n                </div>\n            </div>\n            <div>\n
+        \               <div id=\"stats-overview-comments\" class=\"info-block left\">\n
+        \                   <div class=\"value\">-</div>\n                    <div>Comments</div>\n
+        \               </div>\n                <div id=\"stats-overview-favs\" class=\"info-block
+        left\">\n                    <div class=\"value\">-</div>\n                    <div>Favorites</div>\n
+        \               </div>\n            </div>\n            <div class=\"clear\"></div>\n
+        \       </div>\n        <div id=\"analytics-progress\" class=\"progress\"></div>\n
+        \       <div class=\"analytics-chart-wrapper\">\n            <div class=\"error-bar
+        nodisplay\"></div>\n            <div class=\"analytics-chart-toolbar\">\n
+        \               <div class=\"view-type-toggles left\">\n                    <input
+        type=\"radio\" value=\"daily\" id=\"dailyhourly\" checked=\"checked\" name=\"viewType\">\n
+        \                   <label for=\"dailyhourly\">Daily</label>\n                    <input
+        type=\"radio\" value=\"cumulative\" id=\"cumulative\" name=\"viewType\">\n
+        \                   <label for=\"cumulative\">Cumulative</label>\n                </div>\n
+        \               <div class=\"title left question-mark nodisplay\" title=\"Cumulative
+        is the total views at the end of each day, while daily is the amount of views
+        the item received each day.\">?</div>\n                <div class=\"analytics-chart-buttons
+        right\">\n                    <div id=\"analytics-chart-zoomout\" class=\"title\"
+        title=\"zoom out\">\n                        <div class=\"minus-text\">-</div>\n
+        \                       <div class=\"glass\"></div>\n                        <div
+        class=\"handle\"></div>\n                    </div>\n                    <div
+        id=\"analytics-chart-datepicker\">\n                        <div class=\"date-range
+        left\">waiting for image data</div>\n                        <div class=\"triangle
+        left\"></div>\n                    </div>\n                </div>\n                <div
+        class=\"analytics-chart-status\" id=\"analytics-chart-status\">\n                    Loading
+        views...\n                </div>\n            </div>\n            <div class=\"analytics-chart-placeholder-wrapper\"
+        style=\"clear: both;\">\n                <div id=\"analytics-chart-placeholder\"></div>\n
+        \           </div>\n        </div>\n        <div id=\"analytics-referrers-wrapper\">\n
+        \           <div class=\"error-bar nodisplay\"></div>\n            <div id=\"analytics-referrers-nonpro\"
+        class=\"nodisplay\">\n            </div>\n            <div id=\"analytics-referrers\"
+        class=\"nodisplay\">\n                <div id=\"analytics-referrers-table\"
+        class=\"nano\">\n                    <div class=\"content\">\n                        <table
+        class=\"analytics-referrers-table\"></table>\n                    </div>\n
+        \               </div>\n                <div class=\"share-with-friend nodisplay\">\n
+        \                   <div class=\"social\">\n    <ul>\n        <li class=\"title\"
+        title=\"Share on Facebook\">\n            <span class=\"facebook_custom\"
+        data-jshook=\"facebook_custom\"></span>\n        </li>\n        <li class=\"title\"
+        title=\"Share on Twitter\">\n            <span class=\"twitter_custom\" data-jshook=\"twitter_custom\"></span>\n
+        \       </li>\n        <li class=\"title\" title=\"Share on Pinterest\">\n
+        \           <span class=\"pinterest_custom\" data-jshook=\"pinterest_custom\"></span>\n
+        \       </li>\n        <li class=\"title\" title=\"Share on Google+\">\n            <span
+        class=\"googleplus_custom\" data-jshook=\"googleplus_custom\"></span>\n        </li>\n
+        \       <li class=\"title\" title=\"Share on Tumblr\">\n            <span
+        class=\"tumblr_custom\" data-jshook=\"tumblr_custom\"></span>\n        </li>\n
+        \       <li class=\"title\" title=\"Share on Reddit\">\n            <span
+        class=\"reddit_custom\" data-jshook=\"reddit_custom\"></span>\n        </li>\n
+        \       <li class=\"title stumble\" title=\"Share on StumbleUpon\">\n            <span
+        class=\"stumbleupon_custom\" data-jshook=\"stumbleupon_custom\"></span>\n
+        \       </li>\n        <li class=\"title\" title=\"More sharing options\">\n
+        \           <span class=\"addthis_button st_sharethis_custom\" data-jshook=\"addthis_custom\"><span></span></span>\n
+        \       </li>\n    </ul>\n</div>\n\n                    <p class=\"center\">Get
+        your image out there on the internet!</p>\n                </div>\n            </div>\n
+        \       </div>\n    </div>\n</div>\n    \n\n    \n\n    \n\n            \n
+        \   \n    \n    \n\n            <script type=\"text/javascript\">\n            (function()
+        {\n                var roll = Math.random();\n                if(roll < 0.05)
+        {\n                    \n                    (function(_,e,rr,s){\n                        _errs=[s];var
+        c=_.onerror;_.onerror=function(){var a=arguments;_errs.push(a);\n                        c&&c.apply(this,a)};var
+        b=function(){var c=e.createElement(rr),b=e.getElementsByTagName(rr)[0];\n
+        \                       c.src=\"//beacon.errorception.com/\"+s+\".js\";c.async=!0;b.parentNode.insertBefore(c,b)};\n
+        \                       _.addEventListener?_.addEventListener(\"load\",b,!1):_.attachEvent(\"onload\",b)\n
+        \                   })(window,document,\"script\",\"51d1e360b05ccb10310000d2\");\n
+        \                   \n                }\n            })();\n        </script>\n\n
+        \       \n<!--[if lte IE 8]>\n<script type=\"text/javascript\" src=\"//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js\"></script>\n<script
+        type=\"text/javascript\">\nif(typeof jQuery === 'undefined') {\n    document.write('<script
+        type=\"text/javascript\" src=\"//s.imgur.com/include/js/ext/jquery-1.10.2.min.js\"><'
+        + '/script>');\n}\n</script>\n<![endif]-->\n\n<!--[if gt IE 8]>\n<script type=\"text/javascript\"
+        src=\"//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js\"></script>\n<script
+        type=\"text/javascript\">\nif(typeof jQuery === 'undefined') {\n    document.write('<script
+        type=\"text/javascript\" src=\"//s.imgur.com/include/js/ext/jquery.2.1.1.min.js\"><'
+        + '/script>');\n}\n</script>\n<![endif]-->\n\n<!--[if !IE]> -->\n<script type=\"text/javascript\"
+        src=\"//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js\"></script>\n<script
+        type=\"text/javascript\">\nif(typeof jQuery === 'undefined') {\n    document.write('<script
+        type=\"text/javascript\" src=\"//s.imgur.com/include/js/ext/jquery.2.1.1.min.js\"><'
+        + '/script>');\n}\n</script>\n<!--<![endif]-->\n\n\n\n        <script type=\"text/javascript\"
+        src=\"//s.imgur.com/min/global.js?1425352862\"></script>\n\n        <script
+        type=\"text/javascript\">\n            Imgur.Environment = {\n                isDev:
+        \        false,\n                isSubdomain:   Imgur.Util.isSubdomain('imgur.com'),\n
+        \               host:          'imgur.com',\n                cdnUrl:        '//i.imgur.com',\n
+        \               signed:        false,\n                auth:          {},\n
+        \               recaptcha_key: '6LeZbt4SAAAAAKEsafT3QzEFp5vJ1-Z23uy5mPDz',\n
+        \               msid:          'cb19425b1353c093b24b3293f0158c2e',\n                beta:
+        \         {\n                    enabled:   false,\n                    inBeta:
+        \   false\n                },\n                                    dropdownPulseTime:
+        'pulse' + 1422477503,\n                \n                ctaConfig:     {\"anonymous\":[{\"active\":true,\"type\":\"button\",\"localStorageName\":\"cta-anonymous\",\"url\":\"\\/\",\"buttonText\":\"start
+        exploring\",\"title\":\"Welcome to Imgur!\",\"description\":\"Your new home
+        for the Internet's best visual stories.\",\"background\":\"\\/\\/s.imgur.com\\/images\\/house-cta\\/cta-background.jpg\",\"newTab\":false,\"buttonColor\":\"#77ac21\"}],\"user\":[{\"active\":true,\"type\":\"button\",\"localStorageName\":\"cta-camp1418760143\",\"customClass\":\"u-pl95\",\"url\":\"\\/\\/imgur.com\\/camp\",\"buttonText\":\"Get
+        More Details\",\"title\":\"Camp Imgur, August 2015\",\"description\":\"We're
+        50% sold out! Reserve your space now.\",\"background\":\"\\/\\/s.imgur.com\\/images\\/house-cta\\/cta-camp-imgur.jpg\",\"newTab\":true,\"buttonColor\":\"#cf5033\"}],\"gaming\":[{\"active\":true,\"type\":\"button\",\"localStorageName\":\"cta-gaming\",\"url\":\"http:\\/\\/imgur.com\\/t\\/gaming\\/top\\/week\",\"buttonText\":\"Check
+        it out!\",\"title\":\"You are now browsing the Internet on God Mode.\",\"description\":\"Awesome
+        unlocked! Imgur has gaming content like you wouldn't believe.\",\"background\":\"\\/\\/s.imgur.com\\/images\\/house-cta\\/cta-twitch.jpg\",\"newTab\":false,\"buttonColor\":\"#4d3280\"}],\"facebook\":[{\"active\":true,\"type\":\"facebook\",\"localStorageName\":\"cta-fb141008\",\"title\":\"Like
+        us on Facebook!\",\"description\":\"We're bringing funny to your newsfeed.
+        Like Imgur on Facebook!\",\"background\":\"\\/\\/s.imgur.com\\/images\\/house-cta\\/facebook-day.jpg\"}],\"global\":[{\"active\":false,\"localStorageName\":\"gifgen1422476556\",\"type\":\"button\",\"background\":\"\\/\\/s.imgur.com\\/images\\/house-cta\\/gif-to-video.png\",\"url\":\"\\/vidgif\",\"buttonText\":\"Check
+        it out!\",\"title\":\"Introducing Video to GIF!\",\"description\":\"Create
+        a GIF from hundreds of video sites.\",\"newTab\":true,\"buttonColor\":\"#4d3280\"}]}\n
+        \           };\n\n            var imgur = Imgur.getInstance();\n            imgur.init(_.merge(Imgur.Environment,
+        {\n                \n                \n                beta: {\"enabled\":false,\"inBeta\":false,\"showInvite\":false,\"ctaInvite\":[],\"ctaWelcome\":[]},\n
+        \           }));\n\n                            var uploader = Imgur.Upload.Global.getInstance(Imgur.getInstance()._);\n\n
+        \               if(uploader._.el.$uploadGlobal.length > 0) {\n                    uploader.bindPasteUpload();\n
+        \                   uploader.generalInit();\n                }\n            \n\n
+        \           imgur.generalInit();\n\n            $(function() {\n                \n
+        \           });\n\n            \n            \n\n            var _widgetFactory
+        = new Imgur.Factory.Widget(Imgur.Environment);\n\n            _widgetFactory.mergeConfig('global',
+        Imgur.Environment);\n            \n                            _widgetFactory.produceCtaBanner();\n
+        \           \n            \n            \n        </script>\n                                \n
+        \   \n    \n                <script type=\"text/javascript\">\n            (function(widgetFactory)
+        { \n                widgetFactory.mergeConfig('analytics', {\n                    isAdmin:
+        false,\n                    logPixel: '//i.imgur.com/lumbar.gif'\n                });\n
+        \               widgetFactory.mergeConfig('global', {\n                    analyticsAccountId:
+        'UA-6671908-2'\n                });\n    \n                widgetFactory.mergeConfig('search',
+        {\n                    type: 'global', \n                    q: ''\n                });\n
+        \               \n                widgetFactory.produceJafo();\n            })(_widgetFactory);\n
+        \       </script>\n    \n\n    <script type=\"text/javascript\">\n    (function(widgetFactory)
+        {\n        widgetFactory.mergeConfig('gallery', {\n            account_url
+        \        : 'EvilSanta',\n            sort                : 'viral',\n            section
+        \            : 'hot',\n            window              : 'day',\n            isHotImage
+        \         : '1',\n            hash                : 'ai0XTid',\n            baseURL
+        \            : decodeURIComponent('%2Fgallery'),\n            page                :
+        0,\n            galleryTitle        : 'Imgur',\n            commentName         :
+        'comment',\n            isPro               : false,\n            searchQuery
+        \        : '',\n            advSearch           : null,\n            isRandom
+        \           : false,\n            comment_sort        : 'best',\n            comment_id
+        \         : '',\n            safe_tags           : true,\n        \n            image
+        \              : {\"id\":66407247,\"hash\":\"ai0XTid\",\"account_id\":\"7052210\",\"account_url\":\"EvilSanta\",\"title\":\"I
+        had to.\",\"score\":8307,\"starting_score\":0,\"virality\":2925.9605501119,\"size\":218323,\"views\":945775,\"is_hot\":true,\"is_album\":false,\"album_cover\":null,\"album_cover_width\":0,\"album_cover_height\":0,\"mimetype\":\"image\\/jpeg\",\"ext\":\".jpg\",\"width\":900,\"height\":1200,\"animated\":false,\"looping\":false,\"ups\":7919,\"downs\":84,\"points\":7835,\"reddit\":\"\\/r\\/pics\\/comments\\/2xq5pz\\/this_was_necessary\\/\",\"bandwidth\":\"192.30
+        GB\",\"timestamp\":\"2015-03-02 21:49:53\",\"hot_datetime\":\"2015-03-03 01:36:29\",\"create_datetime\":\"2015-03-02
+        21:46:52\",\"section\":\"pics\",\"description\":\"hey not very good with Photoshop,
+        but I tried\",\"tags\":[],\"subtype\":null,\"spam\":\"0\",\"pending\":\"0\",\"comment_count\":206,\"nsfw\":false,\"topic\":\"No
+        Topic\",\"topic_id\":29,\"meme_name\":null,\"meme_top\":null,\"meme_bottom\":null,\"video_source\":null,\"video_host\":null,\"nsfw_tag\":false,\"favorited\":false,\"vote\":null},\n
+        \           group               : null,\n            usingCache          :
+        true,\n            captionsCacheTime   : 30,\n            captionsCacheCookie
+        : 'm_force_cache_miss',\n            cookieKey           : 'm_',\n            blockedTags
+        \        : [],\n                    defaultTags         : [{\"tag\":\"funny\",\"subscribers\":\"750\",\"images\":\"146975\"},{\"tag\":\"cute\",\"subscribers\":\"248\",\"images\":\"58743\"},{\"tag\":\"art\",\"subscribers\":\"88\",\"images\":\"33454\"},{\"tag\":\"informative\",\"subscribers\":\"85\",\"images\":\"31744\"},{\"tag\":\"news\",\"subscribers\":\"29\",\"images\":\"9089\"},{\"tag\":\"gaming\",\"subscribers\":\"442\",\"images\":\"21646\"},{\"tag\":\"memes\",\"subscribers\":\"53\",\"images\":\"65665\"},{\"tag\":\"science\",\"subscribers\":\"436\",\"images\":\"14730\"},{\"tag\":\"nature\",\"subscribers\":\"34\",\"images\":\"12510\"},{\"tag\":\"animals\",\"subscribers\":\"54\",\"images\":\"18265\"},{\"tag\":\"inspiring\",\"subscribers\":\"23\",\"images\":\"18226\"}],\n
+        \       \n            onTheFlyThreshold   : 10485760\n        });\n\n        widgetFactory.mergeConfig('groups',
+        {\n            groups: {\n                \n            }\n        });\n\n
+        \       widgetFactory.mergeConfig('promoted', {\"distance\":5,\"navThreshold\":6,\"onlyUniqueNavs\":true,\"skipPromoNav\":false,\"populateFirst\":true,\"populateFirstDistance\":3,\"populateFirstThreshold\":3,\"pixelEvents\":[\"ACTION_IMAGE_UPVOTE\",\"ACTION_IMAGE_DOWNVOTE\",\"ACTION_COMMENT\",\"ACTION_COMMENT_REPLY\",\"ACTION_COMMENT_UPVOTE\",\"ACTION_COMMENT_DOWNVOTE\",\"ACTION_FAVORITE\",\"CLICK_COMPANION\",\"CLICK_THUMB\",\"ACTION_SHARE\",\"ACTION_SHARE_FACEBOOK\",\"ACTION_SHARE_TWITTER\",\"ACTION_SHARE_PINTEREST\",\"ACTION_SHARE_REDDIT\",\"ACTION_SHARE_EMAIL\",\"IMPRESSION_THUMB\",\"IMPRESSION_POST\",\"IMPRESSION_COMPANION\"],\"adzerk\":{\"apiLocation\":\"http:\\/\\/zrk.imgur.com\\/api\\/v2\",\"placementParms\":[{\"adTypes\":[20],\"divName\":\"sponsored_thumb\",\"networkId\":9563,\"properties\":[],\"siteId\":57961,\"zoneIds\":[122235],\"eventIds\":[10,11,20,21,22,50,51,52,53,54,101,102,103]},{\"adTypes\":[20],\"divName\":\"sponsored_page\",\"networkId\":9563,\"properties\":[],\"siteId\":57961,\"zoneIds\":[121931]},{\"adTypes\":[5,20],\"divName\":\"sponsored_companion\",\"networkId\":9563,\"properties\":[],\"siteId\":57961,\"zoneIds\":[122236]}],\"placementIds\":{\"companion\":\"sponsored_companion\",\"page\":\"sponsored_page\",\"thumb\":\"sponsored_thumb\"}}});\n
+        \   })(_widgetFactory);\n    </script>\n\n                <div id=\"scroll-ad\"
+        class=\"nodisplay\">\r\n    <a class=\"right\" href=\"javascript:;\">close
+        x</a>\r\n    <iframe id=\"scrolling_adiframe\" src=\"\" scrolling=\"no\" frameBorder=\"0\"></iframe>\r\n
+        \   <script>\r\n        function s(){var e=document.getElementById(\"scrolling_adiframe\");var
+        t=\"//imgur.com/ads/scroll?main\";if(e.src){e.src=t}else{e.location=t}}setTimeout(s,1)\r\n
+        \   </script>\r\n</div>\n    \n\n    <script type=\"text/javascript\" src=\"//s.imgur.com/min/gallery.js?1425352862\"></script>\n\n
+        \   <script type=\"text/javascript\">\n    (function(widgetFactory) {\n        var
+        emitter = new Imgur.Emitter();\n        widgetFactory.produceLocationCommand(emitter);\n\n
+        \       var analytics = widgetFactory.produceAnalytics(emitter);\n        var
+        galleryFactory = widgetFactory.produceInsideGalleryFactory();\n        var
+        gallery = galleryFactory.produceInsideGallery(emitter, analytics);\n\n                galleryFactory.produceSideGalleryControls(emitter);\n
+        \       \n\n        gallery.insideInit(analytics);\n\n        $(document).ready(function()
+        {\n            var imgurFavorite = new Imgur.Favorite({\n                method:
+        null\n            });\n\n            imgurFavorite._init();\n        });\n
+        \       \n        \n        \n        emitter.on('select', null, function(image)
+        {\n            _widgetFactory.produceCtaBanner();                \n        });
+        //For hash specific CTAs\n    })(_widgetFactory);\n    </script>\n\n    <script
+        type=\"text/javascript\">\n        $(function(){\n            // log the item
+        view\n            Imgur.Util.jafoLog({\n                event: 'item',\n                meta:
+        {\n                    'hash': 'ai0XTid',\n                    'inGallery':
+        true,\n                    'isAlbum': false,\n                    'nsfw':
+        false,\n                    'galleryEntry': 1425346589000\n                }\n
+        \           });\n        });\n    </script>\n    \n            <script type=\"text/javascript\">
+        \       \n            (function() {\n                var gads = document.createElement('script');\n
+        \               gads.async = true;\n                gads.type = 'text/javascript';\n
+        \               var useSSL = 'https:' == document.location.protocol;\n                gads.src
+        = (useSSL ? 'https:' : 'http:') + '//www.googletagservices.com/tag/js/gpt.js';\n
+        \               var node = document.getElementsByTagName('script')[0];\n                node.parentNode.insertBefore(gads,
+        node);\n            })();\n        </script>\n        <script type=\"text/javascript\">var
+        usesABP;</script>\r\n<script type=\"text/javascript\" class=\"abp\" src=\"//s.imgur.com/min/px.js?ch=1\"></script>\r\n<script
+        type=\"text/javascript\" class=\"abp\" src=\"//s.imgur.com/min/px.js?ch=2\"></script>\r\n<script
+        type='text/javascript'>\r\n    googletag.cmd.push(function() {\r\n        window.abp_slot
+        = googletag.defineSlot('/4761660/abp', [1, 1], 'div-gpt-ad-1416505221134-0').addService(googletag.pubads());\r\n
+        \       googletag.pubads().enableSingleRequest();\r\n        googletag.pubads().disableInitialLoad();\r\n
+        \       googletag.enableServices();\r\n        googletag.display('div-gpt-ad-1416505221134-0');\r\n
+        \   });\r\n</script>\r\n<div id='div-gpt-ad-1416505221134-0' style='width:1px;
+        height:1px;'></div>\r\n<script type=\"text/javascript\">\r\n    window.abp
+        = function() {\r\n        if (usesABP && window.abp_slot) {\r\n            googletag.pubads().refresh([window.abp_slot]);\r\n
+        \       }\r\n    };\r\n    \r\n            googletag.cmd.push(function(){\r\n
+        \           window.abp();\r\n            \r\n            if (usesABP && window.abp_ad)
+        {\r\n                document.getElementById('div-gpt-ad-1421193579422-0').className
+        = '';\r\n                googletag.pubads().refresh([window.abp_ad]);\r\n
+        \           }\r\n        });\r\n    \n</script>\n\n    \n\n            <script
+        type=\"text/javascript\">\n        (function(widgetFactory) {\n            widgetFactory.produceSearch();\n
+        \       })(_widgetFactory);\n        </script>\n    \n\n        \n    \n\n
+        \                       <script type=\"text/javascript\">\n                (function(widgetFactory)
+        {\n                    var inIframe = false;\n                    try {\n
+        \                       inIframe = window.self !== window.top;\n                    }
+        catch (e) {\n                        inIframe = true;\n                    }\n
+        \                   if(!inIframe) {\n                        $.getScript('//cdn.optimizely.com/js/1507425748.js',
+        function(){\n                                  var insideNav = Imgur.InsideNav.getInstance();\r\n
+        \ var shareTest = new ShareTest(insideNav);\r\n  insideNav._.emitter.on('select',
+        shareTest, shareTest.updateStatus);\r\n\n                            Imgur.Util.getGoogleTracker();\n
+        \                           __ga('send', 'pageview');\n                            Imgur.Util.jafoLog({\n
+        \                               event: 'mattPageView'\n                            });\n
+        \                           \n                            if(_.keys(window.optimizely.data.state.variationNamesMap).length){\n
+        \                               Imgur.Util.jafoLog({\n                                    event:
+        'optExperimentLoaded',\n                                    meta: window.optimizely.data.state.variationNamesMap\n
+        \                               });\n                            }\n                            \n
+        \                       });\n                    } else {\n                        Imgur.Util.getGoogleTracker();\n
+        \                       __ga('send', 'pageview');\n                        Imgur.Util.jafoLog({\n
+        \                           event: 'mattPageView'\n                        });\n
+        \                   }\n                })(_widgetFactory);\n            </script>\n
+        \       \n        \n        \n        <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document,
+        'script', 'twitter-wjs');</script>\n        \n\n        \n\n                    <script
+        type=\"text/javascript\">\n                $(function(){\n                    Imgur.Util.jafoLog({\n
+        \                       event: 'mattShown'\n                    });\n                });\n
+        \           </script>\n        \n    \n\n        <script type='text/javascript'>\n
+        \       \n        (function(){\n            try{\n                var msg
+        = '\\n      _\\n     (_)\\n      _ _ __ ___   __ _ _   _ _ __\\n     | | \\'_
+        ` _ \\\\ / _` | | | | \\'__|\\n     | | | | | | | (_| | |_| | |\\n     |_|_|
+        |_| |_|\\\\__, |\\\\__,_|_|\\n                   __/ |\\n                  |___/\\n';\n
+        \               msg += '========================================\\nYou opened
+        the console! Know some code,\\ndo you? Want to work for one of the best\\nstartups
+        around? http://imgur.com/jobs\\n========================================\\n';\n
+        \               console.log(msg);\n            }catch(e){}\n        })()\n
+        \       \n    </script>\n    \n\n        \n\n</body>\n</html>\n"
+    http_version: 
+  recorded_at: Tue, 03 Mar 2015 09:02:59 GMT
+recorded_with: VCR 2.9.3

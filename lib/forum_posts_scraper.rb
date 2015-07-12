@@ -60,7 +60,7 @@ class ForumPostsScraper < Scraper::Base
 
   def page_base(page_number)
     page_number = page_number.kind_of?(String) ? page_number : page_number * 25
-    "http://www.factorioforums.com/forum/viewforum.php?f=14&start=#{page_number}"
+    "http://www.factorioforums.com/forum/viewforum.php?f=87&start=#{page_number}"
   end
 
   def next_page_url_from_dom(page)
