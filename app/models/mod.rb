@@ -45,7 +45,7 @@ class Mod < ActiveRecord::Base
   ### Scopes
   #################
 
-  scope :filter_by_category, ->(category) { joins(:categories).where(categories_mods: { category_id: category }) }
+  scope :filter_by_category, ->(category) { joins(:categories_mods).where(categories_mods: { category_id: category }) }
   scope :filter_by_game_version, ->(game_version) do
     select('DISTINCT mods.*').joins(:mod_game_versions).where(mod_game_versions: { game_version: game_version })
   end

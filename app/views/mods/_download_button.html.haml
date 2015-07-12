@@ -15,4 +15,4 @@
             -#= "v#{file.mod_version.game_versions_string}"
       - if mod.versions.size > 2
         %li
-          = link_to 'More versions...', category_mod_path(mod.category, mod, anchor: 'download')
+          = link_to 'More versions...', mod_path(mod, anchor: 'download')

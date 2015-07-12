@@ -1,12 +1,3 @@
-# This file should contain all the record creation needed to seed the database with its default values.
-# The data can then be loaded with the rake db:seed (or created alongside the db with db:setup).
-#
-# Examples:
-#
-#   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
-#   Mayor.create(name: 'Emanuel', city: cities.first)
-
-
 User.create!(email: 'zequez@gmail.com', name: 'Zequez', password: 'qwfpqwfp', password_confirmation: 'qwfpqwfp', is_admin: true)
 
 Category.create! name: 'Uncategorized',     icon_class: 'fa fa-question-circle'
@@ -18,7 +9,7 @@ Category.create! name: 'Equipment',         icon_class: 'fa fa-briefcase'
 Category.create! name: 'Defense',           icon_class: 'fa fa-shield'
 Category.create! name: 'Energy',            icon_class: 'fa fa-bolt'
 Category.create! name: 'GUI',               icon_class: 'fa fa-desktop'
-Category.create! name: 'Manufacturing',     icon_class: 'fa fa-cogs'
+Category.create! name: 'Manufacturing',     icon_class: 'fa fa-cog'
 Category.create! name: 'Weapons',           icon_class: 'fa fa-bomb'
 Category.create! name: 'Transport Belts',   icon_class: 'fa fa-indent'
 Category.create! name: 'Logistics Network', icon_class: 'fa fa-android'
