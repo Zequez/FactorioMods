@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150303061050) do
+ActiveRecord::Schema.define(version: 20150712121842) do
 
   create_table "active_admin_comments", force: true do |t|
     t.string   "namespace"
@@ -208,6 +208,14 @@ ActiveRecord::Schema.define(version: 20150303061050) do
     t.string   "ip"
     t.datetime "created_at"
   end
+
+  create_table "table_mods_categories", force: true do |t|
+    t.integer "mod_id"
+    t.integer "category_id"
+  end
+
+  add_index "table_mods_categories", ["category_id"], name: "index_table_mods_categories_on_category_id"
+  add_index "table_mods_categories", ["mod_id"], name: "index_table_mods_categories_on_mod_id"
 
   create_table "tags", force: true do |t|
     t.string   "name"

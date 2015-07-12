@@ -40,6 +40,7 @@ RSpec.describe Mod, :type => :model do
     # belongs_to
     it { should respond_to :author }
     it { should respond_to :category }
+    it { should respond_to :categories }
 
     # has_many
     it { should respond_to :files }
@@ -283,13 +284,6 @@ RSpec.describe Mod, :type => :model do
       end
     end
 
-    # describe '#description_html' do
-    #   it 'should convert the description stuff to HTML stuff' do
-    #     mod = create :mod, description: 'Check out this cool vid: \n\n https://www.youtube.com/watch?v=p7kpJLC_RzM'
-    #     expect(mod.description_html).to include 'iframe'
-    #   end
-    # end
-
     describe '#forum_post' do
       it { expect(mod).to respond_to :forum_post }
       it { expect(mod.build_forum_post).to be_kind_of ForumPost }
@@ -303,7 +297,7 @@ RSpec.describe Mod, :type => :model do
         expect(forum_post.mod).to eq mod
       end
     end
-    
+
     describe '#imgur' do
       it 'should save the value and return the derivated attributes' do
         mod.imgur = 'VRi7OWV'
@@ -316,53 +310,6 @@ RSpec.describe Mod, :type => :model do
       end
     end
   end
-
-  # describe '#media_links_string' do
-  #   it 'should be valid with imgur' do
-  #     mod = build :mod, media_links_string: 'http://imgur.com/gallery/qLpt6gI'
-  #     expect(mod).to be_valid
-  #   end
-
-  #   it 'should be valid gfycat' do
-  #     mod = build :mod, media_links_string: 'http://gfycat.com/EthicalZanyHuman'
-  #     expect(mod).to be_valid
-  #   end
-
-  #   it 'should not be valid with a random domain' do
-  #     mod = build :mod, media_links_string: 'http://potatosalad.com'
-  #     expect(mod).to be_invalid
-  #   end
-
-  #   it "should return the same value if it doesn't exist" do
-  #     mod = build :mod, media_links_string: "http://imgur.com/gallery/qLpt6gI\nhttp://potatosalad.com\nhttp://gfycat.com/EthicalZanyHuman"
-  #     mod.media_links_string.should eq "http://imgur.com/gallery/qLpt6gI\nhttp://potatosalad.com\nhttp://gfycat.com/EthicalZanyHuman"
-  #   end
-
-  #   it "should return the same as #media_links#to_string if it doesn't exist" do
-  #     mod = build :mod, media_links_string: "http://imgur.com/gallery/qLpt6gI\nhttp://imgur.com/gallery/123123"
-  #     mod.save!
-  #     mod = Mod.first
-  #     mod.media_links_string.should eq "http://imgur.com/gallery/qLpt6gI\nhttp://imgur.com/gallery/123123"
-  #   end
-  # end
-
-  # describe '#media_links' do
-  #   it 'should load the #media_links correctly before save' do
-  #     mod = build :mod, media_links_string: "http://imgur.com/gallery/qLpt6gI\nhttp://imgur.com/potato"
-  #     expect(mod.media_links.size).to eq 2
-  #     expect(mod.media_links[0]).to be_kind_of MediaLinks::Imgur
-  #     expect(mod.media_links[1]).to be_kind_of MediaLinks::Imgur
-  #   end
-
-  #   it 'should load the #media_links correctly after save' do
-  #     mod = build :mod, media_links_string: "http://imgur.com/gallery/qLpt6gI\nhttp://imgur.com/potato"
-  #     mod.save!
-  #     mod = Mod.first
-  #     expect(mod.media_links.size).to eq 2
-  #     expect(mod.media_links[0]).to be_kind_of MediaLinks::Imgur
-  #     expect(mod.media_links[1]).to be_kind_of MediaLinks::Imgur
-  #   end
-  # end
 
   describe 'scopes' do
     describe '.filter_by_category' do

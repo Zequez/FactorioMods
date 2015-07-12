@@ -48,9 +48,7 @@ feature 'Modder creates a new mod' do
     fill_in 'Github', with: 'http://github.com/factorio-mods/mah-super-mod'
     fill_in 'Forum URL', with: 'http://www.factorioforums.com/forum/viewtopic.php?f=14&t=5971&sid=1786856d6a687e92f6a12ad9425aeb9e'
     fill_in 'Official URL', with: 'http://www.factorioforums.com/'
-    fill_in 'Description', with: 'Lorem ipsum description potato salad simulator'
     fill_in 'Summary', with: 'This is a small mod for testing'
-    fill_in 'Pictures or gifs links', with: "http://imgur.com/gallery/qLpt6gI\nhttp://imgur.com/rsarsa"
     fill_in_first_version_and_file
     submit_form
     expect(current_path).to eq '/mods/potato-category/mah-super-mod'
@@ -60,25 +58,10 @@ feature 'Modder creates a new mod' do
     expect(mod.github).to eq 'factorio-mods/mah-super-mod'
     expect(mod.forum_url).to eq 'http://www.factorioforums.com/forum/viewtopic.php?f=14&t=5971&sid=1786856d6a687e92f6a12ad9425aeb9e'
     expect(mod.official_url).to eq 'http://www.factorioforums.com/'
-    expect(mod.description).to eq 'Lorem ipsum description potato salad simulator'
     expect(mod.summary).to eq 'This is a small mod for testing'
-    expect(mod.media_links[0].to_string).to eq 'http://imgur.com/gallery/qLpt6gI'
-    expect(mod.media_links[1].to_string).to eq 'http://imgur.com/gallery/rsarsa'
     expect(mod.author).to eq @user
   end
 
-  scenario 'user submits a mod with invalid media links' do
-    sign_in
-    category = create :category, name: 'Potato'
-    visit '/mods/new'
-    fill_in 'mod_name', with: 'Invalid media link'
-    select 'Potato', from: 'Category'
-    fill_in_first_version_and_file
-    fill_in 'Pictures or gifs links', with: "http://imgur.com/gallery/qLpt6gI\nhttp://caca.com\nhttp://imgur.com/rsarsa"
-    submit_form
-    expect(current_path).to eq '/mods'
-    expect(page).to have_content 'Invalid media links'
-  end
 
   scenario 'user submits mod with a version and file' do
     sign_in
@@ -142,7 +125,6 @@ feature 'Modder creates a new mod' do
     expect(find('#mod_author_name').value).to eq 'SuperGuy'
     expect(find('#mod_forum_url').value).to eq 'http://www.factorioforums.com/forum/viewtopic.php?f=14&t=6742'
     expect(find('[id$=released_at]').value).to eq released_at.strftime('%Y-%m-%d')
-    expect(find('#mod_description').value).to eq "### Hey there\n**I'm here to kill you!**\n- And a list of stuff!\n- And more stuff!\n"
   end
 
   scenario 'tries to submit mod with the same name as an existing mod, is shown an error and a link to the existing mod' do

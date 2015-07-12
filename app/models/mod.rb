@@ -32,6 +32,7 @@ class Mod < ActiveRecord::Base
 
   has_many :mod_game_versions, -> { uniq }, dependent: :destroy
   has_many :game_versions, -> { uniq.sort_by_older_to_newer }, through: :mod_game_versions
+  has_many :categories, through: :mods_categories
 
   # has_one :latest_version, -> { sort_by_newer_to_older.limit(1) }, class_name: 'ModVersion'
   # has_one :second_latest_version, -> { sort_by_newer_to_older.limit(1).offset(1) }, class_name: 'ModVersion'
