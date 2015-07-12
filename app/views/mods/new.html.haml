@@ -21,9 +21,11 @@
           = render 'version_fields', f: ff
         .nested-form-links.mod-versions-links
           = link_to_add_association 'Add version', f, :versions
-
     // Nested mod versions
     // Nested mod files
     // Nested mod files
     = f.actions do
       = f.action :submit
+  - unless @mod.new_record?
+    .mod-forum
+      %iframe.mod-forum-iframe{src: @mod.forum_url}

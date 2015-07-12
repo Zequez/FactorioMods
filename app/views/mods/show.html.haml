@@ -2,7 +2,7 @@
 
 .mods-show
   .mod
-    .mod-image<>
+    .mod-image
       - if @mod.imgur
         %a.mod-image-link{href: @mod.imgur_url, target: '_blank'}
           %img.mod-image-img{src: @mod.imgur_normal}
@@ -37,4 +37,11 @@
                 %td= mod_date version.released_at
       - else
         %h3 This mod doesn't have anything to download :(
-    
+    - if @mod.forum_url
+      .mod-forum
+        %h3
+          Mod forum post
+        .mod-forum-iframe-cover
+          %iframe.mod-forum-iframe{src: @mod.forum_url}
+    - else
+      %h3 We couldn't find the the forum post associated with this mod

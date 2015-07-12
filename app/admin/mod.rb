@@ -90,9 +90,13 @@ ActiveAdmin.register Mod do
     column :updated_at do |mod|
       span distance_of_time_in_words_to_now(mod.updated_at), title: mod.updated_at
     end
-    
+
     column :imgur do |mod|
-        link_to mod.imgur, mod.imgur_url if mod.imgur
+      link_to mod.imgur, mod.imgur_url if mod.imgur
+    end
+    
+    column :edit do |mod|
+      link_to 'EditPublic', edit_category_mod_url(mod.category, mod)
     end
 
     actions
