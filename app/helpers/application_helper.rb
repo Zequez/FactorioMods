@@ -70,10 +70,6 @@ module ApplicationHelper
     polymorphic_path([@sort, @category, :mods], filter_params.merge(q: query))
   end
 
-  def edit_mod_url(mod)
-    edit_category_mod_url(mod.category, mod)
-  end
-
   ### Links helpers
   ####################
 

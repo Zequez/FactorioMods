@@ -29,13 +29,13 @@ feature 'Modder creates a new mod' do
     create_category 'Terrain'
     visit '/mods/new'
     fill_in 'mod_name', with: 'Super Mod'
-    select 'Terrain', from: 'Category'
+    select 'Terrain', from: 'Categories'
     fill_in_first_version_and_file
     submit_form
-    expect(current_path).to eq '/mods/terrain/super-mod'
+    expect(current_path).to eq '/mods/super-mod'
     mod = Mod.first
     expect(mod.name).to eq 'Super Mod'
-    expect(mod.category).to eq @category
+    expect(mod.categories).to match_array [@category]
     expect(mod.author).to eq @user
   end
 
@@ -44,17 +44,17 @@ feature 'Modder creates a new mod' do
     create_category 'Potato category'
     visit '/mods/new'
     fill_in 'mod_name', with: 'Mah super mod'
-    select 'Potato category', from: 'Category'
+    select 'Potato category', from: 'Categories'
     fill_in 'Github', with: 'http://github.com/factorio-mods/mah-super-mod'
     fill_in 'Forum URL', with: 'http://www.factorioforums.com/forum/viewtopic.php?f=14&t=5971&sid=1786856d6a687e92f6a12ad9425aeb9e'
     fill_in 'Official URL', with: 'http://www.factorioforums.com/'
     fill_in 'Summary', with: 'This is a small mod for testing'
     fill_in_first_version_and_file
     submit_form
-    expect(current_path).to eq '/mods/potato-category/mah-super-mod'
+    expect(current_path).to eq '/mods/mah-super-mod'
     mod = Mod.first
     expect(mod.name).to eq 'Mah super mod'
-    expect(mod.category).to eq @category
+    expect(mod.categories).to match_array [@category]
     expect(mod.github).to eq 'factorio-mods/mah-super-mod'
     expect(mod.forum_url).to eq 'http://www.factorioforums.com/forum/viewtopic.php?f=14&t=5971&sid=1786856d6a687e92f6a12ad9425aeb9e'
     expect(mod.official_url).to eq 'http://www.factorioforums.com/'
@@ -71,7 +71,7 @@ feature 'Modder creates a new mod' do
     attachment = File.new(Rails.root.join('spec', 'fixtures', 'test.zip'))
     visit '/mods/new'
     fill_in 'mod_name', with: 'Valid mod name'
-    select 'Potato', from: 'Category'
+    select 'Potato', from: 'Categories'
     within('.mod-version:nth-child(1)') do
       fill_in 'Number', with: '123'
       fill_in 'Release day', with: '2014-11-09'  
@@ -84,7 +84,7 @@ feature 'Modder creates a new mod' do
     end
     submit_form
     mod = Mod.first
-    expect(current_path).to eq '/mods/potato/valid-mod-name'
+    expect(current_path).to eq '/mods/valid-mod-name'
     expect(page).to have_content 'Valid mod name'
     expect(mod.versions[0].number).to eq '123'
     expect(mod.versions[0].released_at).to eq Time.zone.parse('2014-11-09')
@@ -98,12 +98,12 @@ feature 'Modder creates a new mod' do
     create_category 'Potato'
     visit '/mods/new'
     fill_in 'mod_name', with: 'Mod Name'
-    select 'Potato', from: 'Category'
+    select 'Potato', from: 'Categories'
     fill_in 'Author name', with: 'MangoDev'
     fill_in_first_version_and_file
     submit_form
     mod = Mod.first
-    expect(current_path).to eq '/mods/potato/mod-name'
+    expect(current_path).to eq '/mods/mod-name'
     expect(mod.author_name).to eq 'MangoDev'
   end
 
@@ -130,15 +130,15 @@ feature 'Modder creates a new mod' do
   scenario 'tries to submit mod with the same name as an existing mod, is shown an error and a link to the existing mod' do
     sign_in
     create_category 'Potato'
-    mod = create :mod, name: 'SuperMod', category: @category
+    mod = create :mod, name: 'SuperMod', categories: [@category]
     visit "/mods/new"
     fill_in 'mod_name', with: 'SuperMod'  
-    select 'Potato', from: 'Category'
+    select 'Potato', from: 'Categories'
     fill_in_first_version_and_file
     submit_form
     expect(current_path).to eq '/mods'
     expect(page).to have_content "There is already another mod with that name"
-    expect(page).to have_link "another mod", "/mods/potato/supermod"
+    expect(page).to have_link "another mod", "/mods/supermod"
   end
 
   def fill_in_first_version_and_file

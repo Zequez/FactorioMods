@@ -7,9 +7,9 @@ RSpec.describe Category, :type => :model do
     it 'should return the mods associated with the category' do
       category = create :category
       mods = []
-      mods << create(:mod, category: category)
-      mods << create(:mod, category: category)
-      mods << create(:mod, category: category)
+      mods << create(:mod, categories: [category])
+      mods << create(:mod, categories: [category])
+      mods << create(:mod, categories: [category])
       expect(category.mods).to eq mods
     end
   end
@@ -28,7 +28,7 @@ RSpec.describe Category, :type => :model do
 
     context 'category has mods' do
       it 'should be the number of mods' do
-        create :mod, categories: [category]
+        m = create :mod, categories: [category]
         create :mod, categories: [category]
         create :mod, categories: [category]
 

@@ -45,9 +45,9 @@ module ModsHelper
     str
   end
 
-  def mod_category_link(mod)
-    link_to [mod.category, :mods] do
-      content_tag(:i, '', class: mod.category.icon_class) + ' ' + mod.category.name
+  def category_tag_link(category)
+    link_to category_filter_url(category) do
+      content_tag(:i, '', class: category.icon_class) + ' ' + category.name
     end
   end
 end

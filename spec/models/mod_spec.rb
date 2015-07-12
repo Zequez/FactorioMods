@@ -66,7 +66,8 @@ RSpec.describe Mod, :type => :model do
       end
 
       it 'should be invalid without category' do
-        mod = build :mod, categories: []
+        mod = build :mod
+        mod.categories = []
         expect(mod).to be_invalid
       end
     end
@@ -293,10 +294,11 @@ RSpec.describe Mod, :type => :model do
     describe '.filter_by_category' do
       it 'should filter results by category' do
         mod1 = create(:mod)
-        mod2 = create(:mod, categories: [mod1.categories[0]])
+        mod2 = create(:mod)
+        mod2.categories = [mod1.categories[0]]
+        mod2.save!
         mod3 = create(:mod)
-
-        Mod.filter_by_category(mod1.category).all.should eq [mod1, mod2]
+        Mod.filter_by_category(mod1.categories[0]).all.should eq [mod1, mod2]
       end
     end
 
@@ -475,9 +477,9 @@ RSpec.describe Mod, :type => :model do
         it 'should work when filtering by category' do
           c1 = create(:category)
           c2 = create(:category)
-          m1 = create(:mod, name: 'manzana 1', category: c1)
-          m2 = create(:mod, name: 'potato 1', category: c1)
-          m3 = create(:mod, name: 'potato 2', category: c2)
+          m1 = create(:mod, name: 'manzana 1', categories: [c1])
+          m2 = create(:mod, name: 'potato 1', categories: [c1])
+          m3 = create(:mod, name: 'potato 2', categories: [c2])
 
           expect(Mod.filter_by_category(c1).filter_by_search_query('potato')).to eq [m2]
         end

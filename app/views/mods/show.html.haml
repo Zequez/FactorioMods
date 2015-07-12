@@ -11,7 +11,8 @@
     .mod-info-container
       %h2.mod-title= @mod.name
       .mod-subtitle
-        = mod_category_link @mod
+        - @mod.categories.each do |category|
+          = category_tag_link category
         %a.mod-subtitle-edit-link{href: edit_mod_url(@mod)} Edit mod
       .mod-summary
         = @mod.summary

@@ -24,7 +24,7 @@ feature 'Display an index of mods in certain order' do
     end
 
     scenario 'sort by recently updated' do
-      visit '/mods/recently-updated'
+      visit '/recently-updated'
       expect(page.all('.mod-title').map(&:text)).to eq %w{SuperMod6 SuperMod2 SuperMod4 superMod3 superMod0}
     end
 
@@ -34,7 +34,7 @@ feature 'Display an index of mods in certain order' do
     end
 
     scenario 'sort by most popular' do
-      visit '/mods/most-popular'
+      visit '/most-popular'
       expect(page.all('.mod-title').map(&:text)).to eq %w{SuperMod6 superMod0 SuperMod2 SuperMod4 superMod3}
     end
   end
@@ -43,14 +43,14 @@ feature 'Display an index of mods in certain order' do
     scenario 'when sorting by release date, mods without mod_version should also be included' do
       create_mod 'SuperMod1', nil, 200
       create_mod 'SuperMod2', 5.days.ago, 100
-      visit '/mods/recently-updated'
+      visit '/recently-updated'
       expect(page.all('.mod-title').map(&:text)).to eq %w{SuperMod2 SuperMod1}
     end
 
     scenario 'when sorting by most popular, mods without forum_post should also be included' do
       create_mod 'SuperMod1', 1.days.ago, nil
       create_mod 'SuperMod2', 1.days.ago, 100
-      visit '/mods/most-popular'
+      visit '/most-popular'
       expect(page.all('.mod-title').map(&:text)).to eq %w{SuperMod2 SuperMod1}
     end
   end

@@ -4,19 +4,14 @@ class ModsController < ApplicationController
   def index
     @mods = Mod
 
-    @mods = @mods.includes([:category, :author, :forum_post, versions: :files])
+    @mods = @mods.includes([:categories, :author, :forum_post, versions: :files])
 
     if params[:category_id]
       @category = Category.find_by_slug params[:category_id]
       if @category
         @mods = @mods.filter_by_category @category
       else
-        @mod = Mod.find_by_slug(params[:category_id])
-        if @mod
-          redirect_to category_mod_url(@mod.category, @mod), status: :moved_permanently
-        else
-          not_found
-        end
+        not_found
       end
     end
 
@@ -59,16 +54,7 @@ class ModsController < ApplicationController
 
   def show
     @mod = Mod.includes(versions: :files).find_by_slug(params[:id])
-    if @mod
-      @category = Category.find_by_slug params[:category_id]
-      if @category and @mod.category == @category
-        # Do nothing, everything is alright
-      else
-        redirect_to category_mod_url(@mod.category, @mod), status: :moved_permanently
-      end
-    else
-      not_found
-    end
+    not_found unless @mod
   end
 
   def new
@@ -93,7 +79,7 @@ class ModsController < ApplicationController
   def create
     @mod = Mod.new(current_user.is_admin? ? mod_params_admin : mod_params)
     if @mod.save
-      redirect_to category_mod_url(@mod.category, @mod)
+      redirect_to mod_url(@mod)
     else
       render :new
     end
@@ -107,7 +93,7 @@ class ModsController < ApplicationController
   def update
     @mod = Mod.find params[:id]
     if @mod.update current_user.is_admin? ? mod_params_admin : mod_params
-      redirect_to category_mod_url(@mod.category, @mod)
+      redirect_to mod_url(@mod)
     else
       render :new
     end
@@ -117,12 +103,12 @@ class ModsController < ApplicationController
 
   def mod_params
     params.require(:mod).permit(:name,
-                                :category_id,
                                 :github,
                                 :official_url,
                                 :forum_url,
                                 :summary,
                                 :imgur,
+                                category_ids: [],
                                 versions_attributes: [
                                   :id,
                                   :number,

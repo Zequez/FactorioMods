@@ -6,10 +6,10 @@ feature 'Modder edits an existing mod' do
   scenario 'submit same basic mod' do
     sign_in
     create_category 'potato'
-    mod = create :mod, name: 'Hey', category: @category, author: @user
-    visit '/mods/potato/hey/edit'
+    mod = create :mod, name: 'Hey', categories: [@category], author: @user
+    visit '/mods/hey/edit'
     submit_form
-    expect(current_path).to eq '/mods/potato/hey'
+    expect(current_path).to eq '/mods/hey'
     expect(page).to_not have_content('Edit Hey')
   end
 

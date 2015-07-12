@@ -32,7 +32,8 @@
         %h2.mod-title
           = link_to mod.name, mod, class: 'highlight-query'
         .mod-subtitle
-          = mod_category_link mod
+          - mod.categories.each do |category|
+            = category_tag_link category
         .mod-summary.highlight-query= mod.summary
       .mod-links
         - if mod.forum_url.present?

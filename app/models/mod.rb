@@ -16,7 +16,6 @@ class Mod < ActiveRecord::Base
   #################
 
   belongs_to :author, class_name: 'User'
-  belongs_to :category, counter_cache: true
   belongs_to :game_version_start, class_name: 'GameVersion'
   belongs_to :game_version_end, class_name: 'GameVersion'
   belongs_to :forum_post
@@ -32,7 +31,8 @@ class Mod < ActiveRecord::Base
 
   has_many :mod_game_versions, -> { uniq }, dependent: :destroy
   has_many :game_versions, -> { uniq.sort_by_older_to_newer }, through: :mod_game_versions
-  has_and_belongs_to_many :categories, counter_cache: true
+  has_many :categories, through: :categories_mods
+  has_many :categories_mods, dependent: :destroy
 
   # has_one :latest_version, -> { sort_by_newer_to_older.limit(1) }, class_name: 'ModVersion'
   # has_one :second_latest_version, -> { sort_by_newer_to_older.limit(1).offset(1) }, class_name: 'ModVersion'
@@ -45,7 +45,7 @@ class Mod < ActiveRecord::Base
   ### Scopes
   #################
 
-  scope :filter_by_category, ->(category) { where(category: category) }
+  scope :filter_by_category, ->(category) { joins(:categories).where(categories_mods: { category_id: category }) }
   scope :filter_by_game_version, ->(game_version) do
     select('DISTINCT mods.*').joins(:mod_game_versions).where(mod_game_versions: { game_version: game_version })
   end
@@ -54,12 +54,11 @@ class Mod < ActiveRecord::Base
   scope :sort_by_forum_comments, -> { order('mods.forum_comments_count desc') }
   scope :sort_by_downloads, -> { order('mods.downloads_count desc') }
   scope :sort_by_popular, -> { includes(:forum_post).order('forum_posts.views_count desc') }
-  
+
   def self.filter_by_search_query(query)
     s1 = s2 = s3 = self
 
     s1 = s1.where 'mods.name LIKE ?', "%#{query}%"
-    found_ids = s1.all.map(&:id)
     found_ids = s1.all.map(&:id)
 
     s2 = s2.where('mods.id NOT IN (?)', found_ids) if not found_ids.empty?
@@ -75,21 +74,10 @@ class Mod < ActiveRecord::Base
   ### Callbacks
   #################
 
-  auto_html_for :description do
-    redcarpet
-    image
-    youtube(autoplay: false)
-    link rel: 'nofollow'
-  end
-
   before_save do
     if forum_url
       self.forum_post = ForumPost.find_by_url(forum_url)
     end
-  end
-  
-  before_save do
-    
   end
 
   after_save do
@@ -103,14 +91,13 @@ class Mod < ActiveRecord::Base
   #################
 
   validates :name, presence: true
-  # validates :author, presence: true
   validates :categories, presence: true
 
   # name uniqueness with link
   validate do
     if ( mod = Mod.where(name: name).first )
       if mod.id != id
-        url = Rails.application.routes.url_helpers.category_mod_path mod.category, mod
+        url = Rails.application.routes.url_helpers.mod_path mod
         self.errors[:name].push I18n.t('activerecord.errors.models.mod.attributes.name.taken_with_link', url: url)
       end
     end

@@ -32,8 +32,8 @@ class ApplicationController < ActionController::Base
   ### Helpers
   ###############
 
-  def mod_path(mod, options = {})
-    polymorphic_path([mod.category, mod], options)
-  end
-  helper_method :mod_path
+  # def mod_path(mod, options = {})
+  #   polymorphic_path([mod.category, mod], options)
+  # end
+  # helper_method :mod_path
 end

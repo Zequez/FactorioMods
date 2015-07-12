@@ -17,33 +17,51 @@ Rails.application.routes.draw do
   # /most-downloaded-mods/tag/:id
   #
   # /tag/:id
-  #
-  # /mods/recently-updated
-  # /mods/recently-updated/:category_id
-  # /mods/most-downloaded
-  # /mods/most-downloaded/:category_id
 
-  resources :categories, path: 'tag', only: [] do
-    resources :mods, path: '/', only: :index
-  end
+
 
   scope '/mods', sort: 'alpha', as: :alpha do
     resources :mods, path: '/', only: :index
   end
 
-  scope '/recently-updated', sort: 'recently-updated', as: :recently_updated do
+  resources :categories, path: 'tag', only: [] do
+    resources :mods, path: '/', only: :index
+  end
+
+  # This one is for the helper
+  scope '/', sort: 'alpha', as: :alpha do
+    resources :categories, path: 'tag', only: [] do
+      resources :mods, path: '/', only: :index
+    end
+  end
+
+  scope '/recently-updated', sort: 'most_recent', as: :most_recent do
     resources :mods, path: '/', only: :index
     resources :categories, path: 'tag', only: [] do
       resources :mods, path: '/', only: :index
     end
   end
 
-  scope '/most-downloaded', sort: 'most_downloaded', as: :most_downloaded do
+  # scope '/most-downloaded', sort: 'most_downloaded', as: :downloads do
+  #   resources :mods, path: '/', only: :index
+  #   resources :categories, path: 'tag', only: [] do
+  #     resources :mods, path: '/', only: :index
+  #   end
+  # end
+
+  scope '/most-popular', sort: 'popular', as: :popular do
     resources :mods, path: '/', only: :index
     resources :categories, path: 'tag', only: [] do
       resources :mods, path: '/', only: :index
     end
   end
+
+  # scope '/most-forum-comments', sort: 'popular', as: :forum_comments do
+  #   resources :mods, path: '/', only: :index
+  #   resources :categories, path: 'tag', only: [] do
+  #     resources :mods, path: '/', only: :index
+  #   end
+  # end
 
   resources :mods
 

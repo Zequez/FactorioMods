@@ -49,24 +49,18 @@ RSpec.describe ModsController, type: :controller do
 
     context 'with existing category' do
       before(:each) { mods }
-      before(:each) { get_index category_id: mods.first.category.to_param }
+      before(:each) { get_index category_id: mods.first.categories.first.to_param }
 
       it { expect(response).to be_success }
       it { expect(response).to render_template 'index' }
-      it { expect(assigns(:category)).to eq mods.first.category }
-      it { expect(assigns(:mods)).to match_array Mod.filter_by_category(mods.first.category) }
+      it { expect(assigns(:category)).to eq mods.first.categories.first }
+      it { expect(assigns(:mods)).to match_array Mod.filter_by_category(mods.first.categories.first) }
     end
 
     context 'with a non-existant category' do
       context "the category_id doesn't match a mod_id" do
         before(:each) { get_index category_id: 'banana-split' }
         it { expect(response.status).to eq 404 }
-      end
-
-      context 'the category_id matches a mod_id' do
-        before(:each) { get_index category_id: mods.first.to_param }
-        it { expect(response).to redirect_to "/mods/#{mods.first.category.to_param}/#{mods.first.to_param}" }
-        it { expect(response.status).to eq 301 }
       end
     end
 
@@ -79,26 +73,26 @@ RSpec.describe ModsController, type: :controller do
         it { expect(assigns(:mods)).to match Mod.sort_by_alpha }
       end
 
-      # context ':forum_comments sorting' do
-      #   before(:each) do
-      #     create(:mod, forum_comments_count: 14)
-      #     create(:mod, forum_comments_count: 4)
-      #     create(:mod, forum_comments_count: 6)
-      #     create(:mod, forum_comments_count: 7)
-      #   end
-      #   before(:each) { get_index sort: :forum_comments }
-      #   it { expect(response).to be_success }
-      #   it { expect(assigns(:mods)).to match Mod.sort_by_forum_comments }
-      #   it { expect(response).to render_template 'index' }
-      # end
+      context ':forum_comments sorting' do
+        before(:each) do
+          create(:mod, forum_comments_count: 14)
+          create(:mod, forum_comments_count: 4)
+          create(:mod, forum_comments_count: 6)
+          create(:mod, forum_comments_count: 7)
+        end
+        before(:each) { get_index sort: :forum_comments }
+        it { expect(response).to be_success }
+        it { expect(assigns(:mods)).to match Mod.sort_by_forum_comments }
+        it { expect(response).to render_template 'index' }
+      end
 
-      # context ':downlaods sorting' do
-      #   before(:each) { mods }
-      #   before(:each) { get_index sort: :downloads }
-      #   it { expect(response).to be_success }
-      #   it { expect(assigns(:mods)).to match Mod.sort_by_downloads }
-      #   it { expect(response).to render_template 'index' }
-      # end
+      context ':downloads sorting' do
+        before(:each) { mods }
+        before(:each) { get_index sort: :downloads }
+        it { expect(response).to be_success }
+        it { expect(assigns(:mods)).to match Mod.sort_by_downloads }
+        it { expect(response).to render_template 'index' }
+      end
     end
 
     context 'with query' do
@@ -158,7 +152,7 @@ RSpec.describe ModsController, type: :controller do
 
   describe "GET 'show'" do
     context 'finds the mod' do
-      before(:each) { get 'show', category_id: mod.category.to_param, id: mod.to_param }
+      before(:each) { get 'show', category_id: mod.categories.first.to_param, id: mod.to_param }
 
       it { expect(response).to be_success }
       it { expect(response).to render_template 'show' }
@@ -166,26 +160,9 @@ RSpec.describe ModsController, type: :controller do
     end
 
     context "doesn't find the mod" do
-      before(:each) { get 'show', category_id: 'banana', id: 'split' }
+      before(:each) { get 'show', id: 'split' }
 
       it { expect(response.status).to eq 404 }
-    end
-
-    context "category doesn't match the mod category" do
-      it 'should redirect to the correct category' do
-        wrong_category = create :category
-        get 'show', category_id: wrong_category.to_param, id: mod.to_param
-        expect(response).to redirect_to "/mods/#{mod.category.to_param}/#{mod.to_param}"
-        expect(response.status).to eq 301
-      end
-    end
-
-    context "category doesn't exist" do
-      it 'should redirect to the correct category' do
-        get 'show', category_id: 'PATATRATARST', id: mod.to_param
-        expect(response).to redirect_to "/mods/#{mod.category.to_param}/#{mod.to_param}"
-        expect(response.status).to eq 301
-      end
     end
   end
 end
