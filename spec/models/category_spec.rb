@@ -28,9 +28,9 @@ RSpec.describe Category, :type => :model do
 
     context 'category has mods' do
       it 'should be the number of mods' do
-        create :mod, category: category
-        create :mod, category: category
-        create :mod, category: category
+        create :mod, categories: [category]
+        create :mod, categories: [category]
+        create :mod, categories: [category]
 
         subject.reload
 
@@ -44,9 +44,9 @@ RSpec.describe Category, :type => :model do
         category1 = create :category
         category2 = create :category
 
-        create :mod, category: category1
-        create :mod, category: category2
-        create :mod, category: category1
+        create :mod, categories: [category1]
+        create :mod, categories: [category2]
+        create :mod, categories: [category1]
 
         expect(Category.order_by_mods_count).to eq [category1, category2]
     end

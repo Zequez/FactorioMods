@@ -39,9 +39,7 @@ RSpec.describe Mod, :type => :model do
 
     # belongs_to
     it { should respond_to :author }
-    it { should respond_to :category }
     it { should respond_to :categories }
-
     # has_many
     it { should respond_to :files }
     it { should respond_to :versions }
@@ -67,29 +65,9 @@ RSpec.describe Mod, :type => :model do
         expect(mod2).to be_invalid
       end
 
-      # it 'should be invalid without author' do
-      #   mod = build :mod, author: nil
-      #   expect(mod).to be_invalid
-      # end
-
       it 'should be invalid without category' do
-        mod = build :mod, category: nil
+        mod = build :mod, categories: []
         expect(mod).to be_invalid
-      end
-
-      it 'should be invalid with a non existant category' do
-        mod = build :mod, category_id: 123123
-        expect(mod).to be_invalid
-      end
-
-      it 'should be invalid with more than 6 media links' do
-        mod = build :mod, media_links_string: 7.times.map{|i| "http://imgur.com/gallery/qLpt6#{i}gI"}.join("\n")
-        expect(mod).to be_invalid
-      end
-
-      it 'should be valid with at most 6 media links' do
-        mod = build :mod, media_links_string: 6.times.map{|i| "http://imgur.com/gallery/qLpt6#{i}gI"}.join("\n")
-        expect(mod).to be_valid
       end
     end
 
@@ -315,7 +293,7 @@ RSpec.describe Mod, :type => :model do
     describe '.filter_by_category' do
       it 'should filter results by category' do
         mod1 = create(:mod)
-        mod2 = create(:mod, category: mod1.category)
+        mod2 = create(:mod, categories: [mod1.categories[0]])
         mod3 = create(:mod)
 
         Mod.filter_by_category(mod1.category).all.should eq [mod1, mod2]

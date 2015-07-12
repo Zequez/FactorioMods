@@ -41,6 +41,14 @@ ActiveRecord::Schema.define(version: 20150712121842) do
     t.string   "slug"
   end
 
+  create_table "categories_mods", force: true do |t|
+    t.integer "mod_id"
+    t.integer "category_id"
+  end
+
+  add_index "categories_mods", ["category_id"], name: "index_categories_mods_on_category_id"
+  add_index "categories_mods", ["mod_id"], name: "index_categories_mods_on_mod_id"
+
   create_table "downloads", force: true do |t|
     t.integer  "mod_file_id"
     t.string   "ip"
@@ -208,14 +216,6 @@ ActiveRecord::Schema.define(version: 20150712121842) do
     t.string   "ip"
     t.datetime "created_at"
   end
-
-  create_table "table_mods_categories", force: true do |t|
-    t.integer "mod_id"
-    t.integer "category_id"
-  end
-
-  add_index "table_mods_categories", ["category_id"], name: "index_table_mods_categories_on_category_id"
-  add_index "table_mods_categories", ["mod_id"], name: "index_table_mods_categories_on_mod_id"
 
   create_table "tags", force: true do |t|
     t.string   "name"

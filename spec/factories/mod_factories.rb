@@ -2,10 +2,15 @@ FactoryGirl.define do
   factory :mod do
     sequence(:name) { |n| "Mod name #{n}" }
     association :author, factory: :user
-    association :category, factory: :category
+    # association :category, factory: :category
+    # association :categories, factory: :category
+    categories { build_list :category, 1 }
     description ''
     forum_comments_count 12
     downloads_count 15
+    after :build do |mod|
+      mod.categories << build(:category)
+    end
   end
 
   factory :category do

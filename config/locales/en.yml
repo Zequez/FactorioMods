@@ -64,6 +64,8 @@ en:
               taken_with_link: "There is already <a href='%{url}''>another mod</a> with that name"
             github:
               invalid: Invalid Github path or URL
+            categories_list:
+              invalid: "Invalid categories: %{categories}"
 
   formtastic:
     labels:

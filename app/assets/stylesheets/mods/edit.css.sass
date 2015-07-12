@@ -9,11 +9,11 @@
     font-weight: bold
     text-align: center
 
-  .mod 
+  .mod
     +span(8 of 12 no-gutters wider)
     margin-left: span(2 of 12)
 
-  .mod-version
+  .mod-version, #mod_categories_input
     select[multiple]
       +span(5 omega of 8)
       height: $base-line-height*3
@@ -23,9 +23,9 @@
         line-height: $base-line-height
         border-right: solid 1px $color-gray
         border-bottom: solid 1px $color-gray
-
-    &>fieldset>legend
-      font-weight: bold
+    
+  .mod-version>fieldset>legend
+    font-weight: bold
 
   .mod-version-file
     &:first-child

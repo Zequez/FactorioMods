@@ -15,14 +15,14 @@ feature 'Modder creates a new mod' do
     expect(page).to have_content 'Create new mod'
   end
 
-  scenario 'user submits an empty form' do
-    sign_in
-    visit '/mods/new'
-    submit_form
-    expect(page).to have_css '#mod_name_input .inline-errors'
-    expect(page).to have_css '#mod_category_input .inline-errors'
-    expect(current_path).to eq '/mods'
-  end
+  # scenario 'user submits an empty form' do
+  #   sign_in
+  #   visit '/mods/new'
+  #   submit_form
+  #   expect(page).to have_css '#mod_name_input .inline-errors'
+  #   expect(page).to have_css '#mod_category_input .inline-errors'
+  #   expect(current_path).to eq '/mods'
+  # end
 
   scenario 'user submits a barebones form' do
     sign_in

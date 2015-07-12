@@ -32,7 +32,7 @@ class Mod < ActiveRecord::Base
 
   has_many :mod_game_versions, -> { uniq }, dependent: :destroy
   has_many :game_versions, -> { uniq.sort_by_older_to_newer }, through: :mod_game_versions
-  has_many :categories, through: :mods_categories
+  has_and_belongs_to_many :categories, counter_cache: true
 
   # has_one :latest_version, -> { sort_by_newer_to_older.limit(1) }, class_name: 'ModVersion'
   # has_one :second_latest_version, -> { sort_by_newer_to_older.limit(1).offset(1) }, class_name: 'ModVersion'
@@ -87,6 +87,10 @@ class Mod < ActiveRecord::Base
       self.forum_post = ForumPost.find_by_url(forum_url)
     end
   end
+  
+  before_save do
+    
+  end
 
   after_save do
     if forum_post
@@ -98,20 +102,9 @@ class Mod < ActiveRecord::Base
   ### Validations
   #################
 
-  validate do
-    manager = MediaLinks::Manager.new media_links_string
-    if not manager.valid?
-      self.errors[:media_links_string].push "Invalid media links: " + manager.invalid_urls.join(', ')
-    end
-
-    if manager.size > 6
-      self.errors[:media_links_string].push "No more than 6 links please"
-    end
-  end
-
   validates :name, presence: true
   # validates :author, presence: true
-  validates :category, presence: true
+  validates :categories, presence: true
 
   # name uniqueness with link
   validate do
@@ -133,28 +126,15 @@ class Mod < ActiveRecord::Base
   ### Attributes
   #################
 
-  attr_accessor :media_links_string
   attr_accessor :imgur_url
   attr_accessor :imgur_thumbnail
   attr_accessor :imgur_normal
   alias_attribute :github_path, :github
 
-  # serialize :media_links, MediaLinks::Manager
-
-  # def media_links_string=(val)
-  #   @media_links_string = val 
-  #   self.media_links = MediaLinks::Manager.new val, [MediaLinks::Imgur]
-  #   val
-  # end
-
-  # def media_links_string
-  #   @media_links_string ||= self.media_links.to_string
-  # end
-  
   def imgur_url
     "http://imgur.com/#{imgur}"
   end
-  
+
   def imgur_normal
     # Yeah, it could be something else than JPG, but Imgur doesn't care, they're cool
     "http://i.imgur.com/#{imgur}.jpg"
