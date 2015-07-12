@@ -6,16 +6,23 @@
     h3
       font-weight: bold
 
-    //-- Images --//
-    &-images
+    &-image
       +span(4 of 12 no-gutter)
-      overflow: auto
-      padding: space()
-        right: 0
+      @extend %pretty-border
+      line-height: 0
+      &-img
+        max-width: 100%
 
-      height: rhythm(12) // Temporal, match the info-container height
+    //-- Images --//
+    // &-image
+    //   +span(4 of 12 no-gutter)
+    //   overflow: auto
+    //   padding: space()
+    //     right: 0
 
-    &-no-image
+    //   height: rhythm(12) // Temporal, match the info-container height
+
+    // &-no-image
 
     // &-medium-images
     //   width: 100%
@@ -43,42 +50,42 @@
     //     cursor: -webkit-zoom-in
     //     cursor: -moz-zoom-in
 
-    &-thumb-images
-      position: relative
-      // top: 50%
-      // +transform(translateY(-50%))
-      text-align: center
-      line-height: 0
+    // &-thumb-images
+    //   position: relative
+    //   // top: 50%
+    //   // +transform(translateY(-50%))
+    //   text-align: center
+    //   line-height: 0
 
-      // &.many-thumbs
-      //   .mod-thumb-image
-      //     width: rhythm(2)
-      //     height: rhythm(2)
+    //   // &.many-thumbs
+    //   //   .mod-thumb-image
+    //   //     width: rhythm(2)
+    //   //     height: rhythm(2)
 
-    &-thumb-image
-      @extend %pretty-border
-      position: relative
-      display: inline-block
-      width: 50%
-      // Same height as width. Really fancy trick.
-      &:before
-        content: ''
-        display: block
-        margin-top: 100%
-      &-container
-        +absolute(5px, 5px, 5px, 5px) // 5px is the padding
-        display: block
-        overflow: hidden
-      a.mod-thumb-image-container
-        cursor: zoom-in
-        cursor: -webkit-zoom-in
-        cursor: -moz-zoom-in
-      &-img
-        min-width: 100%
-        // Center horizontally and vertically
-        +transform(translate(-50%, -50%))
-        margin-left: 50%
-        margin-top: 50%
+    // &-thumb-image
+    //   @extend %pretty-border
+    //   position: relative
+    //   display: inline-block
+    //   width: 50%
+    //   // Same height as width. Really fancy trick.
+    //   &:before
+    //     content: ''
+    //     display: block
+    //     margin-top: 100%
+    //   &-container
+    //     +absolute(5px, 5px, 5px, 5px) // 5px is the padding
+    //     display: block
+    //     overflow: hidden
+    //   a.mod-thumb-image-container
+    //     cursor: zoom-in
+    //     cursor: -webkit-zoom-in
+    //     cursor: -moz-zoom-in
+    //   &-img
+    //     min-width: 100%
+    //     // Center horizontally and vertically
+    //     +transform(translate(-50%, -50%))
+    //     margin-left: 50%
+    //     margin-top: 50%
 
 
     //-- Info container --//

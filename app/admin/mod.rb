@@ -1,9 +1,9 @@
 ActiveAdmin.register Mod do
   permit_params :name, :author_name, :category_id, :author_id,
-                :first_version_date, :last_version_date, :github_url, :forum_comments_count,
+                :first_version_date, :last_version_date, :github, :forum_comments_count,
                 :license, :license_url, :official_url, :forum_subforum_url,
                 :forum_post_id, :forum_posts_ids,
-                :description, :summary, :slug,
+                :description, :summary, :slug, :imgur,
                 assets_attributes: [:id, :image, :sort_order, :_destroy],
                 versions_attributes: [:id, :number, :released_at,
                                       :sort_order, :precise_game_versions_string,
@@ -40,13 +40,10 @@ ActiveAdmin.register Mod do
                      :last_version_date,
                      :github_url,
                      :forum_comments_count,
-                     :license,
-                     :license_url,
                      :official_url,
                      :forum_url,
                      :summary,
-                     :description,
-                     :description_html
+                     :imgur_url
 
 
 
@@ -78,10 +75,8 @@ ActiveAdmin.register Mod do
       link_to mod.github_path, mod.github_url
     end
 
-    column :license
-
     column :forum do |mod|
-      link_to "#{mod.forum_comments_count} comments", mod.forum_post_url
+      link_to "#{mod.forum_comments_count} comments", mod.forum_url
     end
 
     column 'Visits/Down' do |mod|
@@ -94,6 +89,10 @@ ActiveAdmin.register Mod do
 
     column :updated_at do |mod|
       span distance_of_time_in_words_to_now(mod.updated_at), title: mod.updated_at
+    end
+    
+    column :imgur do |mod|
+        link_to mod.imgur, mod.imgur_url if mod.imgur
     end
 
     actions
@@ -113,15 +112,13 @@ ActiveAdmin.register Mod do
       f.input :author
       f.input :author_name
       f.input :github_url
-      f.input :license
-      f.input :license_url
       f.input :official_url
-      f.input :forum_post_url
-      # f.input :forum_subforum_url
+      f.input :forum_url
+      f.input :forum_subforum_url
       # f.input :forum_post
       # f.input :forum_posts, collection: ForumPost.order('title')
-      f.input :description
-      f.input :summary
+      f.input :imgur
+      f.input :summary, as: :text
     end
 
     f.actions

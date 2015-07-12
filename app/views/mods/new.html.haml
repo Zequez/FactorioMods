@@ -14,9 +14,8 @@
       = f.input :github
       = f.input :official_url
       = f.input :forum_url
-      = f.input :description
-      = f.input :summary
-      = f.input :media_links_string, as: :text, hint: t('formtastic.hints.mod.media_links_string').html_safe
+      = f.input :summary, as: :text
+      = f.input :imgur, label: link_to(@mod.imgur_url, @mod.imgur_normal)
       %li.nested-form.mod-versions
         = f.semantic_fields_for :versions do |ff|
           = render 'version_fields', f: ff

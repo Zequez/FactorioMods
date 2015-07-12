@@ -134,18 +134,33 @@ class Mod < ActiveRecord::Base
 
   attr_accessor :media_links_string
   attr_accessor :imgur_url
+  attr_accessor :imgur_thumbnail
+  attr_accessor :imgur_normal
   alias_attribute :github_path, :github
 
-  serialize :media_links, MediaLinks::Manager
+  # serialize :media_links, MediaLinks::Manager
 
-  def media_links_string=(val)
-    @media_links_string = val 
-    self.media_links = MediaLinks::Manager.new val, [MediaLinks::Imgur]
-    val
+  # def media_links_string=(val)
+  #   @media_links_string = val 
+  #   self.media_links = MediaLinks::Manager.new val, [MediaLinks::Imgur]
+  #   val
+  # end
+
+  # def media_links_string
+  #   @media_links_string ||= self.media_links.to_string
+  # end
+  
+  def imgur_url
+    "http://imgur.com/#{imgur}"
+  end
+  
+  def imgur_normal
+    # Yeah, it could be something else than JPG, but Imgur doesn't care, they're cool
+    "http://i.imgur.com/#{imgur}.jpg"
   end
 
-  def media_links_string
-    @media_links_string ||= self.media_links.to_string
+  def imgur_thumbnail
+    "http://i.imgur.com/#{imgur}b.jpg"
   end
 
   def latest_version

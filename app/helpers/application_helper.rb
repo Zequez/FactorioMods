@@ -14,9 +14,12 @@ module ApplicationHelper
   ### Misc helpers:
   ####################
 
-  def mod_asset_missing_image(size)
-    @empty_asset ||= ModAsset.new
-    @empty_asset.image.url(size)
+  def missing_image_thumbnail
+    root_path + 'images/thumb/missing.png'
+  end
+
+  def missing_image_medium
+    root_path + 'images/medium/missing.png'
   end
 
   def if_na(condition, result = nil, &block)

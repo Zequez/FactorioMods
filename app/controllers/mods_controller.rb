@@ -123,9 +123,8 @@ class ModsController < ApplicationController
                                 :github,
                                 :official_url,
                                 :forum_url,
-                                :description,
                                 :summary,
-                                :media_links_string, 
+                                :imgur,
                                 versions_attributes: [
                                   :id,
                                   :number,

@@ -16,7 +16,7 @@
   = render partial: 'mods_filters_list'
 
 - if @query
-  .info-boxrr
+  .info-box
     Huh? Trying to search? Search is pretty basic and plain for now. I apologize the inconvenience.
 
 .mods-index
@@ -24,10 +24,10 @@
     .mod
       .mod-thumbnail<
         %a.mod-thumbnail-link{href: mod_url(mod)}
-          - if mod.media_links.size > 0
-            %img.mod-thumbnail-img{src: mod.media_links.first.thumbnail_url}
+          - if mod.imgur
+            %img.mod-thumbnail-img{src: mod.imgur_thumbnail }
           - else
-            %img.mod-thumbnail-img{src: mod_asset_missing_image(:thumb), title: 'No image available'}
+            %img.mod-thumbnail-img.mod-thumbnail-img-missing{src: missing_image_thumbnail, title: 'No image available'}
       .mod-info-container
         %h2.mod-title
           = link_to mod.name, mod, class: 'highlight-query'
