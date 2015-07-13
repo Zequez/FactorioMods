@@ -19,7 +19,7 @@ module ModsHelper
   end
 
   def attachment_label(mod, name)
-    return nil if mod.new_record?
+    return nil if mod.attachment.blank?
     file_name = mod.send(:"#{name}_file_name")
     file_size = number_to_human_size(mod.send(:"#{name}_file_size"))
 
@@ -27,7 +27,7 @@ module ModsHelper
   end
 
   def attachment_title(mod, name)
-    return "File" if mod.new_record?
+    return "File" if mod.attachment.blank?
     file_updated = time_ago_in_words(mod.send(:"#{name}_updated_at"))
 
     "File / #{file_updated} ago"
