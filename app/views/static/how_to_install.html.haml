@@ -1,16 +1,22 @@
 - title t 'title.static.how_to_install'
 
 %h2 How to install mods
+%h3 Factorio Mod Manager
+:markdown
+  [Factorio Mods Manager](https://github.com/narrowtux/FactorioModManager) it's a multiplatform Java app created by [narrowtux](https://github.com/narrowtux).
+  You can find [detailed instructions of how to use it](http://www.factorioforums.com/forum/viewtopic.php?f=69&t=13327)
+  in the forum. [And you can download the app here](https://github.com/narrowtux/FactorioModManager/releases).
 
-%h3
-  %abbr(title="Too Long; Didn't Read") TL;DR;
-%ol
-  %li Download the mod appropiate for your Factorio version from here or directly from the forum
-  %li Copy/cut the zipped folder
-  %li Paste to the &lt;Factorio folder&gt;/data folder
+  Basically it creates a `/fmm` folder in the [Factorio application directory](http://www.factorioforums.com/wiki/index.php?title=Application_Directory),
+  after that, you copy the mod packs to `/fmm/` and the individual mods to `/fmm/default/`
 
-%h3 Long version
-It's gonna have screenshots! Hopefully <span title="But what year? MUAHAHAHAHA">before the end of the year</span>.
+  The Factorio Mod Manager will let you activate and deactivate mods without having to manually add them or remove them from the folder.
 
-%h3 Mod manager
-<span title="It's gonna have blackjack and hookers!">It's on my TODO list!</span>
+  TODO: Fork the Factorio Mod Manager to make it register a protocol so it downloads and installs the mods automatically.
+
+%h3 Manually
+:markdown
+  Just copy the mods to `/mods` folder in
+  the [Factorio application directory](http://www.factorioforums.com/wiki/index.php?title=Application_Directory).
+
+

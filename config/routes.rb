@@ -1,13 +1,8 @@
 Rails.application.routes.draw do
   devise_for :users, path_names: {sign_in: 'login', sign_out: 'logout', sign_up: 'register'}
 
-  # devise_scope :user do
-  #   get '/register' => 'users#new'
-  #   get '/login' => 'devise/sessions#new'
-  #   delete '/logout' => 'devise/sessions#destroy'
-  # end
-  # resources :users, only: [:new, :create]
-
+  # It's open source so really no much obscurity,
+  # but at least it will deter a few automated crawlers
   scope 'potato' do
     ActiveAdmin.routes(self)
     get '/', to: 'admin/dashboard#index'
@@ -15,6 +10,7 @@ Rails.application.routes.draw do
 
   resources :users, only: [:show]
 
+  # Routes examples
   #
   # /mods
   # /mods/new
