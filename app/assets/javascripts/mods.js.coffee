@@ -70,11 +70,6 @@ $(document).on 'page:change', ->
       $(document).one 'page:change', ->
         $(document).off 'keyup', '.mods-edit .string.input input', setFieldsetLegend
 
-  # Infinite scroll
-  do ->
-    
-
-
   # Edit mod textarea expansion
   # do ->
   #   li = $('#mod_description_input')
