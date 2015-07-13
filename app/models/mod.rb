@@ -24,6 +24,7 @@ class Mod < ActiveRecord::Base
   belongs_to :game_version_start, class_name: 'GameVersion'
   belongs_to :game_version_end, class_name: 'GameVersion'
   belongs_to :forum_post
+  belongs_to :last_version, class_name: 'ModVersion'
 
   # has_many :downloads
   # has_many :visits
@@ -51,7 +52,7 @@ class Mod < ActiveRecord::Base
   scope :filter_by_game_version, ->(game_version) do
     select('DISTINCT mods.*').joins(:mod_game_versions).where(mod_game_versions: { game_version: game_version })
   end
-  scope :sort_by_most_recent, -> { group('mod_versions.mod_id').includes(:versions).order('mod_versions.released_at desc') }
+  scope :sort_by_most_recent, -> { order('mods.last_release_date desc') }
   scope :sort_by_alpha, -> { order('LOWER(mods.name) asc') }
   scope :sort_by_forum_comments, -> { order('mods.forum_comments_count desc') }
   scope :sort_by_downloads, -> { order('mods.downloads_count desc') }
@@ -85,6 +86,11 @@ class Mod < ActiveRecord::Base
       self.forum_post = ForumPost.find_by_url(forum_url)
       # self.forum_posts << forum_post
     end
+  end
+
+  before_save do
+    self.last_version = self.versions.sort_by(&:sort_order).first
+    self.last_release_date = last_version ? last_version.released_at : nil
   end
 
   after_save do
@@ -170,6 +176,10 @@ class Mod < ActiveRecord::Base
 
   def imgur_thumbnail
     "http://i.imgur.com/#{imgur}b.jpg"
+  end
+
+  def imgur_large_thumbnail
+    "http://i.imgur.com/#{imgur}l.jpg"
   end
 
   def latest_version

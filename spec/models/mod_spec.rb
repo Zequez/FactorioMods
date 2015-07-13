@@ -22,6 +22,8 @@ RSpec.describe Mod, :type => :model do
     it { should respond_to :imgur_thumbnail }
     it { should respond_to :imgur_normal }
 
+    it { should respond_to :last_release_date }
+
     # URLs
     it { should respond_to :license_url }
     it { should respond_to :official_url }
@@ -40,6 +42,7 @@ RSpec.describe Mod, :type => :model do
     # belongs_to
     it { should respond_to :author }
     it { should respond_to :categories }
+    it { should respond_to :last_version }
     # has_many
     it { should respond_to :files }
     it { should respond_to :versions }
@@ -155,6 +158,30 @@ RSpec.describe Mod, :type => :model do
         expect(mod.versions.first).to be_kind_of ModVersion
       end
     end
+    
+    describe '#last_version' do
+      it 'should get it from the #versions lists before saving' do
+        date = 5.days.ago
+        mv1 = build(:mod_version, sort_order: 1, released_at: date)
+        mv2 = build(:mod_version, sort_order: 2, released_at: 10.days.ago)
+        mv3 = build(:mod_version, sort_order: 3, released_at: 1.month.ago)
+        mod.versions = [mv2, mv1, mv3]
+        mod.save!
+        expect(mod.last_version).to eq mv1
+      end
+    end
+
+    describe '#last_release_date' do
+      it 'should get it from the #last_version before saving' do
+        date = 5.days.ago
+        mv1 = build(:mod_version, sort_order: 1, released_at: date)
+        mv2 = build(:mod_version, sort_order: 2, released_at: 10.days.ago)
+        mv3 = build(:mod_version, sort_order: 3, released_at: 1.month.ago)
+        mod.versions = [mv2, mv1, mv3]
+        mod.save!
+        expect(mod.last_release_date).to eq date
+      end
+    end
 
     describe '#has_versions?' do
       it 'should return false if the mod has no versions' do
@@ -242,6 +269,7 @@ RSpec.describe Mod, :type => :model do
         mv1 = create :mod_version, mod: mod, sort_order: 1
         mv2 = create :mod_version, mod: mod, sort_order: 2
         mv3 = create :mod_version, mod: mod, sort_order: 3
+        mod.reload
         expect(mod.latest_version).to eq mv3
       end
 
@@ -257,6 +285,7 @@ RSpec.describe Mod, :type => :model do
         mv1 = create :mod_version, mod: mod, sort_order: 1
         mv2 = create :mod_version, mod: mod, sort_order: 2
         mv3 = create :mod_version, mod: mod, sort_order: 3
+        mod.reload
         expect(mod.second_latest_version).to eq mv2
       end
 
@@ -290,6 +319,7 @@ RSpec.describe Mod, :type => :model do
         expect(mod.imgur_url).to eq 'http://imgur.com/VRi7OWV'
         expect(mod.imgur_normal).to eq 'http://i.imgur.com/VRi7OWV.jpg'
         expect(mod.imgur_thumbnail).to eq 'http://i.imgur.com/VRi7OWVb.jpg'
+        expect(mod.imgur_large_thumbnail).to eq 'http://i.imgur.com/VRi7OWVl.jpg'
       end
 
       it 'should extract the ID from an Imgur URL' do
@@ -374,12 +404,9 @@ RSpec.describe Mod, :type => :model do
 
       context 'there are some mods' do
         it 'should return them by versions#released_at date' do
-          mod1 = create(:mod)
-          mod2 = create(:mod)
-          mod3 = create(:mod)
-          create :mod_version, released_at: 2.day.ago, mod: mod1
-          create :mod_version, released_at: 1.day.ago, mod: mod2
-          create :mod_version, released_at: 3.day.ago, mod: mod3
+          mod1 = create(:mod, versions: [build(:mod_version, released_at: 2.day.ago)])
+          mod2 = create(:mod, versions: [build(:mod_version, released_at: 1.day.ago)])
+          mod3 = create(:mod, versions: [build(:mod_version, released_at: 3.day.ago)])
 
           Mod.sort_by_most_recent.all.should eq [mod2, mod1, mod3]
         end

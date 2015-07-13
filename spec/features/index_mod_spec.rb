@@ -4,8 +4,11 @@ include Warden::Test::Helpers
 feature 'Display an index of mods in certain order' do
   def create_mod(name, last_version, forum_views)
     forum_post = forum_views ? create(:forum_post, views_count: forum_views) : nil
-    mod = create :mod, name: name, forum_post: forum_post
-    create(:mod_version, released_at: last_version, mod: mod) if last_version
+    mod = build :mod, name: name, forum_post: forum_post
+    if last_version
+      mod.versions = [build(:mod_version, released_at: last_version)]
+    end
+    mod.save!
   end
 
   context 'with multiple mods' do

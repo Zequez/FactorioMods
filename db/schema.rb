@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150713042200) do
+ActiveRecord::Schema.define(version: 20150713123241) do
 
   create_table "active_admin_comments", force: true do |t|
     t.string   "namespace"
@@ -194,11 +194,14 @@ ActiveRecord::Schema.define(version: 20150713042200) do
     t.string   "forum_url"
     t.text     "media_links"
     t.string   "imgur"
+    t.integer  "last_version_id"
+    t.datetime "last_release_date"
   end
 
   add_index "mods", ["author_id"], name: "index_mods_on_author_id"
   add_index "mods", ["category_id"], name: "index_mods_on_category_id"
   add_index "mods", ["forum_post_id"], name: "index_mods_on_forum_post_id"
+  add_index "mods", ["last_version_id"], name: "index_mods_on_last_version_id"
 
   create_table "mods_tags", force: true do |t|
     t.integer  "mod_id"

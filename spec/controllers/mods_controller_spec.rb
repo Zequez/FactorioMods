@@ -111,8 +111,6 @@ RSpec.describe ModsController, type: :controller do
         before(:each) { get_index sort: :downloads }
         it { expect(response).to be_success }
         it {
-          L Mod.sort_by_downloads.size
-          L assigns(:mods).size
           expect(assigns(:mods)).to match_array Mod.sort_by_downloads
         }
         it { expect(response).to render_template 'index' }

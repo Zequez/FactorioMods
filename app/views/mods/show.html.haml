@@ -5,7 +5,7 @@
     .mod-image
       - if @mod.imgur
         %a.mod-image-link{href: @mod.imgur_normal, target: '_blank'}
-          %img.mod-image-img{src: @mod.imgur_normal}
+          %img.mod-image-img{src: @mod.imgur_large_thumbnail}
       - else
         %img.mod-image-img.mod-image-img-missing{src: missing_image_medium, title: 'No image available'}
     .mod-info-container

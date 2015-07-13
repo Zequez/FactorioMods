@@ -16,7 +16,7 @@ feature 'Display full mod information' do
     visit '/mods/super-mod'
     expect(page).to have_content 'Super Mod'
     expect(page).to have_content 'Potato category'
-    expect(page).to have_css 'img[src="http://i.imgur.com/qLpt6gI.jpg"]'
+    expect(page).to have_css 'img[src="http://i.imgur.com/qLpt6gIl.jpg"]'
   end
 
   scenario 'Visiting the mod page as the owner of the mod should display a link to edit the mod' do
