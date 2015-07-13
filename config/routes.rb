@@ -28,16 +28,8 @@ Rails.application.routes.draw do
   #
   # /tag/:id
 
-  scope '/mods', sort: 'alpha', as: :alpha do
-    resources :mods, path: '/', only: :index
-  end
-
-  resources :categories, path: 'tag', only: [] do
-    resources :mods, path: '/', only: :index
-  end
-
-  # This one is for the helper
-  scope '/', sort: 'alpha', as: :alpha do
+  scope '/', as: :alpha, sort: 'alpha' do
+    resources :mods, only: :index
     resources :categories, path: 'tag', only: [] do
       resources :mods, path: '/', only: :index
     end
@@ -72,6 +64,10 @@ Rails.application.routes.draw do
   # end
 
   resources :mods
+  # This one is for the helper
+  resources :categories, path: 'tag', only: [] do
+    resources :mods, path: '/', only: :index
+  end
 
   get '/how-to-submit' => 'static#how_to_submit', as: :how_to_submit_static
   get '/how-to-install' => 'static#how_to_install', as: :how_to_install_static
