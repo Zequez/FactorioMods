@@ -16,6 +16,12 @@ ActiveAdmin.register ForumPost do
     render json: {}
   end
 
+  member_action :remove_title_changed, method: :put do
+    resource.title_changed = false
+    resource.save!
+    render json: {}
+  end
+
   action_item do
     link_to icon('spin') + ' Scrap',
             [:scrap, :admin, :forum_posts],
@@ -28,6 +34,14 @@ ActiveAdmin.register ForumPost do
   scope :title_changed
   scope :without_mod
   scope :with_mod
+
+  filter :title
+  filter :post_number
+  filter :published_at
+  filter :last_post_at
+  filter :comments_count
+  filter :views_count
+  filter :title_changed
 
   index do
     selectable_column
@@ -54,13 +68,21 @@ ActiveAdmin.register ForumPost do
 
     column :mod do |post|
       if post.mod
-        link_to post.mod.name, [:edit, post.mod.category, post.mod]
+        link_to post.mod.name, [:edit, post.mod]
       else
         link_to 'Create', [:new, :mod, forum_post_id: post.id]
       end
     end
 
-    column :title_changed
+    column :title_changed do |post|
+      if !post.title_changed
+        status_tag 'NO'
+      else
+        status_tag('YES') << link_to('»NO',
+          remove_title_changed_admin_forum_post_path(post),
+          class: 'remove-title-changed', method: :put, 'data-type' => :json, remote: true).html_safe
+      end
+    end
   end
 
   # See permitted parameters documentation:
