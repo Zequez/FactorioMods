@@ -14,11 +14,15 @@ module ModsHelper
     string
   end
 
+  def forum_post_stats_link
+    link_to "#{@mod.forum_post.comments_count} comments / #{@mod.forum_post.views_count} views", @mod.forum_url
+  end
+
   def attachment_label(mod, name)
     return nil if mod.new_record?
     file_name = mod.send(:"#{name}_file_name")
     file_size = number_to_human_size(mod.send(:"#{name}_file_size"))
-    
+
     "#{file_name} / #{file_size}"
   end
 

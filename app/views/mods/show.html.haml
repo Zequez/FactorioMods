@@ -21,7 +21,7 @@
       = render partial: 'download_button', locals: { mod: @mod }
     .mod-downloads#downloads
       - if @mod.has_files?
-        %h3 All Downloads
+        %h3 All releases
         %table.mod-downloads-table
           %thead
             %tr
@@ -43,6 +43,8 @@
       .mod-forum
         %h3
           Mod forum post
+          - if @mod.forum_post
+            = forum_post_stats_link
         .mod-forum-iframe-cover
           %iframe.mod-forum-iframe{src: @mod.forum_url}
     - else

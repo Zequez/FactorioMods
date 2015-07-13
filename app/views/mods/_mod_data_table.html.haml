@@ -1,20 +1,26 @@
 %table.mod-data
   %tbody
     %tr.mod-data-row
-      %td.mod-data-row-name Game version
+      %td.mod-data-row-name Factorio version
       %td.mod-data-row-value= if_na(@mod.game_versions_string.present?) { @mod.game_versions_string }
       %td.mod-data-row-name Author
-      %td.mod-data-row-value= @mod.author_name
+      %td.mod-data-row-value
+        - if @mod.author
+          = link_to @mod.author_name, @mod.author
+        - else
+          = @mod.author_name
     %tr.mod-data-row
-      %td.mod-data-row-name Github
-      %td.mod-data-row-value= if_na(@mod.github_url.present?) { link_to(@mod.github_path, @mod.github_url) }
-      %td.mod-data-row-name Tags
-      %td.mod-data-row-value N/A
-    %tr.mod-data-row
-      %td.mod-data-row-name First version
+      %td.mod-data-row-name First mod version
       %td.mod-data-row-value= if_na(@mod.has_versions?) { mod_release(@mod.versions.first) }
-      %td.mod-data-row-name Last version
+      %td.mod-data-row-name Source (Github)
+      %td.mod-data-row-value= if_na(@mod.github_url.present?) { link_to(@mod.github_path, @mod.github_url) }
+    %tr.mod-data-row
+      %td.mod-data-row-name Last mod version
       %td.mod-data-row-value= if_na(@mod.has_versions?) { mod_release(@mod.versions.last) }
+      %td.mod-data-row-name Official site
+      %td.mod-data-row-value
+        = if_na(@mod.official_url.present?) do
+          = link_to @mod.official_url, @mod.official_url
     %tr.mod-data-row
       / %td.mod-data-row-name License
       / %td.mod-data-row-value= if_na(@mod.license) { link_to(@mod.license, @mod.license_url) }
@@ -23,13 +29,6 @@
         = if_na(@mod.forum_url.present?) do
           %a{href: @mod.forum_url}
             - if @mod.forum_post
-              #{@mod.forum_post.comments_count} comments / #{@mod.forum_post.views_count} views
+              = forum_post_stats_link
             - else
               On the Factorio forums
-            / = @mod.forum_comments_count unless @mod.forum_comments_count.blank?
-            / comments
-    %tr.mod-data-row
-      %td.mod-data-row-name Official site
-      %td.mod-data-row-value{colspan: 3}
-        = if_na(@mod.official_url.present?) do
-          = link_to @mod.official_url, @mod.official_url
