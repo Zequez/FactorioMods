@@ -9,7 +9,7 @@ feature 'Modder creates a new mod' do
   end
 
   scenario 'user visits new mod page' do
-    sign_in
+    sign_in_dev
     visit '/mods/new'
 
     expect(page).to have_content 'Create new mod'
@@ -25,7 +25,7 @@ feature 'Modder creates a new mod' do
   # end
 
   scenario 'user submits a barebones form' do
-    sign_in
+    sign_in_dev
     create_category 'Terrain'
     visit '/mods/new'
     fill_in 'mod_name', with: 'Super Mod'
@@ -40,7 +40,7 @@ feature 'Modder creates a new mod' do
   end
 
   scenario 'user submits a mod with all the data but no versions' do
-    sign_in
+    sign_in_dev
     create_category 'Potato category'
     visit '/mods/new'
     fill_in 'mod_name', with: 'Mah super mod'
@@ -64,7 +64,7 @@ feature 'Modder creates a new mod' do
 
 
   scenario 'user submits mod with a version and file' do
-    sign_in
+    sign_in_dev
     create_category 'Potato'
     create :game_version, number: '1.1.x'
     create :game_version, number: '1.2.x'
@@ -128,7 +128,7 @@ feature 'Modder creates a new mod' do
   end
 
   scenario 'tries to submit mod with the same name as an existing mod, is shown an error and a link to the existing mod' do
-    sign_in
+    sign_in_dev
     create_category 'Potato'
     mod = create :mod, name: 'SuperMod', categories: [@category]
     visit "/mods/new"
@@ -153,16 +153,6 @@ feature 'Modder creates a new mod' do
 
   def submit_form
     click_button 'Create Mod'
-  end
-
-  def sign_in
-    @user = create :user
-    login_as @user
-  end
-
-  def sign_in_admin
-    @user = create :user, is_admin: true
-    login_as @user
   end
 
   def create_category(name)

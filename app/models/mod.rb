@@ -77,6 +77,7 @@ class Mod < ActiveRecord::Base
   before_save do
     if forum_url
       self.forum_post = ForumPost.find_by_url(forum_url)
+      # self.forum_posts << forum_post
     end
   end
 

@@ -86,4 +86,9 @@ RSpec.configure do |config|
     @user = create :user, is_admin: true
     login_as @user
   end
+
+  def sign_in_dev
+    @user = create :user, is_dev: true
+    login_as @user
+  end
 end
