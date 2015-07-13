@@ -1,6 +1,6 @@
 FactoryGirl.define do
   factory :mod do
-    sequence(:name) { |n| "Mod name #{n}" }
+    sequence(:name) { |n| "Mod name #{n.to_s.rjust(6, '0')}" }
     association :author, factory: :user
     categories { build_list :category, 1 }
     description ''

@@ -367,6 +367,7 @@ DEPENDENCIES
   haml-rails
   jquery-rails
   jquery-ui-rails
+  kaminari
   nokogiri
   paperclip!
   rack-livereload

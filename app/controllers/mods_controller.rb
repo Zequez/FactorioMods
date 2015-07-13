@@ -4,7 +4,9 @@ class ModsController < ApplicationController
   def index
     @mods = Mod
 
-    @mods = @mods.includes([:categories, :author, :forum_post, versions: :files])
+    @mods = @mods
+      .includes([:categories, :author, :forum_post, versions: :files])
+      .page(params[:page]).per(20)
 
     if params[:category_id]
       @category = Category.find_by_slug params[:category_id]
@@ -42,9 +44,7 @@ class ModsController < ApplicationController
 
     unless params[:q].blank?
       @query = params[:q][0..30]
-
       @mods = @mods.filter_by_search_query(@query)
-      # Search stuff
     end
 
     @game_versions = GameVersion.sort_by_newer_to_older

@@ -11,7 +11,6 @@ $mods-list-size: 12-$filter-size
   @extend %content-block
   +span($filter-size of 12)
   padding: space() 0
-  margin-bottom: rhythm()
 
   border-radius: $border-radius
   background: $color-white
@@ -65,6 +64,7 @@ $mods-list-size: 12-$filter-size
   line-height: rhythm(2)
   background: $color-teal
   +adjust-leading-to(2)
+
   &-item
     float: left
     margin: 0 space()
@@ -84,6 +84,12 @@ $mods-list-size: 12-$filter-size
 .mods-index
   +span($mods-list-size omega of 12)
 
+  .pagination
+    padding: space()
+    background: $color-white
+    border-radius: $border-radius
+    text-align: center
+
   .mod
     @extend %content-block
     +relative()
@@ -91,6 +97,8 @@ $mods-list-size: 12-$filter-size
     +pie-clearfix
     &:hover
       z-index: 100
+    &:last-child
+      margin-bottom: 0
 
     // .mod-thumbnail .asset-thumbnail
     //   border-radius: 5px 0px 0px 5px

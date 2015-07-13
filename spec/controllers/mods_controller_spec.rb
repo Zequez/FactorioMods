@@ -27,6 +27,26 @@ RSpec.describe ModsController, type: :controller do
   end
 
   describe "get_index" do
+    context 'pagination, 25 mods' do
+      it 'should load the first 20 mods on the first page' do
+        first_page_mods = 20.times.map{ create :mod }
+        second_page_mods = 5.times.map{ create :mod }
+        get_index sort: :alpha
+        expect(response).to be_success
+        expect(response).to render_template 'index'
+        expect(assigns(:mods)).to match first_page_mods
+      end
+
+      it 'should load the last 5 mods on the second page' do
+        first_page_mods = 20.times.map{ create :mod }
+        second_page_mods = 5.times.map{ create :mod }
+        get_index sort: :alpha, page: 2
+        expect(response).to be_success
+        expect(response).to render_template 'index'
+        expect(assigns(:mods)).to match_array second_page_mods
+      end
+    end
+
     it 'should assign all the categories to @categories' do
       get_index
       create :category
@@ -70,7 +90,7 @@ RSpec.describe ModsController, type: :controller do
         before(:each) { get_index sort: :alpha } # :alpha gets converted to a string. What the actual fuck Rails??
         it { expect(response).to be_success }
         it { expect(response).to render_template 'index' }
-        it { expect(assigns(:mods)).to match Mod.sort_by_alpha }
+        it { expect(assigns(:mods)).to match_array Mod.sort_by_alpha }
       end
 
       context ':forum_comments sorting' do
@@ -82,7 +102,7 @@ RSpec.describe ModsController, type: :controller do
         end
         before(:each) { get_index sort: :forum_comments }
         it { expect(response).to be_success }
-        it { expect(assigns(:mods)).to match Mod.sort_by_forum_comments }
+        it { expect(assigns(:mods)).to match_array Mod.sort_by_forum_comments }
         it { expect(response).to render_template 'index' }
       end
 
@@ -90,7 +110,11 @@ RSpec.describe ModsController, type: :controller do
         before(:each) { mods }
         before(:each) { get_index sort: :downloads }
         it { expect(response).to be_success }
-        it { expect(assigns(:mods)).to match Mod.sort_by_downloads }
+        it {
+          L Mod.sort_by_downloads.size
+          L assigns(:mods).size
+          expect(assigns(:mods)).to match_array Mod.sort_by_downloads
+        }
         it { expect(response).to render_template 'index' }
       end
     end

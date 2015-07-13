@@ -34,6 +34,7 @@ gem 'haml-rails'                # HAML
 gem 'auto_html'
 gem 'rack-zippy'
 gem 'jquery-ui-rails'
+gem 'kaminari'
 
 # group :production do
 #   gem 'aws-sdk'

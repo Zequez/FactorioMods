@@ -58,7 +58,7 @@ $(document).on 'page:change', ->
           initialMessage = $legend.text()
           $legend.data('initialMessage', initialMessage)
 
-       
+
         if this.value
           $legend.text(initialMessage + ' / ' + this.value)
         else
@@ -69,6 +69,10 @@ $(document).on 'page:change', ->
       $(document).on 'keyup', '.mods-edit .string.input input', setFieldsetLegend
       $(document).one 'page:change', ->
         $(document).off 'keyup', '.mods-edit .string.input input', setFieldsetLegend
+
+  # Infinite scroll
+  do ->
+    
 
 
   # Edit mod textarea expansion
