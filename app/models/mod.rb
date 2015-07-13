@@ -91,7 +91,7 @@ class Mod < ActiveRecord::Base
 
   after_save do
     if author_id_changed?
-      unless author.is_dev
+      if author and not author.is_dev
         author.is_dev = true
         author.save
       end
