@@ -12,6 +12,11 @@ class Mod < ActiveRecord::Base
 
   FORBIDDEN_NAMES = %q(new create edit update destroy)
 
+  IMGUR_IMAGE_URLS = [
+    %r{\Ahttps?://imgur\.com/(\w+)\Z},
+    %r{\Ahttps?://i\.imgur\.com/(\w+)\.(\w+)\Z}
+  ]
+
   ### Relationships
   #################
 
@@ -53,7 +58,7 @@ class Mod < ActiveRecord::Base
   scope :sort_by_popular, -> { includes(:forum_post).order('forum_posts.views_count desc') }
 
   scope :filter_by_search_query, ->(query) do
-    where('mods.name LIKE ? OR mods.summary LIKE ?', "%#{query}%", "%#{query}%")
+    where('mods.name LIKE ? OR mods.summary LIKE ? OR mods.description LIKE ?', "%#{query}%", "%#{query}%", "%#{query}%")
   end
 
   # def self.filter_by_search_query(query)
@@ -120,6 +125,13 @@ class Mod < ActiveRecord::Base
       self.errors[:github].push I18n.t('activerecord.errors.models.mod.attributes.github.invalid')
     end
   end
+  
+  # Imgur
+  validate do
+    if extract_imgur_id(imgur) == false
+      self.errors[:imgur].push I18n.t('activerecord.errors.models.mod.attributes.imgur.invalid')
+    end
+  end
 
   ### Attributes
   #################
@@ -128,6 +140,24 @@ class Mod < ActiveRecord::Base
   attr_accessor :imgur_thumbnail
   attr_accessor :imgur_normal
   alias_attribute :github_path, :github
+
+  def imgur=(val)
+    imgur_id = extract_imgur_id(val)
+    if imgur_id == false
+      write_attribute(:imgur, val)
+    else
+      write_attribute(:imgur, imgur_id)
+    end
+  end
+
+  def extract_imgur_id(val)
+    if val =~ /\A[A-Z0-9]+\Z/i or val.blank?
+      val
+    else
+      match = IMGUR_IMAGE_URLS.map{|reg| match = reg.match(val) }.compact.first
+      match ? match[1] : false
+    end
+  end
 
   def imgur_url
     "http://imgur.com/#{imgur}"

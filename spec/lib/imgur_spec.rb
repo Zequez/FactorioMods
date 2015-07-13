@@ -4,6 +4,13 @@
 #   subject(:imgur) { Imgur.new }
 
 #   describe '#url', vcr: true do
+#     it 'should work with ID assignment' do
+#       imgur.id = '5xnCbtj'
+#       expect(imgur.is_album).to eq false
+#       expect(imgur.thumbnail_url).to eq 'http://i.imgur.com/5xnCbtjs.jpg'
+#       expect(imgur.url).to eq 'http://imgur.com/5xnCbtj'
+#     end
+    
 #     it 'should detect that its an image with an image URL' do
 #       imgur.url = 'http://imgur.com/5xnCbtj'
 #       expect(imgur.to_s).to eq '5xnCbtj.jpg 5xnCbtj'

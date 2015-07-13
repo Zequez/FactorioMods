@@ -16,7 +16,7 @@
       = f.input :official_url
       = f.input :forum_url
       = f.input :summary, as: :text
-      = f.input :imgur, label: link_to(@mod.imgur_url, @mod.imgur_normal)
+      = f.input :imgur
       %li.nested-form.mod-versions
         = f.semantic_fields_for :versions do |ff|
           = render 'version_fields', f: ff

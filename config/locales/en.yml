@@ -67,6 +67,8 @@ en:
               invalid: Invalid Github path or URL
             categories_list:
               invalid: "Invalid categories: %{categories}"
+            imgur:
+              invalid: "Invalid Imgur URL or ID. Remember it has to be a single picture, not an album."
 
   formtastic:
     labels:
@@ -74,6 +76,7 @@ en:
         forum_url: 'Forum URL'
         official_url: 'Official URL'
         media_links_string: 'Pictures or gifs links'
+        imgur: Imgur.com URL or ID
 
       mod_version:
         released_at: 'Release day'

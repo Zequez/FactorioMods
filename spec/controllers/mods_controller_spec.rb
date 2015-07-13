@@ -129,7 +129,7 @@ RSpec.describe ModsController, type: :controller do
 
         it { expect(response).to be_success }
         it { expect(response).to render_template 'index' }
-        it { expect(assigns(:mods)).to eq Mod.sort_by_most_recent.filter_by_search_query('potato') }
+        it { expect(assigns(:mods).to_a).to match Mod.sort_by_most_recent.filter_by_search_query('potato').to_a }
       end
     end
 
