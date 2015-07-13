@@ -113,11 +113,14 @@ class ModsController < ApplicationController
                                   :id,
                                   :number,
                                   :released_at,
+                                  :_destroy,
                                   game_version_ids: [],
                                   files_attributes: [
                                     :id,
                                     :attachment,
-                                    :name
+                                    :name,
+                                    :download_url,
+                                    :_destroy
                                   ]
                                 ])
     .merge(author_id: current_user.id)

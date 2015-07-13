@@ -6,7 +6,8 @@ class ModFile < ActiveRecord::Base
   validates_attachment_content_type :attachment,
                                     :content_type => ['application/zip', 'application/x-zip-compressed', 'application/octet-stream']
 
-  validates :attachment, presence: true
+  validates :attachment, presence: { :unless => :download_url }
+  validates :download_url, allow_blank: { :if => :attachment }, format: { with: /\Ahttps?:\/\/.*\Z/ }
 
   before_save do
     self.mod = mod_version.mod if mod_version
@@ -14,5 +15,9 @@ class ModFile < ActiveRecord::Base
 
   def delegated_name
     name || (mod_version ? mod_version.number : nil)
+  end
+
+  def available_url
+    download_url || attachment.url
   end
 end

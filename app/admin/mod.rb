@@ -140,13 +140,8 @@ ActiveAdmin.register Mod do
       f.has_many :files, allow_destroy: true, new_record: true, sortable: :sort_order do |a|
         a.input :name
         a.input :attachment, as: :attachment
+        a.input :download_url
         a.input :mod_version, collection: mod_versions
-      end
-    end
-
-    f.inputs do
-      f.has_many :assets, allow_destroy: true, new_record: true, sortable: :sort_order do |a|
-        a.input :image, as: :attachment, image: (:thumb unless a.object.video? )
       end
     end
 

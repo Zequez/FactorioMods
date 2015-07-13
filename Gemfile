@@ -37,14 +37,13 @@ gem 'jquery-ui-rails'
 gem 'kaminari'
 
 group :production do
-  gem 'aws-sdk'
+  gem 'aws-sdk', '< 2.0'
 end
 
 # Models
 ########################
 
 gem 'paperclip', github: 'thoughtbot/paperclip'
-#gem 'ruby-imgur', github: 'ehowe/ruby-imgur'
 gem 'friendly_id'
 gem 'youtube_addy'
 gem 'cocoon'
@@ -57,7 +56,7 @@ gem 'devise'                    # Authentication system
 gem 'cancancan'                    # Authorization adapter
 # gem 'jbuilder', '~> 2.0'        # Build JSON APIs with ease
 # gem 'sdoc', '~> 0.4.0', group: :doc  # bundle exec rake doc:rails generates the API under doc/api.
-gem 'simple_form'
+# gem 'simple_form'
 gem 'reverse_markdown'
 
 group :development do

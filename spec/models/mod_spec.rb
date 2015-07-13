@@ -51,9 +51,24 @@ RSpec.describe Mod, :type => :model do
     it { should respond_to :favorites_count }
 
     describe 'validation' do
-      it 'should be valid by default' do 
+      it 'should be valid by default' do
         mod = build :mod
         expect(mod).to be_valid
+      end
+
+      it 'should be invalid with an invalid #official_url' do
+        mod = build :mod, official_url: 'javascript:alert("Potato")'
+        expect(mod).to be_invalid
+      end
+
+      it 'should be invalid with an invalid #license_url' do
+        mod = build :mod, license_url: 'javascript:alert("Potato")'
+        expect(mod).to be_invalid
+      end
+
+      it 'should be invalid with an invalid #forum_url' do
+        mod = build :mod, forum_url: 'javascript:alert("Potato")'
+        expect(mod).to be_invalid
       end
 
       it 'should be invalid without name' do
@@ -158,7 +173,7 @@ RSpec.describe Mod, :type => :model do
         expect(mod.versions.first).to be_kind_of ModVersion
       end
     end
-    
+
     describe '#last_version' do
       it 'should get it from the #versions lists before saving' do
         date = 5.days.ago
@@ -204,7 +219,9 @@ RSpec.describe Mod, :type => :model do
       end
 
       it 'should return true if the mod has at least a file' do
-        mod = create :mod, versions: []
+        mod = build :mod, versions: []
+        L mod.official_url
+        mod.save!
         mod_version = create :mod_version, mod: mod
         mod_file = create :mod_file, mod_version: mod_version
         mod = Mod.first

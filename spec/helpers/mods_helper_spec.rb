@@ -11,5 +11,27 @@ require 'rails_helper'
 #   end
 # end
 RSpec.describe ModsHelper, :type => :helper do
+  describe '#link_to_file_url_with_name' do
+    it 'should return a link to the download URL if available' do
+      file = build :mod_file, download_url: 'https://github.com/Dysoch/DyTech/archive/v1.1.3-core.zip'
+      expect(link_to_file_url_with_name(file))
+        .to eq '<a href="https://github.com/Dysoch/DyTech/archive/v1.1.3-core.zip">v1.1.3-core.zip</a>'
+    end
 
+    it 'should return a link to the attachment URL if there is no download URL' do
+      file = build :mod_file, download_url: nil
+      expect(link_to_file_url_with_name(file))
+        .to eq "<a href=\"#{file.attachment.url}\">#{file.attachment_file_name} (#{number_to_human_size(file.attachment_file_size)})</a>"
+    end
+
+    it 'should return nil with an invalid URI' do
+      file = build :mod_file, download_url: 'http://github.com/javascript:alert("Yes")'
+      expect(link_to_file_url_with_name(file)).to eq nil
+    end
+
+    it 'should return nil if neither is available' do
+      file = build :mod_file, download_url: nil, attachment: nil
+      expect(link_to_file_url_with_name(file)).to eq nil
+    end
+  end
 end

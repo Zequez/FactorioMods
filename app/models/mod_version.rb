@@ -27,12 +27,15 @@ class ModVersion < ActiveRecord::Base
     if game_versions.size > 1
       all_game_versions = GameVersion.sort_by_older_to_newer
       start = all_game_versions.find_index game_versions.first
-      
+
       if all_game_versions[start, game_versions.size] != game_versions
         self.errors[:game_versions].push 'should be consecutive'
       end
     end
   end
+
+  ### Callbacks
+  #################
 
   ### Attributes
   #################

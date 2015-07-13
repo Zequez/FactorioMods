@@ -1,12 +1,12 @@
 - if mod.latest_version and mod.latest_version.has_files?
   .mod-link.btn.btn-download
-    %a{href: mod.latest_version.files.first.attachment.url}
+    %a{href: mod.latest_version.files.first.available_url}
       = icon 'download'
       Download
     %ul.btn-download-versions
       - mod.latest_mod_file_and_version(2) do |version, file|
         %li
-          %a{href: file.attachment.url}
+          %a{href: file.available_url}
             = icon 'cog'
             %span(title='Factorio version')= version.game_versions_string
             \/

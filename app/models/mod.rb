@@ -114,6 +114,9 @@ class Mod < ActiveRecord::Base
 
   validates :name, presence: true
   validates :categories, presence: true
+  validates :official_url, allow_blank: true, format: { with: /\Ahttps?:\/\/.*\Z/ }
+  validates :license_url, allow_blank: true, format: { with: /\Ahttps?:\/\/.*\Z/ }
+  validates :forum_url, allow_blank: true, format: { with: /\Ahttps?:\/\/.*\Z/ }
 
   # name uniqueness with link
   validate do

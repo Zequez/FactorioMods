@@ -69,6 +69,12 @@ en:
               invalid: "Invalid categories: %{categories}"
             imgur:
               invalid: "Invalid Imgur URL or ID. Remember it has to be a single picture, not an album."
+        mod_file:
+          attributes:
+            download_url:
+              presence: "You need this, or an attachment, or both"
+            attachment:
+              presence: "You need this, or a download URL, or both"
 
   formtastic:
     labels:
@@ -80,6 +86,9 @@ en:
 
       mod_version:
         released_at: 'Release day'
+
+      mod_file:
+        download_url: Release download URL
 
     hints:
       mod:

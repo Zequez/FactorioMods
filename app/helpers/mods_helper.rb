@@ -54,4 +54,14 @@ module ModsHelper
       content_tag(:i, '', class: category.icon_class) + ' ' + category.name
     end
   end
+
+  def link_to_file_url_with_name(file)
+    if file.download_url
+      begin
+        link_to URI(file.download_url).path.scan(/(?<=\/)[^\/]*\Z/).first, file.download_url
+      rescue URI::InvalidURIError; end
+    elsif not file.attachment.blank?
+      link_to "#{file.attachment_file_name} (#{number_to_human_size(file.attachment_file_size)})", file.attachment.url
+    end
+  end
 end

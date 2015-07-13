@@ -34,8 +34,6 @@
       .nested-fields-remove
         display: none
 
-    li
-      margin-bottom: 0
     li.file
       +span(5 of 8 no-gutters wide)
       label
@@ -44,7 +42,6 @@
         +span(2 omega of 5)
         border-radius: $border-radius 0 0 $border-radius
         border-right: 0
-       
 
     li.string
       +span(3 omega of 8)
@@ -52,8 +49,11 @@
         display: none
       input
         +span(full)
-        
         border-radius: 0 $border-radius $border-radius 0
+
+    li.url
+      +span(full)
+      margin-bottom: 0
 
 
   #mod_description_input

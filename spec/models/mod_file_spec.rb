@@ -8,28 +8,12 @@ RSpec.describe ModFile, :type => :model do
   subject(:file) { build :mod_file }
 
   it { expect(file).to respond_to :name }
-
-  describe '#mod_version' do
-    it { expect(file).to respond_to :mod_version }
-    it 'should be kind of ModVersion' do
-      file.build_mod_version
-      expect(file.mod_version).to be_kind_of ModVersion
-    end
-  end
-
-  describe '#attachment' do
-    it { expect(file).to respond_to :attachment }
-
-    it 'should save with the attachment' do
-      file.attachment = fixture('test.zip')
-      expect(file.save).to eq true
-    end
-
-    it 'should not save without an attachment' do
-      file.attachment = nil
-      expect(file.save).to eq false
-    end
-  end
+  it { expect(file).to respond_to :download_url }
+  it { expect(file).to respond_to :attachment }
+  it { expect(file).to respond_to :mod_version }
+  it { expect(file.build_mod_version).to be_kind_of ModVersion }
+  it { expect(file).to respond_to :sort_order }
+  it { expect(file.sort_order).to be_kind_of Integer }
 
   describe '#delegated_name' do
     context '#name is populated' do
@@ -37,7 +21,6 @@ RSpec.describe ModFile, :type => :model do
         file.name = 'Potato Chips'
         file.delegated_name.should eq 'Potato Chips'
       end
-
     end
 
     context '#name is blank' do
@@ -47,11 +30,6 @@ RSpec.describe ModFile, :type => :model do
         file.delegated_name.should eq '1.3.4.5.6'
       end
     end
-  end
-
-  describe '#sort_order' do
-    it { expect(file).to respond_to :sort_order }
-    it { expect(file.sort_order).to be_kind_of Integer }
   end
 
   describe 'validation' do
@@ -69,6 +47,12 @@ RSpec.describe ModFile, :type => :model do
       end
     end
 
+    context 'trying to upload a gigantic file' do 
+      it 'should be invalid' do
+
+      end
+    end
+
     context 'empty #mod_version' do
       it 'should be valid' do
         file.mod_version = nil
@@ -77,6 +61,24 @@ RSpec.describe ModFile, :type => :model do
         expect(file.name).to eq nil
         expect(file.delegated_name).to eq nil
       end
+    end
+
+    context 'no #attachment nor #download_url' do
+      it 'should be invalid' do
+        file.attachment = nil
+        file.download_url = nil
+        expect(file).to be_invalid
+      end
+    end
+
+    context 'no #attachment but with #download_url' do
+      subject(:file) { build :mod_file, attachment: nil, download_url: 'https://github.com/Dysoch/DyTech/archive/v1.1.3-core.zip' }
+      it { expect(file).to be_valid }
+    end
+
+    context 'download_url is not an URL' do
+      subject(:file) { build :mod_file, download_url: 'javascript:alert("D:");' }
+      it { expect(file).to be_invalid }
     end
   end
 end

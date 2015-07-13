@@ -34,7 +34,7 @@
               %tr
                 %td= "#{version.number} #{file.name}"
                 %td= version.game_versions_string
-                %td= link_to "#{file.attachment_file_name} (#{number_to_human_size(file.attachment_file_size)})", file.attachment.url
+                %td= link_to_file_url_with_name(file)
                 //%td= pretty_date version.released_at.to_s(:rfc822)
                 %td= mod_date version.released_at
       - else

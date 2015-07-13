@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150713123241) do
+ActiveRecord::Schema.define(version: 20150713142609) do
 
   create_table "active_admin_comments", force: true do |t|
     t.string   "namespace"
@@ -139,6 +139,7 @@ ActiveRecord::Schema.define(version: 20150713123241) do
     t.integer  "attachment_file_size"
     t.datetime "attachment_updated_at"
     t.integer  "sort_order",              default: 0, null: false
+    t.string   "download_url"
   end
 
   add_index "mod_files", ["mod_id"], name: "index_mod_files_on_mod_id"
