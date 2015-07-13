@@ -1,5 +1,10 @@
 %h2 How to submit mods
 
-For now just send me a PM in the forum with your username and
-mod and I'll associate you. You'll be able to edit the mod and
-create new mods.
+:markdown
+  For now just [send me a PM in the forum to Zequez](http://www.factorioforums.com/forum/ucp.php?i=pm&mode=compose&u=1553)
+  with your username and link to the mod forum post and I'll associate that mod to you. After that you'll be able to
+  edit the mod and submit new mods.
+
+/ - if signed_in? and can? :create, Mod
+/   You are authorized to create mods,
+/   = link_to 'create a new mod', new_mod_path

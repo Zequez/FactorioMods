@@ -87,6 +87,15 @@ class Mod < ActiveRecord::Base
     end
   end
 
+  after_save do
+    if author_id_changed?
+      unless author.is_dev
+        author.is_dev = true
+        author.save
+      end
+    end
+  end
+
   ### Validations
   #################
 
@@ -143,12 +152,9 @@ class Mod < ActiveRecord::Base
     read_attribute(:game_versions_string) || set_game_versions_string
   end
 
-  def author_name
-    if super.present?
-      super
-    else 
-      author ? author.name : nil
-    end
+  def author=(val)
+    self.author_name = val.name if val
+    super(val)
   end
 
   def github_url

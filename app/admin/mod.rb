@@ -33,7 +33,6 @@ ActiveAdmin.register Mod do
     attributes_table :name,
                      :slug,
                      :author_name,
-                     :categories,
                      :author_name,
                      :author,
                      :first_version_date,
@@ -54,13 +53,12 @@ ActiveAdmin.register Mod do
     selectable_column
     id_column
 
-    # column :name do |mod|
-    #   link_to(mod.name, [mod.category, mod]) +
-    #   link_to(' [Official &#11016;]'.html_safe, mod.official_url)
-    # end
+    column :name do |mod|
+      link_to(mod.name, mod)
+    end
 
     column :categories do |mod|
-      mod.categories.join(',')
+      mod.categories.map(&:name).join(', ')
     end
 
     column :author do |mod|
@@ -111,7 +109,7 @@ ActiveAdmin.register Mod do
 
     f.inputs do
       f.input :name
-      f.input :category
+      f.input :categories
       f.input :slug
       f.input :author
       f.input :author_name

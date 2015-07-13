@@ -11,6 +11,7 @@
       = f.input :name
       = f.input :categories
       = f.input :author_name if current_user.is_admin?
+      = f.input :author if current_user.is_admin?
       = f.input :github
       = f.input :official_url
       = f.input :forum_url

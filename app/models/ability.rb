@@ -16,6 +16,7 @@ class Ability
       if user.is_registered?
         can :read, Mod
         can :manage, Mod, author_id: user.id
+        cannot :create, Mod unless user.is_dev?
       end
     end
 

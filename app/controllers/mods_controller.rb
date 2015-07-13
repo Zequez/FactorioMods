@@ -124,7 +124,7 @@ class ModsController < ApplicationController
   end
 
   def mod_params_admin
-    mod_params.merge params.require(:mod).permit(:author_name)
+    mod_params.merge params.require(:mod).permit(:author_name, :author_id)
   end
 
   # def category

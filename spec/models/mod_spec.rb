@@ -75,9 +75,30 @@ RSpec.describe Mod, :type => :model do
     describe '#author_name' do
       context 'there is an #author' do
         it 'should be delegated to #author.name' do
-          mod.author = build :user, name: 'Bye Macumbo'
-          mod.author_name.should eq 'Bye Macumbo'
+          mod.author = build :user, name: 'ByeMacumbo'
+          mod.author_name.should eq 'ByeMacumbo'
         end
+      end
+    end
+
+    describe '#author' do
+      it 'should be set #author_name to #author.name when #author is assigned' do
+        mod = create :mod, author_name: 'HeyDonalds', author: nil
+        user = create :user, name: 'Yeah'
+        mod.author = user
+        expect(mod.author_name).to eq 'Yeah'
+        mod.author = nil
+        expect(mod.author_name).to eq 'Yeah'
+      end
+
+      it 'should set author#is_dev to true after saving' do
+        mod = create :mod, author: nil
+        user = create :user, name: 'YeahYeah'
+        expect(user.is_dev?).to eq false
+        mod.author = user
+        expect(user.is_dev?).to eq false
+        mod.save!
+        expect(user.is_dev?).to eq true
       end
     end
 

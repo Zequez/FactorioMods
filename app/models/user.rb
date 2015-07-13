@@ -8,6 +8,8 @@ class User < ActiveRecord::Base
 
   friendly_id :name, use: [:slugged, :finders]
 
+  has_many :mods, dependent: :nullify, foreign_key: :author_id
+
   def is_registered?
     !new_record?
   end

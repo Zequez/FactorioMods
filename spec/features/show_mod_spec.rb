@@ -20,8 +20,26 @@ feature 'Display full mod information' do
   end
 
   scenario 'Visiting the mod page as the owner of the mod should display a link to edit the mod' do
+    sign_in
     category = create :category, name: 'Potato category'
-    create :mod, name: 'Super Mod', categories: [category]
+    create :mod, name: 'Super Mod', categories: [category], author: @user
+    visit '/mods/super-mod'
+    expect(page).to have_link 'Edit mod', '/mods/super-mod/edit'
+  end
+
+  scenario 'Visiting the mod page as a guest should not display a link to edit the mod' do
+    sign_in
+    category = create :category, name: 'Potato category'
+    create :mod, name: 'Super Mod', categories: [category], author: build(:user)
+    visit '/mods/super-mod'
+    expect(page).to_not have_link 'Edit mod', '/mods/super-mod/edit'
+  end
+
+  scenario 'Visiting the mod page as an admin display a link to edit the mod regardless of the owner' do
+    sign_in
+    @user.is_admin = true
+    category = create :category, name: 'Potato category'
+    create :mod, name: 'Super Mod', categories: [category], author: build(:user)
     visit '/mods/super-mod'
     expect(page).to have_link 'Edit mod', '/mods/super-mod/edit'
   end
