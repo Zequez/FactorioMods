@@ -20,12 +20,11 @@ class Mod < ActiveRecord::Base
   belongs_to :game_version_end, class_name: 'GameVersion'
   belongs_to :forum_post
 
-  has_many :downloads
-  has_many :visits
+  # has_many :downloads
+  # has_many :visits
   has_many :files, class_name: 'ModFile', dependent: :destroy
   has_many :versions, class_name: 'ModVersion', dependent: :destroy
-  has_many :assets, ->{ order 'sort_order asc' }, class_name: 'ModAsset', dependent: :destroy
-  has_many :tags
+  # has_many :tags
   has_many :favorites
   has_many :forum_posts
 
@@ -36,9 +35,7 @@ class Mod < ActiveRecord::Base
 
   # has_one :latest_version, -> { sort_by_newer_to_older.limit(1) }, class_name: 'ModVersion'
   # has_one :second_latest_version, -> { sort_by_newer_to_older.limit(1).offset(1) }, class_name: 'ModVersion'
-  has_one :first_asset, -> { sort_by_older_to_newer.limit(1) }, class_name: 'ModAsset'
 
-  accepts_nested_attributes_for :assets, allow_destroy: true
   accepts_nested_attributes_for :versions, allow_destroy: true
   accepts_nested_attributes_for :files, allow_destroy: true
 

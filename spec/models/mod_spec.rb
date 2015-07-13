@@ -32,10 +32,10 @@ RSpec.describe Mod, :type => :model do
     it { should respond_to :comments_count }
 
     # Tracking data
-    it { should respond_to :downloads }
-    it { should respond_to :downloads_count }
-    it { should respond_to :visits }
-    it { should respond_to :visits_count }
+    # it { should respond_to :downloads }
+    # it { should respond_to :downloads_count }
+    # it { should respond_to :visits }
+    # it { should respond_to :visits_count }
 
     # belongs_to
     it { should respond_to :author }
@@ -43,8 +43,7 @@ RSpec.describe Mod, :type => :model do
     # has_many
     it { should respond_to :files }
     it { should respond_to :versions }
-    it { should respond_to :assets }
-    it { should respond_to :tags }
+    # it { should respond_to :tags }
     it { should respond_to :favorites }
     it { should respond_to :favorites_count }
 
@@ -264,22 +263,6 @@ RSpec.describe Mod, :type => :model do
       context 'no mod versions' do
         it 'returns nil' do
           expect(mod.second_latest_version).to eq nil
-        end
-      end
-    end
-
-    describe '#first_asset' do
-      it 'returns the first asset' do
-        ma1 = create :mod_asset, mod: mod, sort_order: 1
-        ma2 = create :mod_asset, mod: mod, sort_order: 2
-        ma3 = create :mod_asset, mod: mod, sort_order: 3
-
-        expect(mod.first_asset).to eq ma1
-      end
-
-      context 'no mod assets' do
-        it 'returns nil' do
-          expect(mod.first_asset).to eq nil
         end
       end
     end
