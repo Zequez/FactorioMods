@@ -36,9 +36,9 @@ gem 'rack-zippy'
 gem 'jquery-ui-rails'
 gem 'kaminari'
 
-# group :production do
-#   gem 'aws-sdk'
-# end
+group :production do
+  gem 'aws-sdk'
+end
 
 # Models
 ########################
