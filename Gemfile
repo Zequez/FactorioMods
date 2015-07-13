@@ -29,8 +29,8 @@ group :development, :test, :assets do
   gem 'database_cleaner'
 end
 
-gem 'font-awesome-sass'         # View helper for font-awesome, not really neccesary, but handy
-gem 'haml-rails'                # HAML
+gem 'font-awesome-sass', '~> 4.3.0'
+gem 'haml-rails'
 gem 'auto_html'
 gem 'rack-zippy'
 gem 'jquery-ui-rails'

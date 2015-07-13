@@ -1,28 +1,29 @@
-$fa-version: "4.1.0" !default;
-@import "font-awesome/path";
+$fa-version: "4.3.0" !default;
+@import "font-awesome-sprockets";
+@import "font-awesome";
 
 // Run this on the home page and copy the result
 // $('.fa').map(function(i, e){return e.className.replace(/\s*fa-?\s*/g, '')}).toArray().filter(function(value, index, self){ return self.indexOf(value) == index })
 // TODO: Port uncss to Ruby. Or better, just make a binding.
 
-$fa-used-icons: "gears", "history", "sort-alpha-asc", "cog", "cogs", "android", "headphones", "desktop", "flask", "cube", "question-circle", "gamepad", "bomb", "globe", "flag", "indent", "archive", "automobile", "picture-o", "comments", "user", "download", "star-o", "bolt", "shield", "briefcase", "group";
+$fa-used-icons: "rocket", "tint", "train", "gears", "history", "sort-alpha-asc", "cog", "cogs", "android", "headphones", "desktop", "flask", "cube", "question-circle", "gamepad", "bomb", "globe", "flag", "indent", "archive", "automobile", "picture-o", "comments", "user", "download", "star-o", "bolt", "shield", "briefcase", "group";
 
-.fa {
-  display: inline-block;
-  font-family: FontAwesome;
-  font-style: normal;
-  font-weight: normal;
-  line-height: 1;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+// .fa {
+//   display: inline-block;
+//   font-family: FontAwesome;
+//   font-style: normal;
+//   font-weight: normal;
+//   line-height: 1;
+//   -webkit-font-smoothing: antialiased;
+//   -moz-osx-font-smoothing: grayscale;
 
-  @each $icon-name in $fa-used-icons {
-  // @each $icon-name, $icon-value in $fa-icons {
-    &.fa-#{$icon-name}:before {
-      content: map-get($fa-icons, $icon-name);
-    }
-  }
-}
+//   @each $icon-name in $fa-used-icons {
+//   // @each $icon-name, $icon-value in $fa-icons {
+//     &.fa-#{$icon-name}:before {
+//       content: map-get($fa-icons, $icon-name);
+//     }
+//   }
+// }
 
 @mixin content-icon($icon-name) {
   content: map-get($fa-icons, $icon-name);

@@ -159,7 +159,7 @@ GEM
       railties (>= 3.0.0)
     ffi (1.9.6)
     ffi (1.9.6-x64-mingw32)
-    font-awesome-sass (4.1.0)
+    font-awesome-sass (4.3.2.1)
       sass (~> 3.2)
     forgery (0.6.0)
     formatador (0.2.5)
@@ -296,7 +296,7 @@ GEM
     rspec-support (3.0.2)
     rubyzip (1.1.6)
     safe_yaml (1.0.3)
-    sass (3.3.9)
+    sass (3.3.14)
     selenium-webdriver (2.44.0)
       childprocess (~> 0.5)
       multi_json (~> 1.0)
@@ -368,7 +368,7 @@ DEPENDENCIES
   database_cleaner
   devise
   factory_girl_rails
-  font-awesome-sass
+  font-awesome-sass (~> 4.3.0)
   forgery
   friendly_id
   guard-livereload
