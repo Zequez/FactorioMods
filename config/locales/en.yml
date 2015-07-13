@@ -40,6 +40,7 @@ en:
     static:
       how_to_install: How to install mods on Factorio
       how_to_make: How to create mods for Factorio
+      how_to_submit: How to submit mods to FactorioMods
 
   error_pages:
     '401':
