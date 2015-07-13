@@ -8,6 +8,8 @@ class ApplicationController < ActionController::Base
   rescue_from CanCan::AccessDenied, with: :authentication_error
   rescue_from ActiveRecord::RecordNotFound, with: :not_found
 
+  before_action :configure_devise_permitted_parameters, if: :devise_controller?
+
   def not_found
     params[:controller] = 'errors'
     params[:action] = 'error-404'
@@ -28,12 +30,8 @@ class ApplicationController < ActionController::Base
     @error_code = 401
     render 'errors/base', status: 401
   end
-
-  ### Helpers
-  ###############
-
-  # def mod_path(mod, options = {})
-  #   polymorphic_path([mod.category, mod], options)
-  # end
-  # helper_method :mod_path
+  
+  def configure_devise_permitted_parameters
+    devise_parameter_sanitizer.for(:sign_up) << :name
+  end
 end

@@ -1,8 +1,27 @@
 .formtastic
-  li
+  // li
+  .input, .action
     min-height: $base-line-height
     margin-bottom: $base-line-height
     +clearfix
+
+    &.boolean
+      label
+        +pre(3 of 8 wide)
+        +span(5 omega of 8)
+        input
+          float: left
+          margin-right: space()
+
+    &.stringish, &.action
+      label
+        +span(3 of 8)
+
+      input, textarea
+        +span(5 omega of 8)
+
+      textarea
+        height: $base-line-height*5
 
   .inline-hints
     +font-smaller
@@ -12,15 +31,6 @@
     color: $color-error
     a
       text-decoration: underline
-
-  textarea
-    height: $base-line-height*5
-
-  label
-    +span(3 of 8)
-
-  input, textarea
-    +span(5 omega of 8)
 
   .nested-form
     overflow: initial

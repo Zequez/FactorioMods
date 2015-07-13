@@ -30,6 +30,11 @@ module ApplicationHelper
     end
   end
 
+  def body_controller_classes
+    controller_path = params[:controller].split('/')
+    controller_path.each_index.map{|i| controller_path[0..i].join('-')} << params[:action]
+  end
+
   ### Content helpers:
   ####################
 

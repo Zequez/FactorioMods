@@ -10,7 +10,7 @@ class Ability
       can :manage, :all
     else
       if user.is_guest?
-        can :read, Mod 
+        can :read, Mod
       end
 
       if user.is_registered?

@@ -9,7 +9,24 @@
       %i.o-cog<>
         %i.hidden-o<> o
       ds
-  -#.sign-in Login
+  .user-session
+    - if user_signed_in?
+      = link_to current_user.name, user_path(current_user)
+      |
+      = link_to 'Logout', destroy_user_session_path, method: :delete
+    - else
+      = link_to 'Login', new_user_session_path
+      |
+      = link_to 'Register', new_user_registration_path
   .instructions
-    %a.instructions-button{href: how_to_install_static_url} How do I install mods?
-    %a.instructions-button{href: how_to_make_static_url} How do I <strong>make</strong> mods?
+    .instructions-button
+      How do I
+      %a{href: how_to_make_static_url}
+        %strong make
+      \/
+      %a{href: how_to_install_static_url}
+        %strong install
+      \/
+      %a{href: how_to_submit_static_url}
+        %strong submit
+      mods?

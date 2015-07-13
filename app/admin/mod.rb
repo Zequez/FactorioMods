@@ -13,7 +13,7 @@ ActiveAdmin.register Mod do
 
   controller do
     def scoped_collection
-      Mod.includes(:category, :author)
+      Mod.includes(:categories, :author)
     end
 
     def resource
@@ -28,12 +28,12 @@ ActiveAdmin.register Mod do
   end
 
   show do |mod|
-    h2 link_to url_for([mod.category, mod]), [mod.category, mod]
+    h2 link_to mod_path(mod), mod
 
     attributes_table :name,
                      :slug,
                      :author_name,
-                     :category,
+                     :categories,
                      :author_name,
                      :author,
                      :first_version_date,
@@ -59,8 +59,8 @@ ActiveAdmin.register Mod do
     #   link_to(' [Official &#11016;]'.html_safe, mod.official_url)
     # end
 
-    column :category do |mod|
-      link_to mod.category.name, [mod.category, :mods]
+    column :categories do |mod|
+      mod.categories.join(',')
     end
 
     column :author do |mod|
@@ -94,9 +94,9 @@ ActiveAdmin.register Mod do
     column :imgur do |mod|
       link_to mod.imgur, mod.imgur_url if mod.imgur
     end
-    
+
     column :edit do |mod|
-      link_to 'EditPublic', edit_category_mod_url(mod.category, mod)
+      link_to 'EditPublic', edit_mod_url(mod)
     end
 
     actions

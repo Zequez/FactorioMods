@@ -11,11 +11,11 @@
 // about supported directives.
 //
 // require jquery
-// require jquery_ujs
+//= require jquery_ujs
 // require zepto
 // require jquery-ui/slider
 //= require cocoon
 //= require turbolinks
-//= require_tree ./lib
-//= require_tree ./shared
+// require_tree ./lib
+// require_tree ./shared
 //= require mods

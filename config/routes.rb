@@ -1,9 +1,19 @@
 Rails.application.routes.draw do
-  devise_for :users, ActiveAdmin::Devise.config
+  devise_for :users, path_names: {sign_in: 'login', sign_out: 'logout', sign_up: 'register'}
+
+  # devise_scope :user do
+  #   get '/register' => 'users#new'
+  #   get '/login' => 'devise/sessions#new'
+  #   delete '/logout' => 'devise/sessions#destroy'
+  # end
+  # resources :users, only: [:new, :create]
+
   scope 'potato' do
     ActiveAdmin.routes(self)
     get '/', to: 'admin/dashboard#index'
   end
+
+  resources :users, only: [:show]
 
   #
   # /mods
@@ -17,8 +27,6 @@ Rails.application.routes.draw do
   # /most-downloaded-mods/tag/:id
   #
   # /tag/:id
-
-
 
   scope '/mods', sort: 'alpha', as: :alpha do
     resources :mods, path: '/', only: :index

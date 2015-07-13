@@ -8,14 +8,14 @@
 
 .header
   +span(12 of 12)
-  +relative
+  position: relative
   background: $color-blue
   // +light-background-gradient($color-blue)
   +box-shadow(inset 0px -0.20em 0px rgba(#000, 0.1)) // Bar on the bottom
   background-image: asset-data-url('checkered-pattern.png')
 
   .logo
-    +span(9 of 12)
+    +span(8 of 12)
     height: rhythm(3, $font-xxx-larger) // TODO: Shouldn't need to set this. Investigate what's causing the header to increase the height
     padding-left: rhythm(3, $font-xxx-larger)*0.50 // H1 font-size
     font-weight: bold
@@ -27,7 +27,7 @@
         color: transparent
         text-shadow: none
       &:after
-        +inline-block
+        display: inline-block
         +content-icon(cog)
         width: 1em
         margin-left: -0.83em // Magic number
@@ -44,24 +44,28 @@
 
 
 
-
-  .sign-in
-    +span(3 omega of 12)
+  .user-session
+    +span(4 omega of 12)
+    padding-right: space()
     text-align: right
+    a
+      color: $color-1
 
   .instructions
-    +block
-    +span(3 omega of 12)
-    +absolute(false, 0px, 0px)
+    +span(4 omega of 12)
+    display: block
+    margin-top: rhythm(1)
 
     text-align: center
     &-button
-      +block
+      display: block
       background: $color-teal-blue
-      color: inherit
-      &:hover
+      border-radius: $border-radius 0px 0px 0px
+      a
+        color: inherit
+        padding-left: 2px
+        margin-right: 2px
+      a:hover
         background: $color-orange-teal
         color: $color-white
         +white-text-shadow
-      &:first-child
-        border-radius: $border-radius 0px 0px 0px

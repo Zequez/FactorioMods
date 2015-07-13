@@ -1,10 +1,8 @@
+.mods.show .content
+  padding: 0
+
 .mods-show
   .mod
-    @extend %content-block
-    +span(full)
-    margin-bottom: rhythm(1)
-    overflow: hidden
-
     h3
       font-weight: bold
       +font-x-larger
@@ -28,7 +26,7 @@
     &-subtitle
       &-edit-link
         float: right
-      
+
       .tag
         margin-right: space()
         white-space: nowrap
@@ -73,7 +71,7 @@
     &-forum
       +span(full)
       h3
-        padding: 0 space()
+        padding: 0 space($font-x-larger)
       &-iframe-cover
         overflow: hidden
       &-iframe

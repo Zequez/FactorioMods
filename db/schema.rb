@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150712121842) do
+ActiveRecord::Schema.define(version: 20150713042200) do
 
   create_table "active_admin_comments", force: true do |t|
     t.string   "namespace"
@@ -158,8 +158,6 @@ ActiveRecord::Schema.define(version: 20150712121842) do
     t.integer  "mod_id"
     t.string   "number"
     t.datetime "released_at"
-    t.datetime "created_at"
-    t.datetime "updated_at"
     t.integer  "sort_order",                   default: 0, null: false
     t.string   "game_versions_string"
     t.string   "precise_game_versions_string"
@@ -242,6 +240,7 @@ ActiveRecord::Schema.define(version: 20150712121842) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "name"
+    t.string   "slug"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true
