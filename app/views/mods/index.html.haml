@@ -31,6 +31,7 @@
       .mod-info-container
         %h2.mod-title
           = link_to mod.name, mod, class: 'highlight-query'
+          = link_to '[Edit]', edit_mod_path(mod) if can? :manage, Mod
         .mod-subtitle
           - mod.categories.each do |category|
             = category_tag_link category
@@ -55,7 +56,10 @@
             = "v#{mod.game_versions_string}"
             = icon 'cog'
         %span.mod-link{title: 'The awesome person behind this mod'}
-          = mod.author_name
+          - if mod.author
+            = link_to mod.author_name, mod.author
+          - else
+            = mod.author_name
           = icon 'user'
         -# %a.mod-link.mod-official-site{href: '#'}
         -#   Official mod site
