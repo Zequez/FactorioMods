@@ -94,3 +94,5 @@ en:
       mod:
         description: Markdown
         media_links_string: '<a href="http://imgur.com">Imgur.com</a> URLs of pictures of animated gifs. Maximum: 6 links.'
+      mod_file:
+        download_url: "Please use this instead of the attachment when possible, specially for large files"
