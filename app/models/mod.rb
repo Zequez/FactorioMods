@@ -52,21 +52,25 @@ class Mod < ActiveRecord::Base
   scope :sort_by_downloads, -> { order('mods.downloads_count desc') }
   scope :sort_by_popular, -> { includes(:forum_post).order('forum_posts.views_count desc') }
 
-  def self.filter_by_search_query(query)
-    s1 = s2 = s3 = self
-
-    s1 = s1.where 'mods.name LIKE ?', "%#{query}%"
-    found_ids = s1.all.map(&:id)
-
-    s2 = s2.where('mods.id NOT IN (?)', found_ids) if not found_ids.empty?
-    s2 = s2.where 'mods.summary LIKE ?', "%#{query}%"
-    found_ids = found_ids + s2.all.map(&:id)
-
-    s3 = s3.where('mods.id NOT IN (?)', found_ids) if not found_ids.empty?
-    s3 = s3.where 'mods.description LIKE ?',"%#{query}%"
-
-    s1.all.concat s2.all.concat s3.all
+  scope :filter_by_search_query, ->(query) do
+    where('mods.name LIKE ? OR mods.summary LIKE ?', "%#{query}%", "%#{query}%")
   end
+
+  # def self.filter_by_search_query(query)
+  #   s1 = s2 = s3 = self
+
+  #   s1 = s1.where 'mods.name LIKE ?', "%#{query}%"
+  #   found_ids = s1.all.map(&:id)
+
+  #   s2 = s2.where('mods.id NOT IN (?)', found_ids) if not found_ids.empty?
+  #   s2 = s2.where 'mods.summary LIKE ?', "%#{query}%"
+  #   found_ids = found_ids + s2.all.map(&:id)
+
+  #   s3 = s3.where('mods.id NOT IN (?)', found_ids) if not found_ids.empty?
+  #   s3 = s3.where 'mods.description LIKE ?',"%#{query}%"
+
+  #   s1.all.concat s2.all.concat s3.all
+  # end
 
   ### Callbacks
   #################
