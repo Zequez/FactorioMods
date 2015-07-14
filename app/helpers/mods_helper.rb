@@ -56,11 +56,11 @@ module ModsHelper
   end
 
   def link_to_file_url_with_name(file)
-    if file.download_url
+    if file.download_url.present?
       begin
         link_to URI(file.download_url).path.scan(/(?<=\/)[^\/]*\Z/).first, file.download_url
       rescue URI::InvalidURIError; end
-    elsif not file.attachment.blank?
+    elsif file.attachment.present?
       link_to "#{file.attachment_file_name} (#{number_to_human_size(file.attachment_file_size)})", file.attachment.url
     end
   end

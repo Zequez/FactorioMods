@@ -23,6 +23,11 @@ RSpec.describe ModsHelper, :type => :helper do
       expect(link_to_file_url_with_name(file))
         .to eq "<a href=\"#{file.attachment.url}\">#{file.attachment_file_name} (#{number_to_human_size(file.attachment_file_size)})</a>"
     end
+    it 'should return a link to the attachment URL if the download URL is an empty string' do
+      file = build :mod_file, download_url: ''
+      expect(link_to_file_url_with_name(file))
+        .to eq "<a href=\"#{file.attachment.url}\">#{file.attachment_file_name} (#{number_to_human_size(file.attachment_file_size)})</a>"
+    end
 
     it 'should return nil with an invalid URI' do
       file = build :mod_file, download_url: 'http://github.com/javascript:alert("Yes")'
