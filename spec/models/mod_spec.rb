@@ -220,7 +220,6 @@ RSpec.describe Mod, :type => :model do
 
       it 'should return true if the mod has at least a file' do
         mod = build :mod, versions: []
-        L mod.official_url
         mod.save!
         mod_version = create :mod_version, mod: mod
         mod_file = create :mod_file, mod_version: mod_version

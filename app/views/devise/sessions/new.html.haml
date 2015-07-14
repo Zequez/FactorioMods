@@ -7,6 +7,7 @@
     = f.input :email, required: false, autofocus: true
     = f.input :password, required: false
     = f.input :remember_me, as: :boolean if devise_mapping.rememberable?
+    = redirect_to_input(f)
   = f.actions do
     = f.action :submit, label: 'Login'
 = render "devise/shared/links"

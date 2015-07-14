@@ -8,6 +8,7 @@
     = f.input :name, required: true
     = f.input :password, required: true
     = f.input :password_confirmation, required: true
+    = redirect_to_input(f)
   = f.actions do
     = f.action :submit, label: 'Register'
 = render "devise/shared/links"

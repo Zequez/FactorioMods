@@ -30,8 +30,16 @@ class ApplicationController < ActionController::Base
     @error_code = 401
     render 'errors/base', status: 401
   end
-  
+
   def configure_devise_permitted_parameters
     devise_parameter_sanitizer.for(:sign_up) << :name
+  end
+
+  def after_sign_in_path_for(resource)
+    begin
+      params[:redirect_to] ? URI(params[:redirect_to]).path : super
+    rescue URI::InvalidURIError => e
+      super
+    end
   end
 end
