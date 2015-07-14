@@ -37,6 +37,8 @@ class ApplicationController < ActionController::Base
 
   def after_sign_in_path_for(resource)
     begin
+      # L params
+      # L resource
       params[:redirect_to] ? URI(params[:redirect_to]).path : super
     rescue URI::InvalidURIError => e
       super
