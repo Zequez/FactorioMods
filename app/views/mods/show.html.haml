@@ -3,7 +3,7 @@
 .mods-show
   .mod
     .mod-image
-      - if @mod.imgur
+      - if @mod.imgur.present?
         %a.mod-image-link{href: @mod.imgur_normal, target: '_blank'}
           %img.mod-image-img{src: @mod.imgur_large_thumbnail}
       - else

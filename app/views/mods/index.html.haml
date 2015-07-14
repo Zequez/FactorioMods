@@ -24,7 +24,7 @@
     .mod
       .mod-thumbnail<
         %a.mod-thumbnail-link{href: mod_url(mod)}
-          - if mod.imgur
+          - if mod.imgur.present?
             %img.mod-thumbnail-img{src: mod.imgur_thumbnail }
           - else
             %img.mod-thumbnail-img.mod-thumbnail-img-missing{src: missing_image_thumbnail, title: 'No image available'}
