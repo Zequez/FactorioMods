@@ -58,7 +58,12 @@ module ModsHelper
   def link_to_file_url_with_name(file)
     if file.download_url.present?
       begin
-        link_to URI(file.download_url).path.scan(/(?<=\/)[^\/]*\Z/).first, file.download_url
+        external_link = link_to URI(file.download_url).path.scan(/(?<=\/)[^\/]*\Z/).first, file.download_url
+        if file.attachment.present?
+          external_link + ' (' + link_to('Mirror', file.attachment.url) + ')'
+        else
+          external_link
+        end
       rescue URI::InvalidURIError; end
     elsif file.attachment.present?
       link_to "#{file.attachment_file_name} (#{number_to_human_size(file.attachment_file_size)})", file.attachment.url
