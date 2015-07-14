@@ -28,6 +28,6 @@
     // Nested mod files
     = f.actions do
       = f.action :submit
-  - unless @mod.forum_url.present?
+  - if @mod.forum_url.present?
     .mod-forum
       %iframe.mod-forum-iframe{src: @mod.forum_url}

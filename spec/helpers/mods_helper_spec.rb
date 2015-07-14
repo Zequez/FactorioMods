@@ -21,7 +21,7 @@ RSpec.describe ModsHelper, :type => :helper do
     it 'should add a mirror if both are available' do
       file = build :mod_file, download_url: 'https://github.com/Dysoch/DyTech/archive/v1.1.3-core.zip'
       expect(link_to_file_url_with_name(file))
-        .to eq "<a href=\"https://github.com/Dysoch/DyTech/archive/v1.1.3-core.zip\">v1.1.3-core.zip</a> (<a href=\"#{file.attachment.url}\">Mirror</a>)"
+        .to eq "<a href=\"https://github.com/Dysoch/DyTech/archive/v1.1.3-core.zip\">#{file.attachment_file_name}</a> (<a href=\"#{file.attachment.url}\">Mirror</a>)"
     end
 
     it 'should return a link to the attachment URL if there is no download URL' do
@@ -36,7 +36,7 @@ RSpec.describe ModsHelper, :type => :helper do
     end
 
     it 'should return nil with an invalid URI' do
-      file = build :mod_file, download_url: 'http://github.com/javascript:alert("Yes")'
+      file = build :mod_file, download_url: 'http://github.com/javascript:alert("Yes")', attachment: nil
       expect(link_to_file_url_with_name(file)).to eq nil
     end
 
