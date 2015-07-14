@@ -16,3 +16,5 @@ A mod database for Factorio.
 - Add bookmarks functionality for users to save mods and access them easily
 - Track mods downloads and visits, for stats, and for later history checking by users
 - Add a more automated way to authorize developers, instead of receiving PMs in the forum
+- Support for multiple authors
+- Support for mod forking detection

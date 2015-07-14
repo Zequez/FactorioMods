@@ -248,6 +248,10 @@ class Mod < ActiveRecord::Base
     files.size > 0
   end
 
+  def slug=(val)
+    super(val.present? ? val : nil)
+  end
+
   private
 
   def set_game_versions_string
