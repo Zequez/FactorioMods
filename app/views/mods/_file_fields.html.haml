@@ -1,7 +1,7 @@
 .nested-fields.mod-version-file
   = f.inputs name: attachment_title(f.object, :attachment) do
-    = f.input :attachment, label: attachment_label(f.object, :attachment)
+    = f.input :attachment, label: attachment_label(f.object, :attachment), required: false
     = f.input :name, placeholder: "File name (only if multiple files)"
-    = f.input :download_url
+    = f.input :download_url, required: false
     %li.nested-fields-remove
       = link_to_remove_association "&times;".html_safe, f
