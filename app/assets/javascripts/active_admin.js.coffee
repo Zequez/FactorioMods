@@ -13,3 +13,11 @@ $ ->
   .on 'ajax:success', (ev, data, status, xhr)->
     $(ev.target).find('.icon_spin').removeClass 'rotate'
     loading = false
+  
+  $('.toggler_status_tag')
+  .on 'ajax:success', (ev, data, status, xhr)->
+    $link = $(ev.target)
+    $parent = $link.parent()
+    $parent.toggleClass('yes')
+    $parent.toggleClass('no')
+    $link.text($link.text().replace(/([a-z]+)([^a-z]+)([a-z]+)/i, '$3$2$1'))

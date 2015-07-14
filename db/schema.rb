@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150713142609) do
+ActiveRecord::Schema.define(version: 20150714090306) do
 
   create_table "active_admin_comments", force: true do |t|
     t.string   "namespace"
@@ -67,8 +67,8 @@ ActiveRecord::Schema.define(version: 20150713142609) do
   add_index "favorites", ["user_id"], name: "index_favorites_on_user_id"
 
   create_table "forum_posts", force: true do |t|
-    t.integer  "comments_count", default: 0, null: false
-    t.integer  "views_count",    default: 0, null: false
+    t.integer  "comments_count", default: 0,     null: false
+    t.integer  "views_count",    default: 0,     null: false
     t.datetime "published_at"
     t.datetime "last_post_at"
     t.string   "url"
@@ -80,6 +80,7 @@ ActiveRecord::Schema.define(version: 20150713142609) do
     t.integer  "mod_id"
     t.integer  "post_number"
     t.boolean  "title_changed"
+    t.boolean  "not_a_mod",      default: false
   end
 
   add_index "forum_posts", ["mod_id"], name: "index_forum_posts_on_mod_id"

@@ -1,4 +1,6 @@
 ActiveAdmin.register ForumPost do
+  extend ActiveAdmin::ViewsHelper
+
   config.sort_order = "last_post_at_desc"
 
   controller do
@@ -17,7 +19,13 @@ ActiveAdmin.register ForumPost do
   end
 
   member_action :remove_title_changed, method: :put do
-    resource.title_changed = false
+    resource.title_changed = !resource.title_changed
+    resource.save!
+    render json: {}
+  end
+
+  member_action :toggle_not_a_mod, method: :put do
+    resource.not_a_mod = !resource.not_a_mod
     resource.save!
     render json: {}
   end
@@ -42,6 +50,7 @@ ActiveAdmin.register ForumPost do
   filter :comments_count
   filter :views_count
   filter :title_changed
+  filter :not_a_mod
 
   index do
     selectable_column
@@ -75,13 +84,11 @@ ActiveAdmin.register ForumPost do
     end
 
     column :title_changed do |post|
-      if !post.title_changed
-        status_tag 'NO'
-      else
-        status_tag('YES') << link_to('»NO',
-          remove_title_changed_admin_forum_post_path(post),
-          class: 'remove-title-changed', method: :put, 'data-type' => :json, remote: true).html_safe
-      end
+      toggler_status_tag remove_title_changed_admin_forum_post_path(post), post.title_changed
+    end
+
+    column :not_a_mod do |post|
+      toggler_status_tag toggle_not_a_mod_admin_forum_post_path(post), post.not_a_mod
     end
   end
 
