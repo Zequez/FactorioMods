@@ -33,19 +33,22 @@
 
     &-data
       width: 100%
-      &-row
-        // &:nth-child(odd)
-        //   +span(4 of 8)
-        // &:nth-child(even)
-        //   +span(4 omega of 8 no-gutter)
-        &-name
-          // +inline-block
+      li
+        width: 50%
+        float: left
+        &.wide
+          width: 100%
+          .data-name
+            +span(2 of 8)
+          .data-value
+            +span(6 omega of 8)
+        .data-name
           font-weight: bold
+          +span(4 of 8)
           &:after
             content: ':'
-
-        &-value
-          // +inline-block
+        .data-value
+          +span(4 omega of 8)
 
     .btn-download
       float: right

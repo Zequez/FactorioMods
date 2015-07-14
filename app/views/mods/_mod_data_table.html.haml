@@ -1,34 +1,28 @@
-%table.mod-data
-  %tbody
-    %tr.mod-data-row
-      %td.mod-data-row-name Factorio version
-      %td.mod-data-row-value= if_na(@mod.game_versions_string.present?) { @mod.game_versions_string }
-      %td.mod-data-row-name Author
-      %td.mod-data-row-value
-        - if @mod.author
-          = link_to @mod.author_name, @mod.author
+%ul.mod-data
+  %li
+    .data-name Factorio version
+    .data-value= if_na(@mod.game_versions_string)
+  %li
+    .data-name Author
+    .data-value= if_na(@mod.author, nil, @mod.author_name) { link_to @mod.author_name, @mod.author }
+  %li
+    .data-name First version
+    .data-value= if_na(@mod.has_versions?) { mod_release(@mod.versions.first) }
+  %li
+    .data-name Last version
+    .data-value= if_na(@mod.has_versions?) { mod_release(@mod.versions.last) }
+  %li.wide
+    .data-name Source
+    .data-value= if_na(@mod.github) { link_to @mod.github_url }
+  %li.wide
+    .data-name Forum post URL
+    .data-value
+      = if_na(@mod.forum_url) do
+        - if @mod.forum_post
+          = forum_post_stats_link
         - else
-          = @mod.author_name
-    %tr.mod-data-row
-      %td.mod-data-row-name First mod version
-      %td.mod-data-row-value= if_na(@mod.has_versions?) { mod_release(@mod.versions.first) }
-      %td.mod-data-row-name Source (Github)
-      %td.mod-data-row-value= if_na(@mod.github_url.present?) { link_to(@mod.github_path, @mod.github_url) }
-    %tr.mod-data-row
-      %td.mod-data-row-name Last mod version
-      %td.mod-data-row-value= if_na(@mod.has_versions?) { mod_release(@mod.versions.last) }
-      %td.mod-data-row-name Official site
-      %td.mod-data-row-value
-        = if_na(@mod.official_url.present?) do
-          = link_to @mod.official_url, @mod.official_url
-    %tr.mod-data-row
-      / %td.mod-data-row-name License
-      / %td.mod-data-row-value= if_na(@mod.license) { link_to(@mod.license, @mod.license_url) }
-      %td.mod-data-row-name Official forum post
-      %td.mod-data-row-value
-        = if_na(@mod.forum_url.present?) do
-          %a{href: @mod.forum_url}
-            - if @mod.forum_post
-              = forum_post_stats_link
-            - else
-              On the Factorio forums
+          = link_to "On the Factorio forums", @mod.forum_url
+  - if @mod.forum_subforum_url.present?
+    %li.wide
+      .data-name Subforum URL
+      .data-value= link_to @mod.forum_subforum_url

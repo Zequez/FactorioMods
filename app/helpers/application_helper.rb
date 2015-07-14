@@ -22,13 +22,27 @@ module ApplicationHelper
     root_path + 'images/medium/missing.png'
   end
 
-  def if_na(condition, result = nil, &block)
-    if !result and block_given?
-      condition ? capture(&block) : 'N/A'
+  def if_na(value, result = nil, na = 'N/A', &block)
+    use_na = (!!value == value) ? !value : value.blank?
+    if use_na
+      na
     else
-      condition ? result : 'N/A'
+      if block_given?
+        capture(&block)
+      else
+        result.nil? ? value : result
+      end
     end
   end
+
+  # def if_na(condition, result = nil, &block)
+  #   condition = condition.blank? if !!condition == condition # check if boolean
+  #   if !result and block_given?
+  #     condition ? capture(&block) : 'N/A'
+  #   else
+  #     condition ? result : 'N/A'
+  #   end
+  # end
 
   def body_controller_classes
     controller_path = params[:controller].split('/')

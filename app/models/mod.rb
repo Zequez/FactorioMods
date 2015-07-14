@@ -149,6 +149,7 @@ class Mod < ActiveRecord::Base
   attr_accessor :imgur_thumbnail
   attr_accessor :imgur_normal
   alias_attribute :github_path, :github
+  alias_attribute :subforum_url, :forum_subforum_url
 
   def imgur=(val)
     imgur_id = extract_imgur_id(val)
@@ -203,7 +204,7 @@ class Mod < ActiveRecord::Base
   end
 
   def github_url
-    "http://github.com/#{github_path}"
+    "http://github.com/#{github_path}" if github_path
     # github_url.match('[^/]+/[^/]+\/?\Z').to_s
   end
 

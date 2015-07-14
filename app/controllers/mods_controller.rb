@@ -106,6 +106,7 @@ class ModsController < ApplicationController
                                 :github,
                                 :official_url,
                                 :forum_url,
+                                :forum_subforum_url,
                                 :summary,
                                 :imgur,
                                 category_ids: [],

@@ -14,7 +14,7 @@ module ModsHelper
     string
   end
 
-  def forum_post_stats_link
+  def forum_post_stats_link(mod = @mod)
     link_to "#{@mod.forum_post.comments_count} comments / #{@mod.forum_post.views_count} views", @mod.forum_url
   end
 

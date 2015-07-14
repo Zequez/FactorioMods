@@ -46,7 +46,7 @@ feature 'Modder creates a new mod' do
     fill_in 'mod_name', with: 'Mah super mod'
     select 'Potato category', from: 'Categories'
     fill_in 'Github', with: 'http://github.com/factorio-mods/mah-super-mod'
-    fill_in 'Forum URL', with: 'http://www.factorioforums.com/forum/viewtopic.php?f=14&t=5971&sid=1786856d6a687e92f6a12ad9425aeb9e'
+    fill_in 'Forum post URL', with: 'http://www.factorioforums.com/forum/viewtopic.php?f=14&t=5971&sid=1786856d6a687e92f6a12ad9425aeb9e'
     fill_in 'Official URL', with: 'http://www.factorioforums.com/'
     fill_in 'Summary', with: 'This is a small mod for testing'
     fill_in_first_version_and_file
