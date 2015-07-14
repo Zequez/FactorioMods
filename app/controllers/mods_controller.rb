@@ -65,6 +65,7 @@ class ModsController < ApplicationController
     if params[:forum_post_id]
       forum_post = ForumPost.find params[:forum_post_id]
       @mod.name = forum_post.title
+      
       @mod.author_name = forum_post.author_name
       @mod.forum_url = forum_post.url
       if forum_post.published_at

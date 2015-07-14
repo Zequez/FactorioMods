@@ -13,7 +13,7 @@
     .data-value= if_na(@mod.has_versions?) { mod_release(@mod.versions.last) }
   %li.wide
     .data-name Source
-    .data-value= if_na(@mod.github) { link_to @mod.github_url }
+    .data-value= if_na(@mod.github) { link_to @mod.github_url, @mod.github_url }
   %li.wide
     .data-name Forum post URL
     .data-value
