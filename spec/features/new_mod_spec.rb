@@ -127,18 +127,19 @@ feature 'Modder creates a new mod' do
     expect(find('[id$=released_at]').value).to eq released_at.strftime('%Y-%m-%d')
   end
 
-  scenario 'tries to submit mod with the same name as an existing mod, is shown an error and a link to the existing mod' do
+  scenario 'tries to submit mod with the same name as an existing mod, it works fine' do
     sign_in_dev
+    @user.name = 'yeah'
+    @user.save!
     create_category 'Potato'
     mod = create :mod, name: 'SuperMod', categories: [@category]
+
     visit "/mods/new"
-    fill_in 'mod_name', with: 'SuperMod'  
+    fill_in 'mod_name', with: 'SuperMod'
     select 'Potato', from: 'Categories'
     fill_in_first_version_and_file
     submit_form
-    expect(current_path).to eq '/mods'
-    expect(page).to have_content "There is already another mod with that name"
-    expect(page).to have_link "another mod", "/mods/supermod"
+    expect(current_path).to eq '/mods/supermod-yeah'
   end
 
   def fill_in_first_version_and_file

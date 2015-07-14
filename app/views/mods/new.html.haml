@@ -9,6 +9,7 @@
   = semantic_form_for @mod do |f|
     = f.inputs do
       = f.input :name
+      = f.input :slug if current_user.is_admin?
       = f.input :categories
       = f.input :author_name if current_user.is_admin?
       = f.input :author if current_user.is_admin?

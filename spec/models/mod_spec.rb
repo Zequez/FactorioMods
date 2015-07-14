@@ -74,12 +74,19 @@ RSpec.describe Mod, :type => :model do
       it 'should be invalid without name' do
         mod = build :mod, name: ''
         expect(mod).to be_invalid
-      end 
+      end
 
-      it 'should be invalid with the same name as an existing mod' do
+      it 'should be valid with the same name as an existing mod' do
         mod1 = create :mod, name: 'PotatoMod'
         mod2 = build :mod, name: 'PotatoMod'
-        expect(mod2).to be_invalid
+        expect(mod2).to be_valid
+      end
+
+      it 'should use the author name on the slug when the mod has the same name' do
+        mod1 = create :mod, name: 'PotatoMod'
+        mod2 = build :mod, name: 'PotatoMod', author_name: 'yeahYeah'
+        mod2.save!
+        expect(mod2.slug).to eq 'potatomod-yeahyeah'
       end
 
       it 'should be invalid without category' do
@@ -99,12 +106,14 @@ RSpec.describe Mod, :type => :model do
     end
 
     describe '#author' do
-      it 'should be set #author_name to #author.name when #author is assigned' do
+      it 'should be set #author_name to #author.name when #author is assigned and saved' do
         mod = create :mod, author_name: 'HeyDonalds', author: nil
         user = create :user, name: 'Yeah'
         mod.author = user
+        mod.save!
         expect(mod.author_name).to eq 'Yeah'
         mod.author = nil
+        mod.save!
         expect(mod.author_name).to eq 'Yeah'
       end
 

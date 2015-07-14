@@ -8,7 +8,14 @@
 class Mod < ActiveRecord::Base
   extend FriendlyId
 
-  friendly_id :name, use: [:slugged, :finders]
+  friendly_id :slug_candidates, use: [:slugged, :finders]
+
+  def slug_candidates
+    [
+      :name,
+      [:name, :author_name]
+    ]
+  end
 
   FORBIDDEN_NAMES = %q(new create edit update destroy)
 
@@ -93,6 +100,12 @@ class Mod < ActiveRecord::Base
     self.last_release_date = last_version ? last_version.released_at : nil
   end
 
+  before_save do
+    if author
+      self.author_name = author.name
+    end
+  end
+
   after_save do
     if forum_post
       forum_post.mod = self
@@ -119,14 +132,14 @@ class Mod < ActiveRecord::Base
   validates :forum_url, allow_blank: true, format: { with: /\Ahttps?:\/\/.*\Z/ }
 
   # name uniqueness with link
-  validate do
-    if ( mod = Mod.where(name: name).first )
-      if mod.id != id
-        url = Rails.application.routes.url_helpers.mod_path mod
-        self.errors[:name].push I18n.t('activerecord.errors.models.mod.attributes.name.taken_with_link', url: url)
-      end
-    end
-  end
+  # validate do
+  #   if ( mod = Mod.where(name: name).first )
+  #     if mod.id != id
+  #       url = Rails.application.routes.url_helpers.mod_path mod
+  #       self.errors[:name].push I18n.t('activerecord.errors.models.mod.attributes.name.taken_with_link', url: url)
+  #     end
+  #   end
+  # end
 
   # Github URL
   validate do
@@ -198,9 +211,9 @@ class Mod < ActiveRecord::Base
     read_attribute(:game_versions_string) || set_game_versions_string
   end
 
-  def author=(val)
-    self.author_name = val.name if val
-    super(val)
+  def author_name
+    return super if super.present?
+    return author.name if author
   end
 
   def github_url
