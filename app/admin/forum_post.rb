@@ -39,9 +39,8 @@ ActiveAdmin.register ForumPost do
             'data-type' => :json
   end
 
-  scope :title_changed
-  scope :without_mod
-  scope :with_mod
+  scope :for_mod_update
+  scope :for_mod_creation
 
   filter :title
   filter :post_number
