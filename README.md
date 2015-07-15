@@ -18,3 +18,7 @@ A mod database for Factorio.
 - Add a more automated way to authorize developers, instead of receiving PMs in the forum
 - Support for multiple authors
 - Support for mod forking detection
+- I noticed a few devs use AdFly to get a little support,
+  maybe I could add a pop up on the first download and ask the user if he wants
+  to activate an "dev-support-download toggle" to turn all downloads into AdFly links
+  for the dev. And maybe a custom YouTube video link, also for support.
