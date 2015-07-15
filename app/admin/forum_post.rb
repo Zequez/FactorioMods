@@ -3,6 +3,10 @@ ActiveAdmin.register ForumPost do
 
   config.sort_order = "last_post_at_desc"
 
+  permit_params :title, :author_name, :post_number, :url,
+                :published_at, :edited_at, :last_post_at,
+                :comments_count, :views_count,
+                :title_changed, :not_a_mod, :mod_id
   controller do
     def scoped_collection
       ForumPost.includes(:mod)
@@ -89,6 +93,29 @@ ActiveAdmin.register ForumPost do
     column :not_a_mod do |post|
       toggler_status_tag toggle_not_a_mod_admin_forum_post_path(post), post.not_a_mod
     end
+
+    actions
+  end
+
+  form do |f|
+    f.semantic_errors *f.object.errors.keys
+
+    f.inputs do
+      f.input :title
+      f.input :author_name
+      f.input :post_number
+      f.input :url
+      f.input :published_at
+      f.input :edited_at
+      f.input :last_post_at
+      f.input :comments_count
+      f.input :views_count
+      f.input :title_changed
+      f.input :not_a_mod
+      f.input :mod
+    end
+
+    f.actions
   end
 
   # See permitted parameters documentation:
