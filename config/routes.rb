@@ -18,50 +18,50 @@ Rails.application.routes.draw do
   # /mods/:id/edit
   #
   # /recently-updated-mods
-  # /recently-updated-mods/tag/:id
+  # /recently-updated-mods/category/:id
   # /most-downloaded-mods
-  # /most-downloaded-mods/tag/:id
+  # /most-downloaded-mods/category/:id
   #
-  # /tag/:id
+  # /category/:id
 
   scope '/', as: :alpha, sort: 'alpha' do
     resources :mods, only: :index
-    resources :categories, path: 'tag', only: [] do
+    resources :categories, path: 'category', only: [] do
       resources :mods, path: '/', only: :index
     end
   end
 
   scope '/recently-updated', sort: 'most_recent', as: :most_recent do
     resources :mods, path: '/', only: :index
-    resources :categories, path: 'tag', only: [] do
+    resources :categories, path: 'category', only: [] do
       resources :mods, path: '/', only: :index
     end
   end
 
   # scope '/most-downloaded', sort: 'most_downloaded', as: :downloads do
   #   resources :mods, path: '/', only: :index
-  #   resources :categories, path: 'tag', only: [] do
+  #   resources :categories, path: 'category', only: [] do
   #     resources :mods, path: '/', only: :index
   #   end
   # end
 
   scope '/most-popular', sort: 'popular', as: :popular do
     resources :mods, path: '/', only: :index
-    resources :categories, path: 'tag', only: [] do
+    resources :categories, path: 'category', only: [] do
       resources :mods, path: '/', only: :index
     end
   end
 
   # scope '/most-forum-comments', sort: 'popular', as: :forum_comments do
   #   resources :mods, path: '/', only: :index
-  #   resources :categories, path: 'tag', only: [] do
+  #   resources :categories, path: 'category', only: [] do
   #     resources :mods, path: '/', only: :index
   #   end
   # end
 
   resources :mods
   # This one is for the helper
-  resources :categories, path: 'tag', only: [] do
+  resources :categories, path: 'category', only: [] do
     resources :mods, path: '/', only: :index
   end
 
