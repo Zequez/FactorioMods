@@ -146,6 +146,7 @@ feature 'Modder creates a new mod' do
     attachment = File.new(Rails.root.join('spec', 'fixtures', 'test.zip'))
     within('.mod-version:nth-child(1)') do
       fill_in 'Number', with: '123'
+      fill_in 'Release day', with: 3.weeks.ago
       within('.mod-version-file:nth-child(1)') do
         attach_file 'Attachment', attachment.path
       end

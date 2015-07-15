@@ -120,8 +120,8 @@ RSpec.describe ModsController, type: :controller do
     context 'with query' do
       context 'no categories, no sorting' do
         before(:each) do
-          @m1 = create :mod, name: 'potato', versions: [create(:mod_version)]
-          @m2 = create :mod, name: 'banana', versions: [create(:mod_version)]
+          @m1 = create :mod, name: 'potato', versions: [build(:mod_version)]
+          @m2 = create :mod, name: 'banana', versions: [build(:mod_version)]
         end
         before(:each) { get_index q: 'potato' }
 

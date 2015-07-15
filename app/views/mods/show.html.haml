@@ -30,7 +30,7 @@
               %th File download
               %th Release date
           %tbody
-            - @mod.latest_mod_file_and_version do |version, file|
+            - @mod.latest_versions_with_files do |version, file|
               %tr
                 %td= "#{version.number} #{file.name}"
                 %td= version.game_versions_string

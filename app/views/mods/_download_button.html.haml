@@ -4,7 +4,7 @@
       = icon 'download'
       Download
     %ul.btn-download-versions
-      - mod.latest_mod_file_and_version(2) do |version, file|
+      - mod.latest_versions_with_files(2) do |version, file|
         %li
           %a{href: file.available_url}
             = icon 'cog'

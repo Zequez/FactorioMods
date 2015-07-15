@@ -185,10 +185,9 @@ RSpec.describe Mod, :type => :model do
 
     describe '#last_version' do
       it 'should get it from the #versions lists before saving' do
-        date = 5.days.ago
-        mv1 = build(:mod_version, sort_order: 1, released_at: date)
-        mv2 = build(:mod_version, sort_order: 2, released_at: 10.days.ago)
-        mv3 = build(:mod_version, sort_order: 3, released_at: 1.month.ago)
+        mv1 = build(:mod_version, sort_order: 3, released_at: 5.days.ago)
+        mv2 = build(:mod_version, sort_order: 1, released_at: 10.days.ago)
+        mv3 = build(:mod_version, sort_order: 2, released_at: 1.month.ago)
         mod.versions = [mv2, mv1, mv3]
         mod.save!
         expect(mod.last_version).to eq mv1
@@ -429,9 +428,12 @@ RSpec.describe Mod, :type => :model do
 
       context 'there are some mods' do
         it 'should return them by versions#released_at date' do
-          mod1 = create(:mod, versions: [build(:mod_version, released_at: 2.day.ago)])
-          mod2 = create(:mod, versions: [build(:mod_version, released_at: 1.day.ago)])
-          mod3 = create(:mod, versions: [build(:mod_version, released_at: 3.day.ago)])
+          mod1 = create(:mod)
+          mod2 = create(:mod)
+          mod3 = create(:mod)
+          create(:mod_version, released_at: 2.day.ago, mod: mod1)
+          create(:mod_version, released_at: 1.day.ago, mod: mod2)
+          create(:mod_version, released_at: 3.day.ago, mod: mod3)
 
           Mod.sort_by_most_recent.all.should eq [mod2, mod1, mod3]
         end

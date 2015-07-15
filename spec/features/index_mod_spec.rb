@@ -6,7 +6,7 @@ feature 'Display an index of mods in certain order' do
     forum_post = forum_views ? create(:forum_post, views_count: forum_views) : nil
     mod = build :mod, name: name, forum_post: forum_post
     if last_version
-      mod.versions = [build(:mod_version, released_at: last_version)]
+      mod.versions = [build(:mod_version, released_at: last_version, mod: nil)]
     end
     mod.save!
   end

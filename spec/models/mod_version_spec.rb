@@ -67,6 +67,10 @@ RSpec.describe ModVersion, :type => :model do
   end
 
   describe 'validations' do
+    it 'should be invalid without a mod' do
+      expect(build(:mod_version, mod_id: nil)).to be_invalid
+    end
+
     it 'should be invalid with empty number' do
       expect(build(:mod_version, number: nil)).to be_invalid
     end
@@ -99,6 +103,10 @@ RSpec.describe ModVersion, :type => :model do
       mod_version = build :mod_version, game_versions: [gv2, gv3]
 
       expect(mod_version).to be_valid
+    end
+
+    it 'should be invalid without a release date' do
+      expect(build(:mod_version, released_at: nil)).to be_invalid
     end
   end
 

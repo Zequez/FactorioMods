@@ -1,5 +1,5 @@
 class ModVersion < ActiveRecord::Base
-  belongs_to :mod
+  belongs_to :mod, inverse_of: :versions
 
   has_many :files, class_name: 'ModFile'
   has_many :mod_game_versions
@@ -7,6 +7,8 @@ class ModVersion < ActiveRecord::Base
 
   scope :sort_by_older_to_newer, -> { order('sort_order asc') }
   scope :sort_by_newer_to_older, -> { order('sort_order desc') }
+  # scope :sort_by_release_date, -> { order('released_at desc') }
+  scope :most_recent, -> { order('released_at desc') }
 
   accepts_nested_attributes_for :files, allow_destroy: true
 
@@ -20,6 +22,8 @@ class ModVersion < ActiveRecord::Base
   #################
 
   validates :number, presence: true
+  validates :released_at, presence: true
+  validates :mod, presence: true
 
   # validates :game_versions, presence: true
   validate :validate_non_consecutive_game_versions
@@ -36,6 +40,14 @@ class ModVersion < ActiveRecord::Base
 
   ### Callbacks
   #################
+
+  after_save do
+    if not mod.last_release_date or (released_at > mod.last_release_date)
+      mod.last_version = self
+      mod.last_release_date = released_at
+      mod.update_attributes(last_version: self, last_release_date: released_at)
+    end
+  end
 
   ### Attributes
   #################

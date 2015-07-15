@@ -25,6 +25,7 @@ FactoryGirl.define do
     released_at 3.weeks.ago
     # game_versions { build_list :game_version, 1 }
     precise_game_versions_string '1.3.5'
+    association :mod, factory: :mod
   end
 
   factory :game_version do

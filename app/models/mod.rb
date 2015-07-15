@@ -36,7 +36,7 @@ class Mod < ActiveRecord::Base
   # has_many :downloads
   # has_many :visits
   has_many :files, class_name: 'ModFile', dependent: :destroy
-  has_many :versions, class_name: 'ModVersion', dependent: :destroy
+  has_many :versions, class_name: 'ModVersion', dependent: :destroy, inverse_of: :mod
   # has_many :tags
   has_many :favorites
   has_many :forum_posts
@@ -96,11 +96,6 @@ class Mod < ActiveRecord::Base
   end
 
   before_save do
-    self.last_version = self.versions.sort_by(&:sort_order).first
-    self.last_release_date = last_version ? last_version.released_at : nil
-  end
-
-  before_save do
     if author
       self.author_name = author.name
     end
@@ -147,7 +142,7 @@ class Mod < ActiveRecord::Base
       self.errors[:github].push I18n.t('activerecord.errors.models.mod.attributes.github.invalid')
     end
   end
-  
+
   # Imgur
   validate do
     if extract_imgur_id(imgur) == false
@@ -218,17 +213,16 @@ class Mod < ActiveRecord::Base
 
   def github_url
     "http://github.com/#{github_path}" if github_path
-    # github_url.match('[^/]+/[^/]+\/?\Z').to_s
   end
 
   def github=(val)
     write_attribute :github, extract_github_path(val) || val
   end
 
-  def latest_mod_file_and_version(number = nil)
+  def latest_versions_with_files(number = nil)
     result = []
-    selected_versions = number ? versions.last(number) : versions
-    selected_versions.reverse.each do |version|
+    selected_versions = number ? versions.most_recent.last(number) : versions.most_recent
+    selected_versions.each do |version|
       version.files.each do |file|
         if block_given?
           yield version, file

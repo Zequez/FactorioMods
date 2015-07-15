@@ -43,4 +43,15 @@ feature 'Display full mod information' do
     visit '/mods/super-mod'
     expect(page).to have_link 'Edit mod', '/mods/super-mod/edit'
   end
+
+  scenario 'Mod with multiple releases should sort them by newer to older' do
+    mod = create :mod, name: 'SuperMod'
+    mv1 = build :mod_version, released_at: 1.year.ago, number: 'aaaaa', files: [build(:mod_file)]
+    mv2 = build :mod_version, released_at: 1.month.ago, number: 'bbbbb', files: [build(:mod_file)]
+    mv3 = build :mod_version, released_at: 2.years.ago, number: 'ccccc', files: [build(:mod_file)]
+    mod.versions = [mv1, mv2, mv3]
+    mod.save!
+    visit '/mods/supermod'
+    expect(page.find('.mod-downloads-table')).to have_content /bbbbb.*aaaaa.*ccccc/
+  end
 end
