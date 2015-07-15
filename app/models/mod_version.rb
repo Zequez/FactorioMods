@@ -2,8 +2,11 @@ class ModVersion < ActiveRecord::Base
   belongs_to :mod, inverse_of: :versions
 
   has_many :files, class_name: 'ModFile'
-  has_many :mod_game_versions
-  has_many :game_versions, -> { sort_by_older_to_newer }, through: :mod_game_versions
+  has_many :mod_game_versions, dependent: :destroy
+  has_many :game_versions, -> { sort_by_older_to_newer },
+           through: :mod_game_versions,
+           dependent: :destroy # This actually destroys :mod_game_versions when removing the association.
+                               # See https://github.com/rails/rails/issues/7618
 
   scope :sort_by_older_to_newer, -> { order('sort_order asc') }
   scope :sort_by_newer_to_older, -> { order('sort_order desc') }

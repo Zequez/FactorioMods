@@ -286,6 +286,22 @@ RSpec.describe Mod, :type => :model do
           expect(mod.game_versions_string).to eq "#{gv1.number}-#{gv3.number}"
         end
       end
+
+      context 'it should update after I change the game versions of the mod versions to a single version' do
+        it 'returns the game version number' do
+          mv1 = create :mod_version, mod: mod
+          gv1 = create :game_version
+          gv2 = create :game_version
+          gv3 = create :game_version
+          mv1.game_versions = [gv1, gv2, gv3]
+          L ModGameVersion.all
+          mv1.game_versions = [gv1]
+          L ModGameVersion.all
+          mod = Mod.first
+
+          expect(mod.game_versions_string).to eq "#{gv1.number}"
+        end
+      end
     end
 
     describe '#latest_version' do

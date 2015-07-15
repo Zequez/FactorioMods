@@ -91,4 +91,8 @@ RSpec.configure do |config|
     @user = create :user, is_dev: true
     login_as @user
   end
+
+  def nfind(tag_name = '', input_name)
+    find("#{tag_name}[name^='#{input_name}']")
+  end
 end

@@ -1,5 +1,4 @@
 require 'rails_helper'
-
 include Warden::Test::Helpers
 
 feature 'Modder edits an existing mod' do
