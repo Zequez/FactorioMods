@@ -1,7 +1,10 @@
 # Factorio Mods
-A upcoming mod database for Factorio.
 
-## Upcoming features
+A database for Factorio mods.
+
+[http://factoriomods.com](http://factoriomods.com)
+
+## Planned features
 
 - Integration with Github
   - Automatically scrap the releases from mods hosted in Github instead
