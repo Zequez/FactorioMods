@@ -1,48 +1,31 @@
-// @-webkit-keyframes rotate
-//   0%
-//     -webkit-transform: rotate(0deg)
-//     transform: rotate(0deg)
-//   100%
-//     -webkit-transform: rotate(360deg)
-//     transform: rotate(360deg)
-
 .header
   +span(12 of 12)
   position: relative
   background: $color-blue
-  // +light-background-gradient($color-blue)
   box-shadow: inset 0px -0.20em 0px rgba(#000, 0.1) // Bar on the bottom
   background-image: asset-data-url('checkered-pattern.png')
 
   .logo
     +span(8 of 12)
-    height: rhythm(3, $font-xxx-larger) // TODO: Shouldn't need to set this. Investigate what's causing the header to increase the height
     padding-left: rhythm(3, $font-xxx-larger)*0.50 // H1 font-size
     font-weight: bold
     +dark-text-shadow
     a
       color: inherit
-    .o-cog
-      .hidden-o
+
+      .fa-cog
+        font-size: 0.75em
+      span
+        display: inline-block
+        width: 25px
+        margin-left: -25px
         color: transparent
         text-shadow: none
-      &:after
-        display: inline-block
-        +content-icon(cog)
-        width: 1em
-        margin-left: -0.83em // Magic number
-        font-size: 0.68em // Magic number
-        text-align: center
-        // +transform(rotate(0deg))
-        // +transition(transform 3s linear)
-        // -webkit-animation: rotate 3s linear infinite
-        // -webkit-animation-play-state: paused
-        // -webkit-filter: blur(0) // Fix wiggling
-      // &:hover:after
-        // +transform(rotate(360deg))
-        // -webkit-animation-play-state: running
-
-
+      &:hover .fa-cog
+        &:nth-child(1), &:nth-child(5)
+          animation: fa-spin 8s infinite linear
+        &:nth-child(3)
+          animation: fa-spin 8s infinite linear reverse
 
   .user-session
     +span(4 omega of 12)

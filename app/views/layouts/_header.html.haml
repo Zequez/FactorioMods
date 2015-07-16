@@ -1,14 +1,8 @@
 .header
   %h1.logo
     %a{href: '/'}
-      Fact
-      %i.o-cog<>
-        %i.hidden-o<> o
-      rio
-      M
-      %i.o-cog<>
-        %i.hidden-o<> o
-      ds
+      Fact<i class="fa fa-cog"></i><span>o</span>ri<i class="fa fa-cog"></i><span>o</span>
+      M<i class="fa fa-cog"></i><span>o</span>ds
   .user-session
     - if user_signed_in?
       = link_to current_user.name, user_path(current_user)
