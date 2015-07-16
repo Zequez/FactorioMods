@@ -8,7 +8,7 @@ module ApplicationHelper
   end
 
   def all_categories_mods_count
-    @categories.map(&:mods_count).reduce(&:+)
+    Mod.count
   end
 
   ### Misc helpers:
