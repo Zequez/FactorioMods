@@ -29,6 +29,9 @@ VCR.configure do |config|
   config.configure_rspec_metadata!
 end
 
+Spring.after_fork do
+  Dir["app/inputs/*_input.rb"].each { |f| require File.basename(f) }
+end
 
 RSpec.configure do |config|
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
