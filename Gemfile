@@ -82,7 +82,7 @@ end
 gem 'nokogiri'                  # To parse HTML, for the scrapper
 
 # gem 'bcrypt', '~> 3.1.7'      # Use ActiveModel has_secure_password
-# gem 'unicorn'                 # Use unicorn as the app server
+gem 'unicorn'                 # Use unicorn as the app server
 # gem 'capistrano-rails', group: :development # Use Capistrano for deployment
 # gem 'debugger', group: [:development, :test]  # Use debugger
 
