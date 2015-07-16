@@ -22,3 +22,7 @@ A mod database for Factorio.
   maybe I could add a pop up on the first download and ask the user if he wants
   to activate an "dev-support-download toggle" to turn all downloads into AdFly links
   for the dev. And maybe a custom YouTube video link, also for support.
+- Feature to create modpacks. Just select the mods you want and then it's
+  gonna create a joined zip with all the mods. Or maybe just a page with the list of the mods
+  and their downloads buttons, a big zipped file sounds like an expensive bandwidth bill. It could just
+  download everything with one click, that would be better.
