@@ -18,14 +18,16 @@
   .mod-version, #mod_categories_input
     select[multiple]
       +span(5 omega of 8)
-      height: $base-line-height*3
+      height: $base-line-height*2
       padding: 0px
       option
         float: left
         line-height: $base-line-height
         border-right: solid 1px $color-gray
         border-bottom: solid 1px $color-gray
-    
+  #mod_categories_input select[multiple]
+    height: $base-line-height*5
+
   .mod-version>fieldset>legend
     font-weight: bold
 
