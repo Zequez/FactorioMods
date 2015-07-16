@@ -1,5 +1,5 @@
 # Factorio Mods
-A mod database for Factorio.
+A upcoming mod database for Factorio.
 
 ## Upcoming features
 
@@ -26,3 +26,9 @@ A mod database for Factorio.
   gonna create a joined zip with all the mods. Or maybe just a page with the list of the mods
   and their downloads buttons, a big zipped file sounds like an expensive bandwidth bill. It could just
   download everything with one click, that would be better.
+
+# Copyright / License
+
+Copyright © Ezequiel Adrian Schwartzman. All Rights Reserved.
+
+Licensed under the CPAL-1.0 (the same licence that Reddit uses, seems like a good licence for open sourcing web apps).
