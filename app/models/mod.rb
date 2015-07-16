@@ -36,7 +36,7 @@ class Mod < ActiveRecord::Base
   # has_many :downloads
   # has_many :visits
   has_many :files, class_name: 'ModFile', dependent: :destroy
-  has_many :versions, class_name: 'ModVersion', dependent: :destroy, inverse_of: :mod
+  has_many :versions, -> { most_recent }, class_name: 'ModVersion', dependent: :destroy, inverse_of: :mod
   # has_many :tags
   has_many :favorites
   has_many :forum_posts
@@ -221,7 +221,7 @@ class Mod < ActiveRecord::Base
 
   def latest_versions_with_files(number = nil)
     result = []
-    selected_versions = number ? versions.most_recent.last(number) : versions.most_recent
+    selected_versions = number ? versions.last(number) : versions
     selected_versions.each do |version|
       version.files.each do |file|
         if block_given?
