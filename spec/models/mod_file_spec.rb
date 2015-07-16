@@ -32,6 +32,33 @@ RSpec.describe ModFile, :type => :model do
     end
   end
 
+  describe '#available_url' do
+    context 'There is both a #download_url and an #attachment' do
+      subject(:file) { build :mod_file, download_url: 'http://potato.com' }
+      it { expect(file.available_url).to eq 'http://potato.com' }
+    end
+
+    context 'There is a #download_url but not an #attachment' do
+      subject(:file) { build :mod_file, download_url: 'http://potato.com', attachment: nil }
+      it { expect(file.available_url).to eq 'http://potato.com' }
+    end
+
+    context 'There is no #download_url but there is an #attachment' do
+      subject(:file) { build :mod_file, download_url: nil }
+      it { expect(file.available_url).to eq file.attachment.url}
+    end
+
+    context '#download_url is blank and there is an attachment #attachment' do
+      subject(:file) { build :mod_file, download_url: '' }
+      it { expect(file.available_url).to eq file.attachment.url}
+    end
+
+    context 'There is neither a #download_url nor an #attachment' do
+      subject(:file) { build :mod_file, download_url: nil, attachment: nil }
+      it { expect(file.available_url).to eq ''}
+    end
+  end
+
   describe 'validation' do
     context 'an image instead of a zip file' do
       it 'should not be valid' do

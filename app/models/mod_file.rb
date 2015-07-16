@@ -18,6 +18,10 @@ class ModFile < ActiveRecord::Base
   end
 
   def available_url
-    download_url || attachment.url
+    if download_url.blank?
+      attachment.blank? ? '' : attachment.url
+    else
+      download_url
+    end
   end
 end
