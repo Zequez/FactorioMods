@@ -12,4 +12,6 @@
 //
 //= require cocoon
 //= require turbolinks
+//= require nprogress
+//= require nprogress-turbolinks
 //= require mods
