@@ -37,12 +37,33 @@ $(document).on 'page:change', ->
   do ->
     query = $('#search-input').val()
     if query
+      replaceText = (node)->
+        if node.nodeType == 3
+          # console.log node.textContent.search regexQuery
+          if ( match = node.textContent.match(safeRegexQuery) )
+            node.splitText(match.index)
+            spanTextNode = node.nextSibling
+            spanTextNode.splitText(match[0].length)
+            nextNode = spanTextNode.nextSibling
+            highlight = document.createElement('span')
+            highlight.appendChild spanTextNode
+            highlight.className = 'query-highlight'
+            node.parentElement.insertBefore(highlight, nextNode)
+            replaceText(nextNode)
+          true
+        else false
+
+      dfs = (parent)->
+        for elem in parent.childNodes
+          dfs(elem) unless replaceText(elem)
+        return
+
       # Escape for Regex
-      regexQuery = query.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&");
-      regexQuery = new RegExp(regexQuery, 'ig')
-      for elem in $('.highlight-query')
-        elem.innerHTML = elem.innerHTML.replace regexQuery, (match)->
-          '<span class="query-highlight">'+match+'</span>'
+      safeRegexQuery = query.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&");
+      safeRegexQuery = new RegExp(safeRegexQuery, 'i')
+
+      dfs(elem) for elem in document.getElementsByClassName('highlight-query')
+
       return
 
   # Edit mod mod version on fieldset legend
