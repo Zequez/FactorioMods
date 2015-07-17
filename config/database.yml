@@ -17,7 +17,7 @@ test:
 production:
   adapter: postgresql
   encoding: unicode
-  database: factorio_mods_test
+  database: factorio_mods_production
   pool: 5
   username: factorio_mods
   password:
