@@ -81,7 +81,6 @@ class ModsController < ApplicationController
     if @mod.save
       redirect_to mod_url(@mod)
     else
-      L @mod.errors
       render :new
     end
   end
