@@ -1,10 +1,10 @@
-- title @mod.new_record? ? t('title.mods.new') : t('title.mods.edit', name: @mod.name)
+- title @mod.new_record? ? t('.title') : t('.title_edit', name: @mod.name)
 .mods-edit
   - if @mod.new_record?
-    %h2 Create new mod
+    %h2= t('.new')
   - else
     %h2
-      Edit
+      = t('.edit')
       = link_to @mod.name, @mod
   = semantic_form_for @mod do |f|
     = f.inputs do
@@ -23,7 +23,7 @@
         = f.semantic_fields_for :versions do |ff|
           = render 'version_fields', f: ff
         .nested-form-links.mod-versions-links
-          = link_to_add_association 'Add version', f, :versions
+          = link_to_add_association t('.add_version'), f, :versions
     // Nested mod versions
     // Nested mod files
     // Nested mod files

@@ -14,15 +14,39 @@ module ApplicationHelper
   ### Misc helpers:
   ####################
 
-  def missing_image_thumbnail
-    root_path + 'images/thumb/missing.png'
+  def link_wrap_if(link_condition, *options, &block)
+    if link_condition
+      link_to link_condition, *options, &block
+    else
+      capture &block
+    end
   end
 
-  def missing_image_medium
-    root_path + 'images/medium/missing.png'
+  def missing_img(size, img_tag_options = {})
+    img_tag_options = img_tag_options.reverse_merge({
+      src: missing_img_url(size),
+      title: t('helpers.no_image_available')
+    })
+    tag :img, img_tag_options
   end
 
-  def if_na(value, result = nil, na = 'N/A', &block)
+  def mod_img(mod, size)
+    tag :img,
+      src: mod_img_url(mod, size),
+      class: 'mod-img',
+      title: (t('helpers.no_image_available') if !mod.imgur)
+  end
+
+  def mod_img_url(mod, size)
+    mod.imgur(size).presence || missing_img_url(size)
+  end
+
+  def missing_img_url(size)
+    root_path + "images/missing_#{size}.png"
+  end
+
+  def if_na(value, result = nil, na = nil, &block)
+    na = na || t('helpers.not_available')
     use_na = (!!value == value) ? !value : value.blank?
     if use_na
       na
@@ -35,15 +59,6 @@ module ApplicationHelper
     end
   end
 
-  # def if_na(condition, result = nil, &block)
-  #   condition = condition.blank? if !!condition == condition # check if boolean
-  #   if !result and block_given?
-  #     condition ? capture(&block) : 'N/A'
-  #   else
-  #     condition ? result : 'N/A'
-  #   end
-  # end
-
   def body_controller_classes
     controller_path = params[:controller].split('/')
     controller_path.each_index.map{|i| controller_path[0..i].join('-')} << params[:action]
@@ -55,7 +70,7 @@ module ApplicationHelper
   def title(page_title = nil, options = {suffix: true})
     @title ||= ''
     @title = page_title.to_s + @title unless page_title.nil?
-    @title = @title + t('title.suffix') if options[:suffix]
+    @title = @title + t('layouts.application.title.suffix') if options[:suffix]
     @title = @title.strip
     content_for :title, @title[0].upcase + @title[1..-1]
   end
@@ -102,7 +117,7 @@ module ApplicationHelper
 
   def version_filter_option(version, &block)
     content_tag :option,
-                "For Factorio v#{version.number}",
+                t('.for_game_version', version: version.number),
                 value: version_filter_url(version),
                 selected: version_filter_selected_state(version)
   end

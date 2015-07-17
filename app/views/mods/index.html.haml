@@ -1,14 +1,4 @@
-- if current_page? '/'
-  - title t 'title.root'
-- else
-  - if @game_version
-    - title_append t('title.mods.index.version', version: @game_version.number)
-  - title_append t('title.mods.index.mods')
-  - if @category
-    - title_append t('title.mods.index.category', category: @category.name)
-  - if @sort
-    - title_append t(@sort, scope: 'title.mods.index.sort')
-  - title
+- index_title
 
 = render partial: 'filter_bar'
 
@@ -16,22 +6,18 @@
   = render partial: 'mods_filters_list'
 
 - if @query
-  .info-box
-    Huh? Trying to search? Search is pretty basic and plain for now. I apologize the inconvenience.
+  .info-box= t('.search_notice')
 
 .mods-index
   - @mods.each do |mod|
     .mod
       .mod-thumbnail<
         %a.mod-thumbnail-link{href: mod_url(mod)}
-          - if mod.imgur.present?
-            %img.mod-thumbnail-img{src: mod.imgur_thumbnail }
-          - else
-            %img.mod-thumbnail-img.mod-thumbnail-img-missing{src: missing_image_thumbnail, title: 'No image available'}
+          = mod_img(mod, :thumbnail)
       .mod-info-container
         %h2.mod-title
           = link_to mod.name, mod, class: 'highlight-query'
-          = link_to '[Edit]', edit_mod_path(mod) if can? :manage, Mod
+          = admin_edit_link(mod)
         .mod-subtitle
           - mod.categories.each do |category|
             = category_tag_link category
@@ -59,7 +45,7 @@
           - if mod.author
             = link_to mod.author_name, mod.author
           - else
-            = mod.author_name
+            = link_to mod.author_name, user_url(mod.author_name)
           = icon 'user'
         -# %a.mod-link.mod-official-site{href: '#'}
         -#   Official mod site

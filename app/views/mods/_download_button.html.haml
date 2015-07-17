@@ -2,7 +2,7 @@
   .mod-link.btn.btn-download
     %a{href: mod.latest_version.files.first.available_url}
       = icon 'download'
-      Download
+      = t('.download')
     %ul.btn-download-versions
       - mod.latest_versions_with_files(2) do |version, file|
         %li
@@ -15,4 +15,4 @@
             -#= "v#{file.mod_version.game_versions_string}"
       - if mod.versions.size > 2
         %li
-          = link_to 'More versions...', mod_path(mod, anchor: 'download')
+          = link_to t('.more_versions'), mod_path(mod, anchor: 'download')

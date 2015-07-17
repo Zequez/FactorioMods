@@ -1,0 +1,59 @@
+en:
+  mods:
+    new:
+      title: Create new mod
+      title_edit: Edit %{name} # We use the same view
+      edit: Edit
+      new: Create new mod
+      add_version: Add version
+
+    show:
+      title: "%{name}"
+      no_downloads: This mod doesn't have anything to download :(
+      downloads_table:
+        game_version: Factorio version
+        mod_version: Mod version
+        file_version: File version
+        release_date: Release date
+      all_releases: All releases
+      mod_subforum: Mod subforum
+      mod_forum_post: Mod forum post
+
+    index:
+      title:
+        root: Latest Factorio mods
+        version: " for Factorio v%{version} "
+        mods: ' mods '
+        category: " %{category} "
+        sort:
+          most_recent: ' recently updated '
+          alpha: ' '
+          downloads: ' most downloaded '
+          popular: ' most popular'
+          forum_comments: ' most forum comments '
+      show: '%{name}'
+      search_notice: |
+        Huh? Trying to search? Search is pretty
+        basic and plain for now. I apologize the inconvenience.
+      admin_edit: Edit
+      post_on_the_factorio_forum: Post on the official Factorio forums
+
+    mod_data_table:
+      game_version: Factorio version
+      author: Author
+      first_version: First version
+      last_version: Last version
+      source: Source
+      forum_post_url: Forum post URL
+      forum_post_url_title: On the Factorio forums
+      subforum_url: Subforum URL
+
+    download_button:
+      more_versions: More versions...
+      download: Download
+
+    filter_bar:
+      any_game_version: Any Factorio version
+      categories: Categories
+      all: All
+      for_game_version: For Factorio v%{version}

@@ -1,0 +1,21 @@
+en:
+  layouts:
+    application:
+      title:
+        suffix: " - Factorio Mods "
+    header:
+      sign_out: Logout
+      sign_in: Login
+      sign_up: Register
+      how_to:
+        start: How do I
+        make: make
+        install: install
+        submit: submit
+        end: mods?
+    search_bar:
+      search: Search
+      most_recent: Recently updated
+      alpha: Alphabetically
+      popular: Most popular
+      forum_comments: Most comments

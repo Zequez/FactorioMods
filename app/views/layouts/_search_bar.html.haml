@@ -2,17 +2,13 @@
   %ul.sorters
     %li.sorter><
       = sort_link :most_recent do
-        = icon 'history', 'Recently updated'
+        = icon 'history', t('.most_recent')
     %li.sorter><
       = sort_link :alpha do
-        = icon 'sort-alpha-asc', 'Alphabetically'
+        = icon 'sort-alpha-asc', t('.alpha')
     %li.sorter<>
       = sort_link :popular do
-        = icon 'star-o', 'Most Popular'
-    -# %li.sorter<>
-    -#   = sort_link :forum_comments do
-    -#     = icon 'comments-o'
-    -#     Most comments
+        = icon 'star-o', t('.popular')
   .text-filter
     = search_form do
-      %input.input.input-text.input-text-search#search-input{type: 'text', placeholder: 'Search', name: 'q', value: params[:q], maxlength: 30}
+      %input.input.input-text.input-text-search#search-input{type: 'text', placeholder: t('.search'), name: 'q', value: params[:q], maxlength: 30}

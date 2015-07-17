@@ -99,32 +99,19 @@ $mods-list-size: 12-$filter-size
     &:last-child
       margin-bottom: 0
 
-    // .mod-thumbnail .asset-thumbnail
-    //   border-radius: 5px 0px 0px 5px
-
-    // &:first-child
-    //   border-radius: $border-radius $border-radius 0px 0px
-    //   .mod-thumbnail .asset-thumbnail
-    //     border-radius: $border-radius 0px 0px 0px
-
-    // &:last-child
-    //   border-radius: 0px 0px $border-radius $border-radius
-    //   .mod-thumbnail .asset-thumbnail
-    //     border-radius: 0px 0px 0px $border-radius
-
     //-- Thumbnail --//
     &-thumbnail
       @extend %pretty-border
       +span(2 of no-gutter $mods-list-size)
       overflow: hidden
 
-      &-link
+      a
         //@extend %thumbnail-hover
         display: block
         width: 100%
         overflow: hidden
 
-      &-img
+      img
         display: block
         width: 100%
 

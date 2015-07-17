@@ -181,6 +181,18 @@ class Mod < ActiveRecord::Base
     "http://imgur.com/#{imgur}"
   end
 
+  def imgur(size = false)
+    return nil if self[:imgur].blank?
+    return self[:imgur] unless size
+    case size
+    when :normal then imgur_normal
+    when :thumbnail then imgur_thumbnail
+    when :large_thumbnail then imgur_large_thumbnail
+    else
+      super
+    end
+  end
+
   def imgur_normal
     # Yeah, it could be something else than JPG, but Imgur doesn't care, they're cool
     "http://i.imgur.com/#{imgur}.jpg"

@@ -1,13 +1,9 @@
-- title t 'title.mods.show', name: @mod.name
+- title t '.title', name: @mod.name
 
 .mods-show
   .mod
     .mod-image
-      - if @mod.imgur.present?
-        %a.mod-image-link{href: @mod.imgur_normal, target: '_blank'}
-          %img.mod-image-img{src: @mod.imgur_large_thumbnail}
-      - else
-        %img.mod-image-img.mod-image-img-missing{src: missing_image_medium, title: 'No image available'}
+      = link_wrap_if(@mod.imgur(:normal)) { mod_img(@mod, :large_thumbnail) }
     .mod-info-container
       %h2.mod-title= @mod.name
       .mod-subtitle
@@ -21,33 +17,32 @@
       = render partial: 'download_button', locals: { mod: @mod }
     .mod-downloads#downloads
       - if @mod.has_files?
-        %h3 All releases
+        %h3= t('.all_releases')
         %table.mod-downloads-table
           %thead
             %tr
-              %th Mod version
-              %th Factorio version
-              %th File download
-              %th Release date
+              %th= t('.downloads_table.mod_version')
+              %th= t('.downloads_table.game_version')
+              %th= t('.downloads_table.file_version')
+              %th= t('.downloads_table.release_date')
           %tbody
             - @mod.latest_versions_with_files do |version, file|
               %tr
                 %td= "#{version.number} #{file.name}"
                 %td= version.game_versions_string
                 %td= link_to_file_url_with_name(file)
-                //%td= pretty_date version.released_at.to_s(:rfc822)
                 %td= mod_date version.released_at
       - else
-        %h3 This mod doesn't have anything to download :(
+        %h3= t('.no_downloads')
     - if @mod.subforum_url.present?
       .mod-forum
-        %h3 Mod subforum
+        %h3= t('.mod_subforum')
         .mod-forum-iframe-cover
           %iframe.mod-forum-iframe{src: @mod.subforum_url}
     - elsif @mod.forum_url.present?
       .mod-forum
         %h3
-          Mod forum post
+          = t('.mod_forum_post')
           - if @mod.forum_post
             = forum_post_stats_link
         .mod-forum-iframe-cover

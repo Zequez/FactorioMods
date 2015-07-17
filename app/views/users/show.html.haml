@@ -1,5 +1,9 @@
-- title "#{@user.name } profile"
+- title "#{@name} profile"
 
-%h2 #{@user.name}'s profile
+%h2 Mods by #{@name}
 
-There is nothing here yet.
+Haven't gotten to properly do this page yet, so here is a quick list of mods by this author:
+
+%ul
+  - @mods.each do |mod|
+    %li= link_to mod.name, mod

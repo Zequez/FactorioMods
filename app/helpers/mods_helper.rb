@@ -68,4 +68,32 @@ module ModsHelper
       link_to "#{file.attachment_file_name} (#{number_to_human_size(file.attachment_file_size)})", file.attachment.url
     end
   end
+
+  def admin_edit_link(mod)
+    link_to t('helpers.admin_edit'), edit_mod_path(mod) if can? :manage, Mod
+  end
+
+  def index_title
+    if current_page? '/'
+      title t('.title.root')
+    else
+      title_append t('.title.version', version: @game_version.number) if @game_version
+      title_append t('.title.mods')
+      title_append t('.title.category', category: @category.name) if @category
+      title_append t(".title.sort.#{@sort}") if @sort
+      title
+    end
+  end
+
+#   - if current_page? '/'
+#   - title t 'title.root'
+# - else
+#   - if @game_version
+#     - title_append t('title.mods.index.version', version: @game_version.number)
+#   - title_append t('title.mods.index.mods')
+#   - if @category
+#     - title_append t('title.mods.index.category', category: @category.name)
+#   - if @sort
+#     - title_append t(@sort, scope: 'title.mods.index.sort')
+#   - title
 end

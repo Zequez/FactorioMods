@@ -7,20 +7,20 @@
     - if user_signed_in?
       = link_to current_user.name, user_path(current_user)
       |
-      = link_to 'Logout', destroy_user_session_path
+      = link_to t('.sign_out'), destroy_user_session_path
     - else
-      = link_to 'Login', new_user_session_path
+      = link_to t('.sign_in'), new_user_session_path
       |
-      = link_to 'Register', new_user_registration_path
+      = link_to t('.sign_up'), new_user_registration_path
   .instructions
     .instructions-button
-      How do I
-      %a{href: how_to_make_static_url}
-        %strong make
-      \/
+      = t('.how_to.start')
       %a{href: how_to_install_static_url}
-        %strong install
+        %strong= t('.how_to.install')
+      \/
+      %a{href: how_to_make_static_url}
+        %strong= t('.how_to.make')
       \/
       %a{href: how_to_submit_static_url}
-        %strong submit
-      mods?
+        %strong= t('.how_to.submit')
+      = t('.how_to.end')
