@@ -12,14 +12,6 @@ FactoryGirl.define do
     sequence(:name) { |n| "Category #{n}#{n}#{n}" }
   end
 
-  factory :mod_asset do
-    image { File.new(Rails.root.join('spec', 'fixtures', 'test.jpg')) }
-  end
-
-  factory :mod_video_asset, class: 'ModAsset' do
-    video_url 'http://www.youtube.com/watch?v=C0DPdy98e4c'
-  end
-
   factory :mod_version do
     number '3.5.4'
     released_at 3.weeks.ago

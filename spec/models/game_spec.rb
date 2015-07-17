@@ -20,6 +20,6 @@ RSpec.describe Game, :type => :model do
   it 'should not allow to create more than one game' do
     create :game
     game = build :game
-    expect{game.save}.to raise_error
+    expect{game.save}.to raise_error Game::CannotCreateMoreThanOneGameError
   end
 end

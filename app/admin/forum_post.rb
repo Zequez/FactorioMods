@@ -34,7 +34,7 @@ ActiveAdmin.register ForumPost do
     render json: {}
   end
 
-  action_item do
+  action_item :scrap do
     link_to icon('spin') + ' Scrap',
             [:scrap, :admin, :forum_posts],
             id: 'scrap-forum-posts',

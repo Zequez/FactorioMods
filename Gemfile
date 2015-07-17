@@ -3,20 +3,20 @@ source 'http://rails-assets.org'
 
 ruby "2.1.5"
 
-
 # Base
 ########################
 
-gem 'rails', '4.1.1'  # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'sqlite3'         # Use sqlite3 as the database for Active Record
+gem 'rails', '~> 4.1.12'  # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
+gem 'sqlite3'             # Use sqlite3 as the database for Active Record
+gem 'unicorn'             # Use unicorn as the app server
+gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw]
 
 # Assets
 ########################
 
 group :development, :test, :assets do
-  gem 'sass-rails', github: 'rails/sass-rails'  # SASS bindins for Rails
-  gem 'sass', '~> 3.3.0'          # CSS with superpowers
-  gem 'compass', github: 'Compass/compass'              # SASS on steroids
+  gem 'sass-rails'#, github: 'rails/sass-rails'  # SASS bindins for Rails
+  gem 'sass', '~> 3.4.0'          # CSS with superpowers
   gem 'compass-rails', github: 'Compass/compass-rails'  # Compass bindings for Rails
   gem 'breakpoint'                # Media queries sugar
   gem 'susy', '~> 2.0'            # Grids for SASS
@@ -27,37 +27,38 @@ group :development, :test, :assets do
   gem 'turbolinks'                # Turbolinks makes following links in your web application faster
   gem 'selenium-webdriver'
   gem 'database_cleaner'
+  gem 'bourbon', '~> 4.2'
 end
 
+# Views
+########################
 gem 'font-awesome-sass', '~> 4.3.0'
 gem 'haml-rails'
-gem 'auto_html'
-gem 'rack-zippy'
-gem 'jquery-ui-rails'
+gem 'rack-zippy' # Serves static gzipped precompiled assets
 gem 'kaminari'
-
-group :production do
-  gem 'aws-sdk', '< 2.0'
-end
+gem 'formtastic'
 
 # Models
 ########################
 
-gem 'paperclip', github: 'thoughtbot/paperclip'
+gem 'paperclip'
 gem 'friendly_id'
-gem 'youtube_addy'
 gem 'cocoon'
 
-# General
+# Users / Authentication / Administration
 ########################
 
-gem 'activeadmin', github: 'gregbell/active_admin'    # Administration panel for Rails. Fantastic.
-gem 'devise'                    # Authentication system
+gem 'activeadmin', '~> 1.0.0.pre1' # Administration panel for Rails. Fantastic.
+gem 'devise'                       # Authentication system
 gem 'cancancan'                    # Authorization adapter
-# gem 'jbuilder', '~> 2.0'        # Build JSON APIs with ease
-# gem 'sdoc', '~> 0.4.0', group: :doc  # bundle exec rake doc:rails generates the API under doc/api.
-# gem 'simple_form'
+
+# Other
+#######################
 gem 'reverse_markdown'
+gem 'nokogiri'                     # To parse HTML, for the scraper
+
+# Testing
+#######################
 
 group :development do
   gem 'spring'                  # Spring speeds up development by keeping your application running in the background
@@ -79,12 +80,17 @@ group :test do
   gem 'vcr'
 end
 
-gem 'nokogiri'                  # To parse HTML, for the scrapper
+# Production
+#######################
+
+group :production do
+  gem 'aws-sdk', '< 2.0'
+end
+
+# gem 'jbuilder', '~> 2.0'         # Build JSON APIs with ease
+# gem 'sdoc', '~> 0.4.0', group: :doc  # bundle exec rake doc:rails generates the API under doc/api.
 
 # gem 'bcrypt', '~> 3.1.7'      # Use ActiveModel has_secure_password
-gem 'unicorn'                 # Use unicorn as the app server
+
 # gem 'capistrano-rails', group: :development # Use Capistrano for deployment
 # gem 'debugger', group: [:development, :test]  # Use debugger
-
-
-gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw]
