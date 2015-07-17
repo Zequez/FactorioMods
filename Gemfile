@@ -86,6 +86,7 @@ end
 
 group :production do
   gem 'aws-sdk', '< 2.0'
+  gem 'rails_12factor'
 end
 
 # gem 'jbuilder', '~> 2.0'         # Build JSON APIs with ease
