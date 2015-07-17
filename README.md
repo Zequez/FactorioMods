@@ -1,8 +1,51 @@
 # Factorio Mods
 
-A database for Factorio mods.
+[FactorioMods.com](http://factoriomods.com) it's an open
+source web app to host Factorio Mods, and make it easier for user and devs alike
+to share, find, download, and manage mods.
 
-[http://factoriomods.com](http://factoriomods.com)
+## Is FactorioMods a mod manager?
+
+No, FactorioMods it's not a mod manager, after you download the mods, you have to install them
+yourself. However there is another open source app, [FactorioModManager](https://github.com/narrowtux/FactorioModManager) that
+allows you to do just that, and [here is the forum post with instructions of how to use it](http://www.factorioforums.com/forum/viewtopic.php?f=69&t=13327).
+
+Since these are both open source apps, it's just a matter of time until
+we can coordinate to use a common protocol to install mods in the same way
+that NexusModManager does it.
+
+## How do I submit mods?
+
+For now just create an account on the site, and then [PM me on the forum](http://www.factorioforums.com/forum/ucp.php?i=pm&mode=compose&u=1553) and I'll set your permissions up. I still need to strengthen the system until I make it
+fully public.
+
+## How to get it up and running locally
+
+If you want to contribute you'll probably need to run it locally
+
+```bash
+git clone https://github.com/Zequez/FactorioMods
+bundle
+rake db:setup
+rake fake_data
+```
+
+That might take a while, specially because `rake fake_data` actually scraps posts from the Factorio forum.
+
+After that you just have to
+
+```bash
+rails s
+```
+
+And you're on! ...probably... didn't actually test it from scratch on a different
+computer, you might need to install some things, I'm sure you'll figure it out!
+
+## Running tests
+
+```bash
+guard
+```
 
 ## Planned features
 
@@ -11,6 +54,7 @@ A database for Factorio mods.
     of adding the releases manually and hosting them on AWS.
   - Automatically use the Github README file as mod description and
     use the first pharagraph as summary
+  - Maybe just host the mods list on the repo?
 - Read dependencies from the info.json file in the zipped
   - Actually add inter-mod dependencies, for now it just saves information about the Factorio version required
 - Fork [Factorio Mod Manager](https://github.com/narrowtux/FactorioModManager/) or convince someone
@@ -34,4 +78,4 @@ A database for Factorio mods.
 
 Copyright © Ezequiel Adrian Schwartzman. All Rights Reserved.
 
-Licensed under the CPAL-1.0 (the same licence that Reddit uses, seems like a good licence for open sourcing web apps).
+Licensed under the CPAL-1.0 (the same license that Reddit uses, seemed like a good license for open sourcing web apps).

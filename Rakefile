@@ -43,68 +43,77 @@ task fake_data: :environment do
 
     ### Game Versions
     ##################
+    puts "---------- Creating game versions!"
     rand(3..4).times do |i|
       rand(4..6).times do |j|
         time_ago =  (4-i).months + (6-j).weeks
-        GameVersion.create!(number: "#{i}.#{j}.x", released_at: Time.now - time_ago, game: game)
+        game_version = GameVersion.create!(number: "#{i}.#{j}.x", released_at: Time.now - time_ago, game: game)
+        puts "Created game version #{game_version.number}"
       end
     end
     game_versions = GameVersion.all.sort_by_older_to_newer
 
     ### Users
     ##################
+    puts "---------- Creating users!"
     rand(5..10).times do |i|
       pass = Forgery(:basic).password(at_least: 8, at_most: 20)
-      User.create!(email: Forgery(:internet).email_address,
+      user = User.create!(email: Forgery(:internet).email_address,
                    name: Forgery(:internet).user_name,
                    password: pass,
                    password_confirmation: pass)
+      puts "Created user #{user.name} #{user.email}"
     end
     users = User.all
 
+    ### Forum posts
+    ##################
+    # Actually scrap the forum posts from the Factorio forum
+    # in real time, I don't see why not, it's just a few pages.
+    puts "---------- Scraping real life forum posts! This make take a while..."
+    scraper = ForumPostsScraper.new
+    posts = scraper.scrap
+    posts.each(&:save!)
+
     ### Mods
     ##################
-    links = ['http://i.imgur.com/b9VDd2E.jpg', 
-           'http://i.imgur.com/6TIfdyR.jpg',
-           'http://i.imgur.com/6DS3LT6.jpg',
-           'http://i.imgur.com/jRBKTqv.jpg',
-           'http://gfycat.com/HorribleUnkemptBeaver',
-           'http://gfycat.com/ExcellentUnsightlyAfricanporcupine',
-           'http://gfycat.com/SharpGiganticEchidna']
+    puts "---------- Creating mods!"
+    imgurs = ['b9VDd2E', '6TIfdyR', '6DS3LT6', 'jRBKTqv', '']
 
     categories = Category.all
     rand(30..50).times do |i|
       github_url = Forgery(:lorem_ipsum).words(1, random: true) + '/' + Forgery(:lorem_ipsum).words(1, random: true)
-      Mod.create! name: Forgery(:lorem_ipsum).words(rand(3..6), random: true),
-                  author_name: Forgery(:internet).user_name,
-                  author: rand > 0.25 ? nil : users.sample,
-                  category: categories.sample,
-                  github: rand > 50 ? nil : github_url,
-                  license: ['MIT', 'GPLv2', 'GPLv3'].sample,
-                  license_url: ['https://tldrlegal.com/license/mit-license',
-                                'https://tldrlegal.com/license/gnu-general-public-license-v2',
-                                'https://tldrlegal.com/license/gnu-general-public-license-v3-(gpl-3)'].sample,
-                  official_url: rand > 75 ? nil : "http://" + Forgery(:internet).domain_name,
-                  favorites_count: rand(0..100),
-                  comments_count: rand(0..150),
-                  forum_url: 'http://www.factorioforums.com/forum/viewtopic.php?f=14&t=' + rand(1000..4000).to_s,
-                  forum_comments_count: rand(0..150),
-                  downloads_count: rand(0..25000),
-                  visits_count: rand(0..100000),
-                  description: Forgery(:lorem_ipsum).paragraphs(rand(3..6), random: true),
-                  summary: Forgery(:lorem_ipsum).words(rand(10..100), random: true),
-                  media_links_string: links.sample(rand(4)).join("\n")
+      mod = Mod.create! name: Forgery(:lorem_ipsum).words(rand(3..6), random: true),
+                        author_name: Forgery(:internet).user_name,
+                        author: rand > 0.25 ? nil : users.sample,
+                        categories: categories.sample(rand(1..4)),
+                        github: rand > 50 ? nil : github_url,
+                        # license: ['MIT', 'GPLv2', 'GPLv3'].sample,
+                        # license_url: ['https://tldrlegal.com/license/mit-license',
+                        #               'https://tldrlegal.com/license/gnu-general-public-license-v2',
+                        #               'https://tldrlegal.com/license/gnu-general-public-license-v3-(gpl-3)'].sample,
+                        official_url: rand > 75 ? nil : "http://" + Forgery(:internet).domain_name,
+                        # favorites_count: rand(0..100),
+                        forum_url: posts.sample.url, # This will associate them on save
+                        # downloads_count: rand(0..25000),
+                        # visits_count: rand(0..100000),
+                        # description: Forgery(:lorem_ipsum).paragraphs(rand(3..6), random: true),
+                        summary: Forgery(:lorem_ipsum).words(rand(10..100), random: true),
+                        imgur: imgurs.sample
+                        # media_links_string: links.sample(rand(4)).join("\n")
 
+      mod_categories = mod.categories.map(&:name).join(', ')
+      puts "Created mod #{mod.name}, Categories: #{mod_categories}"
     end
 
     ### Mod Versions
     ##################
+    puts "---------- Creating mod versions and files!"
     Mod.all.each do |mod|
-      rand(1..5).times do |i|
-        ModVersion.create! game_versions: game_versions[i..(rand(i..game_versions.size))],
-                           number: i,
-                           mod: mod,
-                           released_at: Time.now - (5-i).weeks
+      mod.versions = rand(1..5).times.map do |i|
+        ModVersion.new game_versions: game_versions[i..(rand(i..game_versions.size))],
+                       number: i,
+                       released_at: Time.now - (5-i).weeks
 
 
       end
@@ -113,25 +122,16 @@ task fake_data: :environment do
       ### Mod Files
       ##################
       mod_versions.each do |mod_version|
-        rand(1..3).times do |i|
-          ModFile.create! name: rand > 0.25 ? nil : Forgery(:lorem_ipsum).words(1, random: true),
-                          mod: mod,
-                          mod_version: mod_version,
-                          downloads_count: rand(0..5000),
-                          sort_order: i,
-                          attachment: File.new(Rails.root.join('spec', 'fixtures', 'test.zip'))
+        mod_version.files = rand(1..3).times.map do |i|
+          download = [1,2,3].sample
+          ModFile.new name: rand > 0.05 ? nil : Forgery(:lorem_ipsum).words(1, random: true).downcase,
+                      attachment: [1,2].include?(download) ? File.new(Rails.root.join('spec', 'fixtures', 'test.zip')) : nil,
+                      download_url: [2,3].include?(download) ? "http://github.com/potato/mod/releases/whatever-#{1}.zip" : nil
         end
       end
 
-      ### Mod Assets
-      ##################
-      # rand(1..3).times do |i|       
-      #   image = Dir[Rails.root.join('spec', 'fixtures', 'sample_images', '*')]
-      #   ModAsset.create! mod: mod,
-      #                    sort_order: i,
-      #                    image: File.new(image.sample)
-
-      # end
+      mod.save!
+      puts "Added #{mod_versions.size} versions to mod #{mod.name}"
     end
   end
 end
