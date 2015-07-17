@@ -11,8 +11,7 @@
           = category_tag_link category
         - if can? :edit, @mod
           %a.mod-subtitle-edit-link{href: edit_mod_url(@mod)} Edit mod
-      .mod-summary
-        = @mod.summary
+      .mod-summary= simple_format @mod.summary
       = render partial: 'mod_data_table'
       = render partial: 'download_button', locals: { mod: @mod }
     .mod-downloads#downloads

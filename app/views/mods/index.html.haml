@@ -21,7 +21,7 @@
         .mod-subtitle
           - mod.categories.each do |category|
             = category_tag_link category
-        .mod-summary.highlight-query= mod.summary
+        .mod-summary.highlight-query= simple_format mod.summary
       .mod-links
         - if mod.forum_url.present?
           - if mod.forum_post
