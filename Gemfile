@@ -1,5 +1,5 @@
 source 'https://rubygems.org'
-source 'http://rails-assets.org'
+# source 'http://rails-assets.org'
 
 ruby "2.1.5"
 
