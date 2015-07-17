@@ -7,9 +7,10 @@ ruby "2.1.5"
 ########################
 
 gem 'rails', '~> 4.1.12'  # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'sqlite3'             # Use sqlite3 as the database for Active Record
+# gem 'sqlite3'             # Use sqlite3 as the database for Active Record
 gem 'unicorn'             # Use unicorn as the app server
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw]
+gem 'pg'
 
 # Assets
 ########################

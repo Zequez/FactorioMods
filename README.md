@@ -26,6 +26,11 @@ If you want to contribute you'll probably need to run it locally
 ```bash
 git clone https://github.com/Zequez/FactorioMods
 bundle
+```
+
+At this point you'll need to configure a Postgres server.
+
+```bash
 rake db:setup
 rake fake_data
 ```

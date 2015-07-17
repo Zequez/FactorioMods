@@ -57,16 +57,16 @@ class Mod < ActiveRecord::Base
 
   scope :filter_by_category, ->(category) { joins(:categories_mods).where(categories_mods: { category_id: category }) }
   scope :filter_by_game_version, ->(game_version) do
-    select('DISTINCT mods.*').joins(:mod_game_versions).where(mod_game_versions: { game_version: game_version })
+    joins(:mod_game_versions).where(mod_game_versions: { game_version: game_version })
   end
-  scope :sort_by_most_recent, -> { order('mods.last_release_date desc') }
+  scope :sort_by_most_recent, -> { order('mods.last_release_date desc NULLS LAST') }
   scope :sort_by_alpha, -> { order('LOWER(mods.name) asc') }
   scope :sort_by_forum_comments, -> { order('mods.forum_comments_count desc') }
   scope :sort_by_downloads, -> { order('mods.downloads_count desc') }
-  scope :sort_by_popular, -> { includes(:forum_post).order('forum_posts.views_count desc') }
+  scope :sort_by_popular, -> { includes(:forum_post).order('forum_posts.views_count desc NULLS LAST') }
 
   scope :filter_by_search_query, ->(query) do
-    where('mods.name LIKE ? OR mods.summary LIKE ? OR mods.description LIKE ?', "%#{query}%", "%#{query}%", "%#{query}%")
+    where('mods.name ILIKE ? OR mods.summary ILIKE ? OR mods.description ILIKE ?', "%#{query}%", "%#{query}%", "%#{query}%")
   end
 
   # def self.filter_by_search_query(query)
@@ -207,11 +207,11 @@ class Mod < ActiveRecord::Base
   end
 
   def latest_version
-    versions[-1]
+    versions[0]
   end
 
   def second_latest_version
-    versions[-2]
+    versions[1]
   end
 
   def game_versions_string

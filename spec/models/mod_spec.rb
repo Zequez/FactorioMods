@@ -294,9 +294,7 @@ RSpec.describe Mod, :type => :model do
           gv2 = create :game_version
           gv3 = create :game_version
           mv1.game_versions = [gv1, gv2, gv3]
-          L ModGameVersion.all
           mv1.game_versions = [gv1]
-          L ModGameVersion.all
           mod = Mod.first
 
           expect(mod.game_versions_string).to eq "#{gv1.number}"
@@ -306,9 +304,9 @@ RSpec.describe Mod, :type => :model do
 
     describe '#latest_version' do
       it 'returns latest mod version' do
-        mv1 = create :mod_version, mod: mod, sort_order: 1
-        mv2 = create :mod_version, mod: mod, sort_order: 2
-        mv3 = create :mod_version, mod: mod, sort_order: 3
+        mv1 = create :mod_version, mod: mod, released_at: 3.years.ago
+        mv2 = create :mod_version, mod: mod, released_at: 2.months.ago
+        mv3 = create :mod_version, mod: mod, released_at: 1.day.ago
         mod.reload
         expect(mod.latest_version).to eq mv3
       end
@@ -322,9 +320,9 @@ RSpec.describe Mod, :type => :model do
 
     describe '#second_latest_version' do
       it 'returns second latest mod version' do
-        mv1 = create :mod_version, mod: mod, sort_order: 1
-        mv2 = create :mod_version, mod: mod, sort_order: 2
-        mv3 = create :mod_version, mod: mod, sort_order: 3
+        mv1 = create :mod_version, mod: mod, released_at: 3.days.ago
+        mv2 = create :mod_version, mod: mod, released_at: 2.days.ago
+        mv3 = create :mod_version, mod: mod, released_at: 1.day.ago
         mod.reload
         expect(mod.second_latest_version).to eq mv2
       end

@@ -11,7 +11,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150714090306) do
+ActiveRecord::Schema.define(version: 20150717091318) do
+
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
 
   create_table "active_admin_comments", force: true do |t|
     t.string   "namespace"
@@ -24,9 +27,9 @@ ActiveRecord::Schema.define(version: 20150714090306) do
     t.datetime "updated_at"
   end
 
-  add_index "active_admin_comments", ["author_type", "author_id"], name: "index_active_admin_comments_on_author_type_and_author_id"
-  add_index "active_admin_comments", ["namespace"], name: "index_active_admin_comments_on_namespace"
-  add_index "active_admin_comments", ["resource_type", "resource_id"], name: "index_active_admin_comments_on_resource_type_and_resource_id"
+  add_index "active_admin_comments", ["author_type", "author_id"], name: "index_active_admin_comments_on_author_type_and_author_id", using: :btree
+  add_index "active_admin_comments", ["namespace"], name: "index_active_admin_comments_on_namespace", using: :btree
+  add_index "active_admin_comments", ["resource_type", "resource_id"], name: "index_active_admin_comments_on_resource_type_and_resource_id", using: :btree
 
   create_table "categories", force: true do |t|
     t.string   "name"
@@ -46,8 +49,8 @@ ActiveRecord::Schema.define(version: 20150714090306) do
     t.integer "category_id"
   end
 
-  add_index "categories_mods", ["category_id"], name: "index_categories_mods_on_category_id"
-  add_index "categories_mods", ["mod_id"], name: "index_categories_mods_on_mod_id"
+  add_index "categories_mods", ["category_id"], name: "index_categories_mods_on_category_id", using: :btree
+  add_index "categories_mods", ["mod_id"], name: "index_categories_mods_on_mod_id", using: :btree
 
   create_table "downloads", force: true do |t|
     t.integer  "mod_file_id"
@@ -55,7 +58,7 @@ ActiveRecord::Schema.define(version: 20150714090306) do
     t.datetime "created_at"
   end
 
-  add_index "downloads", ["mod_file_id"], name: "index_downloads_on_mod_file_id"
+  add_index "downloads", ["mod_file_id"], name: "index_downloads_on_mod_file_id", using: :btree
 
   create_table "favorites", force: true do |t|
     t.integer  "user_id"
@@ -63,8 +66,8 @@ ActiveRecord::Schema.define(version: 20150714090306) do
     t.datetime "created_at"
   end
 
-  add_index "favorites", ["mod_id"], name: "index_favorites_on_mod_id"
-  add_index "favorites", ["user_id"], name: "index_favorites_on_user_id"
+  add_index "favorites", ["mod_id"], name: "index_favorites_on_mod_id", using: :btree
+  add_index "favorites", ["user_id"], name: "index_favorites_on_user_id", using: :btree
 
   create_table "forum_posts", force: true do |t|
     t.integer  "comments_count", default: 0,     null: false
@@ -83,8 +86,8 @@ ActiveRecord::Schema.define(version: 20150714090306) do
     t.boolean  "not_a_mod",      default: false
   end
 
-  add_index "forum_posts", ["mod_id"], name: "index_forum_posts_on_mod_id"
-  add_index "forum_posts", ["post_number"], name: "index_forum_posts_on_post_number"
+  add_index "forum_posts", ["mod_id"], name: "index_forum_posts_on_mod_id", using: :btree
+  add_index "forum_posts", ["post_number"], name: "index_forum_posts_on_post_number", using: :btree
 
   create_table "game_versions", force: true do |t|
     t.string   "number"
@@ -96,15 +99,15 @@ ActiveRecord::Schema.define(version: 20150714090306) do
     t.integer  "game_id"
   end
 
-  add_index "game_versions", ["game_id"], name: "index_game_versions_on_game_id"
+  add_index "game_versions", ["game_id"], name: "index_game_versions_on_game_id", using: :btree
 
   create_table "game_versions_mods", force: true do |t|
     t.integer "game_version_id"
     t.integer "mod_id"
   end
 
-  add_index "game_versions_mods", ["game_version_id"], name: "index_game_versions_mods_on_game_version_id"
-  add_index "game_versions_mods", ["mod_id"], name: "index_game_versions_mods_on_mod_id"
+  add_index "game_versions_mods", ["game_version_id"], name: "index_game_versions_mods_on_game_version_id", using: :btree
+  add_index "game_versions_mods", ["mod_id"], name: "index_game_versions_mods_on_mod_id", using: :btree
 
   create_table "games", force: true do |t|
     t.string   "name"
@@ -125,8 +128,8 @@ ActiveRecord::Schema.define(version: 20150714090306) do
     t.integer  "sort_order",         default: 0, null: false
   end
 
-  add_index "mod_assets", ["mod_id"], name: "index_mod_assets_on_mod_id"
-  add_index "mod_assets", ["mod_version_id"], name: "index_mod_assets_on_mod_version_id"
+  add_index "mod_assets", ["mod_id"], name: "index_mod_assets_on_mod_id", using: :btree
+  add_index "mod_assets", ["mod_version_id"], name: "index_mod_assets_on_mod_version_id", using: :btree
 
   create_table "mod_files", force: true do |t|
     t.string   "name"
@@ -143,8 +146,8 @@ ActiveRecord::Schema.define(version: 20150714090306) do
     t.string   "download_url"
   end
 
-  add_index "mod_files", ["mod_id"], name: "index_mod_files_on_mod_id"
-  add_index "mod_files", ["mod_version_id"], name: "index_mod_files_on_mod_version_id"
+  add_index "mod_files", ["mod_id"], name: "index_mod_files_on_mod_id", using: :btree
+  add_index "mod_files", ["mod_version_id"], name: "index_mod_files_on_mod_version_id", using: :btree
 
   create_table "mod_game_versions", force: true do |t|
     t.integer "game_version_id"
@@ -152,9 +155,9 @@ ActiveRecord::Schema.define(version: 20150714090306) do
     t.integer "mod_id"
   end
 
-  add_index "mod_game_versions", ["game_version_id"], name: "index_mod_game_versions_on_game_version_id"
-  add_index "mod_game_versions", ["mod_id"], name: "index_mod_game_versions_on_mod_id"
-  add_index "mod_game_versions", ["mod_version_id"], name: "index_mod_game_versions_on_mod_version_id"
+  add_index "mod_game_versions", ["game_version_id"], name: "index_mod_game_versions_on_game_version_id", using: :btree
+  add_index "mod_game_versions", ["mod_id"], name: "index_mod_game_versions_on_mod_id", using: :btree
+  add_index "mod_game_versions", ["mod_version_id"], name: "index_mod_game_versions_on_mod_version_id", using: :btree
 
   create_table "mod_versions", force: true do |t|
     t.integer  "mod_id"
@@ -165,7 +168,7 @@ ActiveRecord::Schema.define(version: 20150714090306) do
     t.string   "precise_game_versions_string"
   end
 
-  add_index "mod_versions", ["mod_id"], name: "index_mod_versions_on_mod_id"
+  add_index "mod_versions", ["mod_id"], name: "index_mod_versions_on_mod_id", using: :btree
 
   create_table "mods", force: true do |t|
     t.string   "name"
@@ -174,21 +177,21 @@ ActiveRecord::Schema.define(version: 20150714090306) do
     t.datetime "first_version_date"
     t.datetime "last_version_date"
     t.string   "github"
-    t.integer  "favorites_count",                  default: 0, null: false
-    t.integer  "comments_count",                   default: 0, null: false
+    t.integer  "favorites_count",      default: 0, null: false
+    t.integer  "comments_count",       default: 0, null: false
     t.string   "license"
     t.string   "license_url"
     t.string   "official_url"
     t.string   "forum_post_url"
-    t.integer  "forum_comments_count", limit: 255
-    t.integer  "downloads_count",                  default: 0, null: false
-    t.integer  "visits_count",                     default: 0, null: false
+    t.integer  "forum_comments_count"
+    t.integer  "downloads_count",      default: 0, null: false
+    t.integer  "visits_count",         default: 0, null: false
     t.integer  "category_id"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.text     "description"
     t.string   "slug"
-    t.string   "summary"
+    t.text     "summary"
     t.string   "game_versions_string"
     t.text     "description_html"
     t.integer  "forum_post_id"
@@ -200,10 +203,10 @@ ActiveRecord::Schema.define(version: 20150714090306) do
     t.datetime "last_release_date"
   end
 
-  add_index "mods", ["author_id"], name: "index_mods_on_author_id"
-  add_index "mods", ["category_id"], name: "index_mods_on_category_id"
-  add_index "mods", ["forum_post_id"], name: "index_mods_on_forum_post_id"
-  add_index "mods", ["last_version_id"], name: "index_mods_on_last_version_id"
+  add_index "mods", ["author_id"], name: "index_mods_on_author_id", using: :btree
+  add_index "mods", ["category_id"], name: "index_mods_on_category_id", using: :btree
+  add_index "mods", ["forum_post_id"], name: "index_mods_on_forum_post_id", using: :btree
+  add_index "mods", ["last_version_id"], name: "index_mods_on_last_version_id", using: :btree
 
   create_table "mods_tags", force: true do |t|
     t.integer  "mod_id"
@@ -211,8 +214,8 @@ ActiveRecord::Schema.define(version: 20150714090306) do
     t.datetime "created_at"
   end
 
-  add_index "mods_tags", ["mod_id"], name: "index_mods_tags_on_mod_id"
-  add_index "mods_tags", ["tag_id"], name: "index_mods_tags_on_tag_id"
+  add_index "mods_tags", ["mod_id"], name: "index_mods_tags_on_mod_id", using: :btree
+  add_index "mods_tags", ["tag_id"], name: "index_mods_tags_on_tag_id", using: :btree
 
   create_table "search_terms", force: true do |t|
     t.string   "query"
@@ -248,8 +251,8 @@ ActiveRecord::Schema.define(version: 20150714090306) do
     t.string   "slug"
   end
 
-  add_index "users", ["email"], name: "index_users_on_email", unique: true
-  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+  add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
+  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
   create_table "visits", force: true do |t|
     t.integer  "mod_id"
@@ -257,6 +260,6 @@ ActiveRecord::Schema.define(version: 20150714090306) do
     t.datetime "created_at"
   end
 
-  add_index "visits", ["mod_id"], name: "index_visits_on_mod_id"
+  add_index "visits", ["mod_id"], name: "index_visits_on_mod_id", using: :btree
 
 end
