@@ -27,3 +27,5 @@ factorio_mods.sublime-project
 factorio_mods.sublime-workspace
 
 .DS_Store
+
+config/database.yml
