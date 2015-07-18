@@ -1,4 +1,6 @@
-if Rails.env.development?
+if Rails.env.production?
+  def L(*a); end
+else
   require 'custom_logger'
   logfile = File.open("#{Rails.root}/log/custom.log", 'a')  # create log file
   logfile.sync = true  # automatically flushes data to file
@@ -7,6 +9,4 @@ if Rails.env.development?
   def L(msg)
     LL.debug msg
   end
-else
-  def L(*a); end
 end
