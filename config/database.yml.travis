@@ -1,0 +1,6 @@
+# Database config for Travis-CI
+test:
+  adapter: postgresql
+  encoding: unicode
+  database: factorio_mods_test
+  pool: 5
