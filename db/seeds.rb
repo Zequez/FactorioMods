@@ -1,4 +1,4 @@
-User.create!(email: 'admin@admin.com', name: 'admin', password: '12345678', password_confirmation: '12345678', is_admin: true)
+User.create!(email: 'admin@admin.com', name: 'Administrator', password: '12345678', password_confirmation: '12345678', is_admin: true)
 
 Category.create! name: 'Uncategorized',     icon_class: 'fa fa-question-circle'
 Category.create! name: 'Sound',             icon_class: 'fa fa-headphones'
