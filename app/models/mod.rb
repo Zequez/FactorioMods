@@ -13,11 +13,9 @@ class Mod < ActiveRecord::Base
   def slug_candidates
     [
       :name,
-      [:name, :author_name]
+      [:name, 'by', :author_name]
     ]
   end
-
-  FORBIDDEN_NAMES = %q(new create edit update destroy)
 
   IMGUR_IMAGE_URLS = [
     %r{\Ahttps?://imgur\.com/(\w+)\Z},
@@ -120,21 +118,20 @@ class Mod < ActiveRecord::Base
   ### Validations
   #################
 
-  validates :name, presence: true
+  validates :name, presence: true, length: { maximum: 50  }
   validates :categories, presence: true
   validates :official_url, allow_blank: true, format: { with: /\Ahttps?:\/\/.*\Z/ }
   validates :license_url, allow_blank: true, format: { with: /\Ahttps?:\/\/.*\Z/ }
   validates :forum_url, allow_blank: true, format: { with: /\Ahttps?:\/\/.*\Z/ }
+  validates :summary, length: { maximum: 1000 }
+  validates :slug, uniqueness: true
 
-  # name uniqueness with link
-  # validate do
-  #   if ( mod = Mod.where(name: name).first )
-  #     if mod.id != id
-  #       url = Rails.application.routes.url_helpers.mod_path mod
-  #       self.errors[:name].push I18n.t('activerecord.errors.models.mod.attributes.name.taken_with_link', url: url)
-  #     end
-  #   end
-  # end
+  # #categories.count limit
+  validate do
+    if categories.size > 8
+      errors[:categories].push I18n.t('activerecord.errors.models.mod.attributes.categories.too_long')
+    end
+  end
 
   # Github URL
   validate do

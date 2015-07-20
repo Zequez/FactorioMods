@@ -60,6 +60,8 @@ RSpec.describe ModFile, :type => :model do
   end
 
   describe 'validation' do
+    it { should validate_attachment_size(:attachment).less_than(20.megabytes) }
+
     context 'an image instead of a zip file' do
       it 'should not be valid' do
         file.attachment = fixture('test.jpg')
@@ -74,38 +76,28 @@ RSpec.describe ModFile, :type => :model do
       end
     end
 
-    context 'trying to upload a gigantic file' do 
-      it 'should be invalid' do
-
-      end
+    it 'should be valid withoua a #mod_version' do
+      file.mod_version = nil
+      file.name = nil
+      expect(file).to be_valid
+      expect(file.name).to eq nil
+      expect(file.delegated_name).to eq nil
     end
 
-    context 'empty #mod_version' do
-      it 'should be valid' do
-        file.mod_version = nil
-        file.name = nil
-        expect(file).to be_valid
-        expect(file.name).to eq nil
-        expect(file.delegated_name).to eq nil
-      end
+    it 'should be invalid with no #attachment or #download_url' do
+      file.attachment = nil
+      file.download_url = nil
+      expect(file).to be_invalid
     end
 
-    context 'no #attachment nor #download_url' do
-      it 'should be invalid' do
-        file.attachment = nil
-        file.download_url = nil
-        expect(file).to be_invalid
-      end
+    it 'should be valid with no #attachment but with #download_url' do
+      file = build :mod_file, attachment: nil, download_url: 'https://github.com/Dysoch/DyTech/archive/v1.1.3-core.zip'
+      expect(file).to be_valid
     end
 
-    context 'no #attachment but with #download_url' do
-      subject(:file) { build :mod_file, attachment: nil, download_url: 'https://github.com/Dysoch/DyTech/archive/v1.1.3-core.zip' }
-      it { expect(file).to be_valid }
-    end
-
-    context 'download_url is not an URL' do
-      subject(:file) { build :mod_file, download_url: 'javascript:alert("D:");' }
-      it { expect(file).to be_invalid }
+    it 'should be invalid if the #download_url is not an URL' do
+      file = build :mod_file, download_url: 'javascript:alert("D:");'
+      expect(file).to be_invalid
     end
   end
 end

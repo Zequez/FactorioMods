@@ -9,7 +9,7 @@ class CategoriesSelectInput < Formtastic::Inputs::SelectInput
     # t1 = Time.now
     custom_collection = raw_collection.map { |c| ["|#{c.icon_class}| #{c.name}", c.id] }
     result2 = builder.select(input_name, custom_collection, input_options, input_html_options)
-    .gsub(/>\|([^|]+)\|/, ' class="\1">').html_safe
+    .gsub(/>\|([^|]*)\|/, ' class="\1">').html_safe
     # t2 = Time.now
 
     # icons = Hash[raw_collection.map{ |c| [c.id.to_s, "#{c.id}\" class=\"#{c.icon_class}"] }]

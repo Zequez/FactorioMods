@@ -6,6 +6,7 @@ require 'rspec/rails'
 require 'capybara/rspec'
 require 'webmock/rspec'
 require 'vcr'
+require 'paperclip/matchers'
 
 WebMock.disable_net_connect!(allow_localhost: true)
 # Capybara.default_driver = :selenium_phantomjs
@@ -24,6 +25,9 @@ Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| require f }
 ActiveRecord::Migration.maintain_test_schema!
 
 VCR.configure do |config|
+  config.ignore_request do |request|
+    URI(request.uri).host == '127.0.0.1'
+  end
   config.cassette_library_dir = "#{::Rails.root}/spec/fixtures/vcr_cassettes"
   config.hook_into :webmock # or :fakeweb
   config.configure_rspec_metadata!
@@ -36,6 +40,8 @@ end
 RSpec.configure do |config|
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
   config.fixture_path = "#{::Rails.root}/spec/fixtures"
+
+  config.include Paperclip::Shoulda::Matchers
 
   # If you're not using ActiveRecord, or you'd prefer not to run each of your
   # examples within a transaction, remove the following line or assign false

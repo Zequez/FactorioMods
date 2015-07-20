@@ -31,12 +31,19 @@ en:
               invalid: "Invalid categories: %{categories}"
             imgur:
               invalid: "Invalid Imgur URL or ID. Remember it has to be a single picture, not an album."
+            categories:
+              too_long: "Too many categories, please use less than 8 categories"
         mod_file:
           attributes:
             download_url:
               presence: "You need this, or an attachment, or both"
             attachment:
               presence: "You need this, or a download URL, or both"
+              
+        mod_version:
+          attributes:
+            released_at:
+              in_the_future: 'The release date should be in the past'
 
   formtastic:
     labels:

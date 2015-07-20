@@ -24,19 +24,28 @@ class ModVersion < ActiveRecord::Base
   ### Validations
   #################
 
-  validates :number, presence: true
-  validates :released_at, presence: true
+  validates :number, presence: true,
+                     length: { maximum: 20 },
+                     format: { with: /\A[a-z0-9\-_.]+\Z/ }
   validates :mod, presence: true
 
-  # validates :game_versions, presence: true
-  validate :validate_non_consecutive_game_versions
-  def validate_non_consecutive_game_versions
+  # validates #game_versions to be consecutive
+  validate do
     if game_versions.size > 1
       all_game_versions = GameVersion.sort_by_older_to_newer
       start = all_game_versions.find_index game_versions.first
 
       if all_game_versions[start, game_versions.size] != game_versions
-        self.errors[:game_versions].push 'should be consecutive'
+        errors[:game_versions].push 'should be consecutive'
+      end
+    end
+  end
+
+  # validates #released_at not in the future
+  validate do
+    if released_at.present? # allows blank
+      if released_at > 1.hour.since
+        errors[:released_at].push I18n.t('activerecord.errors.models.mod_version.attributes.released_at.in_the_future')
       end
     end
   end

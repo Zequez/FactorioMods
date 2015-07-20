@@ -7,7 +7,9 @@ class ModFile < ActiveRecord::Base
                                     :content_type => ['application/zip', 'application/x-zip-compressed', 'application/octet-stream']
 
   validates :attachment, presence: { :if => 'download_url.blank?' }
-  validates :download_url, allow_blank: { :if => 'attachment.present?' }, format: { with: /\Ahttps?:\/\/.*\Z/ }
+  validates_attachment_size :attachment, less_than: 20.megabytes
+  validates :download_url, allow_blank: { :if => 'attachment.present?' },
+                           format: { with: /\Ahttps?:\/\/.*\Z/ }
 
   before_save do
     self.mod = mod_version.mod if mod_version

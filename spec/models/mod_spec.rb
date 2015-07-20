@@ -51,7 +51,7 @@ RSpec.describe Mod, :type => :model do
     it { should respond_to :favorites_count }
 
     describe 'validation' do
-      it 'should be valid by default' do
+      it 'should be valid by default from the factory' do
         mod = build :mod
         expect(mod).to be_valid
       end
@@ -76,23 +76,55 @@ RSpec.describe Mod, :type => :model do
         expect(mod).to be_invalid
       end
 
+      it 'should be valid with a name with 50 characters or less' do
+        mod = build :mod, name: 'a'*50
+        expect(mod).to be_valid
+      end
+
+      it 'should be invalid with a name with more than 50 characters' do
+        mod = build :mod, name: 'a'*51
+        expect(mod).to be_invalid
+      end
+
       it 'should be valid with the same name as an existing mod' do
         mod1 = create :mod, name: 'PotatoMod'
         mod2 = build :mod, name: 'PotatoMod'
         expect(mod2).to be_valid
       end
 
-      it 'should use the author name on the slug when the mod has the same name' do
-        mod1 = create :mod, name: 'PotatoMod'
-        mod2 = build :mod, name: 'PotatoMod', author_name: 'yeahYeah'
-        mod2.save!
-        expect(mod2.slug).to eq 'potatomod-yeahyeah'
-      end
-
       it 'should be invalid without category' do
         mod = build :mod
         mod.categories = []
         expect(mod).to be_invalid
+      end
+
+      it 'should be valid with 8 categories or less' do
+        categories = 8.times.map{ create :category }
+        mod.categories = categories
+        expect(mod).to be_valid
+      end
+
+      it 'should be invalid with more than 8 categories' do
+        categories = 9.times.map{ create :category }
+        mod.categories = categories
+        expect(mod).to be_invalid
+      end
+
+      it 'should be valid with a 1000 letters or shorter summary' do
+        mod.summary = 'a'*1000
+        expect(mod).to be_valid
+      end
+
+      it 'should be invalid with a summary longer than 1000 letters' do
+        mod.summary = 'a'*1001
+        expect(mod).to be_invalid
+      end
+
+      it 'should be invalid with the same slug as another mod' do
+        mod1 = create :mod, slug: 'potato'
+        mod2 = build :mod, slug: 'potato', name: 'apple' # We are forcing this slug
+        expect(mod2).to be_invalid
+        expect(mod2.errors[:slug].size).to eq 1
       end
     end
 
@@ -129,8 +161,22 @@ RSpec.describe Mod, :type => :model do
     end
 
     describe '#slug' do
-      subject { create :mod, name: 'Banana split canaleta cósmica "123" pepep' }
-      it { expect(subject.slug).to eq 'banana-split-canaleta-cosmica-123-pepep' }
+      it 'should slug all characters from the name' do
+        mod = create :mod, name: 'Banana split canaleta cósmica "123" pepep'
+        expect(mod.slug).to eq 'banana-split-canaleta-cosmica-123-pepep'
+      end
+
+      it 'should use the author name as the second part of the slug when clashing' do
+        mod1 = create :mod, name: 'Potato!'
+        mod2 = create :mod, name: 'Potato?', author_name: 'Salad'
+        expect(mod1.slug).to eq 'potato'
+        expect(mod2.slug).to eq 'potato-by-salad'
+      end
+
+      it 'should not allow the "new" slug as it clashes with the controller action' do
+        mod = create :mod, name: 'New!', author_name: 'Potato'
+        expect(mod.slug).to eq 'new-by-potato'
+      end
     end
 
     describe '#github' do
@@ -168,7 +214,7 @@ RSpec.describe Mod, :type => :model do
         end
       end
 
-      describe '#github_url' do 
+      describe '#github_url' do
         it 'should use the path to generate a URL' do
           mod.github = 'zequez/something'
           expect(mod.github_url).to eq 'http://github.com/zequez/something'

@@ -2,49 +2,129 @@ require 'rails_helper'
 include Warden::Test::Helpers
 
 feature 'Modder creates a new mod' do
-  scenario 'non-user visits the new mod page' do
-    visit '/mods/new'
-
-    expect(page.status_code).to eq 401
-  end
-
-  scenario 'user visits new mod page' do
-    sign_in_dev
-    visit '/mods/new'
-
-    expect(page).to have_content 'Create new mod'
-  end
-
-  # scenario 'user submits an empty form' do
-  #   sign_in
-  #   visit '/mods/new'
-  #   submit_form
-  #   expect(page).to have_css '#mod_name_input .inline-errors'
-  #   expect(page).to have_css '#mod_category_input .inline-errors'
-  #   expect(current_path).to eq '/mods'
-  # end
-
-  scenario 'user submits a barebones form' do
-    sign_in_dev
+  before :each do
     create_category 'Terrain'
-    visit '/mods/new'
-    fill_in 'mod_name', with: 'Super Mod'
-    select 'Terrain', from: 'Categories'
-    fill_in_first_version_and_file
-    submit_form
-    expect(current_path).to eq '/mods/super-mod'
-    mod = Mod.first
-    expect(mod.name).to eq 'Super Mod'
-    expect(mod.categories).to match_array [@category]
-    expect(mod.author).to eq @user
+  end
+
+  describe 'authentication' do
+    scenario 'non-user visits the new mod page' do
+      visit '/mods/new'
+
+      expect(page.status_code).to eq 401
+    end
+
+    scenario 'user visits new mod page' do
+      sign_in_dev
+      visit '/mods/new'
+
+      expect(page).to have_content 'Create new mod'
+    end
+  end
+
+  describe 'minimum values' do
+    scenario 'user submits an empty form' do
+      sign_in_dev
+      visit '/mods/new'
+      submit_form
+      expect(page).to have_css '#mod_name_input .inline-errors'
+      expect(page).to have_css '#mod_categories_input .inline-errors'
+      expect(current_path).to eq '/mods'
+    end
+
+    scenario 'user submits a barebones form' do
+      sign_in_dev
+      visit '/mods/new'
+      fill_in 'mod_name', with: 'Super Mod'
+      select 'Terrain', from: 'Categories'
+      fill_in_first_version_and_file
+      submit_form
+      expect(current_path).to eq '/mods/super-mod'
+      mod = Mod.first
+      expect(mod.name).to eq 'Super Mod'
+      expect(mod.categories).to match_array [@category]
+      expect(mod.author).to eq @user
+    end
+
+    scenario 'user submits a form without any mod version', js: true do
+      sign_in_dev
+      visit '/mods/new'
+      fill_in 'mod_name', with: 'Super Mod'
+      select 'Terrain', from: 'Categories'
+      first('.remove_fields').click
+      submit_form
+      expect(current_path).to eq '/mods/super-mod'
+      mod = Mod.first
+      expect(mod.name).to eq 'Super Mod'
+      expect(mod.categories).to match_array [@category]
+      expect(mod.author).to eq @user
+    end
+  end
+
+  describe 'categories validations' do
+    scenario 'user submits a mod with more than 8 categories' do
+      9.times{ |i| create_category "Cat#{i}" }
+      sign_in_dev
+      visit '/mods/new'
+      fill_in 'mod_name', with: 'ModName'
+      9.times{ |i| select "Cat#{i}", from: 'Categories' }
+      fill_in_first_version_and_file
+      submit_form
+      expect(current_path).to eq '/mods'
+      expect(page).to have_css '#mod_categories_input .inline-errors'
+    end
+
+    scenario 'user submits a mod with less than 8 categories' do
+      9.times{ |i| create_category "Cat#{i}" }
+      sign_in_dev
+      visit '/mods/new'
+      fill_in 'mod_name', with: 'ModName'
+      7.times{ |i| select "Cat#{i}", from: 'Categories' }
+      fill_in_first_version_and_file
+      submit_form
+      expect(current_path).to eq '/mods/modname'
+    end
+  end
+
+  describe 'mod_version validation' do
+    scenario 'user submits a mod with a mod_version with strange characters' do
+      sign_in_dev
+      visit '/mods/new'
+      fill_in 'mod_name', with: 'ModName'
+      select 'Terrain', from: 'Categories'
+      within('.mod-version:nth-child(1)') do
+        fill_in 'Number', with: '123 324$#OE'
+        fill_in 'Release day', with: 3.weeks.ago
+        within('.mod-version-file:nth-child(1)') do
+          fill_in 'Release download URL', with: 'http://github.com/release/something.zip'
+        end
+      end
+      submit_form
+      expect(current_path).to eq '/mods'
+      expect(page).to have_css '#mod_versions_attributes_0_number_input .inline-errors'
+    end
+
+    scenario 'user submits a mod with a mod_version with a perfectly fine number' do
+      sign_in_dev
+      visit '/mods/new'
+      fill_in 'mod_name', with: 'ModName'
+      select 'Terrain', from: 'Categories'
+      within('.mod-version:nth-child(1)') do
+        fill_in 'Number', with: '1.2.3_5-potato'
+        fill_in 'Release day', with: 3.weeks.ago
+        within('.mod-version-file:nth-child(1)') do
+          fill_in 'Release download URL', with: 'http://github.com/release/something.zip'
+        end
+      end
+      submit_form
+      expect(current_path).to eq '/mods/modname'
+    end
   end
 
   scenario 'user submits a mod with all the data but no versions' do
     sign_in_dev
-    create_category 'Potato category'
     visit '/mods/new'
     fill_in 'mod_name', with: 'Mah super mod'
-    select 'Potato category', from: 'Categories'
+    select 'Terrain', from: 'Categories'
     fill_in 'Github', with: 'http://github.com/factorio-mods/mah-super-mod'
     fill_in 'Forum post URL', with: 'http://www.factorioforums.com/forum/viewtopic.php?f=14&t=5971&sid=1786856d6a687e92f6a12ad9425aeb9e'
     fill_in 'Official URL', with: 'http://www.factorioforums.com/'
@@ -54,7 +134,7 @@ feature 'Modder creates a new mod' do
     expect(current_path).to eq '/mods/mah-super-mod'
     mod = Mod.first
     expect(mod.name).to eq 'Mah super mod'
-    expect(mod.categories).to match_array [@category]
+    expect(mod.categories).to match_array [Category.first]
     expect(mod.github).to eq 'factorio-mods/mah-super-mod'
     expect(mod.forum_url).to eq 'http://www.factorioforums.com/forum/viewtopic.php?f=14&t=5971&sid=1786856d6a687e92f6a12ad9425aeb9e'
     expect(mod.official_url).to eq 'http://www.factorioforums.com/'
@@ -65,13 +145,12 @@ feature 'Modder creates a new mod' do
 
   scenario 'user submits mod with a version and file' do
     sign_in_dev
-    create_category 'Potato'
     create :game_version, number: '1.1.x'
     create :game_version, number: '1.2.x'
     attachment = File.new(Rails.root.join('spec', 'fixtures', 'test.zip'))
     visit '/mods/new'
     fill_in 'mod_name', with: 'Valid mod name'
-    select 'Potato', from: 'Categories'
+    select 'Terrain', from: 'Categories'
     within('.mod-version:nth-child(1)') do
       fill_in 'Number', with: '123'
       fill_in 'Release day', with: '2014-11-09'  
@@ -95,10 +174,9 @@ feature 'Modder creates a new mod' do
 
   scenario 'admin user submits a mod selecting an author' do
     sign_in_admin
-    create_category 'Potato'
     visit '/mods/new'
     fill_in 'mod_name', with: 'Mod Name'
-    select 'Potato', from: 'Categories'
+    select 'Terrain', from: 'Categories'
     fill_in 'Author name', with: 'MangoDev'
     fill_in_first_version_and_file
     submit_form
@@ -109,7 +187,6 @@ feature 'Modder creates a new mod' do
 
   scenario 'admin tries to create a mod from the forum_posts dashboard, so it has pre-filled attributes' do
     sign_in_admin
-    create_category 'Potato'
     released_at = 5.days.ago
     forum_post = create :forum_post, title: '[0.11.x] Potato mod',
                                      author_name: 'SuperGuy', 
@@ -131,15 +208,14 @@ feature 'Modder creates a new mod' do
     sign_in_dev
     @user.name = 'yeah'
     @user.save!
-    create_category 'Potato'
-    mod = create :mod, name: 'SuperMod', categories: [@category]
+    mod = create :mod, name: 'SuperMod'
 
     visit "/mods/new"
     fill_in 'mod_name', with: 'SuperMod'
-    select 'Potato', from: 'Categories'
+    select 'Terrain', from: 'Categories'
     fill_in_first_version_and_file
     submit_form
-    expect(current_path).to eq '/mods/supermod-yeah'
+    expect(current_path).to eq '/mods/supermod-by-yeah'
   end
 
   def fill_in_first_version_and_file
