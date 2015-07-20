@@ -1,0 +1,11 @@
+language: ruby
+cache: bundler
+rvm:
+  - 2.1.5
+addons:
+  postgresql: "9.4"
+before_script:
+  - psql -c 'create database factorio_mods_test;' -U postgres
+  - cp config/database.yml.travis config/database.yml
+  - bundle exec rake db:schema:load db:seed
+script: bundle exec spring rspec

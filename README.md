@@ -1,4 +1,4 @@
-# Factorio Mods
+# Factorio Mods [![Build Status](https://travis-ci.org/Zequez/FactorioMods.svg)](https://travis-ci.org/Zequez/FactorioMods)
 
 [FactorioMods.com](http://factoriomods.com) it's an open
 source web app to host Factorio Mods, and make it easier for user and devs alike
