@@ -4,6 +4,8 @@
 source web app to host Factorio Mods, and make it easier for user and devs alike
 to share, find, download, and manage mods.
 
+[Trello board with tasks being worked, ideas, planning and stuff](https://trello.com/b/Ii5IHVxG/factoriomods). For bug report use the Github issues.
+
 ## Is FactorioMods a mod manager?
 
 No, FactorioMods it's not a mod manager, after you download the mods, you have to install them
