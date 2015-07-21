@@ -1,0 +1,13 @@
+- title t('.title')
+
+%h2= t('.header')
+
+%p= t('.mods_with_your_name')
+
+%ul
+  - resource.authored_mods.each do |mod|
+    %li= link_to mod.name, mod
+
+%p
+  :markdown
+    #{t('.verification')}
