@@ -58,7 +58,6 @@ class ModsController < ApplicationController
 
   def new
     @mod = Mod.new
-    @existing_authors_names = User.pluck(:name)
     mod_version = @mod.versions.build
     mod_file = mod_version.files.build
 
@@ -75,6 +74,8 @@ class ModsController < ApplicationController
       scraper.scrap
       # @mod.description = forum_post.markdown_content
     end
+
+    render_form
   end
 
   def create
@@ -82,14 +83,14 @@ class ModsController < ApplicationController
     if @mod.save
       redirect_to mod_url(@mod)
     else
-      render :new
+      render_form
     end
   end
 
   def edit
     @mod = Mod.find params[:id]
     @existing_authors_names = User.pluck(:name)
-    render :new
+    render_form
   end
 
   def update
@@ -97,11 +98,16 @@ class ModsController < ApplicationController
     if @mod.update current_user.is_admin? ? mod_params_admin : mod_params
       redirect_to mod_url(@mod)
     else
-      render :new
+      render_form
     end
   end
 
   private
+
+  def render_form
+    @existing_authors_names = User.pluck(:name)
+    render :new
+  end
 
   def mod_params
     params.require(:mod).permit(:name,
