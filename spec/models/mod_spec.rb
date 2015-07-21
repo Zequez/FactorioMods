@@ -449,6 +449,21 @@ RSpec.describe Mod, :type => :model do
         expect(mod.authors).to eq [u3, u2, u4]
       end
 
+      it 'should order them correctly' do
+        u1 = create :user, name: 'Apple'
+        u2 = create :user, name: 'Potato'
+        u3 = create :user, name: 'Orange'
+        u4 = create :user, name: 'Banana'
+        mod.authors_list = 'Orange,Potato,Banana'
+        mod.save!
+        mod = Mod.first
+        expect(mod.authors).to eq [u3, u2, u4]
+        mod.authors_list = 'Potato,Banana,Orange'
+        mod.save!
+        mod = Mod.first
+        expect(mod.authors).to eq [u2, u4, u3]
+      end
+
       it 'should work with random spaces everywhere' do
         u1 = create :user, name: 'Apple'
         u2 = create :user, name: 'Potato'

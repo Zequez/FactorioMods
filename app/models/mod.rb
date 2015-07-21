@@ -44,7 +44,7 @@ class Mod < ActiveRecord::Base
   has_many :game_versions, -> { uniq.sort_by_older_to_newer }, through: :mod_game_versions
   has_many :categories, through: :categories_mods
   has_many :categories_mods, dependent: :destroy
-  has_many :authors, through: :authors_mods, class_name: 'User'
+  has_many :authors, ->{ order('sort_order') } , through: :authors_mods, class_name: 'User'
   has_many :authors_mods, dependent: :destroy
 
   # has_one :latest_version, -> { sort_by_newer_to_older.limit(1) }, class_name: 'ModVersion'
@@ -123,7 +123,9 @@ class Mod < ActiveRecord::Base
     if authors_list.present?
       authors_names = authors_list.split(',').map(&:strip)
       authors_index = User.where('lower(name) IN (?)', authors_names.map(&:downcase)).index_by{ |user| user.name.downcase }
-      self.authors = authors_names.map{ |name| authors_index[name.downcase] || User.autogenerate(name) }
+      self.authors = @reordered_authors = authors_names.each_with_index.map do |name, i|
+        authors_index[name.downcase] || User.autogenerate(name: name)
+      end
     end
   end
 
@@ -140,6 +142,17 @@ class Mod < ActiveRecord::Base
       # the individual authors errors without any information
       # about the user
       # errors[:authors_list].concat errors[:authors]
+    end
+  end
+
+  # Set the #sort_order of the #authors_mods
+  # We cannot use self.authors because it you cannot change
+  # the order of the association
+  after_save do
+    if @reordered_authors
+      @reordered_authors.each_with_index do |author, i|
+        authors_mods.where(author: author).update_all(sort_order: i)
+      end
     end
   end
 

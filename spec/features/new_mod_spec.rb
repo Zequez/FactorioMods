@@ -218,6 +218,44 @@ feature 'Modder creates a new mod' do
     expect(current_path).to eq '/mods/supermod-by-yeah'
   end
 
+  scenario 'user submits a mod with valid names in the #authors_list' do
+    sign_in_dev
+    visit '/mods/new'
+    fill_in 'mod_name', with: 'SuperMod'
+    select 'Terrain', from: 'Categories'
+    fill_in 'mod_authors_list', with: 'Potato, SuperUser, Salad'
+    fill_in_first_version_and_file
+    submit_form
+    expect(current_path).to eq '/mods/supermod'
+    expect(Mod.first.authors.map(&:name)).to eq %w{Potato SuperUser Salad}
+  end
+
+  scenario 'user submits a mod with invalid names in the #authors_list' do
+    sign_in_dev
+    visit '/mods/new'
+    fill_in 'mod_name', with: 'SuperMod'
+    select 'Terrain', from: 'Categories'
+    fill_in 'mod_authors_list', with: 'Potato(), SuperUser, Salad'
+    fill_in_first_version_and_file
+    submit_form
+    expect(current_path).to eq '/mods'
+    expect(page).to have_css '#mod_authors_list_input .inline-errors'
+    expect(page).to have_content /Potato\(\) is invalid/
+  end
+
+  scenario 'user submits a mod too many authors in the #authors_list' do
+    sign_in_dev
+    visit '/mods/new'
+    fill_in 'mod_name', with: 'SuperMod'
+    select 'Terrain', from: 'Categories'
+    fill_in 'mod_authors_list', with: 'Potato, SuperUser, Salad, Tururu, Papapa, Aaaaa, Bbbbb, Ccccc, Ddddd'
+    fill_in_first_version_and_file
+    submit_form
+    expect(current_path).to eq '/mods'
+    expect(page).to have_css '#mod_authors_list_input .inline-errors'
+    expect(page).to have_content /too many/i
+  end
+
   def fill_in_first_version_and_file
     attachment = File.new(Rails.root.join('spec', 'fixtures', 'test.zip'))
     within('.mod-version:nth-child(1)') do

@@ -109,6 +109,7 @@ class ModsController < ApplicationController
                                 :forum_subforum_url,
                                 :summary,
                                 :imgur,
+                                :authors_list,
                                 category_ids: [],
                                 versions_attributes: [
                                   :id,
