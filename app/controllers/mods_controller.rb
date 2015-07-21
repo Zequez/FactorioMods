@@ -58,6 +58,7 @@ class ModsController < ApplicationController
 
   def new
     @mod = Mod.new
+    @existing_authors_names = User.pluck(:name)
     mod_version = @mod.versions.build
     mod_file = mod_version.files.build
 
@@ -87,6 +88,7 @@ class ModsController < ApplicationController
 
   def edit
     @mod = Mod.find params[:id]
+    @existing_authors_names = User.pluck(:name)
     render :new
   end
 

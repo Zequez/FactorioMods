@@ -15,3 +15,4 @@
 //= require nprogress
 //= require nprogress-turbolinks
 //= require mods
+//= require_tree ./inputs

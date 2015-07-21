@@ -69,3 +69,7 @@ en:
         imgur: "For an individual picture, not and album"
       mod_file:
         download_url: "Please use this instead of the attachment when possible, specially for large files"
+
+    placeholders:
+      mod:
+        authors_list: 'Author1, Author2, Author3, etc'
