@@ -40,7 +40,9 @@ en:
 
     mod_data_table:
       game_version: Factorio version
-      author: Author
+      authors:
+        one: Author
+        other: Authors
       first_version: First version
       last_version: Last version
       source: Source

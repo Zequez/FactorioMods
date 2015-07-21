@@ -41,11 +41,8 @@
           %span.mod-link(title='Last Factorio version this mod works with')
             = "v#{mod.game_versions_string}"
             = icon 'cog'
-        %span.mod-link{title: 'The awesome person behind this mod'}
-          - if mod.author
-            = link_to mod.author_name, mod.author
-          - else
-            = link_to mod.author_name, user_url(mod.author_name)
+        %span.mod-link{title: 'The awesome person/people behind this mod'}
+          = authors_links_list(mod)
           = icon 'user'
         -# %a.mod-link.mod-official-site{href: '#'}
         -#   Official mod site

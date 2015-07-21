@@ -3,8 +3,8 @@
     .data-name= t('.game_version')
     .data-value= if_na(@mod.game_versions_string)
   %li
-    .data-name= t('.author')
-    .data-value= if_na(@mod.author, nil, @mod.author_name) { link_to @mod.author_name, @mod.author }
+    .data-name= t('.authors', count: @mod.authors.size)
+    .data-value= authors_links_list(@mod)
   %li{class: ('wide' if @mod.has_versions?)}
     .data-name= t('.first_version')
     .data-value= if_na(@mod.has_versions?) { mod_release(@mod.versions.first) }

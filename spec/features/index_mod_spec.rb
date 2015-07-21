@@ -12,7 +12,6 @@ feature 'Display an index of mods in certain order' do
   end
 
   context 'with multiple mods' do
-
     before(:each) do
       create_mod 'SuperMod2', 2.days.ago, 1000
       create_mod 'SuperMod4', 5.days.ago, 800
@@ -55,6 +54,39 @@ feature 'Display an index of mods in certain order' do
       create_mod 'SuperMod2', 1.days.ago, 100
       visit '/most-popular'
       expect(page.all('.mod-title').map(&:text)).to eq %w{SuperMod2 SuperMod1}
+    end
+  end
+
+  context 'with many authors' do
+    scenario 'Mod with multiple authors and no owner' do
+      authors = 5.times.map{ |i| create :user, name: "Au#{i}" }
+      create :mod, name: 'SuperMod', authors: authors
+      visit '/'
+      expect(page).to have_content /Au0.*Au1.*Au2.*Au3.*Au4/
+      expect(page).to have_link 'Au0', '/users/au0'
+      expect(page).to have_link 'Au1', '/users/au1'
+      expect(page).to have_link 'Au2', '/users/au2'
+      expect(page).to have_link 'Au3', '/users/au3'
+      expect(page).to have_link 'Au4', '/users/au4'
+    end
+
+    scenario 'Mod with multiple authors and one of the authors is the owner' do
+      authors = 5.times.map{ |i| create :user, name: "Au#{i}" }
+      create :mod, name: 'SuperMod', authors: authors, owner: authors[1]
+      visit '/'
+      expect(page).to have_content /Au0.*Au1.*(maintainer).*Au2.*Au3.*Au4/
+    end
+
+    scenario 'Mod with multiple authors with reversed sorting order' do
+      authors = 5.times.map{ |i| create :user, name: "Au#{i}" }
+      mod = create :mod, name: 'SuperMod', authors: authors
+      mod.authors_mods[0].update_column :sort_order, 5
+      mod.authors_mods[1].update_column :sort_order, 4
+      mod.authors_mods[2].update_column :sort_order, 3
+      mod.authors_mods[3].update_column :sort_order, 2
+      mod.authors_mods[4].update_column :sort_order, 1
+      visit '/'
+      expect(page).to have_content /Au4.*Au3.*Au2.*Au1.*Au0/
     end
   end
 end

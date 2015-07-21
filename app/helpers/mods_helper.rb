@@ -85,6 +85,20 @@ module ModsHelper
     end
   end
 
+  def authors_links_list(mod)
+    return t('helpers.not_available') if mod.authors.empty?
+
+    mod.authors.each.map do |author, i|
+      link = link_to(author.name, author)
+      if author == mod.owner and mod.authors.size > 1
+        maintainer = I18n.t('helpers.mods.maintainer')
+        link + " (#{maintainer})"
+      else
+        link
+      end
+    end.join(', ').html_safe
+  end
+
 #   - if current_page? '/'
 #   - title t 'title.root'
 # - else
