@@ -23,7 +23,10 @@ class User < ActiveRecord::Base
     new_record?
   end
 
-  validates :name, presence: true, format: { with: /\A[A-Z0-9\-_]+\Z/i }, uniqueness: { case_sensitive: false }
+  validates :name, presence: true,
+                   format: { with: /\A[A-Z0-9\-_]+\Z/i },
+                   uniqueness: { case_sensitive: false },
+                   length: { minimum: 2, maximum: 50 }
 
   def self.autogenerate(attributes)
     attributes = attributes.reverse_merge(

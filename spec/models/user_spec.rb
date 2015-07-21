@@ -53,6 +53,26 @@ RSpec.describe User, :type => :model do
       user2 = build :user, name: 'heyheynanana'
       expect(user2).to be_invalid
     end
+
+    it 'should not allow names shorter than 2 characters' do
+      user = build :user, name: 'a'
+      expect(user).to be_invalid
+    end
+
+    it 'should allow names of 2 characters' do
+      user = build :user, name: '22'
+      expect(user).to be_valid
+    end
+
+    it 'should not allow names longer than 50 characters' do
+      user = build :user, name: 'a'*51
+      expect(user).to be_invalid
+    end
+
+    it 'should allow names of 50 characters' do
+      user = build :user, name: 'a'*50
+      expect(user).to be_valid
+    end
   end
 
   describe 'attributes' do
