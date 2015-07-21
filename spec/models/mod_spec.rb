@@ -511,6 +511,27 @@ RSpec.describe Mod, :type => :model do
         expect(mod.save).to eq false
         expect(User.all).to eq [mod.owner]
       end
+
+      it 'should ignore duplicated names and use the first apparition' do
+        mod = build :mod, authors_list: 'Apple, Potato, Apple'
+        expect(mod).to be_valid
+        mod.save!
+        expect(mod.authors.map(&:name)).to eq %w{Apple Potato}
+      end
+
+      it 'should ignore empty authors' do
+        mod = build :mod, authors_list: 'Apple,,Potato'
+        expect(mod).to be_valid
+        mod.save!
+        expect(mod.authors.map(&:name)).to eq %w{Apple Potato}
+      end
+
+      # This is some top-notch DDoS protection
+      it 'should disregard everything after the tenth author' do
+        mod = build :mod, authors_list: "Au0, Au1, Au2, Au4, Au5, Au6, Au7, Au8, Au9, Au10, Au11, Au12"
+        expect(mod).to be_invalid
+        expect(mod.authors.size).to eq 10
+      end
     end
   end
 

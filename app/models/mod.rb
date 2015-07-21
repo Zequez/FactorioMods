@@ -121,7 +121,7 @@ class Mod < ActiveRecord::Base
   # find or generate users from #authors_list
   before_validation do
     if authors_list.present?
-      authors_names = authors_list.split(',').map(&:strip)
+      authors_names = authors_list.split(',').map(&:strip).reject(&:blank?).take(10).uniq(&:downcase)
       authors_index = User.where('lower(name) IN (?)', authors_names.map(&:downcase)).index_by{ |user| user.name.downcase }
       self.authors = @reordered_authors = authors_names.each_with_index.map do |name, i|
         authors_index[name.downcase] || User.autogenerate(name: name)
