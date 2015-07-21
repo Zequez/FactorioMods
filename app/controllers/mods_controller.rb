@@ -5,7 +5,7 @@ class ModsController < ApplicationController
     @mods = Mod
 
     @mods = @mods
-      .includes([:categories, :author, :forum_post, versions: :files])
+      .includes([:categories, :authors, :owner, :forum_post, versions: :files])
       .page(params[:page]).per(20)
 
     if params[:category_id]

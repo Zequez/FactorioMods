@@ -44,7 +44,7 @@ class Mod < ActiveRecord::Base
   has_many :game_versions, -> { uniq.sort_by_older_to_newer }, through: :mod_game_versions
   has_many :categories, through: :categories_mods
   has_many :categories_mods, dependent: :destroy
-  has_many :authors, ->{ order('sort_order') } , through: :authors_mods, class_name: 'User'
+  has_many :authors, ->{ includes(:authors_mods).order('authors_mods.sort_order') } , through: :authors_mods, class_name: 'User'
   has_many :authors_mods, dependent: :destroy
 
   # has_one :latest_version, -> { sort_by_newer_to_older.limit(1) }, class_name: 'ModVersion'
