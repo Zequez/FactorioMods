@@ -25,7 +25,8 @@ class Mod < ActiveRecord::Base
   ### Relationships
   #################
 
-  belongs_to :author, class_name: 'User'
+  belongs_to :author, class_name: 'User' # Deprecated
+  belongs_to :owner, class_name: 'User', foreign_key: :author_id
   belongs_to :game_version_start, class_name: 'GameVersion'
   belongs_to :game_version_end, class_name: 'GameVersion'
   belongs_to :forum_post
@@ -43,6 +44,8 @@ class Mod < ActiveRecord::Base
   has_many :game_versions, -> { uniq.sort_by_older_to_newer }, through: :mod_game_versions
   has_many :categories, through: :categories_mods
   has_many :categories_mods, dependent: :destroy
+  has_many :authors, through: :authors_mods, class_name: 'User'
+  has_many :authors_mods, dependent: :destroy
 
   # has_one :latest_version, -> { sort_by_newer_to_older.limit(1) }, class_name: 'ModVersion'
   # has_one :second_latest_version, -> { sort_by_newer_to_older.limit(1).offset(1) }, class_name: 'ModVersion'
@@ -115,6 +118,31 @@ class Mod < ActiveRecord::Base
     end
   end
 
+  # find or generate users from #authors_list
+  before_validation do
+    if authors_list.present?
+      authors_names = authors_list.split(',').map(&:strip)
+      authors_index = User.where('lower(name) IN (?)', authors_names.map(&:downcase)).index_by{ |user| user.name.downcase }
+      self.authors = authors_names.map{ |name| authors_index[name.downcase] || User.autogenerate(name) }
+    end
+  end
+
+  # add the #authors errors to #authors_list
+  after_validation do
+    if authors_list.present?
+      authors.each do |author|
+        author.errors[:name].each do |error|
+          self.errors[:authors_list].push(author.name + ' ' + error)
+        end
+      end
+
+      # We can't do this because errors[:authors] also holds
+      # the individual authors errors without any information
+      # about the user
+      # errors[:authors_list].concat errors[:authors]
+    end
+  end
+
   ### Validations
   #################
 
@@ -129,7 +157,16 @@ class Mod < ActiveRecord::Base
   # #categories.count limit
   validate do
     if categories.size > 8
-      errors[:categories].push I18n.t('activerecord.errors.models.mod.attributes.categories.too_long')
+      errors[:categories].push I18n.t('activerecord.errors.models.mod.attributes.categories.too_many')
+    end
+  end
+
+  # #authors.count limit
+  validate do
+    if authors.size > 8
+      error_msg = I18n.t('activerecord.errors.models.mod.attributes.authors.too_many')
+      errors[:authors].push error_msg
+      errors[:authors_list].push error_msg if authors_list.present?
     end
   end
 
@@ -153,6 +190,7 @@ class Mod < ActiveRecord::Base
   attr_accessor :imgur_url
   attr_accessor :imgur_thumbnail
   attr_accessor :imgur_normal
+  attr_accessor :authors_list
   alias_attribute :github_path, :github
   alias_attribute :subforum_url, :forum_subforum_url
 

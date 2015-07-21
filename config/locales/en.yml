@@ -32,14 +32,15 @@ en:
             imgur:
               invalid: "Invalid Imgur URL or ID. Remember it has to be a single picture, not an album."
             categories:
-              too_long: "Too many categories, please use less than 8 categories"
+              too_many: "Too many categories, please use 8 or fewer categories"
+            authors:
+              too_many: "Too many authors, please use 8 or fewer authors"
         mod_file:
           attributes:
             download_url:
               presence: "You need this, or an attachment, or both"
             attachment:
               presence: "You need this, or a download URL, or both"
-              
         mod_version:
           attributes:
             released_at:

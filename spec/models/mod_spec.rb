@@ -4,51 +4,58 @@ RSpec.describe Mod, :type => :model do
   describe 'attributes' do
     subject(:mod) { build :mod }
 
-    it { should respond_to :name }
-    it { should respond_to :author_name }
-    it { should respond_to :description }
-    it { should respond_to :summary }
+    it { is_expected.to respond_to :name }
+    it { is_expected.to respond_to :author_name }
+    it { is_expected.to respond_to :description }
+    it { is_expected.to respond_to :summary }
 
-    it { should respond_to :github }
-    it { should respond_to :github_url }
-    it { should respond_to :license }
+    it { is_expected.to respond_to :github }
+    it { is_expected.to respond_to :github_url }
+    it { is_expected.to respond_to :license }
 
-    it { should respond_to :first_version_date }
-    it { should respond_to :last_version_date }
+    it { is_expected.to respond_to :first_version_date }
+    it { is_expected.to respond_to :last_version_date }
 
-    it { should respond_to :media_links }
-    it { should respond_to :imgur }
-    it { should respond_to :imgur_url }
-    it { should respond_to :imgur_thumbnail }
-    it { should respond_to :imgur_normal }
+    it { is_expected.to respond_to :media_links }
+    it { is_expected.to respond_to :imgur }
+    it { is_expected.to respond_to :imgur_url }
+    it { is_expected.to respond_to :imgur_thumbnail }
+    it { is_expected.to respond_to :imgur_normal }
 
-    it { should respond_to :last_release_date }
+    it { is_expected.to respond_to :last_release_date }
 
     # URLs
-    it { should respond_to :license_url }
-    it { should respond_to :official_url }
-    it { should respond_to :forum_url }
+    it { is_expected.to respond_to :license_url }
+    it { is_expected.to respond_to :official_url }
+    it { is_expected.to respond_to :forum_url }
 
     # External counters
-    it { should respond_to :forum_comments_count }
-    it { should respond_to :comments_count }
+    it { is_expected.to respond_to :forum_comments_count }
+    it { is_expected.to respond_to :comments_count }
 
     # Tracking data
-    # it { should respond_to :downloads }
-    # it { should respond_to :downloads_count }
-    # it { should respond_to :visits }
-    # it { should respond_to :visits_count }
+    # it { is_expected.to respond_to :downloads }
+    # it { is_expected.to respond_to :downloads_count }
+    # it { is_expected.to respond_to :visits }
+    # it { is_expected.to respond_to :visits_count }
 
     # belongs_to
-    it { should respond_to :author }
-    it { should respond_to :categories }
-    it { should respond_to :last_version }
+    it { is_expected.to respond_to :author }
+    it { is_expected.to respond_to :owner }
+    it { expect(mod.build_owner).to be_kind_of User }
+    it { is_expected.to respond_to :categories }
+    it { is_expected.to respond_to :last_version }
     # has_many
-    it { should respond_to :files }
-    it { should respond_to :versions }
-    # it { should respond_to :tags }
-    it { should respond_to :favorites }
-    it { should respond_to :favorites_count }
+    it { is_expected.to respond_to :files }
+    it { is_expected.to respond_to :versions }
+    it { expect(mod.versions.build).to be_kind_of ModVersion }
+    # it { is_expected.to respond_to :tags }
+    it { is_expected.to respond_to :favorites }
+    it { is_expected.to respond_to :favorites_count }
+    it { is_expected.to respond_to :authors }
+    it { expect(mod.authors.build).to be_kind_of User }
+    it { is_expected.to respond_to :authors_mods }
+    it { expect(mod.authors_mods.build).to be_kind_of AuthorsMod }
 
     describe 'validation' do
       it 'should be valid by default from the factory' do
@@ -125,6 +132,19 @@ RSpec.describe Mod, :type => :model do
         mod2 = build :mod, slug: 'potato', name: 'apple' # We are forcing this slug
         expect(mod2).to be_invalid
         expect(mod2.errors[:slug].size).to eq 1
+      end
+
+      it 'should be invalid with more than 8 authors' do
+        authors = 9.times.map{ create :user }
+        mod = build :mod, authors: authors
+        expect(mod).to be_invalid
+        expect(mod.errors[:authors].size).to eq 1
+      end
+
+      it 'should be valid with 8 authors' do
+        authors = 8.times.map{ create :user }
+        mod = build :mod, authors: authors
+        expect(mod).to be_valid
       end
     end
 
@@ -219,13 +239,6 @@ RSpec.describe Mod, :type => :model do
           mod.github = 'zequez/something'
           expect(mod.github_url).to eq 'http://github.com/zequez/something'
         end
-      end
-    end
-
-    describe '#versions' do
-      it 'should be ModVersion type' do
-        mod.versions.build
-        expect(mod.versions.first).to be_kind_of ModVersion
       end
     end
 
@@ -420,6 +433,68 @@ RSpec.describe Mod, :type => :model do
       it 'should be invalid with an URL other than Imgur' do
         mod.imgur = 'https://lesserimagehost.com/5yc64LJ.png'
         expect(mod).to be_invalid
+      end
+    end
+
+    describe '#authors_list' do
+      it { is_expected.to respond_to :authors_list }
+
+      it 'associate the #authors by name separated by commas' do
+        u1 = create :user, name: 'Apple'
+        u2 = create :user, name: 'Potato'
+        u3 = create :user, name: 'Orange'
+        u4 = create :user, name: 'Banana'
+        mod.authors_list = 'Orange,Potato,Banana'
+        mod.save!
+        expect(mod.authors).to eq [u3, u2, u4]
+      end
+
+      it 'should work with random spaces everywhere' do
+        u1 = create :user, name: 'Apple'
+        u2 = create :user, name: 'Potato'
+        u3 = create :user, name: 'Orange'
+        u4 = create :user, name: 'Banana'
+        mod.authors_list = '      Orange     , Potato , Banana         '
+        mod.save!
+        expect(mod.authors).to eq [u3, u2, u4]
+      end
+
+      it 'should work with different cases' do
+        u1 = create :user, name: 'Apple'
+        u2 = create :user, name: 'Potato'
+        u3 = create :user, name: 'Orange'
+        u4 = create :user, name: 'Banana'
+        mod.authors_list = 'orange,potato,banana'
+        mod.save!
+        expect(mod.authors).to eq [u3, u2, u4]
+      end
+
+      it "should create a new user with autogenerated:true if it doesn't exist" do
+        u1 = create :user, name: 'Apple'
+        mod.authors_list = 'Apple,Watermelon'
+        mod.save!
+        u2 = User.last
+        expect(u2.name).to eq 'Watermelon'
+        expect(u2.autogenerated).to eq true
+        expect(mod.authors).to eq [u1, u2]
+      end
+
+      it 'should be invalid if the user to be generated is invalid' do
+        mod.authors_list = 'Bi$cuit,C( )okie'
+        expect(mod).to be_invalid
+        expect(mod.errors[:authors_list]).to eq ['Bi$cuit is invalid', 'C( )okie is invalid']
+      end
+
+      it 'should be invalid with more than 8 authors' do
+        mod.authors_list = 'Apple,Potato,Watermelon,Orange,Clementine,Fennel,Banana,Melon,Strawberry'
+        expect(mod).to be_invalid
+        expect(mod.errors[:authors_list].first).to match /too many authors/i
+      end
+
+      it 'should not create the users if the validation fails' do
+        mod = build :mod, authors_list: 'Apple,P( )tato,Fennel'
+        expect(mod.save).to eq false
+        expect(User.all).to eq [mod.owner]
       end
     end
   end
