@@ -532,6 +532,12 @@ RSpec.describe Mod, :type => :model do
         expect(mod).to be_invalid
         expect(mod.authors.size).to eq 10
       end
+
+      it 'return a list of names if called after the mod loads' do
+        authors = 5.times.map{ |i| create :user, name: "Au#{i}" }
+        mod = create :mod, authors: authors
+        expect(mod.authors_list).to eq 'Au0, Au1, Au2, Au3, Au4'
+      end
     end
   end
 

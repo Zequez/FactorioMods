@@ -306,6 +306,10 @@ class Mod < ActiveRecord::Base
     super(val.present? ? val : nil)
   end
 
+  def authors_list
+    @authors_list ||= authors.map(&:name).join(', ')
+  end
+
   private
 
   def set_game_versions_string

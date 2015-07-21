@@ -172,17 +172,17 @@ feature 'Modder creates a new mod' do
     expect(mod.versions[0].files[0].attachment_file_size).to eq attachment.size
   end
 
-  scenario 'admin user submits a mod selecting an author' do
+  scenario 'admin user submits a mod selecting an owner' do
     sign_in_admin
     visit '/mods/new'
     fill_in 'mod_name', with: 'Mod Name'
     select 'Terrain', from: 'Categories'
-    fill_in 'Author name', with: 'MangoDev'
+    fill_in 'mod_authors_list', with: 'MangoDev'
     fill_in_first_version_and_file
     submit_form
     mod = Mod.first
     expect(current_path).to eq '/mods/mod-name'
-    expect(mod.author_name).to eq 'MangoDev'
+    expect(mod.authors.first.name).to eq 'MangoDev'
   end
 
   scenario 'admin tries to create a mod from the forum_posts dashboard, so it has pre-filled attributes' do
@@ -199,7 +199,7 @@ feature 'Modder creates a new mod' do
 
     visit "/mods/new?forum_post_id=#{forum_post.id}"
     expect(find('#mod_name').value).to eq '[0.11.x] Potato mod'
-    expect(find('#mod_author_name').value).to eq 'SuperGuy'
+    expect(find('#mod_authors_list').value).to eq 'SuperGuy'
     expect(find('#mod_forum_url').value).to eq 'http://www.factorioforums.com/forum/viewtopic.php?f=14&t=6742'
     expect(find('[id$=released_at]').value).to eq released_at.strftime('%Y-%m-%d')
   end
