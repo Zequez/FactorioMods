@@ -28,6 +28,11 @@ end
 desc 'Clean assets, precompile them, and start Rails in production'
 task :rails_prod_assets => [:assets_precompile, :rails_prod]
 
+desc 'Execute multi-authors migration'
+task multi_authors_migration: :environment do
+  MultiAuthorsUpdater.new.update
+end
+
 
 desc 'Create fake data'
 task fake_data: :environment do
