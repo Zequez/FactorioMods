@@ -1,9 +1,9 @@
 ActiveAdmin.register Mod do
-  permit_params :name, :author_name, :category_id, :author_id,
+  permit_params :name, :category_id, :author_id,
                 :first_version_date, :last_version_date, :github, :forum_comments_count,
                 :license, :license_url, :official_url, :forum_subforum_url,
                 :forum_post_id, :forum_posts_ids,
-                :description, :summary, :slug, :imgur,
+                :description, :summary, :slug, :imgur, :authors_list,
                 assets_attributes: [:id, :image, :sort_order, :_destroy],
                 versions_attributes: [:id, :number, :released_at,
                                       :sort_order, :precise_game_versions_string,
@@ -13,7 +13,7 @@ ActiveAdmin.register Mod do
 
   controller do
     def scoped_collection
-      Mod.includes(:categories, :author)
+      Mod.includes(:categories, :owner, :authors, :forum_post)
     end
 
     def resource
@@ -32,13 +32,11 @@ ActiveAdmin.register Mod do
 
     attributes_table :name,
                      :slug,
-                     :author_name,
-                     :author_name,
-                     :author,
+                     :authors_list,
+                     :owner,
                      :first_version_date,
                      :last_version_date,
                      :github_url,
-                     :forum_comments_count,
                      :official_url,
                      :forum_url,
                      :summary,
@@ -61,25 +59,23 @@ ActiveAdmin.register Mod do
       mod.categories.map(&:name).join(', ')
     end
 
-    column :author do |mod|
-      if mod.author
-        link_to mod.author_name, [:admin, mod.author]
-      else
-        mod.author_name
-      end
+    column :authors do |mod|
+      mod.authors.map(&:name).join(', ')
     end
+
+    column :owner
 
     column :github do |mod|
       link_to mod.github_path, mod.github_url
     end
 
     column :forum do |mod|
-      link_to "#{mod.forum_comments_count} comments", mod.forum_url
+      link_to "#{mod.forum_post.views_count}V / #{mod.forum_post.comments_count}C", [:edit, :admin, mod.forum_post]
     end
 
-    column 'Visits/Down' do |mod|
-      "#{mod.visits_count}/#{mod.downloads_count}"
-    end
+    # column 'Visits/Down' do |mod|
+    #   "#{mod.visits_count}/#{mod.downloads_count}"
+    # end
 
     column :created_at do |mod|
       span distance_of_time_in_words_to_now(mod.created_at), title: mod.created_at
@@ -92,6 +88,8 @@ ActiveAdmin.register Mod do
     column :imgur do |mod|
       link_to mod.imgur, mod.imgur_url if mod.imgur
     end
+
+    column :is_dev
 
     column :edit do |mod|
       link_to 'EditPublic', edit_mod_url(mod)
@@ -111,8 +109,8 @@ ActiveAdmin.register Mod do
       f.input :name
       f.input :categories
       f.input :slug
-      f.input :author
-      f.input :author_name
+      f.input :owner
+      f.input :authors_list
       f.input :github_url
       f.input :official_url
       f.input :forum_url
@@ -120,6 +118,7 @@ ActiveAdmin.register Mod do
       # f.input :forum_post
       # f.input :forum_posts, collection: ForumPost.order('title')
       f.input :imgur
+      f.input :is_dev
       f.input :summary, as: :text
     end
 
