@@ -37,9 +37,15 @@ RSpec.describe User, :type => :model do
       expect(user).to be_invalid
     end
 
-    it 'should not allow spaces in the name' do
+    it 'should allow spaces in the name' do
       user = build :user, name: 'Potato Head'
-      expect(user).to be_invalid
+      expect(user).to be_valid
+    end
+    
+    it 'should strip extra spaces and sqeeze them automatically' do
+      user = build :user, name: '   Potato     Head   '
+      expect(user).to be_valid
+      expect(user.name).to eq 'Potato Head'
     end
 
     it 'should not allow users with the same name' do
@@ -72,6 +78,10 @@ RSpec.describe User, :type => :model do
     it 'should allow names of 50 characters' do
       user = build :user, name: 'a'*50
       expect(user).to be_valid
+    end
+
+    it 'should be valid with alphanumeric characters, spaces, dashes, underscores, dots or spaces' do
+      expect(build(:user, name: 'Zeq.mán123- _Potatoí')).to be_valid
     end
   end
 
