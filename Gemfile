@@ -30,6 +30,7 @@ group :development, :test, :assets do
   gem 'database_cleaner'
   gem 'bourbon', '~> 4.2'
   gem 'nprogress-rails'
+  gem 'json_spec'
 end
 
 # Views

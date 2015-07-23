@@ -22,6 +22,7 @@ include ActionDispatch::TestProcess
 RSpec.configure do |config|
   LL.info '############################################################################################'
   config.include FactoryGirl::Syntax::Methods
+  config.include JsonSpec::Helpers
   config.before(:suite) { FactoryGirl.reload }
   config.expect_with :rspec do |c|
     c.syntax = [:should, :expect]
