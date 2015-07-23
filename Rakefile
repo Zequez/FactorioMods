@@ -28,12 +28,6 @@ end
 desc 'Clean assets, precompile them, and start Rails in production'
 task :rails_prod_assets => [:assets_precompile, :rails_prod]
 
-desc 'Execute multi-authors migration'
-task multi_authors_migration: :environment do
-  MultiAuthorsUpdater.new.update
-end
-
-
 desc 'Create fake data'
 task fake_data: :environment do
   ActiveRecord::Base.transaction do
@@ -70,15 +64,18 @@ task fake_data: :environment do
       puts "Created user #{user.name} #{user.email}"
     end
     users = User.all
+    
+    ### Subforum
+    ##################
+    subforum = Subforum.create!(url: 'http://www.factorioforums.com/forum/viewforum.php?f=91')
 
     ### Forum posts
     ##################
     # Actually scrap the forum posts from the Factorio forum
     # in real time, I don't see why not, it's just a few pages.
     puts "---------- Scraping real life forum posts! This make take a while..."
-    scraper = ForumPostsScraper.new
-    posts = scraper.scrap
-    posts.each(&:save!)
+    scraper_manager = Scraper::SubforumManager.new [subforum]
+    scraper_manager.run
 
     ### Mods
     ##################
@@ -89,8 +86,8 @@ task fake_data: :environment do
     rand(30..50).times do |i|
       github_url = Forgery(:lorem_ipsum).words(1, random: true) + '/' + Forgery(:lorem_ipsum).words(1, random: true)
       mod = Mod.create! name: Forgery(:lorem_ipsum).words(rand(3..6), random: true),
-                        author_name: Forgery(:internet).user_name,
-                        author: rand > 0.25 ? nil : users.sample,
+                        authors: users.sample(users.size),
+                        owner: [nil, nil].concat(users).sample,
                         categories: categories.sample(rand(1..4)),
                         github: rand > 50 ? nil : github_url,
                         # license: ['MIT', 'GPLv2', 'GPLv3'].sample,
