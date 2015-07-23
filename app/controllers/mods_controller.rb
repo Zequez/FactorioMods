@@ -15,7 +15,7 @@ class ModsController < ApplicationController
       if @category
         @mods = @mods.filter_by_category @category
       else
-        not_found
+        not_found and return
       end
     end
 
