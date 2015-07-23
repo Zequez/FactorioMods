@@ -18,4 +18,5 @@
           = category_link category do
             %i{class: category.icon_class}
             = category.name
-            = "(#{category.mods_count})"
+            (#{category_probabilistic_count(category)})
+            

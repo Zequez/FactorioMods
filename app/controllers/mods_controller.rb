@@ -10,14 +10,7 @@ class ModsController < ApplicationController
       .includes([:categories, :authors, :owner, :forum_post, versions: :files])
       .page(params[:page]).per(20)
 
-    if params[:category_id]
-      @category = Category.find_by_slug params[:category_id]
-      if @category
-        @mods = @mods.filter_by_category @category
-      else
-        not_found and return
-      end
-    end
+    
 
     @sort = params[:sort].to_sym
     case @sort
@@ -47,6 +40,17 @@ class ModsController < ApplicationController
     unless params[:q].blank?
       @query = params[:q][0..30]
       @mods = @mods.filter_by_search_query(@query)
+    end
+    
+    @uncategorized_mods_total_count = @mods.total_count
+    @all_mods_count = Mod.count
+    if params[:category_id]
+      @category = Category.find_by_slug params[:category_id]
+      if @category
+        @mods = @mods.filter_by_category @category
+      else
+        not_found and return
+      end
     end
 
     @game_versions = GameVersion.sort_by_newer_to_older
