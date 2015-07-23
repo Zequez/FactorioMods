@@ -188,19 +188,19 @@ feature 'Modder creates a new mod' do
   scenario 'admin tries to create a mod from the forum_posts dashboard, so it has pre-filled attributes' do
     sign_in_admin
     released_at = 5.days.ago
+    game_version = create :game_version
+    subforum = create :subforum, game_version: game_version
     forum_post = create :forum_post, title: '[0.11.x] Potato mod',
-                                     author_name: 'SuperGuy', 
-                                     published_at: released_at, 
+                                     author_name: 'SuperGuy',
+                                     published_at: released_at,
+                                     subforum: subforum,
                                      url: 'http://www.factorioforums.com/forum/viewtopic.php?f=14&t=6742'
-
-    # We mock the forum post page here
-    mocked_page = File.read File.expand_path("../../fixtures/forum_post/basic_post.html", __FILE__)
-    stub_request(:get, forum_post.url).to_return body: mocked_page
 
     visit "/mods/new?forum_post_id=#{forum_post.id}"
     expect(find('#mod_name').value).to eq '[0.11.x] Potato mod'
     expect(find('#mod_authors_list').value).to eq 'SuperGuy'
     expect(find('#mod_forum_url').value).to eq 'http://www.factorioforums.com/forum/viewtopic.php?f=14&t=6742'
+    expect(find('[id$=game_version_ids]').value).to eq [game_version.id.to_s]
     expect(find('[id$=released_at]').value).to eq released_at.strftime('%Y-%m-%d')
   end
 

@@ -7,6 +7,7 @@ require 'capybara/rspec'
 require 'webmock/rspec'
 require 'vcr'
 require 'paperclip/matchers'
+require 'rspec/its'
 
 WebMock.disable_net_connect!(allow_localhost: true)
 # Capybara.default_driver = :selenium_phantomjs
@@ -27,6 +28,9 @@ ActiveRecord::Migration.maintain_test_schema!
 VCR.configure do |config|
   config.ignore_request do |request|
     URI(request.uri).host == '127.0.0.1'
+  end
+  config.before_record do |i|
+    i.response.body.force_encoding('UTF-8')
   end
   config.cassette_library_dir = "#{::Rails.root}/spec/fixtures/vcr_cassettes"
   config.hook_into :webmock # or :fakeweb

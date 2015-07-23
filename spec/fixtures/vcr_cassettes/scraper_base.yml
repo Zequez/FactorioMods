@@ -1,0 +1,118 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: http://www.purple.com/
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Typhoeus - https://github.com/typhoeus/typhoeus
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 23 Jul 2015 01:53:44 GMT
+      Server:
+      - Chaos
+      Last-Modified:
+      - Wed, 22 Jul 2015 05:01:01 GMT
+      Etag:
+      - '"4c1-51b6fa83ac483"'
+      Accept-Ranges:
+      - bytes
+      Content-Length:
+      - '1217'
+      Content-Type:
+      - text/html
+    body:
+      encoding: UTF-8
+      string: |
+        <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+        <HTML>
+        <HEAD>
+        <meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+        <style type="text/css">
+        body { background-color: #7D26CD; }
+        a{ color:#AAAA00; text-decoration: none; padding: 4px; }
+        a:link { color:#AAAA00; }
+        a:visited { color:#999900; }
+        a:hover { color:#660000; background: #9D46DD; }
+        a:active { color:#666600; }
+        </style>
+        <link rel="stylesheet" type="text/css" href="index.css">
+        <META HTTP-EQUIV="Refresh" CONTENT="3; URL=purple.html">
+        <TITLE>www.purple.com</TITLE>
+        <script type="text/javascript">
+
+          var _gaq = _gaq || [];
+          _gaq.push(['_setAccount', 'UA-27318022-1']);
+          _gaq.push(['_setDomainName', 'purple.com']);
+          _gaq.push(['_trackPageview']);
+
+          (function() {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+          })();
+
+        </script>
+        </HEAD>
+
+        <ul>
+          <li> <a href="faq.html">FAQ</a></li>
+          <li>&nbsp;</li>
+          <li> <a href="advertise.html">Your ad here</a></li>
+        </ul>
+
+
+        </BODY>
+        </HTML>
+    http_version: 
+  recorded_at: Thu, 23 Jul 2015 01:53:44 GMT
+- request:
+    method: get
+    uri: http://www.zombo.com/
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Typhoeus - https://github.com/typhoeus/typhoeus
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 23 Jul 2015 02:21:55 GMT
+      Server:
+      - Apache/2.0.63 (Unix) mod_ssl/2.0.63 OpenSSL/0.9.7a mod_auth_passthrough/2.1
+        mod_bwlimited/1.4 FrontPage/5.0.2.2635 PHP/5.2.14
+      Last-Modified:
+      - Tue, 23 Apr 2002 05:19:28 GMT
+      Etag:
+      - '"b2013c-2f6-f5f17800"'
+      Accept-Ranges:
+      - bytes
+      Content-Length:
+      - '758'
+      Content-Type:
+      - text/html
+    body:
+      encoding: UTF-8
+      string: "<html>\n<head>\n<title>ZOMBO</title>\n<meta http-equiv=\"Content-Type\"
+        content=\"text/html; charset=iso-8859-1\">\n<!--Please Visit 15footstick.com
+        our other website. ThankZ -->\n</head>\n\n<body bgcolor=\"#FFFFFF\">\n<object
+        classid=\"clsid:D27CDB6E-AE6D-11cf-96B8-444553540000\"\n\n codebase=\"http://active.macromedia.com/flash2/cabs/swflash.cab#version=4,0,0,0\"\n\n
+        id=inrozxa width=100% height=100%>\n  <param name=movie value=\"welcomenew6.swf\">\n
+        \ <param name=quality value=high>\n  <param name=bgcolor value=#FFFFFF>\n
+        \ <embed src=\"inrozxa.swf\" quality=high bgcolor=#FFFFFF  width=100% height=100%
+        type=\"application/x-shockwave-flash\" pluginspage=\"http://www.macromedia.com/shockwave/download/index.cgi?P1_Prod_Version=ShockwaveFlash\">\n
+        \ </embed> \n</object> \n</body>\n</html>\n"
+    http_version: 
+  recorded_at: Thu, 23 Jul 2015 02:21:55 GMT
+recorded_with: VCR 2.9.3

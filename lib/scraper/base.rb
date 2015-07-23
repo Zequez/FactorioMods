@@ -1,40 +1,62 @@
+require 'typhoeus'
+require 'nokogiri'
+
 module Scraper
   class Base
-    def initialize
-      @current_page_number = -1
-      @current_page = nil
+    @@processors = []
+    def self.register_processor(processor_class)
+      unless processor_class.kind_of?(Class) and processor_class.ancestors.include? Scraper::BaseProcessor
+        raise InvalidProcessorError
+      end
+      @@processors.push processor_class
     end
 
-    def page_base(page_number)
-      ''
+    def initialize(initial_url)
+      @multi_urls = initial_url.kind_of? Array
+      @initial_urls = @multi_urls ? initial_url : [initial_url]
+      @hydra = Typhoeus::Hydra.hydra
+      @urls_queued = []
     end
 
-    def get_next_page
-      url = next_page_url(@current_page)
-      @last_page = @current_page
-      if url
-        page = Page.new(url)
-        @current_page = page.is_end_page? ? nil : page
+    def scrap
+      @data = {}
+      @initial_urls.each do |initial_url|
+        @data[initial_url] = []
+        add_to_queue initial_url, initial_url
+      end
+      @hydra.run
+
+      @multi_urls ? @data : @data.values.first
+    end
+
+    def process_page(doc, request, response)
+    end
+
+    def process_response(response, initial_url)
+      document = Nokogiri::HTML(response.body)
+      processor_class = @@processors.detect{ |processor_class| processor_class.regexp.match response.request.url }
+      if processor_class
+        processor = processor_class.new(document, response.request, response, self, initial_url)
+        @data[initial_url].method(processor_class.addition_method).call processor.process_page
       else
-        @current_page = nil
+        raise NoPageProcessorFoundError
       end
     end
 
-    def next_page_url(page = nil)
-      if page
-        next_page_url_from_dom(page)
-        # Find it in the DOM
-      else
-        next_page_url_from_number
+    def add_to_queue(url, initial_url)
+      request = Typhoeus::Request.new(url)
+      request.on_complete do |response|
+        process_response response, initial_url
       end
+      @urls_queued << url
+      @hydra.queue request
     end
 
-    def next_page_url_from_number
-      page_base @current_page_number+1
-    end
-
-    def next_page_url_from_dom(current_page)
-      false
+    # Queue the URL unless we already queued it before
+    def add_to_queue_unless_there(url, initial_url)
+      unless @urls_queued.include? url
+        add_to_queue(url, initial_url)
+      end
     end
   end
 end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150721162608) do
+ActiveRecord::Schema.define(version: 20150722233819) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -91,12 +91,14 @@ ActiveRecord::Schema.define(version: 20150721162608) do
     t.datetime "edited_at"
     t.integer  "mod_id"
     t.integer  "post_number"
-    t.boolean  "title_changed"
+    t.boolean  "title_changed",  default: true,  null: false
     t.boolean  "not_a_mod",      default: false
+    t.integer  "subforum_id"
   end
 
   add_index "forum_posts", ["mod_id"], name: "index_forum_posts_on_mod_id", using: :btree
   add_index "forum_posts", ["post_number"], name: "index_forum_posts_on_post_number", using: :btree
+  add_index "forum_posts", ["subforum_id"], name: "index_forum_posts_on_subforum_id", using: :btree
 
   create_table "game_versions", force: true do |t|
     t.string   "number"
@@ -232,6 +234,18 @@ ActiveRecord::Schema.define(version: 20150721162608) do
     t.string   "ip"
     t.datetime "created_at"
   end
+
+  create_table "subforums", force: true do |t|
+    t.string   "url"
+    t.string   "name"
+    t.integer  "game_version_id"
+    t.boolean  "scrap"
+    t.integer  "number"
+    t.integer  "forum_posts_count"
+    t.datetime "last_scrap_at"
+  end
+
+  add_index "subforums", ["game_version_id"], name: "index_subforums_on_game_version_id", using: :btree
 
   create_table "tags", force: true do |t|
     t.string   "name"

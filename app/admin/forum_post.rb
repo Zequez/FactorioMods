@@ -9,15 +9,14 @@ ActiveAdmin.register ForumPost do
                 :title_changed, :not_a_mod, :mod_id
   controller do
     def scoped_collection
-      ForumPost.includes(:mod)
+      ForumPost.includes(:mod, :subforum)
     end
   end
 
   collection_action :scrap, method: :post do
-    scraper = ForumPostsScraper.new
-    posts = scraper.scrap
+    manager = Scraper::SubforumManager.new Subforum.for_scraping
     ForumPost.transaction do
-      posts.each(&:save!)
+      manager.run
     end
     render json: {}
   end
@@ -56,8 +55,7 @@ ActiveAdmin.register ForumPost do
   filter :not_a_mod
 
   index do
-    selectable_column
-    id_column
+    column(:subforum) { |p| link_to(p.subforum.name, [:edit, :admin, p.subforum]) if p.subforum }
 
     column :post_number, sortable: :post_number do |post|
       link_to post.post_number, post.url
@@ -67,12 +65,10 @@ ActiveAdmin.register ForumPost do
       link_to post.title, post.url
     end
 
-    column :published_at, sortable: :published_at do |post|
-      span distance_of_time_in_words_to_now(post.published_at), title: post.published_at
-    end
-
-    column :last_post_at, sortable: :last_post_at do |post|
-      span distance_of_time_in_words_to_now(post.last_post_at), title: post.last_post_at
+    [:published_at, :last_post_at, :created_at, :updated_at].each do |time_column|
+      column time_column, sortable: time_column do |post|
+        span distance_of_time_in_words_to_now(post[time_column]), title: post[time_column]
+      end
     end
 
     column :comments_count

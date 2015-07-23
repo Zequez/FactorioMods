@@ -58,6 +58,7 @@ gem 'cancancan'                    # Authorization adapter
 #######################
 gem 'reverse_markdown'
 gem 'nokogiri'                     # To parse HTML, for the scraper
+gem 'typhoeus'                     # Concurrent HTTP requests handler
 
 # Testing
 #######################
@@ -75,6 +76,8 @@ group :development, :test do
   gem 'factory_girl_rails'      # Models factories for Rspec
   gem 'forgery'                 # Create random text for testing, like lorem ipsum or random names
   gem 'capybara'
+  gem 'rspec-its'
+  gem 'rspec-mocks'
 end
 
 group :test do

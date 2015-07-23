@@ -67,11 +67,16 @@ class ModsController < ApplicationController
 
       @mod.authors_list = forum_post.author_name
       @mod.forum_url = forum_post.url
+
       if forum_post.published_at
         mod_version.released_at = forum_post.published_at
       end
-      scraper = ForumPostScraper.new forum_post
-      scraper.scrap
+
+      if forum_post.subforum and forum_post.subforum.game_version
+        mod_version.game_versions = [forum_post.subforum.game_version]
+      end
+      # scraper = ForumPostScraper.new forum_post
+      # scraper.scrap
       # @mod.description = forum_post.markdown_content
     end
 
