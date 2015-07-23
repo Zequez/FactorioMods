@@ -11,6 +11,7 @@ gem 'rails', '~> 4.1.12'  # Bundle edge Rails instead: gem 'rails', github: 'rai
 gem 'unicorn'             # Use unicorn as the app server
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw]
 gem 'pg'
+gem 'dotenv-rails'
 
 # Assets
 ########################
@@ -79,7 +80,6 @@ group :development, :test do
   gem 'capybara'
   gem 'rspec-its'
   gem 'rspec-mocks'
-  gem 'dotenv-rails'
 end
 
 group :test do
