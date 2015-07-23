@@ -29,3 +29,8 @@ factorio_mods.sublime-workspace
 .DS_Store
 
 config/database.yml
+
+/.env
+/.env.production
+/.env.test
+/.env.local

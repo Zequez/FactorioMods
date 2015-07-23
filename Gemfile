@@ -79,6 +79,7 @@ group :development, :test do
   gem 'capybara'
   gem 'rspec-its'
   gem 'rspec-mocks'
+  gem 'dotenv-rails'
 end
 
 group :test do

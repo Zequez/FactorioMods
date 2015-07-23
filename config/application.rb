@@ -1,6 +1,7 @@
 require File.expand_path('../boot', __FILE__)
 
 require 'rails/all'
+require 'dotenv-rails'
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
@@ -22,5 +23,8 @@ module FactorioMods
 
     config.autoload_paths << Rails.root.join('lib')
     config.watchable_dirs['lib'] = [:rb]
+    
+    config.ga_ua = ENV['GA_UA']
+    config.ga_url = ENV['GA_URL']
   end
 end
