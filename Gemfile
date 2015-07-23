@@ -26,7 +26,7 @@ group :development, :test, :assets do
   gem 'coffee-rails', '~> 4.0.0'  # Use CoffeeScript for .js.coffee assets and views
   gem 'jquery-rails'              # Use jquery as the JavaScript library
   gem 'turbolinks'                # Turbolinks makes following links in your web application faster
-  gem 'selenium-webdriver'
+  gem 'poltergeist'
   gem 'database_cleaner'
   gem 'bourbon', '~> 4.2'
   gem 'nprogress-rails'
