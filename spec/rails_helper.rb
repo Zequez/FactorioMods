@@ -14,6 +14,10 @@ WebMock.disable_net_connect!(allow_localhost: true)
 # Capybara.default_driver = :selenium_phantomjs
 Capybara.javascript_driver = :poltergeist
 
+Capybara.register_driver :rack_test_json do |app|
+  Capybara::RackTest::Driver.new(app, headers: { 'HTTP_ACCEPT' => 'application/json' })
+end
+
 # Requires supporting ruby files with custom matchers and macros, etc, in
 # spec/support/ and its subdirectories. Files matching `spec/**/*_spec.rb` are
 # run as spec files by default. This means that files in spec/support that end
@@ -109,5 +113,9 @@ RSpec.configure do |config|
 
   def nfind(tag_name = '', input_name)
     find("#{tag_name}[name^='#{input_name}']")
+  end
+  
+  def last_response
+    page.source
   end
 end

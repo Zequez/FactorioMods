@@ -1,5 +1,7 @@
 class ModsController < ApplicationController
   load_and_authorize_resource
+  
+  respond_to :html, :json, only: [:index, :show]
 
   def index
     @mods = Mod
@@ -13,7 +15,7 @@ class ModsController < ApplicationController
       if @category
         @mods = @mods.filter_by_category @category
       else
-        not_found
+        not_found and return
       end
     end
 
@@ -49,11 +51,15 @@ class ModsController < ApplicationController
 
     @game_versions = GameVersion.sort_by_newer_to_older
     @categories = Category.order_by_mods_count.order_by_name
+    
+    respond_with @mods
   end
 
   def show
     @mod = Mod.includes(versions: :files).find_by_slug(params[:id])
     not_found unless @mod
+
+    respond_with @mod
   end
 
   def new

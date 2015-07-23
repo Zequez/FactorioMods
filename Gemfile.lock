@@ -182,6 +182,9 @@ GEM
     jquery-ui-rails (5.0.5)
       railties (>= 3.2.16)
     json (1.8.3)
+    json_spec (1.1.4)
+      multi_json (~> 1.0)
+      rspec (>= 2.0, < 4.0)
     kaminari (0.16.3)
       actionpack (>= 3.0.0)
       activesupport (>= 3.0.0)
@@ -371,6 +374,7 @@ DEPENDENCIES
   guard-rspec
   haml-rails
   jquery-rails
+  json_spec
   kaminari
   nokogiri
   nprogress-rails

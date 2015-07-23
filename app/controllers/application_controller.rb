@@ -9,6 +9,10 @@ class ApplicationController < ActionController::Base
   rescue_from ActiveRecord::RecordNotFound, with: :not_found
 
   before_action :configure_devise_permitted_parameters, if: :devise_controller?
+  
+  # Ignore JSON requests by default
+  # (Rails 4.1 tries to serve them by default)
+  respond_to :html
 
   def not_found
     params[:controller] = 'errors'
