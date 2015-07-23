@@ -1,3 +1,5 @@
-class Scraper::PostProcessor < Scraper::BaseProcessor
+module Scraper
+  class PostProcessor < Scraper::BaseProcessor
 
+  end
 end

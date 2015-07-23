@@ -39,7 +39,8 @@ module Scraper
         processor = processor_class.new(document, response.request, response, self, initial_url)
         @data[initial_url].method(processor_class.addition_method).call processor.process_page
       else
-        raise NoPageProcessorFoundError
+        available_processors_names = @@processors.map{|p|p.class.name}.join(', ')
+        raise NoPageProcessorFoundError.new("Available processors: #{available_processors_names}")
       end
     end
 
