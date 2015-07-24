@@ -18,18 +18,22 @@
         .mod-summary.highlight-query= mod.pretty_summary
       .mod-info
         %span.mod-info-tag{title: mod.forum_link_title}
-          = mod.forum_link
+          .mod-info-tag-label
+            = mod.forum_link
           = icon 'comments'
         %span.mod-info-tag{title: t('.links.last_version_date', date: mod.last_version_date)}
-          = mod.last_version_date_time_tag
+          .mod-info-tag-label
+            = mod.last_version_date_time_tag
           = icon 'history'
         %span.mod-info-tag{title: t('.links.game_version')}
-          = mod.game_versions_string
+          .mod-info-tag-label
+            = mod.game_versions_string
           = icon 'cog'
         -# It's here in the middle so we can make some CSS magic
         = render partial: 'download_button', locals: { mod: mod }
-        %span.mod-info-tag{title: t('.links.authors')}
-          = mod.authors_links_list
+        %span.mod-info-tag{title: t('.links.authors', count: mod.authors_count)}
+          .mod-info-tag-label
+            = mod.authors_links_list
           = icon 'user'
           
   = paginate @mods

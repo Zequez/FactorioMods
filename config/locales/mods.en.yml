@@ -17,7 +17,7 @@ en:
         release_date: Release date
       all_releases: All releases
       mod_subforum: "Forum location: "
-      mod_forum_post: "Forum post:"
+      mod_forum_post: "Forum post: "
 
     index:
       title:
@@ -40,7 +40,9 @@ en:
       links:
         last_version_date: "Date of the latest version of this mod %{date}"
         game_version: Factorio versions this mod works with
-        authors: The awesome person/people behind this mod
+        authors:
+          one: The awesome person behind this mod
+          other: The awesome people behind this mod
 
     mod_data_table:
       game_version: Factorio version
@@ -71,7 +73,7 @@ en:
         vague: Post on the official Factorio forum
       forum_link:
         subforum:
-          subforum: Dedicated subforum
+          subforum: Subforum
           post: Releases post
         long: "%{comments} comments / %{views} views"
         short: "%{views}<abbr title='Views'>V</abbr> / %{comments}<abbr title='Comments'>C</abbr>"

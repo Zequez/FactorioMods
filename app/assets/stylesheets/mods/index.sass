@@ -147,6 +147,29 @@ $mods-list-size: 12-$filter-size
       
       &-tag
         display: block
+        position: relative
+        padding-right: 20px
+        
+        &-label
+          position: relative
+          display: block
+          background-color: $color-white
+          overflow: hidden
+          border-radius: 0 $border-radius $border-radius 0
+          z-index: 1
+          &:hover
+            overflow: visible
+            display: inline
+            z-index: 3
+        
+        .fa
+          position: absolute
+          top: 3px // Sorry, magic pixel
+          right: 0
+          height: 100%
+          width: 16px
+          background: $color-white
+          z-index: 2
 
       .btn-download
         position: absolute
