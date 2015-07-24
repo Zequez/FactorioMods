@@ -1,7 +1,7 @@
 class ModDecorator < Draper::Decorator
   delegate :id, :name, :forum_url, :subforum_url
 
-  def authors_count; mod.authors.count end
+  def authors_count; mod.authors.size end
 
   def game_versions_string
     return na if mod.game_versions_string.blank?
