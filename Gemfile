@@ -41,6 +41,7 @@ gem 'rack-zippy' # Serves static gzipped precompiled assets
 gem 'kaminari'
 gem 'formtastic'
 gem 'font-awesome-sass', '~> 4.3.0'
+gem 'draper'
 
 # Models
 ########################

@@ -8,16 +8,6 @@ module ModsHelper
     end
   end
 
-  def mod_release(mod_version)
-    string = h mod_version.number
-    string += (' (' + mod_date(mod_version.released_at) + ')').html_safe if mod_version.released_at
-    string
-  end
-
-  def forum_post_stats_link(mod = @mod)
-    link_to "#{@mod.forum_post.comments_count} comments / #{@mod.forum_post.views_count} views", @mod.forum_url
-  end
-
   def attachment_label(mod, name)
     return nil if mod.attachment.blank?
     file_name = mod.send(:"#{name}_file_name")
@@ -49,12 +39,6 @@ module ModsHelper
     str
   end
 
-  def category_tag_link(category)
-    link_to category_filter_url(category), class: 'tag' do
-      content_tag(:i, '', class: category.icon_class) + ' ' + category.name
-    end
-  end
-
   def link_to_file_url_with_name(file)
     if file.download_url.present?
       begin
@@ -69,10 +53,6 @@ module ModsHelper
     end
   end
 
-  def admin_edit_link(mod)
-    link_to t('helpers.admin_edit'), edit_mod_path(mod) if can? :manage, Mod
-  end
-
   def index_title
     if current_page? '/'
       title t('.title.root')
@@ -84,30 +64,4 @@ module ModsHelper
       title
     end
   end
-
-  def authors_links_list(mod)
-    return t('helpers.not_available') if mod.authors.empty?
-
-    mod.authors.each.map do |author, i|
-      link = link_to(author.name, author)
-      if author == mod.owner and mod.authors.size > 1
-        maintainer = I18n.t('helpers.mods.maintainer')
-        link + " (#{maintainer})"
-      else
-        link
-      end
-    end.join(', ').html_safe
-  end
-
-#   - if current_page? '/'
-#   - title t 'title.root'
-# - else
-#   - if @game_version
-#     - title_append t('title.mods.index.version', version: @game_version.number)
-#   - title_append t('title.mods.index.mods')
-#   - if @category
-#     - title_append t('title.mods.index.category', category: @category.name)
-#   - if @sort
-#     - title_append t(@sort, scope: 'title.mods.index.sort')
-#   - title
 end

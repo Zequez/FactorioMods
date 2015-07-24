@@ -265,36 +265,6 @@ RSpec.describe Mod, :type => :model do
       end
     end
 
-    describe '#has_versions?' do
-      it 'should return false if the mod has no versions' do
-        mod = create :mod, versions: []
-        expect(mod.has_versions?).to eq false
-      end
-
-      it 'should return true if the mod has a version' do
-        mod = create :mod, versions: []
-        create :mod_version, mod: mod
-        mod = Mod.first
-        expect(mod.has_versions?).to eq true
-      end
-    end
-
-    describe '#has_files?' do
-      it 'should return false if the mod has no files' do
-        mod = create :mod, versions: []
-        expect(mod.has_files?).to eq false
-      end
-
-      it 'should return true if the mod has at least a file' do
-        mod = build :mod, versions: []
-        mod.save!
-        mod_version = create :mod_version, mod: mod
-        mod_file = create :mod_file, mod_version: mod_version
-        mod = Mod.first
-        expect(mod.has_files?).to eq true
-      end
-    end
-
     describe '#files' do
       it 'should be ModFile type' do
         mod.files.build
@@ -357,38 +327,6 @@ RSpec.describe Mod, :type => :model do
           mod = Mod.first
 
           expect(mod.game_versions_string).to eq "#{gv1.number}"
-        end
-      end
-    end
-
-    describe '#latest_version' do
-      it 'returns latest mod version' do
-        mv1 = create :mod_version, mod: mod, released_at: 3.years.ago
-        mv2 = create :mod_version, mod: mod, released_at: 2.months.ago
-        mv3 = create :mod_version, mod: mod, released_at: 1.day.ago
-        mod.reload
-        expect(mod.latest_version).to eq mv3
-      end
-
-      context 'no mod versions' do
-        it 'returns nil' do
-          expect(mod.latest_version).to eq nil
-        end
-      end
-    end
-
-    describe '#second_latest_version' do
-      it 'returns second latest mod version' do
-        mv1 = create :mod_version, mod: mod, released_at: 3.days.ago
-        mv2 = create :mod_version, mod: mod, released_at: 2.days.ago
-        mv3 = create :mod_version, mod: mod, released_at: 1.day.ago
-        mod.reload
-        expect(mod.second_latest_version).to eq mv2
-      end
-
-      context 'no mod versions' do
-        it 'returns nil' do
-          expect(mod.second_latest_version).to eq nil
         end
       end
     end

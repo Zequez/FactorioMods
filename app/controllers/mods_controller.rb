@@ -56,12 +56,15 @@ class ModsController < ApplicationController
     @game_versions = GameVersion.sort_by_newer_to_older
     @categories = Category.order_by_mods_count.order_by_name
     
+    @mods = @mods.decorate
+    
     respond_with @mods
   end
 
   def show
     @mod = Mod.includes(versions: :files).find_by_slug(params[:id])
     not_found unless @mod
+    @mod = @mod.decorate
 
     respond_with @mod
   end

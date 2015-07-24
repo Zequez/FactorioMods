@@ -1,28 +1,19 @@
 %ul.mod-data
-  %li
+  %li{class: ('wide' if @mod.authors_count > 2)}
     .data-name= t('.game_version')
-    .data-value= if_na(@mod.game_versions_string)
-  %li
-    .data-name= t('.authors', count: @mod.authors.size)
-    .data-value= authors_links_list(@mod)
-  %li{class: ('wide' if @mod.has_versions?)}
+    .data-value= @mod.game_versions_string
+  %li{class: ('wide' if @mod.authors_count > 2)}
+    .data-name= t('.authors', count: @mod.authors_count)
+    .data-value= @mod.authors_links_list
+  %li.wide
     .data-name= t('.first_version')
-    .data-value= if_na(@mod.has_versions?) { mod_release(@mod.versions.first) }
-  %li{class: ('wide' if @mod.has_versions?)}
+    .data-value= @mod.first_release_info
+  %li.wide
     .data-name= t('.last_version')
-    .data-value= if_na(@mod.has_versions?) { mod_release(@mod.versions.last) }
+    .data-value= @mod.last_release_info
   %li.wide
     .data-name= t('.source')
-    .data-value= if_na(@mod.github) { link_to @mod.github_url, @mod.github_url }
+    .data-value= @mod.github_link
   %li.wide
-    .data-name= t('.forum_post_url')
-    .data-value
-      = if_na(@mod.forum_url) do
-        - if @mod.forum_post
-          = forum_post_stats_link
-        - else
-          = link_to t('.forum_post_url_title'), @mod.forum_url
-  - if @mod.forum_subforum_url.present?
-    %li.wide
-      .data-name= t('.subforum_url')
-      .data-value= link_to @mod.forum_subforum_url
+    .data-name= t('.forum_url')
+    .data-value= @mod.forum_link(:long)

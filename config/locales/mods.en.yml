@@ -16,8 +16,8 @@ en:
         file_version: File version
         release_date: Release date
       all_releases: All releases
-      mod_subforum: Mod subforum
-      mod_forum_post: Mod forum post
+      mod_subforum: "Forum location: "
+      mod_forum_post: "Forum post:"
 
     index:
       title:
@@ -37,6 +37,10 @@ en:
         basic and plain for now. I apologize the inconvenience.
       admin_edit: Edit
       post_on_the_factorio_forum: Post on the official Factorio forums
+      links:
+        last_version_date: "Date of the latest version of this mod %{date}"
+        game_version: Factorio versions this mod works with
+        authors: The awesome person/people behind this mod
 
     mod_data_table:
       game_version: Factorio version
@@ -46,12 +50,9 @@ en:
       first_version: First version
       last_version: Last version
       source: Source
-      forum_post_url: Forum post URL
-      forum_post_url_title: On the Factorio forums
-      subforum_url: Subforum URL
+      forum_url: Forum URL
 
     download_button:
-      more_versions: More versions...
       download: Download
 
     filter_bar:
@@ -59,3 +60,21 @@ en:
       categories: Categories
       all: All
       for_game_version: For Factorio v%{version}
+
+    decorator:
+      more_versions: More versions...
+      admin_edit: '//Edit'
+      edit_mod: 'Edit mod'
+      forum_link_title:
+        subforum: This mod has a whole subforum for itself
+        detailed: "%{views} views and %{comments} comments on the official Factorio forum"
+        vague: Post on the official Factorio forum
+      forum_link:
+        subforum:
+          subforum: Dedicated subforum
+          post: Releases post
+        long: "%{comments} comments / %{views} views"
+        short: "%{views}<abbr title='Views'>V</abbr> / %{comments}<abbr title='Comments'>C</abbr>"
+        vague:
+          long: On the Factorio forums
+          short: Forum

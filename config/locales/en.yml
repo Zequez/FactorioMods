@@ -2,7 +2,6 @@ en:
   helpers:
     no_image_available: No image available
     not_available: N/A
-    admin_edit: '[Edit]'
     mods:
       maintainer: 'maintainer'
 

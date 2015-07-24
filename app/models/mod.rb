@@ -253,14 +253,6 @@ class Mod < ActiveRecord::Base
     "http://i.imgur.com/#{imgur}l.jpg"
   end
 
-  def latest_version
-    versions[0]
-  end
-
-  def second_latest_version
-    versions[1]
-  end
-
   def game_versions_string
     read_attribute(:game_versions_string) || set_game_versions_string
   end
@@ -276,29 +268,6 @@ class Mod < ActiveRecord::Base
 
   def github=(val)
     write_attribute :github, extract_github_path(val) || val
-  end
-
-  def latest_versions_with_files(number = nil)
-    result = []
-    selected_versions = number ? versions.last(number) : versions
-    selected_versions.each do |version|
-      version.files.each do |file|
-        if block_given?
-          yield version, file
-        else
-          result << [version, file]
-        end
-      end
-    end
-    result
-  end
-
-  def has_versions?
-    versions.size > 0
-  end
-
-  def has_files?
-    files.size > 0
   end
 
   def slug=(val)

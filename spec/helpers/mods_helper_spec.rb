@@ -36,28 +36,4 @@ RSpec.describe ModsHelper, :type => :helper do
       expect(link_to_file_url_with_name(file)).to eq nil
     end
   end
-
-  describe '#authors_links_list' do
-    it 'should return a comma separated authors list links' do
-      mod = create :mod, authors: 3.times.map{ |i| create :user, name: "Au#{i}" }
-      expect(authors_links_list(mod)).to eq '<a href="/users/au0">Au0</a>, <a href="/users/au1">Au1</a>, <a href="/users/au2">Au2</a>'
-    end
-
-    it 'should add the (maintainer) text if the author is also the owner' do
-      authors = 3.times.map{ |i| create :user, name: "Au#{i}" }
-      mod = create :mod, authors: authors, owner: authors[1]
-      expect(authors_links_list(mod)).to eq '<a href="/users/au0">Au0</a>, <a href="/users/au1">Au1</a> (maintainer), <a href="/users/au2">Au2</a>'
-    end
-
-    it 'should not add the (maintainer) text if there is only 1 author' do
-      author = create :user, name: "Au0"
-      mod = create :mod, authors: [author], owner: author
-      expect(authors_links_list(mod)).to eq '<a href="/users/au0">Au0</a>'
-    end
-
-    it 'should return N/A if the mod has no authors associated' do
-      mod = create :mod, authors: []
-      expect(authors_links_list(mod)).to eq 'N/A'
-    end
-  end
 end

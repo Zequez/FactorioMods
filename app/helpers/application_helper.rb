@@ -19,17 +19,24 @@ module ApplicationHelper
       category.mods_count
     end
   end
+  
+  def date_time_tag(date)
+    if date
+      string = time_ago_in_words(date) + ' ago'
+      time_tag(date, string, title: date.to_s(:rfc822)).html_safe
+    else
+      ''
+    end
+  end
+  
+  def release_info(mod_version)
+    string = h mod_version.number
+    string += (' (' + date_time_tag(mod_version.released_at) + ')').html_safe if mod_version.released_at
+    string
+  end
 
   ### Misc helpers:
   ####################
-
-  def link_wrap_if(link_condition, *options, &block)
-    if link_condition
-      link_to link_condition, *options, &block
-    else
-      capture &block
-    end
-  end
 
   def missing_img(size, img_tag_options = {})
     img_tag_options = img_tag_options.reverse_merge({
@@ -38,34 +45,9 @@ module ApplicationHelper
     })
     tag :img, img_tag_options
   end
-
-  def mod_img(mod, size)
-    tag :img,
-      src: mod_img_url(mod, size),
-      class: 'mod-img',
-      title: (t('helpers.no_image_available') if !mod.imgur)
-  end
-
-  def mod_img_url(mod, size)
-    mod.imgur(size).presence || missing_img_url(size)
-  end
-
+  
   def missing_img_url(size)
     root_path + "images/missing_#{size}.png"
-  end
-
-  def if_na(value, result = nil, na = nil, &block)
-    na = na || t('helpers.not_available')
-    use_na = (!!value == value) ? !value : value.blank?
-    if use_na
-      na
-    else
-      if block_given?
-        capture(&block)
-      else
-        result.nil? ? value : result
-      end
-    end
   end
 
   def body_controller_classes

@@ -11,40 +11,25 @@
 .mods-index
   - @mods.each do |mod|
     .mod
-      .mod-thumbnail<
-        %a.mod-thumbnail-link{href: mod_url(mod)}
-          = mod_img(mod, :thumbnail)
+      .mod-thumbnail= link_to mod.img(:thumbnail), mod
       .mod-info-container
-        %h2.mod-title
-          = link_to mod.name, mod, class: 'highlight-query'
-          = admin_edit_link(mod)
-        .mod-subtitle
-          - mod.categories.each do |category|
-            = category_tag_link category
-        .mod-summary.highlight-query= simple_format mod.summary
-      .mod-links
-        - if mod.forum_url.present?
-          - if mod.forum_post
-            %a.mod-link{href: mod.forum_url, title: "#{mod.forum_post.views_count} views and #{mod.forum_post.comments_count} comments on the official Factorio forum"}
-              #{mod.forum_post.views_count}<abbr title="Views">V</abbr> / #{mod.forum_post.comments_count}<abbr title="Comments">C</abbr>
-              = icon 'comments'
-          - else
-            %a.mod-link{href: mod.forum_url, title: 'Post on the official Factorio forum'}
-              Forum
-              = icon 'comments'
-
-        - if mod.latest_version.present? and mod.latest_version.released_at.present?
-          %span.mod-link{title: "#{mod.latest_version.released_at.to_s(:rfc822)} - Date of the latest version of this mod"}
-            = mod_date mod.latest_version.released_at
-            = icon 'history'
-        - if mod.game_versions_string.present?
-          %span.mod-link(title='Last Factorio version this mod works with')
-            = "v#{mod.game_versions_string}"
-            = icon 'cog'
-        %span.mod-link{title: 'The awesome person/people behind this mod'}
-          = authors_links_list(mod)
-          = icon 'user'
-        -# %a.mod-link.mod-official-site{href: '#'}
-        -#   Official mod site
+        %h2.mod-title.highlight-query= mod.title_link
+        .mod-subtitle= mod.categories_links
+        .mod-summary.highlight-query= mod.pretty_summary
+      .mod-info
+        %span.mod-info-tag{title: mod.forum_link_title}
+          = mod.forum_link
+          = icon 'comments'
+        %span.mod-info-tag{title: t('.links.last_version_date', date: mod.last_version_date)}
+          = mod.last_version_date_time_tag
+          = icon 'history'
+        %span.mod-info-tag{title: t('.links.game_version')}
+          = mod.game_versions_string
+          = icon 'cog'
+        -# It's here in the middle so we can make some CSS magic
         = render partial: 'download_button', locals: { mod: mod }
+        %span.mod-info-tag{title: t('.links.authors')}
+          = mod.authors_links_list
+          = icon 'user'
+          
   = paginate @mods

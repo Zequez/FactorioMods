@@ -139,17 +139,23 @@ $mods-list-size: 12-$filter-size
 
 
     //-- Links --//
-    &-links
+    &-info
       +span(2 omega of $mods-list-size)
       padding: space()
       text-align: right
       +nowrap
+      
+      &-tag
+        display: block
 
       .btn-download
-        +absolute(false, space(), space(), false)
-      //   bottom: rhythm(1)*0.5
-      //   right: rhythm(1)*0.5
+        position: absolute
+        bottom: space()
+        right: space()
         z-index: 999
+        
+        // Add some spacing when the download button is shown
+        & + .mod-info-tag
+          margin-bottom: rhythm(1)
 
-    &-link
-      display: block
+      
