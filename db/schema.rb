@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150723185125) do
+ActiveRecord::Schema.define(version: 20150724141339) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -188,15 +188,15 @@ ActiveRecord::Schema.define(version: 20150723185125) do
     t.datetime "first_version_date"
     t.datetime "last_version_date"
     t.string   "github"
-    t.integer  "favorites_count",      default: 0, null: false
-    t.integer  "comments_count",       default: 0, null: false
+    t.integer  "favorites_count",      default: 0,  null: false
+    t.integer  "comments_count",       default: 0,  null: false
     t.string   "license"
     t.string   "license_url"
     t.string   "official_url"
     t.string   "forum_post_url"
     t.integer  "forum_comments_count"
-    t.integer  "downloads_count",      default: 0, null: false
-    t.integer  "visits_count",         default: 0, null: false
+    t.integer  "downloads_count",      default: 0,  null: false
+    t.integer  "visits_count",         default: 0,  null: false
     t.integer  "category_id"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -206,8 +206,8 @@ ActiveRecord::Schema.define(version: 20150723185125) do
     t.string   "game_versions_string"
     t.text     "description_html"
     t.integer  "forum_post_id"
-    t.string   "forum_subforum_url"
-    t.string   "forum_url"
+    t.string   "forum_subforum_url",   default: "", null: false
+    t.string   "forum_url",            default: "", null: false
     t.text     "media_links"
     t.string   "imgur"
     t.integer  "last_version_id"

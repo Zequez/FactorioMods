@@ -9,7 +9,7 @@ class ModDecorator < Draper::Decorator
   end
     
   def forum_link_title
-    if mod.subforum_url
+    if mod.subforum_url.present?
       h.t('mods.decorator.forum_link_title.subforum')
     elsif mod.forum_post
       h.t('mods.decorator.forum_link_title.detailed', views: forum_views, comments: forum_comments)
@@ -19,9 +19,9 @@ class ModDecorator < Draper::Decorator
   end
   
   def forum_link(length = :short) # or :long
-    if mod.subforum_url
+    if mod.subforum_url.present?
       subforum_link = h.link_to h.t('mods.decorator.forum_link.subforum.subforum'), mod.subforum_url
-      if mod.forum_url
+      if mod.forum_url.present?
         post_link = h.link_to h.t('mods.decorator.forum_link.subforum.post'), mod.forum_url
         (subforum_link + ' - ' + post_link).html_safe
       else

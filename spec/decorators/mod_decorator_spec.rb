@@ -35,11 +35,21 @@ describe ModDecorator do
         mod = create_decorated :mod, forum_url: 'http://potato.com'
         expect(URI.extract(mod.forum_link)).to eq ['http://potato.com']
       end
+      
+      it 'should only have the forum URL, with empty string subforum_url' do
+        mod = create_decorated :mod, forum_url: 'http://potato.com', subforum_url: ''
+        expect(URI.extract(mod.forum_link)).to eq ['http://potato.com']
+      end
     end
     
     context 'has only the subforum URL' do
       it 'should link to the subforum' do
         mod = create_decorated :mod, subforum_url: 'http://cabbage.com'
+        expect(URI.extract(mod.forum_link)).to eq ['http://cabbage.com']
+      end
+      
+      it 'should link to the subforum, with empty string forum post URL' do
+        mod = create_decorated :mod, subforum_url: 'http://cabbage.com', forum_url: ''
         expect(URI.extract(mod.forum_link)).to eq ['http://cabbage.com']
       end
     end

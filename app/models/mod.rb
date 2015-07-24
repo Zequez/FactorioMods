@@ -90,8 +90,12 @@ class Mod < ActiveRecord::Base
   #################
 
   before_save do
-    if forum_url_changed?
-      self.forum_post = ForumPost.find_by_url(forum_url)
+    if forum_url_changed? and not forum_post_id_changed?
+      if forum_url.present?
+        self.forum_post = ForumPost.find_by_url(forum_url)
+      else
+        self.forum_post = nil
+      end
     end
   end
 
