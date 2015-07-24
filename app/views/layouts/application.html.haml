@@ -2,7 +2,8 @@
 %html
   %head
     %title= yield :title
-    = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true
+    = stylesheet_link_tag 'http://fonts.googleapis.com/css?family=Titillium+Web:400,600'
+    = stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true
     %script(src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js")
     = csrf_meta_tags
     %link(rel="shortcut icon" href="/favicon.ico?v=2")

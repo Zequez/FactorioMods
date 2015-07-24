@@ -4,16 +4,16 @@
 @mixin dark-box-shadow($amount: 0.1)
   box-shadow: inset 0px -1px 0px rgba(#000, $amount)
 
-@mixin light-background-gradient($color: false, $amount: 5%)
+@mixin light-background-gradient($color: false, $amount: 0.05)
   @if not $color
-    $color: rgba(#fff, $amount/100)
+    $color: rgba(#fff, $amount)
     +background-image(linear-gradient($color, rgba(#fff, 0)))
   @else
     +background-image(linear-gradient(lighten($color, $amount), $color))
 
-@mixin dark-background-gradient($color: false, $amount: 5%)
+@mixin dark-background-gradient($color: false, $amount: 0.05)
   @if not $color
-    $color: rgba(#000, $amount/100)
+    $color: rgba(#000, $amount)
     +background-image(linear-gradient($color, rgba(#000, 0)))
   @else
     +background-image(linear-gradient(darken($color, $amount), $color))
