@@ -85,4 +85,65 @@ feature 'Display full mod information' do
     visit '/mods/supermod'
     expect(page).to have_content /Au4.*Au3.*Au2.*Au1.*Au0/
   end
+  
+  describe 'visibility' do
+    scenario 'non-dev owner visits his own mod' do
+      user = create :user
+      mod = create :mod, owner: user, visible: false
+      sign_in user
+      visit mod_path mod
+      expect(page).to have_http_status :success
+      expect(page).to have_content I18n.t('mods.show.non_visible.non_dev')
+    end
+    
+    scenario 'dev owner visits his own mod' do
+      user = create :user, is_dev: true
+      mod = create :mod, owner: user, visible: false
+      sign_in user
+      visit mod_path mod
+      expect(page).to have_http_status :success
+      expect(page).to have_content I18n.t('mods.show.non_visible.dev')
+    end
+    
+    scenario 'a non-registered user visits a non-visible mod' do
+      mod = create :mod, visible: false
+      visit mod_path mod
+      expect(page).to have_http_status :unauthorized
+    end
+    
+    scenario 'a registered user visits a non-visible mod' do
+      user = create :user
+      sign_in user
+      mod = create :mod, visible: false
+      visit mod_path mod
+      expect(page).to have_http_status :unauthorized
+    end
+
+    scenario 'a dev user visits a non-visible mod' do
+      user = create :user, is_dev: true
+      sign_in user
+      mod = create :mod, visible: false
+      visit mod_path mod
+      expect(page).to have_http_status :unauthorized
+    end
+    
+    scenario 'admin visits some guy non-visible mod' do
+      some_guy = create :user, is_dev: true
+      mod = create :mod, owner: some_guy, visible: false
+      admin = create :user, is_admin: true
+      sign_in admin
+      visit mod_path mod
+      expect(page).to have_http_status :success
+      expect(page).to have_content I18n.t('mods.show.non_visible.admin')
+    end
+    
+    scenario 'admin visits an ownerless non-visible mod' do
+      mod = create :mod, owner: nil, visible: false
+      admin = create :user, is_admin: true
+      sign_in admin
+      visit mod_path mod
+      expect(page).to have_http_status :success
+      expect(page).to have_content I18n.t('mods.show.non_visible.admin')
+    end
+  end
 end

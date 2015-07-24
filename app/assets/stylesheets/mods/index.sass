@@ -6,6 +6,10 @@ $mods-list-size: 12-$filter-size
     background: none
     border-radius: none
     padding: 0
+    
+    .query-info-box
+      +span($mods-list-size omega of 12)
+      margin-bottom: rhythm()
 
 .filter-bar
   @extend %content-block
@@ -73,11 +77,6 @@ $mods-list-size: 12-$filter-size
     &-remove:before
       color: $color-washed-orange
       content: '✖'
-
-.info-box
-  +span($mods-list-size omega of 12)
-  padding: 0 space()
-  margin-bottom: rhythm()
 
 .mods-index
   +span($mods-list-size omega of 12)

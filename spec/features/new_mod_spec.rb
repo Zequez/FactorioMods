@@ -12,11 +12,30 @@ feature 'Modder creates a new mod' do
 
       expect(page.status_code).to eq 401
     end
-
-    scenario 'user visits new mod page' do
-      sign_in_dev
+    
+    
+    scenario 'non-dev user visits the new mod page' do
+      sign_in
       visit '/mods/new'
 
+      expect(page.status_code).to eq 200
+      expect(page).to have_content 'Create new mod'
+    end
+
+    scenario 'dev user visits new mod page' do
+      sign_in_dev
+      visit '/mods/new'
+      
+      expect(page.status_code).to eq 200
+      expect(page).to have_content 'Create new mod'
+    end
+    
+    
+    scenario 'admin user visits new mod page' do
+      sign_in_admin
+      visit '/mods/new'
+      
+      expect(page.status_code).to eq 200
       expect(page).to have_content 'Create new mod'
     end
   end
@@ -254,6 +273,92 @@ feature 'Modder creates a new mod' do
     expect(current_path).to eq '/mods'
     expect(page).to have_css '#mod_authors_list_input .inline-errors'
     expect(page).to have_content /too many/i
+  end
+  
+  describe 'visibility toggle' do
+    scenario 'should be hidden for non-dev, and false' do
+      sign_in
+      visit '/mods/new'
+      expect(page).to_not have_css '#mod_visible'
+      fill_in_minimum
+      submit_form
+      expect(Mod.first.visible).to eq false
+    end
+    
+    shared_examples 'admin or dev' do
+      scenario 'should be visible and ON by default' do
+        sign_in_admin_or_dev
+        visit '/mods/new'
+        expect(page).to have_css '#mod_visible'
+        expect(find('#mod_visible').value).to eq '1'
+        fill_in_minimum
+        submit_form
+        expect(Mod.first.visible).to eq true
+      end
+      
+      scenario 'should be visible it should be changeable' do
+        sign_in_admin_or_dev
+        visit '/mods/new'
+        expect(page).to have_css '#mod_visible'
+        expect(find('#mod_visible').value).to eq '1'
+        uncheck 'mod_visible'
+        fill_in_minimum
+        submit_form
+        expect(Mod.first.visible).to eq false
+      end
+    end
+    
+    context 'dev user' do
+      it_behaves_like 'admin or dev' do
+        let(:sign_in_admin_or_dev){ sign_in_dev }
+      end
+    end
+    
+    context 'admin user' do
+      it_behaves_like 'admin or dev' do
+        let(:sign_in_admin_or_dev){ sign_in_admin }
+      end
+    end
+    
+    # context 'dev or admin submits a mod' do
+    #   scenario 'should be visible and ON by default' do
+    #     sign_in_dev
+    #     visit '/mods/new'
+    #     expect(page).to have_css '#mod_visible_input'
+    #     expect(find('#mod_visible_input').value).to eq true
+    #     fill_in_minimum
+    #     submit_form
+    #     expect(Mod.first.visible).to eq true
+    #   end
+      
+    #   scenario 'should be visible it should be changeable' do
+    #     sign_in_dev
+    #     visit '/mods/new'
+    #     expect(page).to have_css '#mod_visible_input'
+    #     expect(find('#mod_visible_input').value).to eq true
+    #     uncheck 'mod_visible_input'
+    #     fill_in_minimum
+    #     submit_form
+    #     expect(Mod.first.visible).to eq false
+    #   end
+    # end
+    
+    
+    # scenario 'should be visible if an admin visits mods#new, and it should be ON by default' do
+    #   sign_in
+    #   visit '/mods/new'
+    #   expect(page).to have_css '#mod_visible_input'
+    #   expect(find('#mod_visible_input').value).to eq true
+    #   fill_in_minimum
+    #   submit_form
+    #   expect(Mod.first.visible).to eq true
+    # end
+  end
+  
+  def fill_in_minimum
+    fill_in 'mod_name', with: 'SuperMod'
+    select 'Terrain', from: 'Categories'
+    fill_in_first_version_and_file
   end
 
   def fill_in_first_version_and_file

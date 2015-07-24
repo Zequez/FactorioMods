@@ -9,17 +9,19 @@ feature 'Display an index of mods in certain order' do
       mod.versions = [build(:mod_version, released_at: last_version, mod: nil)]
     end
     mod.save!
+    mod
   end
 
   # Describe how the mod index should work
   RSpec.shared_examples 'mod index' do
     context 'with multiple mods' do
       before(:each) do
-        create_mod 'SuperMod2', 2.days.ago, 1000
-        create_mod 'SuperMod4', 5.days.ago, 800
-        create_mod 'superMod0', 10.days.ago, 1200
-        create_mod 'SuperMod6', 1.days.ago, 1500
-        create_mod 'superMod3', 7.days.ago, 100
+        @mods = []
+        @mods << create_mod('SuperMod2', 2.days.ago, 1000)
+        @mods << create_mod('SuperMod4', 5.days.ago, 800)
+        @mods << create_mod('superMod0', 10.days.ago, 1200)
+        @mods << create_mod('SuperMod6', 1.days.ago, 1500)
+        @mods << create_mod('superMod3', 7.days.ago, 100)
       end
 
       scenario 'visit the front page and sort by recently updated' do
@@ -40,6 +42,13 @@ feature 'Display an index of mods in certain order' do
       scenario 'sort by most popular' do
         visit '/most-popular'
         expect(mod_names).to eq %w{SuperMod6 superMod0 SuperMod2 SuperMod4 superMod3}
+      end
+      
+      scenario 'some mods are not visible' do
+        @mods[2].update! visible: false
+        @mods[4].update! visible: false
+        visit '/mods'
+        expect(mod_names).to eq %w{SuperMod2 SuperMod4 SuperMod6}
       end
     end
 

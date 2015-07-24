@@ -86,7 +86,7 @@ class ModDecorator < Draper::Decorator
   
   def title_link
     h.link_to(mod.name, mod) +
-    (h.link_to h.t('mods.decorator.admin_edit'), [:edit, mod] if h.can? :manage, Mod)
+    (h.link_to h.t('mods.decorator.admin_edit'), [:edit, mod] if h.can? :edit, mod)
   end
   
   def edit_link
@@ -126,6 +126,18 @@ class ModDecorator < Draper::Decorator
   
   def preferred_forum_url
     mod.subforum_url.presence || mod.forum_url
+  end
+  
+  def visibility_notice
+    if not mod.visible?
+      if h.current_user.is_admin?
+        h.t('mods.show.non_visible.admin')
+      elsif h.current_user.is_dev?
+        h.t('mods.show.non_visible.dev')
+      else
+        h.t('mods.show.non_visible.non_dev')
+      end
+    end
   end
   
   ### Download button

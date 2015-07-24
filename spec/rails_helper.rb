@@ -96,8 +96,8 @@ RSpec.configure do |config|
   config.infer_spec_type_from_file_location!
 
 
-  def sign_in
-    @user = create :user
+  def sign_in(user = nil)
+    @user = user || create(:user)
     login_as @user
   end
 

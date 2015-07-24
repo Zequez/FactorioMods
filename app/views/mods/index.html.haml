@@ -6,7 +6,7 @@
   = render partial: 'mods_filters_list'
 
 - if @query
-  .info-box= t('.search_notice')
+  .info-box.query-info-box= t('.search_notice')
 
 .mods-index
   - @mods.each do |mod|

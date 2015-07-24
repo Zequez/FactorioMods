@@ -60,6 +60,7 @@ class Mod < ActiveRecord::Base
   scope :filter_by_game_version, ->(game_version) do
     joins(:mod_game_versions).where(mod_game_versions: { game_version: game_version })
   end
+  scope :visible, ->{ where(visible: true) }
   scope :sort_by_most_recent, -> { order('mods.last_release_date desc NULLS LAST') }
   scope :sort_by_alpha, -> { order('LOWER(mods.name) asc') }
   scope :sort_by_forum_comments, -> { order('mods.forum_comments_count desc') }
@@ -109,15 +110,6 @@ class Mod < ActiveRecord::Base
     if forum_post
       forum_post.mod = self
       forum_post.save
-    end
-  end
-
-  after_save do
-    if author_id_changed?
-      if author and not author.is_dev
-        author.is_dev = true
-        author.save
-      end
     end
   end
 

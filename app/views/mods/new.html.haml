@@ -9,9 +9,9 @@
   = semantic_form_for @mod do |f|
     = f.inputs do
       = f.input :name
-      = f.input :slug if current_user.is_admin?
+      = f.input :slug if can? :set_slug, @mod
       = f.input :categories, as: :categories_select
-      = f.input :owner if current_user.is_admin?
+      = f.input :owner if can? :set_owner, @mod
       = f.input :authors_list, as: :multi_datalist, collection: @existing_authors_names, placeholder: @existing_authors_names.sample(4).push('etc').join(', ')
       = f.input :github
       = f.input :official_url
@@ -19,6 +19,7 @@
       = f.input :forum_subforum_url
       = f.input :imgur
       = f.input :summary, as: :text
+      = f.input :visible if can? :set_visibility, @mod
       %li.nested-form.mod-versions
         = f.semantic_fields_for :versions do |ff|
           = render 'version_fields', f: ff

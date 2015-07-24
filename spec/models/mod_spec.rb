@@ -23,6 +23,9 @@ RSpec.describe Mod, :type => :model do
     it { is_expected.to respond_to :imgur_normal }
 
     it { is_expected.to respond_to :last_release_date }
+    
+    it { is_expected.to respond_to :visible? }
+    it { expect(mod.visible).to eq true }
 
     # URLs
     it { is_expected.to respond_to :license_url }
@@ -167,16 +170,6 @@ RSpec.describe Mod, :type => :model do
         mod.author = nil
         mod.save!
         expect(mod.author_name).to eq 'Yeah'
-      end
-
-      it 'should set author#is_dev to true after saving' do
-        mod = create :mod, author: nil
-        user = create :user, name: 'YeahYeah'
-        expect(user.is_dev?).to eq false
-        mod.author = user
-        expect(user.is_dev?).to eq false
-        mod.save!
-        expect(user.is_dev?).to eq true
       end
     end
 

@@ -7,6 +7,7 @@ class ApplicationController < ActionController::Base
 
   rescue_from CanCan::AccessDenied, with: :authentication_error
   rescue_from ActiveRecord::RecordNotFound, with: :not_found
+  rescue_from ActionController::ParameterMissing, with: :wrong_parameres_error
 
   before_action :configure_devise_permitted_parameters, if: :devise_controller?
   
@@ -33,6 +34,10 @@ class ApplicationController < ActionController::Base
     params[:action] = 'error-401'
     @error_code = 401
     render 'errors/base', status: 401
+  end
+  
+  def wrong_parameres_error(exception = nil)
+    render text: '', status: 400
   end
 
   def configure_devise_permitted_parameters

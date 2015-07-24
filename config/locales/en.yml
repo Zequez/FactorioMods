@@ -55,6 +55,7 @@ en:
         media_links_string: 'Pictures or gifs links'
         imgur: Imgur.com URL or ID
         forum_subforum_url: 'Subforum URL'
+        visible: Make this mod publicly visible
 
       mod_version:
         released_at: 'Release day'

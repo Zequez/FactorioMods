@@ -1,6 +1,7 @@
 require 'rails_helper'
 
-RSpec.describe ModsController, type: :controller do
+describe ModsController, type: :controller do
+  include Devise::TestHelpers
 
   subject(:mods) do
     mods = mods || begin
@@ -170,6 +171,17 @@ RSpec.describe ModsController, type: :controller do
         end
       end
     end
+    
+    context 'some mods non-visible' do
+      it 'should not load them' do
+        mods[0].update! visible: false
+        mods.delete_at(0)
+        mods[3].update! visible: false
+        mods.delete_at(3)
+        get_index
+        expect(assigns(:mods)).to match_array mods
+      end
+    end
   end
 
   describe "GET 'show'" do
@@ -185,6 +197,240 @@ RSpec.describe ModsController, type: :controller do
       before(:each) { get 'show', id: 'split' }
 
       it { expect(response.status).to eq 404 }
+    end
+  end
+  
+  describe 'POST create' do  
+    def submit_basic(extra_params = {})
+      post :create, mod: {name: 'SuperMod', category_ids: [create(:category).id]}.merge(extra_params)
+    end
+    
+    def submit_blank(params = {})
+      post :create, params
+    end
+
+    context 'a malformed query' do
+      it 'should raise a 400 error' do
+        submit_blank
+        expect(response).to have_http_status :bad_request
+      end
+    end
+    
+    context 'guest user (not registered)' do
+      it 'should not allow it at all 401' do
+        submit_blank mod: {name: 'SuperMod'}
+        expect(response).to have_http_status :unauthorized
+      end
+    end
+    
+    context 'user is registered' do
+      it 'should allow it to create a mod' do
+        sign_in create :user
+        submit_basic
+        expect(response).to have_http_status :redirect
+      end
+      
+      it 'should not allow it set #visible #owner or #slug' do
+        first_user = create :user
+        second_user = create :user
+        sign_in first_user
+        submit_basic visible: true, author_id: second_user.id, slug: 'rsarsarsa'
+        expect(response).to have_http_status :redirect
+        mod = Mod.first
+        expect(mod.visible).to eq false
+        expect(mod.owner).to eq first_user
+        expect(mod.slug).to eq 'supermod'
+      end
+    end
+    
+    context 'user is a developer' do
+      it 'should allow it set #visible but not #owner or #slug' do
+        first_user = create :dev_user
+        second_user = create :user
+        sign_in first_user
+        submit_basic visible: true, author_id: second_user.id, slug: 'rsarsarsa'
+        expect(response).to have_http_status :redirect
+        mod = Mod.first
+        expect(mod.visible).to eq true
+        expect(mod.owner).to eq first_user
+        expect(mod.slug).to eq 'supermod'
+      end
+      
+      it 'should also allow it to set visibility to false' do
+        sign_in create(:dev_user)
+        submit_basic visible: false
+        expect(Mod.first.visible).to eq false
+      end
+    end
+    
+    
+    context 'user is an admin' do
+      it 'should allow it set #visible, #owner or #slug' do
+        first_user = create :admin_user
+        second_user = create :user
+        sign_in first_user
+        submit_basic visible: true, author_id: second_user.id, slug: 'rsarsarsa'
+        expect(response).to have_http_status :redirect
+        mod = Mod.first
+        expect(mod.visible).to eq true
+        expect(mod.owner).to eq second_user
+        expect(mod.slug).to eq 'rsarsarsa'
+      end
+      
+      it 'should also be able to allow those values to be default' do
+        sign_in create(:admin_user)
+        submit_basic visible: false, author_id: nil, slug: ''
+        expect(Mod.first.visible).to eq false
+        expect(Mod.first.owner).to eq nil
+        expect(Mod.first.slug).to eq 'supermod'
+      end
+    end
+  end
+
+  
+  describe "PATCH update"  do
+    def submit_basic(mod, extra_params = {})
+      put :update, id: mod.id, mod: extra_params
+    end
+
+    context 'a malformed query' do
+      it 'should raise a 400 error' do
+        user = create :user
+        mod = create :mod, owner: user
+        sign_in user
+        patch :update, id: mod.id
+        expect(response).to have_http_status :bad_request
+      end
+    end
+    
+    context 'guest user (not registered)' do
+      it 'should not allow it at all 401' do
+        mod = create :mod
+        submit_basic mod, name: mod.name
+        expect(response).to have_http_status :unauthorized
+      end
+    end
+    
+    context 'user is registered' do
+      it "should allow it to update a it's own mod" do
+        user = create :user
+        mod = create :mod, owner: user
+        sign_in user
+        submit_basic mod, name: mod.name
+        expect(response).to have_http_status :redirect
+      end
+      
+      it "should not allow it to update someone elses mod" do
+        user = create :user
+        mod = create :mod, owner: (create :user)
+        sign_in user
+        submit_basic mod
+        expect(response).to have_http_status :unauthorized
+      end
+      
+      it 'should not allow it set #visible #owner or #slug' do
+        first_user = create :user
+        second_user = create :user
+        mod = create :mod, owner: first_user
+        sign_in first_user
+        submit_basic mod, visible: true, author_id: second_user.id, slug: 'rsarsarsa'
+        expect(response).to have_http_status :redirect
+        mod = Mod.first
+        expect(mod.visible).to eq false
+        expect(mod.owner).to eq first_user
+        expect(mod.slug).to eq mod.slug
+      end
+    end
+    
+    context 'user is a developer' do
+      it 'should allow it set #visible but not #owner or #slug' do
+        first_user = create :dev_user
+        second_user = create :user
+        mod = create :mod, owner: first_user
+        sign_in first_user
+        submit_basic mod, visible: true, author_id: second_user.id, slug: 'rsarsarsa'
+        expect(response).to have_http_status :redirect
+        mod = Mod.first
+        expect(mod.visible).to eq true
+        expect(mod.owner).to eq first_user
+        expect(mod.slug).to eq mod.slug
+      end
+      
+      it 'should not allow it to update someone elses mod' do
+        first_user = create :dev_user
+        second_user = create :user
+        mod = create :mod, owner: second_user
+        sign_in first_user
+        submit_basic mod, visible: true, author_id: second_user.id, slug: 'rsarsarsa'
+        expect(response).to have_http_status :unauthorized
+      end
+      
+      it 'should not allow it to update a mod without owner' do
+        first_user = create :dev_user
+        mod = create :mod, owner: nil
+        sign_in first_user
+        submit_basic mod, visible: true, author_id: first_user.id, slug: 'rsarsarsa'
+        expect(response).to have_http_status :unauthorized
+      end
+      
+      it 'should also allow it to set visibility to false' do
+        user = create(:dev_user)
+        sign_in user
+        mod = create :mod, owner: user
+        submit_basic mod, visible: false
+        expect(Mod.first.visible).to eq false
+      end
+    end
+    
+    context 'user is an admin' do
+      it 'should allow it set #visible, #owner or #slug' do
+        first_user = create :admin_user
+        second_user = create :user
+        mod = create :mod, owner: first_user
+        sign_in first_user
+        submit_basic mod, visible: true, author_id: second_user.id, slug: 'rsarsarsa'
+        expect(response).to have_http_status :redirect
+        mod = Mod.first
+        expect(mod.visible).to eq true
+        expect(mod.owner).to eq second_user
+        expect(mod.slug).to eq 'rsarsarsa'
+      end
+      
+      it 'should also be able to allow those values to be default' do
+        user = create(:admin_user)
+        mod = create :mod, owner: user
+        sign_in user
+        submit_basic mod, visible: false, author_id: nil, slug: ''
+        expect(Mod.first.visible).to eq false
+        expect(Mod.first.owner).to eq nil
+        expect(Mod.first.slug).to eq mod.slug
+      end
+      
+      it 'should also allow it to modify a mod with any owner' do
+        first_user = create :admin_user
+        second_user = create :user
+        mod = create :mod, owner: second_user
+        sign_in first_user
+        submit_basic mod, visible: true, author_id: second_user.id, slug: 'rsarsarsa'
+        expect(response).to have_http_status :redirect
+        mod = Mod.first
+        expect(mod.visible).to eq true
+        expect(mod.owner).to eq second_user
+        expect(mod.slug).to eq 'rsarsarsa'
+      end
+      
+      it 'should not allow it to update a mod without owner' do
+        first_user = create :admin_user
+        second_user = create :user
+        mod = create :mod, owner: nil
+        sign_in first_user
+        submit_basic mod, visible: true, author_id: second_user.id, slug: 'rsarsarsa'
+        expect(response).to have_http_status :redirect
+        mod = Mod.first
+        expect(mod.visible).to eq true
+        expect(mod.owner).to eq second_user
+        expect(mod.slug).to eq 'rsarsarsa'
+      end
     end
   end
 end

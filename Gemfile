@@ -81,6 +81,7 @@ group :development, :test do
   gem 'capybara'
   gem 'rspec-its'
   gem 'rspec-mocks'
+  gem 'awesome_print'
 end
 
 group :test do

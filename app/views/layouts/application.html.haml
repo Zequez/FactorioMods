@@ -13,6 +13,9 @@
       .container
         = render partial: 'layouts/header'
         = render partial: 'layouts/search_bar'
+        - if content_for? :info_box
+          .info-box
+            = yield :info_box
         .content
           = yield
       .footer-spacer

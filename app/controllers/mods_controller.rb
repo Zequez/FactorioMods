@@ -8,9 +8,8 @@ class ModsController < ApplicationController
 
     @mods = @mods
       .includes([:categories, :authors, :owner, :forum_post, versions: :files])
+      .visible
       .page(params[:page]).per(20)
-
-    
 
     @sort = params[:sort].to_sym
     case @sort
@@ -70,34 +69,13 @@ class ModsController < ApplicationController
   end
 
   def new
-    @mod = Mod.new
-    mod_version = @mod.versions.build
-    mod_file = mod_version.files.build
-
-    if params[:forum_post_id]
-      forum_post = ForumPost.find params[:forum_post_id]
-      @mod.name = forum_post.title
-
-      @mod.authors_list = forum_post.author_name
-      @mod.forum_url = forum_post.url
-
-      if forum_post.published_at
-        mod_version.released_at = forum_post.published_at
-      end
-
-      if forum_post.subforum and forum_post.subforum.game_version
-        mod_version.game_versions = [forum_post.subforum.game_version]
-      end
-      # scraper = ForumPostScraper.new forum_post
-      # scraper.scrap
-      # @mod.description = forum_post.markdown_content
-    end
-
+    @mod = Mod.new visible: true, owner: (current_user unless current_user.is_admin?)
+    fill_with_forum_post_data(@mod, @mod.versions.build, @mod.versions[0].files.build)
     render_form
   end
 
   def create
-    @mod = Mod.new(current_user.is_admin? ? mod_params_admin : mod_params)
+    @mod = Mod.new mod_params
     if @mod.save
       redirect_to mod_url(@mod)
     else
@@ -113,7 +91,7 @@ class ModsController < ApplicationController
 
   def update
     @mod = Mod.find params[:id]
-    if @mod.update current_user.is_admin? ? mod_params_admin : mod_params
+    if @mod.update mod_params
       redirect_to mod_url(@mod)
     else
       render_form
@@ -128,34 +106,68 @@ class ModsController < ApplicationController
   end
 
   def mod_params
-    params.require(:mod).permit(:name,
-                                :github,
-                                :official_url,
-                                :forum_url,
-                                :forum_subforum_url,
-                                :summary,
-                                :imgur,
-                                :authors_list,
-                                category_ids: [],
-                                versions_attributes: [
-                                  :id,
-                                  :number,
-                                  :released_at,
-                                  :_destroy,
-                                  game_version_ids: [],
-                                  files_attributes: [
-                                    :id,
-                                    :attachment,
-                                    :name,
-                                    :download_url,
-                                    :_destroy
-                                  ]
-                                ])
-    .merge(author_id: current_user.id)
-  end
+    permitted = [
+      :name,
+      :github,
+      :official_url,
+      :forum_url,
+      :forum_subforum_url,
+      :summary,
+      :imgur,
+      :authors_list,
+      category_ids: [],
+      versions_attributes: [
+        :id,
+        :number,
+        :released_at,
+        :_destroy,
+        game_version_ids: [],
+        files_attributes: [
+          :id,
+          :attachment,
+          :name,
+          :download_url,
+          :_destroy
+        ]
+      ]
+    ]
 
-  def mod_params_admin
-    mod_params.merge params.require(:mod).permit(:author_name, :author_id, :slug)
+    (permitted << :author_id) if can? :set_owner, Mod
+    (permitted << :visible) if can? :set_visibility, Mod
+    (permitted << :slug) if can? :set_slug, Mod
+    
+    permitted_params = params.require(:mod).permit(*permitted)
+
+    if cannot?(:set_owner, Mod) and current_user
+      permitted_params.merge! author_id: current_user.id
+    end
+    
+    if cannot?(:set_visibility, Mod)
+      permitted_params.merge! visible: false
+    end
+    
+    permitted_params
+  end
+  
+  def fill_with_forum_post_data(mod, mod_version, mod_file)
+    if params[:forum_post_id]
+      forum_post = ForumPost.find params[:forum_post_id]
+      mod.name = forum_post.title
+
+      mod.authors_list = forum_post.author_name
+      mod.forum_url = forum_post.url
+
+      if forum_post.published_at
+        mod_version.released_at = forum_post.published_at
+      end
+
+      if forum_post.subforum and forum_post.subforum.game_version
+        mod_version.game_versions = [forum_post.subforum.game_version]
+      end
+      # scraper = ForumPostScraper.new forum_post
+      # scraper.scrap
+      # mod.description = forum_post.markdown_content
+    end
   end
 
   # def category

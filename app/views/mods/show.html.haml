@@ -1,5 +1,7 @@
 - title t '.title', name: @mod.name
 
+- content_for :info_box, @mod.visibility_notice
+
 .mods-show
   .mod
     .mod-image= @mod.img_link
