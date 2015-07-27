@@ -48,6 +48,8 @@ Spring.after_fork do
 end
 
 RSpec.configure do |config|
+  config.backtrace_exclusion_patterns << /\/gems\//
+
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
   config.fixture_path = "#{::Rails.root}/spec/fixtures"
 
@@ -114,7 +116,7 @@ RSpec.configure do |config|
   def nfind(tag_name = '', input_name)
     find("#{tag_name}[name^='#{input_name}']")
   end
-  
+
   def last_response
     page.source
   end

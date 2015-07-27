@@ -10,7 +10,11 @@ else
   def L(msg)
     LL.debug msg.inspect
   end
-  
+
+  def LN(msg)
+    LL.debug msg
+  end
+
   def LA(msg)
     LL.ap msg
   end
