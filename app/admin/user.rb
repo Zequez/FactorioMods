@@ -3,13 +3,17 @@ ActiveAdmin.register User do
 
   controller do
     def scoped_collection
-      User.includes(:owned_mods)
+      User.includes(:owned_mods, :authored_mods)
     end
   end
 
   member_action :validate, method: :put do
-    resource.validate
-    resource.save!
+    resource.validate!
+    render json: {}
+  end
+
+  member_action :give_ownership, method: :put do
+    resource.give_ownership_of_authored!
     render json: {}
   end
 
@@ -29,7 +33,14 @@ ActiveAdmin.register User do
     column :owned_mods do |user|
       user.owned_mods.map{ |m| link_to m.name, m }.join('<br/>').html_safe
     end
+    column :authored_mods do |user|
+      user.owned_mods.map{ |m| link_to m.name, m }.join('<br/>').html_safe
+    end
     column :validate do |user|
+      # Doesn't actually toggle, it's just a one way trip
+      toggler_status_tag validate_admin_user_path(user), user.is_dev
+    end
+    column :give_ownership do |user|
       # Doesn't actually toggle, it's just a one way trip
       toggler_status_tag validate_admin_user_path(user), user.is_dev
     end

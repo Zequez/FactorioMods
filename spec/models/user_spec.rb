@@ -149,7 +149,7 @@ RSpec.describe User, :type => :model do
     end
   end
 
-  describe '#validate' do
+  describe '#validate!' do
     it 'should set the user to #is_dev true and all his mods to visible and do nothing if the user is already dev' do
       u1 = create :user, is_dev: false
       u2 = create :user, is_dev: false
@@ -157,9 +157,9 @@ RSpec.describe User, :type => :model do
       create :mod, owner: u1, visible: false
       create :mod, owner: u3, visible: false
       create :mod, owner: u3, visible: false
-      u1.validate
-      u2.validate
-      u3.validate
+      u1.validate!
+      u2.validate!
+      u3.validate!
       expect(u1.is_dev).to eq true
       expect(u2.is_dev).to eq true
       expect(u3.is_dev).to eq true
@@ -171,7 +171,7 @@ RSpec.describe User, :type => :model do
     it 'should not do anything for users with #is_dev true' do
       user = create :user, is_dev: true
       create :mod, owner: user, visible: false
-      user.validate
+      user.validate!
       expect(user.is_dev).to eq true
       expect(user.owned_mods[0].visible).to eq false
     end
@@ -179,9 +179,48 @@ RSpec.describe User, :type => :model do
     it 'should only set #is_dev to true to admins but not change any mod visibility' do
       user = create :user, is_dev: false, is_admin: true
       create :mod, owner: user, visible: false
-      user.validate
+      user.validate!
       expect(user.is_dev).to eq true
       expect(user.owned_mods[0].visible).to eq false
+    end
+  end
+
+  describe '#give_ownership_of_authored!' do
+    it 'should set the user as owner of all his authored mods' do
+      user = create :user
+      m1 = create :mod, authors: [user], owner: nil
+      m2 = create :mod, authors: [user], owner: nil
+      user.reload
+      user.give_ownership_of_authored!
+      m1.reload
+      m2.reload
+      expect(m1.owner).to eq user
+      expect(m2.owner).to eq user
+    end
+
+    it 'should ignore mods that already have an owner' do
+      user = create :user
+      other_guy = create :user
+      m1 = create :mod, authors: [user], owner: other_guy
+      m2 = create :mod, authors: [user], owner: nil
+      user.reload
+      user.give_ownership_of_authored!
+      m1.reload
+      m2.reload
+      expect(m1.owner).to eq other_guy
+      expect(m2.owner).to eq user
+    end
+  end
+
+  describe '#non_owned_authored_mods' do
+    it 'should give the #authored_mods that arent #owned_mods' do
+      user = create :user
+      create :mod, authors: [user], owner: user
+      create :mod, owner: user
+      m1 = create :mod, authors: [user]
+      m2 = create :mod, authors: [user]
+      user.reload
+      expect(user.non_owned_authored_mods).to match_array [m1, m2]
     end
   end
 end

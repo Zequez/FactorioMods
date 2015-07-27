@@ -54,13 +54,22 @@ class User < ActiveRecord::Base
   ### Methods
   #################
 
-  def validate
-    owned_mods.each{ |om| om.visible = true } unless is_dev? or is_admin?
+  def validate!
+    owned_mods.each{ |om| om.update!(visible: true) } unless is_dev? or is_admin?
     self.is_dev = true
+    save!
+  end
+
+  def give_ownership_of_authored!
+    authored_mods.each{ |am| am.update!(owner: self) unless am.owner.present? }
   end
 
   ### Attributes
   #################
+
+  def non_owned_authored_mods
+    authored_mods - owned_mods
+  end
 
   def needs_validation?
     !is_dev? and !is_admin? and owned_mods.any?
