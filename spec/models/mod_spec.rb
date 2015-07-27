@@ -23,9 +23,12 @@ RSpec.describe Mod, :type => :model do
     it { is_expected.to respond_to :imgur_normal }
 
     it { is_expected.to respond_to :last_release_date }
-    
+
     it { is_expected.to respond_to :visible? }
     it { expect(mod.visible).to eq true }
+
+    it { is_expected.to respond_to :contact }
+    it { is_expected.to respond_to :info_json_name }
 
     # URLs
     it { is_expected.to respond_to :license_url }
@@ -97,7 +100,7 @@ RSpec.describe Mod, :type => :model do
       end
 
       it 'should be valid with the same name as an existing mod' do
-        mod1 = create :mod, name: 'PotatoMod'
+        create :mod, name: 'PotatoMod'
         mod2 = build :mod, name: 'PotatoMod'
         expect(mod2).to be_valid
       end
@@ -131,7 +134,7 @@ RSpec.describe Mod, :type => :model do
       end
 
       it 'should be invalid with the same slug as another mod' do
-        mod1 = create :mod, slug: 'potato'
+        create :mod, slug: 'potato'
         mod2 = build :mod, slug: 'potato', name: 'apple' # We are forcing this slug
         expect(mod2).to be_invalid
         expect(mod2.errors[:slug].size).to eq 1
@@ -371,7 +374,7 @@ RSpec.describe Mod, :type => :model do
       it { is_expected.to respond_to :authors_list }
 
       it 'associate the #authors by name separated by commas' do
-        u1 = create :user, name: 'Apple'
+        create :user, name: 'Apple'
         u2 = create :user, name: 'Potato'
         u3 = create :user, name: 'Orange'
         u4 = create :user, name: 'Banana'
@@ -381,7 +384,7 @@ RSpec.describe Mod, :type => :model do
       end
 
       it 'should order them correctly' do
-        u1 = create :user, name: 'Apple'
+        create :user, name: 'Apple'
         u2 = create :user, name: 'Potato'
         u3 = create :user, name: 'Orange'
         u4 = create :user, name: 'Banana'
@@ -396,7 +399,7 @@ RSpec.describe Mod, :type => :model do
       end
 
       it 'should work with random spaces everywhere' do
-        u1 = create :user, name: 'Apple'
+        create :user, name: 'Apple'
         u2 = create :user, name: 'Potato'
         u3 = create :user, name: 'Orange'
         u4 = create :user, name: 'Banana'
@@ -406,7 +409,7 @@ RSpec.describe Mod, :type => :model do
       end
 
       it 'should work with different cases' do
-        u1 = create :user, name: 'Apple'
+        create :user, name: 'Apple'
         u2 = create :user, name: 'Potato'
         u3 = create :user, name: 'Orange'
         u4 = create :user, name: 'Banana'
@@ -434,7 +437,7 @@ RSpec.describe Mod, :type => :model do
       it 'should be invalid with more than 8 authors' do
         mod.authors_list = 'Apple,Potato,Watermelon,Orange,Clementine,Fennel,Banana,Melon,Strawberry'
         expect(mod).to be_invalid
-        expect(mod.errors[:authors_list].first).to match /too many authors/i
+        expect(mod.errors[:authors_list].first).to match(/too many authors/i)
       end
 
       it 'should not create the users if the validation fails' do
@@ -479,7 +482,7 @@ RSpec.describe Mod, :type => :model do
         mod2 = create(:mod)
         mod2.categories = [mod1.categories[0]]
         mod2.save!
-        mod3 = create(:mod)
+        create(:mod)
         Mod.filter_by_category(mod1.categories[0]).all.should eq [mod1, mod2]
       end
     end
@@ -517,9 +520,9 @@ RSpec.describe Mod, :type => :model do
         gv1 = create :game_version, number: '1.1.x'
         gv2 = create :game_version, number: '1.2.x'
         gv3 = create :game_version, number: '1.3.x'
-        mv1 = create :mod_version, game_versions: [gv1, gv2], mod: m1
-        mv2 = create :mod_version, game_versions: [gv2, gv3], mod: m2
-        mv3 = create :mod_version, game_versions: [gv3], mod: m3
+        create :mod_version, game_versions: [gv1, gv2], mod: m1
+        create :mod_version, game_versions: [gv2, gv3], mod: m2
+        create :mod_version, game_versions: [gv3], mod: m3
 
         expect(Mod.filter_by_game_version(gv1)).to match [m1]
         expect(Mod.filter_by_game_version(gv2)).to match [m1, m2]
@@ -601,33 +604,33 @@ RSpec.describe Mod, :type => :model do
 
     describe '.filter_by_search_query' do
       it 'should search on the mod name' do
-        m1 = create(:mod, name: 'This is a potato simulator')
+        create(:mod, name: 'This is a potato simulator')
         m2 = create(:mod, name: 'This is a banana simulator')
-        m3 = create(:mod, name: 'This is a coffee simulator')
+        create(:mod, name: 'This is a coffee simulator')
 
         expect(Mod.filter_by_search_query('banana')).to eq [m2]
       end
 
       it 'should search with any case' do
-        m1 = create(:mod, name: 'This is a potato simulator')
+        create(:mod, name: 'This is a potato simulator')
         m2 = create(:mod, name: 'This is a BaNaNAnana simulator')
-        m3 = create(:mod, name: 'This is a coffee simulator')
+        create(:mod, name: 'This is a coffee simulator')
 
         expect(Mod.filter_by_search_query('BaNaNa')).to eq [m2]
       end
 
       it 'should search on the mod summary' do
-        m1 = create(:mod, summary: 'This is a potato simulator')
+        create(:mod, summary: 'This is a potato simulator')
         m2 = create(:mod, summary: 'This is a BaNaNAnana simulator')
-        m3 = create(:mod, summary: 'This is a coffee simulator')
+        create(:mod, summary: 'This is a coffee simulator')
 
         expect(Mod.filter_by_search_query('banana')).to eq [m2]
       end
 
       it 'should search on the mod description' do
-        m1 = create(:mod, description: 'This is a potato simulator')
+        create(:mod, description: 'This is a potato simulator')
         m2 = create(:mod, description: 'This is a BaNaNAnana simulator')
-        m3 = create(:mod, description: 'This is a coffee simulator')
+        create(:mod, description: 'This is a coffee simulator')
 
         expect(Mod.filter_by_search_query('banana')).to eq [m2]
       end
@@ -649,9 +652,9 @@ RSpec.describe Mod, :type => :model do
           m3 = create(:mod, name: 'banana 2')
           gv1 = create :game_version
           gv2 = create :game_version
-          mv1 = create :mod_version, game_versions: [gv1], mod: m1
-          mv2 = create :mod_version, game_versions: [gv2], mod: m2
-          mv3 = create :mod_version, game_versions: [gv2], mod: m3
+          create :mod_version, game_versions: [gv1], mod: m1
+          create :mod_version, game_versions: [gv2], mod: m2
+          create :mod_version, game_versions: [gv2], mod: m3
 
           expect(Mod.filter_by_game_version(gv2).filter_by_search_query('potato')).to eq [m2]
         end
@@ -659,9 +662,9 @@ RSpec.describe Mod, :type => :model do
         it 'should work when filtering by category' do
           c1 = create(:category)
           c2 = create(:category)
-          m1 = create(:mod, name: 'manzana 1', categories: [c1])
+          create(:mod, name: 'manzana 1', categories: [c1])
           m2 = create(:mod, name: 'potato 1', categories: [c1])
-          m3 = create(:mod, name: 'potato 2', categories: [c2])
+          create(:mod, name: 'potato 2', categories: [c2])
 
           expect(Mod.filter_by_category(c1).filter_by_search_query('potato')).to eq [m2]
         end
