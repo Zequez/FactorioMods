@@ -756,12 +756,9 @@ RSpec.describe Mod, :type => :model do
       gv2 = create :game_version, number: '0.11.x'
       gv3 = create :game_version, number: '0.12.x'
 
-      one_month_ago = 1.month.ago
-      two_weeks_ago = 2.weeks.ago
-      one_week_ago = 1.week.ago
       create :mod_version,
         number: '1.2.1',
-        released_at: one_month_ago,
+        released_at: 1.month.ago,
         game_versions: [gv1],
         mod: mod,
         files: [
@@ -769,7 +766,7 @@ RSpec.describe Mod, :type => :model do
         ]
       create :mod_version,
         number: '1.2.2',
-        released_at: two_weeks_ago,
+        released_at: 2.weeks.ago,
         game_versions: [gv2, gv3],
         mod: mod,
         files: [
@@ -778,7 +775,7 @@ RSpec.describe Mod, :type => :model do
         ]
       mv3 = create :mod_version,
         number: '1.2.3',
-        released_at: one_week_ago,
+        released_at: 1.week.ago,
         game_versions: [gv3],
         mod: mod,
         files: [
@@ -800,7 +797,7 @@ RSpec.describe Mod, :type => :model do
         releases: [
           {
             version: '1.2.3',
-            released_at: one_week_ago,
+            released_at: mod.versions[0].released_at,
             game_versions: ['0.12.x'],
             dependencies: [],
             files: [
@@ -813,7 +810,7 @@ RSpec.describe Mod, :type => :model do
           },
           {
             version: '1.2.2',
-            released_at: two_weeks_ago,
+            released_at: mod.versions[1].released_at,
             game_versions: ['0.11.x', '0.12.x'],
             dependencies: [],
             files: [
@@ -823,7 +820,7 @@ RSpec.describe Mod, :type => :model do
           },
           {
             version: '1.2.1',
-            released_at: one_month_ago,
+            released_at: mod.versions[2].released_at,
             game_versions: ['0.10.x'],
             dependencies: [],
             files: [
