@@ -16,6 +16,70 @@ Since these are both open source apps, it's just a matter of time until
 we can coordinate to use a common protocol to install mods in the same way
 that NexusModManager does it.
 
+## API to get mods
+
+The API it's basically adding `.json` to the end of any URL. Not really a proper API but good enough.
+
+You can get a list of mods by calling [/mods.json](http://factoriomods.com/mods.json) or by calling [/mods/mod-name.json](http://www.factoriomods.com/mods/torches.json). The first one returns an array,
+and the later, a single object.
+
+The structure of the mods given by the API is the following:
+
+```javascript
+{
+    "title": "Example Mod!",
+    "name": "example-mod", // This is the name on the info.json file
+    "url": "http://www.factoriomods.com/mods/example-mod",
+    "description": "The summary of what he mod does.",
+    "homepage": "", // Official site
+    "contact": "", // Authors contact information
+    "authors": ["That guy", "That other guy"], // List of authors
+    "releases": [{
+        "version": "0.1.2",
+        "released_at": "2015-07-22T00:00:00.000Z",
+        "game_versions": ["0.11.x", "0.12.x"], // This list of versions the mod works with. But it's actually a range, not a list
+        "dependencies": [], // This should be the dependencies listed on info.json but it's empty for now
+        "files": [{
+            "name": "",
+            "url": "http://www.factorioforums.com/forum/download/file.php?id=4726",
+            "mirror": "http://s3.amazonaws.com/factoriomods/mod_files/attachments/000/000/222/original/example-mod.zip?1437683360"
+        }]
+    }, {
+        "version": "0.1.1",
+        "released_at": "2015-07-15T00:00:00.000Z",
+        "game_versions": ["0.11.x"],
+        "dependencies": [],
+        "files": [{
+            "name": "",
+            "url": "http://www.factorioforums.com/forum/download/file.php?id=4484",
+            "mirror": "http://s3.amazonaws.com/factoriomods/mod_files/attachments/000/000/206/original/example-mod.zip?1437014505"
+        }]
+    }]
+}
+```
+
+Yes, the main URL is an external hotlink, bandwidth costs
+money, I'm cheap and poor. It that link it's broken you
+can use the mirror hosted on the project S3 bucket.
+
+## factoriomods:// protocol
+
+The URIs look like the following:
+
+```
+factoriomods://eyJ0aXRsZSI6IkN1cnNlZCBVbmRlcmdyb3VuZCBUcmFuc3BvcnQiLCJuYW1lIjoiIiwidXJsIjoiaHR0cDovL3d3dy5mYWN0b3Jpb21vZHMuY29tL21vZHMvY3Vyc2VkLXVuZGVyZ3JvdW5kLXRyYW5zcG9ydCIsImRlc2NyaXB0aW9uIjoiTm8gb25lIGxpa2VzIGEgdHJhaW4gY3Jhc2hpbmcgeW91LCBubyBvbmUgZGl2aWRlIHRoZSBmYWN0b3J5IGp1c3QgZm9yIGEgdHJhaW4sIHdpdGggdGhpcyBtb2QgeW91IGNhbiBwdXQgdGhlIHRyYWluIHVuZGVyIHRoZSBmYWN0b3J5ISA6RCIsImhvbWVwYWdlIjoiIiwiY29udGFjdCI6IiIsImF1dGhvcnMiOlsiTDA3NzEiXSwicmVsZWFzZXMiOlt7InZlcnNpb24iOiIwLjAuMyIsInJlbGVhc2VkX2F0IjoiMjAxNS0wNy0yN1QwMDowMDowMC4wMDBaIiwiZ2FtZV92ZXJzaW9ucyI6WyIwLjEyLngiXSwiZGVwZW5kZW5jaWVzIjpbXSwiZmlsZXMiOlt7Im5hbWUiOiIiLCJ1cmwiOiJodHRwczovL2dpdGh1Yi5jb20vTDA3NzEvQ3Vyc2VkLVVHL3JlbGVhc2VzL2Rvd25sb2FkL3YwLjAuMy9DdXJzZWQtVUdfMC4wLjMuemlwIiwibWlycm9yIjoiIn1dfSx7InZlcnNpb24iOiIwLjAuMiIsInJlbGVhc2VkX2F0IjoiMjAxNS0wNi0xMFQwMDowMDowMC4wMDBaIiwiZ2FtZV92ZXJzaW9ucyI6WyIwLjExLngiXSwiZGVwZW5kZW5jaWVzIjpbXSwiZmlsZXMiOlt7Im5hbWUiOiIiLCJ1cmwiOiJodHRwczovL2dpdGh1Yi5jb20vTDA3NzEvQ3Vyc2VkLVVHL3JlbGVhc2VzL2Rvd25sb2FkL3YwLjAuMi9DdXJzZWQtVUdfMC4wLjIuemlwIiwibWlycm9yIjoiIn1dfV19
+```
+
+If it seems familiar, it's because it's a Base64 encoded JSON string, the same
+JSON string returned by /mods.json and /mods/name.json. Just check whether it's an array
+or a single object, and install it.
+
+One thing consider is that the user can click a link to install an specific version, and when
+he does, the same mod is encoded, but instead of a list of all versions in the #releases attribute,
+it has just the version the user wants to install.
+
+If the user just clicks install, the version to be installed is to be selected by the mod manager.
+
 ## How do I submit mods?
 
 For now just create an account on the site, and then [PM me on the forum](http://www.factorioforums.com/forum/ucp.php?i=pm&mode=compose&u=1553) and I'll set your permissions up. I still need to strengthen the system until I make it
@@ -51,35 +115,13 @@ computer, you might need to install some things, I'm sure you'll figure it out!
 ## Running tests
 
 ```bash
-guard
+bundle exec spring rspec # for one time
+guard # for continuous development
 ```
 
 ## Planned features
 
-- Integration with Github
-  - Automatically scrap the releases from mods hosted in Github instead
-    of adding the releases manually and hosting them on AWS.
-  - Automatically use the Github README file as mod description and
-    use the first pharagraph as summary
-  - Maybe just host the mods list on the repo?
-- Read dependencies from the info.json file in the zipped
-  - Actually add inter-mod dependencies, for now it just saves information about the Factorio version required
-- Fork [Factorio Mod Manager](https://github.com/narrowtux/FactorioModManager/) or convince someone
-  that actually knows Java to register a `factoriomod://` protocol to automatically download and
-  install the mods by clicking "install" on the web app
-- Add bookmarks functionality for users to save mods and access them easily
-- Track mods downloads and visits, for stats, and for later history checking by users
-- Add a more automated way to authorize developers, instead of receiving PMs in the forum
-- Support for multiple authors
-- Support for mod forking detection
-- I noticed a few devs use AdFly to get a little support,
-  maybe I could add a pop up on the first download and ask the user if he wants
-  to activate an "dev-support-download toggle" to turn all downloads into AdFly links
-  for the dev. And maybe a custom YouTube video link, also for support.
-- Feature to create modpacks. Just select the mods you want and then it's
-  gonna create a joined zip with all the mods. Or maybe just a page with the list of the mods
-  and their downloads buttons, a big zipped file sounds like an expensive bandwidth bill. It could just
-  download everything with one click, that would be better.
+I just dump all the ideas on [the project Trello board](https://trello.com/b/Ii5IHVxG/factoriomods)
 
 # Copyright / License
 
