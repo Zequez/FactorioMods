@@ -82,7 +82,7 @@ If the user just clicks install, the version to be installed is to be selected b
 
 ## How do I submit mods?
 
-Just create an account on the site. After that you'll be able to go to /mods/new and
+Just create an account on the site. After that you'll be able to go to [/mods/new](http://www.factoriomods.com/mods/new) and
 create new mods.
 
 If you already published a mod on the Factorio forums, there is high chance that
