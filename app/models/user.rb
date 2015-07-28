@@ -14,6 +14,8 @@ class User < ActiveRecord::Base
   has_many :authors_mods, dependent: :destroy, foreign_key: :author_id
   has_many :authored_mods, through: :authors_mods, class_name: 'Mod', source: :mod
   has_many :owned_mods, class_name: 'Mod', foreign_key: :author_id, dependent: :nullify # We'll change it to User#owner_id eventually
+  has_many :bookmarks
+  has_many :bookmarked_mods, through: :bookmarks, source: :mod
 
   ### Scopes
   #################
