@@ -94,10 +94,17 @@ describe ModDecorator do
 
   describe '#install_protocol_url' do
     it 'should return the factoriomods:// protocol with the JSON-encoded mod' do
-      include ActionView::Helpers::TextHelper
-      mod = create(:mod).decorate
-      encoded_json = Base64.encode64 mod.to_json
-      expect(mod.install_protocol_url).to eq "factoriomods://#{encoded_json}"
+      mod = create(:mod)
+      encoded_json = Base64.strict_encode64 mod.to_json
+      expect(mod.decorate.install_protocol_url).to eq "factoriomods://#{encoded_json}"
+    end
+
+    it 'should accept an argument with the intended version' do
+      mod = create(:mod)
+      mv = create :mod_version, mod: mod
+      create :mod_version, mod: mod
+      encoded_json = Base64.strict_encode64 mod.to_json(versions: mv)
+      expect(mod.decorate.install_protocol_url(mv)).to eq "factoriomods://#{encoded_json}"
     end
   end
 end

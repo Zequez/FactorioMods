@@ -140,8 +140,8 @@ class ModDecorator < Draper::Decorator
     end
   end
 
-  def install_protocol_url
-    "factoriomods://#{Base64.encode64(mod.to_json)}"
+  def install_protocol_url(versions = nil)
+    'factoriomods://' + Base64.strict_encode64(mod.to_json(versions: versions)).to_s
   end
 
   ### Download button

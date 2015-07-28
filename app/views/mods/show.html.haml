@@ -22,6 +22,7 @@
               %th= t('.downloads_table.mod_version')
               %th= t('.downloads_table.game_version')
               %th= t('.downloads_table.file_version')
+              %th= t('.downloads_table.install_version')
               %th= t('.downloads_table.release_date')
           %tbody
             - @mod.download_files do |version, file|
@@ -29,6 +30,7 @@
                 %td= "#{version.number} #{file.name}"
                 %td= version.game_versions_string
                 %td= link_to_file_url_with_name(file)
+                %td= link_to t('.downloads_table.install'), @mod.install_protocol_url(version)
                 %td= release_info version
       - else
         %h3= t('.no_downloads')

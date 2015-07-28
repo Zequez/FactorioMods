@@ -14,7 +14,9 @@ en:
         game_version: Factorio version
         mod_version: Mod version
         file_version: File version
+        install_version: Install this version
         release_date: Release date
+        install: Install
       all_releases: All releases
       mod_subforum: "Forum location: "
       mod_forum_post: "Forum post: "

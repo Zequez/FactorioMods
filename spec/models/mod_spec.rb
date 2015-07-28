@@ -742,9 +742,9 @@ RSpec.describe Mod, :type => :model do
   end
 
   describe '#as_json' do
-    it 'should return the public API structure' do
+    before :each do
       authors = [create(:user, name: 'John Snow Zombie'), create(:user, name: 'THAT Guy')]
-      mod = create :mod,
+      @mod = create :mod,
         name: 'Potato Galaxy',
         info_json_name: 'potato-galaxy-mod',
         authors: authors,
@@ -760,7 +760,7 @@ RSpec.describe Mod, :type => :model do
         number: '1.2.1',
         released_at: 1.month.ago,
         game_versions: [gv1],
-        mod: mod,
+        mod: @mod,
         files: [
           build(:mod_file, name: '', download_url: 'http://thepotatoexperience.com/1.2.1', attachment: nil)
         ]
@@ -768,16 +768,16 @@ RSpec.describe Mod, :type => :model do
         number: '1.2.2',
         released_at: 2.weeks.ago,
         game_versions: [gv2, gv3],
-        mod: mod,
+        mod: @mod,
         files: [
           build(:mod_file, name: 'win', download_url: 'http://thepotatoexperience.com/1.2.2', attachment: nil),
           build(:mod_file, name: 'mac', download_url: 'http://thepotatoexperience.com/1.2.2', attachment: nil)
         ]
-      mv3 = create :mod_version,
+      create :mod_version,
         number: '1.2.3',
         released_at: 1.week.ago,
         game_versions: [gv3],
-        mod: mod,
+        mod: @mod,
         files: [
           build(:mod_file,
             name: '',
@@ -785,8 +785,10 @@ RSpec.describe Mod, :type => :model do
             attachment: File.new(Rails.root.join('spec', 'fixtures', 'test.zip'))
           )
         ]
+    end
 
-      expect(mod.as_json).to eq({
+    it 'should return the public API structure' do
+      expect(@mod.as_json).to eq({
         title: 'Potato Galaxy',
         name: 'potato-galaxy-mod',
         url: 'http://localhost:3000/mods/potato-galaxy',
@@ -797,20 +799,20 @@ RSpec.describe Mod, :type => :model do
         releases: [
           {
             version: '1.2.3',
-            released_at: mod.versions[0].released_at,
+            released_at: @mod.versions[0].released_at,
             game_versions: ['0.12.x'],
             dependencies: [],
             files: [
               {
                 name: '',
                 url: 'http://thepotatoexperience.com/1.2.3',
-                mirror: mv3.files.first.attachment.url
+                mirror: @mod.versions[0].files.first.attachment.url
               }
             ]
           },
           {
             version: '1.2.2',
-            released_at: mod.versions[1].released_at,
+            released_at: @mod.versions[1].released_at,
             game_versions: ['0.11.x', '0.12.x'],
             dependencies: [],
             files: [
@@ -820,7 +822,7 @@ RSpec.describe Mod, :type => :model do
           },
           {
             version: '1.2.1',
-            released_at: mod.versions[2].released_at,
+            released_at: @mod.versions[2].released_at,
             game_versions: ['0.10.x'],
             dependencies: [],
             files: [
@@ -830,6 +832,63 @@ RSpec.describe Mod, :type => :model do
         ]
       })
 
+    end
+
+    it 'should accept a :versions ModVersion parameter to select the version' do
+      expect(@mod.as_json(versions: @mod.versions[1])).to eq({
+        title: 'Potato Galaxy',
+        name: 'potato-galaxy-mod',
+        url: 'http://localhost:3000/mods/potato-galaxy',
+        description: 'This mod adds the ability to farm potatoes on Factorio.',
+        homepage: 'http://castleblack.com',
+        contact: 'Send a homing pigeon to Castle Black',
+        authors: ['John Snow Zombie', 'THAT Guy'],
+        releases: [
+          {
+            version: '1.2.2',
+            released_at: @mod.versions[1].released_at,
+            game_versions: ['0.11.x', '0.12.x'],
+            dependencies: [],
+            files: [
+              { name: 'mac', url: 'http://thepotatoexperience.com/1.2.2', mirror: '' },
+              { name: 'win', url: 'http://thepotatoexperience.com/1.2.2', mirror: '' }
+            ]
+          }
+        ]
+      })
+    end
+
+    it 'should accept a :versions array of ModVersion parameter to select the version' do
+      expect(@mod.as_json(versions: @mod.versions.slice(1..2))).to eq({
+        title: 'Potato Galaxy',
+        name: 'potato-galaxy-mod',
+        url: 'http://localhost:3000/mods/potato-galaxy',
+        description: 'This mod adds the ability to farm potatoes on Factorio.',
+        homepage: 'http://castleblack.com',
+        contact: 'Send a homing pigeon to Castle Black',
+        authors: ['John Snow Zombie', 'THAT Guy'],
+        releases: [
+          {
+            version: '1.2.2',
+            released_at: @mod.versions[1].released_at,
+            game_versions: ['0.11.x', '0.12.x'],
+            dependencies: [],
+            files: [
+              { name: 'mac', url: 'http://thepotatoexperience.com/1.2.2', mirror: '' },
+              { name: 'win', url: 'http://thepotatoexperience.com/1.2.2', mirror: '' }
+            ]
+          },
+          {
+            version: '1.2.1',
+            released_at: @mod.versions[2].released_at,
+            game_versions: ['0.10.x'],
+            dependencies: [],
+            files: [
+              { name: '', url: 'http://thepotatoexperience.com/1.2.1', mirror: '' }
+            ]
+          }
+        ]
+      })
     end
   end
 end

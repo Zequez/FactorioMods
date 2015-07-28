@@ -284,6 +284,7 @@ class Mod < ActiveRecord::Base
   # we use these different attributes to roughly match the ones used in
   # the mods info.json files
   def as_json(options = {})
+    selected_versions = options[:versions] ? [options[:versions]].flatten : versions
     {
       title: name,
       name: info_json_name,
@@ -292,7 +293,7 @@ class Mod < ActiveRecord::Base
       homepage: official_url,
       contact: contact,
       authors: authors.map(&:name),
-      releases: versions.map do |version|
+      releases: selected_versions.map do |version|
         {
           version: version.number,
           released_at: version.released_at,
