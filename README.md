@@ -82,8 +82,14 @@ If the user just clicks install, the version to be installed is to be selected b
 
 ## How do I submit mods?
 
-For now just create an account on the site, and then [PM me on the forum](http://www.factorioforums.com/forum/ucp.php?i=pm&mode=compose&u=1553) and I'll set your permissions up. I still need to strengthen the system until I make it
-fully public.
+Just create an account on the site. After that you'll be able to go to /mods/new and
+create new mods.
+
+If you already published a mod on the Factorio forums, there is high chance that
+the mod it's already on the DB. To claim the mod as your own and get management
+rights, after you register just send me a [PM me on the forum](http://www.factorioforums.com/forum/ucp.php?i=pm&mode=compose&u=1553)
+and I'll transfer you the mod. I'm working on automating this step, but I want to ask for permission
+to create an automated bot for the forum first.
 
 ## How to get it up and running locally
 
@@ -118,6 +124,8 @@ computer, you might need to install some things, I'm sure you'll figure it out!
 bundle exec spring rspec # for one time
 guard # for continuous development
 ```
+
+And you can check if everything it's working on [Travis](https://travis-ci.org/Zequez/FactorioMods).
 
 ## Planned features
 
