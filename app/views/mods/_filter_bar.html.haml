@@ -12,11 +12,10 @@
         = category_link nil do
           %i.fa.fa-cog
           = t('.all')
-          (#{all_categories_mods_count})
+          (#{uncategorized_mods_total_count})
       - @categories.each do |category|
         %li.category-filter
           = category_link category do
             %i{class: category.icon_class}
             = category.name
             (#{category_probabilistic_count(category)})
-            

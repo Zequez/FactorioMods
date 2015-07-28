@@ -46,8 +46,8 @@ class ModsController < ApplicationController
       @mods = @mods.filter_by_search_query(@query)
     end
 
-    @uncategorized_mods_total_count = @mods.total_count
-    @all_mods_count = Mod.count
+    @uncategorized_mods = @mods
+    @all_mods = Mod.visible
     if params[:category_id].present?
       @category = Category.find_by_slug params[:category_id]
       if @category

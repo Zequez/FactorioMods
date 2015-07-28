@@ -7,19 +7,23 @@ module ApplicationHelper
     end
   end
 
-  def all_categories_mods_count
-    @uncategorized_mods_total_count
+  def uncategorized_mods_total_count
+    @uncategorized_mods_total_count ||= @uncategorized_mods.total_count
   end
-  
+
+  def all_mods_count
+    @all_mods_count ||= @all_mods.count
+  end
+
   def category_probabilistic_count(category)
-    if @all_mods_count != @uncategorized_mods_total_count
-      aproximate_count = (category.mods_count.to_f / @all_mods_count * @uncategorized_mods_total_count).round(1).to_s
+    if all_mods_count != uncategorized_mods_total_count
+      aproximate_count = (category.mods_count.to_f / all_mods_count * uncategorized_mods_total_count).round(1).to_s
       content_tag('span', "~#{aproximate_count}", title: 'Probabilistic quantity').html_safe
     else
       category.mods_count
     end
   end
-  
+
   def date_time_tag(date)
     if date
       string = time_ago_in_words(date) + ' ago'
@@ -28,7 +32,7 @@ module ApplicationHelper
       ''
     end
   end
-  
+
   def release_info(mod_version)
     string = h mod_version.number
     string += (' (' + date_time_tag(mod_version.released_at) + ')').html_safe if mod_version.released_at
@@ -45,7 +49,7 @@ module ApplicationHelper
     })
     tag :img, img_tag_options
   end
-  
+
   def missing_img_url(size)
     root_path + "images/missing_#{size}.png"
   end
