@@ -152,6 +152,11 @@ RSpec.describe Mod, :type => :model do
         mod = build :mod, authors: authors
         expect(mod).to be_valid
       end
+
+      it 'should be invalid without #info_json_name' do
+        mod = build :mod, info_json_name: ''
+        expect(mod).to be_invalid
+      end
     end
 
     describe '#author_name' do
@@ -476,6 +481,32 @@ RSpec.describe Mod, :type => :model do
   end
 
   describe 'scopes' do
+    describe '.filter_by_names' do
+      it 'should return a list of mods by #info_json_name' do
+        mods = []
+        mods.push create :mod, info_json_name: 'potato'
+        create :mod, info_json_name: 'potato-2'
+        mods.push create :mod, info_json_name: 'banana-stream'
+        create :mod, info_json_name: 'i love this keyboard'
+        mods.push create :mod, info_json_name: 'Atom by github rocks'
+        found = Mod.filter_by_names 'potato,banana-stream, Atom by github rocks'
+        expect(found).to match_array mods
+      end
+
+      it 'should be case sensitive' do
+        create :mod, info_json_name: 'potato'
+        mod = create :mod, info_json_name: 'PoTaTo'
+        expect(Mod.filter_by_names('PoTaTo')).to match_array [mod]
+      end
+
+      it 'should return all the mods with the same #info_json_name' do
+        mod1 = create :mod, info_json_name: 'potato'
+        mod2 = create :mod, info_json_name: 'potato'
+        create :mod, info_json_name: 'banana'
+        expect(Mod.filter_by_names('potato')).to match_array [mod1, mod2]
+      end
+    end
+
     describe '.filter_by_category' do
       it 'should filter results by category' do
         mod1 = create(:mod)
@@ -707,6 +738,101 @@ RSpec.describe Mod, :type => :model do
 
         # end
       end
+    end
+  end
+
+  describe '#as_json' do
+    it 'should return the public API structure' do
+      authors = [create(:user, name: 'John Snow Zombie'), create(:user, name: 'THAT Guy')]
+      mod = create :mod,
+        name: 'Potato Galaxy',
+        info_json_name: 'potato-galaxy-mod',
+        authors: authors,
+        contact: 'Send a homing pigeon to Castle Black',
+        official_url: 'http://castleblack.com',
+        summary: 'This mod adds the ability to farm potatoes on Factorio.'
+
+      gv1 = create :game_version, number: '0.10.x'
+      gv2 = create :game_version, number: '0.11.x'
+      gv3 = create :game_version, number: '0.12.x'
+
+      one_month_ago = 1.month.ago
+      two_weeks_ago = 2.weeks.ago
+      one_week_ago = 1.week.ago
+      create :mod_version,
+        number: '1.2.1',
+        released_at: one_month_ago,
+        game_versions: [gv1],
+        mod: mod,
+        files: [
+          build(:mod_file, name: '', download_url: 'http://thepotatoexperience.com/1.2.1', attachment: nil)
+        ]
+      create :mod_version,
+        number: '1.2.2',
+        released_at: two_weeks_ago,
+        game_versions: [gv2, gv3],
+        mod: mod,
+        files: [
+          build(:mod_file, name: 'win', download_url: 'http://thepotatoexperience.com/1.2.2', attachment: nil),
+          build(:mod_file, name: 'mac', download_url: 'http://thepotatoexperience.com/1.2.2', attachment: nil)
+        ]
+      mv3 = create :mod_version,
+        number: '1.2.3',
+        released_at: one_week_ago,
+        game_versions: [gv3],
+        mod: mod,
+        files: [
+          build(:mod_file,
+            name: '',
+            download_url: 'http://thepotatoexperience.com/1.2.3',
+            attachment: File.new(Rails.root.join('spec', 'fixtures', 'test.zip'))
+          )
+        ]
+
+      expect(mod.as_json).to eq({
+        title: 'Potato Galaxy',
+        name: 'potato-galaxy-mod',
+        url: 'http://localhost:3000/mods/potato-galaxy',
+        description: 'This mod adds the ability to farm potatoes on Factorio.',
+        homepage: 'http://castleblack.com',
+        contact: 'Send a homing pigeon to Castle Black',
+        authors: ['John Snow Zombie', 'THAT Guy'],
+        releases: [
+          {
+            version: '1.2.3',
+            released_at: one_week_ago,
+            game_versions: ['0.12.x'],
+            dependencies: [],
+            files: [
+              {
+                name: '',
+                url: 'http://thepotatoexperience.com/1.2.3',
+                mirror: mv3.files.first.attachment.url
+              }
+            ]
+          },
+          {
+            version: '1.2.2',
+            released_at: two_weeks_ago,
+            game_versions: ['0.11.x', '0.12.x'],
+            dependencies: [],
+            files: [
+              { name: 'mac', url: 'http://thepotatoexperience.com/1.2.2', mirror: '' },
+              { name: 'win', url: 'http://thepotatoexperience.com/1.2.2', mirror: '' }
+            ]
+          },
+          {
+            version: '1.2.1',
+            released_at: one_month_ago,
+            game_versions: ['0.10.x'],
+            dependencies: [],
+            files: [
+              { name: '', url: 'http://thepotatoexperience.com/1.2.1', mirror: '' }
+            ]
+          }
+        ]
+      })
+
     end
   end
 end

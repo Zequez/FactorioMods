@@ -66,6 +66,10 @@ en:
 
     download_button:
       download: Download
+      install:
+        title: Install with the Factorio Mod Manager, or any mod manager that can read the protocol
+        show: Install with FMM
+        index: Install
 
     filter_bar:
       any_game_version: Any Factorio version

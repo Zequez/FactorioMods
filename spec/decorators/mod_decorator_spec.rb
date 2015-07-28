@@ -4,7 +4,7 @@ describe ModDecorator do
   def create_decorated(*args)
     create(*args).decorate
   end
-  
+
   describe '#authors_links_list' do
     it 'should return a comma separated authors list links' do
       mod = create_decorated :mod, authors: 3.times.map{ |i| create :user, name: "Au#{i}" }
@@ -28,32 +28,32 @@ describe ModDecorator do
       expect(mod.authors_links_list).to eq 'N/A'
     end
   end
-  
+
   describe '#forum_link' do
     context 'only has forum post URL' do
       it 'should only have the forum URL' do
         mod = create_decorated :mod, forum_url: 'http://potato.com'
         expect(URI.extract(mod.forum_link)).to eq ['http://potato.com']
       end
-      
+
       it 'should only have the forum URL, with empty string subforum_url' do
         mod = create_decorated :mod, forum_url: 'http://potato.com', subforum_url: ''
         expect(URI.extract(mod.forum_link)).to eq ['http://potato.com']
       end
     end
-    
+
     context 'has only the subforum URL' do
       it 'should link to the subforum' do
         mod = create_decorated :mod, subforum_url: 'http://cabbage.com'
         expect(URI.extract(mod.forum_link)).to eq ['http://cabbage.com']
       end
-      
+
       it 'should link to the subforum, with empty string forum post URL' do
         mod = create_decorated :mod, subforum_url: 'http://cabbage.com', forum_url: ''
         expect(URI.extract(mod.forum_link)).to eq ['http://cabbage.com']
       end
     end
-    
+
     context 'has both the subforum and the forum post URL' do
       it 'should link to both' do
         mod = create_decorated :mod, forum_url: 'http://potato.com', subforum_url: 'http://cabbage.com'
@@ -61,7 +61,7 @@ describe ModDecorator do
       end
     end
   end
-  
+
   describe '#has_versions?' do
     it 'should return false if the mod has no versions' do
       mod = create_decorated :mod, versions: []
@@ -86,9 +86,18 @@ describe ModDecorator do
       mod = build :mod, versions: []
       mod.save!
       mod_version = create :mod_version, mod: mod
-      mod_file = create :mod_file, mod_version: mod_version
+      create :mod_file, mod_version: mod_version
       mod = Mod.first.decorate
       expect(mod.has_files?).to eq true
+    end
+  end
+
+  describe '#install_protocol_url' do
+    it 'should return the factoriomods:// protocol with the JSON-encoded mod' do
+      include ActionView::Helpers::TextHelper
+      mod = create(:mod).decorate
+      encoded_json = Base64.encode64 mod.to_json
+      expect(mod.install_protocol_url).to eq "factoriomods://#{encoded_json}"
     end
   end
 end

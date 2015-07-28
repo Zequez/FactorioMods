@@ -43,7 +43,7 @@ feature 'Display an index of mods in certain order' do
         visit '/most-popular'
         expect(mod_names).to eq %w{SuperMod6 superMod0 SuperMod2 SuperMod4 superMod3}
       end
-      
+
       scenario 'some mods are not visible' do
         @mods[2].update! visible: false
         @mods[4].update! visible: false
@@ -68,7 +68,7 @@ feature 'Display an index of mods in certain order' do
       end
     end
   end
-  
+
   # Test those examples for both HTML and JSON
   context 'when requesting HTML' do
     it_behaves_like 'mod index' do
@@ -77,11 +77,11 @@ feature 'Display an index of mods in certain order' do
       end
     end
   end
-  
+
   context 'when requesting JSON', driver: :rack_test_json do
     it_behaves_like 'mod index' do
       def mod_names
-        JSON.parse(last_response).map { |hash| hash["name"] }
+        JSON.parse(last_response).map { |hash| hash["title"] }
       end
     end
   end
@@ -91,7 +91,7 @@ feature 'Display an index of mods in certain order' do
       authors = 5.times.map{ |i| create :user, name: "Au#{i}" }
       create :mod, name: 'SuperMod', authors: authors
       visit '/'
-      expect(page).to have_content /Au0.*Au1.*Au2.*Au3.*Au4/
+      expect(page).to have_content(/Au0.*Au1.*Au2.*Au3.*Au4/)
       expect(page).to have_link 'Au0', '/users/au0'
       expect(page).to have_link 'Au1', '/users/au1'
       expect(page).to have_link 'Au2', '/users/au2'
@@ -103,7 +103,7 @@ feature 'Display an index of mods in certain order' do
       authors = 5.times.map{ |i| create :user, name: "Au#{i}" }
       create :mod, name: 'SuperMod', authors: authors, owner: authors[1]
       visit '/'
-      expect(page).to have_content /Au0.*Au1.*(maintainer).*Au2.*Au3.*Au4/
+      expect(page).to have_content(/Au0.*Au1.*(maintainer).*Au2.*Au3.*Au4/)
     end
 
     scenario 'Mod with multiple authors with reversed sorting order' do
@@ -115,7 +115,7 @@ feature 'Display an index of mods in certain order' do
       mod.authors_mods[3].update_column :sort_order, 2
       mod.authors_mods[4].update_column :sort_order, 1
       visit '/'
-      expect(page).to have_content /Au4.*Au3.*Au2.*Au1.*Au0/
+      expect(page).to have_content(/Au4.*Au3.*Au2.*Au1.*Au0/)
     end
   end
 end

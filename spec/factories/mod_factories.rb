@@ -6,6 +6,7 @@ FactoryGirl.define do
     description ''
     forum_comments_count 12
     downloads_count 15
+    sequence(:info_json_name) { |n| "mod-name-#{n}" }
   end
 
   factory :category do

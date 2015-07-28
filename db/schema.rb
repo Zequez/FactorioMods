@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150724155022) do
+ActiveRecord::Schema.define(version: 20150727221452) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -213,11 +213,14 @@ ActiveRecord::Schema.define(version: 20150724155022) do
     t.integer  "last_version_id"
     t.datetime "last_release_date"
     t.boolean  "visible",              default: true, null: false
+    t.string   "contact",              default: "",   null: false
+    t.string   "info_json_name",       default: "",   null: false
   end
 
   add_index "mods", ["author_id"], name: "index_mods_on_author_id", using: :btree
   add_index "mods", ["category_id"], name: "index_mods_on_category_id", using: :btree
   add_index "mods", ["forum_post_id"], name: "index_mods_on_forum_post_id", using: :btree
+  add_index "mods", ["info_json_name"], name: "index_mods_on_info_json_name", using: :btree
   add_index "mods", ["last_version_id"], name: "index_mods_on_last_version_id", using: :btree
   add_index "mods", ["slug"], name: "index_mods_on_slug", unique: true, using: :btree
 

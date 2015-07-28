@@ -1,7 +1,11 @@
 - if mod.last_version_has_downloads?
+  .mod-install-button.btn.btn-download{title: t('.install.title')}
+    %a{href: mod.install_protocol_url}
+      = icon 'download'
+      = t(".install.#{params[:action]}")
   .mod-download-button.btn.btn-download
     %a{href: mod.first_available_download_url}
-      = icon 'download'
+      = icon 'cloud-download'
       = t('.download')
     %ul.btn-download-versions
       - mod.download_files(2) do |version, file|

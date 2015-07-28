@@ -65,11 +65,7 @@ class ModVersion < ActiveRecord::Base
   #################
 
   def game_versions_string
-    if precise_game_versions_string.blank?
-      read_attribute(:game_versions_string) || set_game_versions_string
-    else
-      precise_game_versions_string
-    end
+    read_attribute(:game_versions_string) || set_game_versions_string
   end
 
   def to_label

@@ -11,7 +11,7 @@ class FakeDataGenerator
           Category.create! name: Forgery(:lorem_ipsum).words(1, random: true) + i.to_s
         end
       end
-      
+
       ### Game
       ##################
       begin
@@ -45,7 +45,7 @@ class FakeDataGenerator
         gputs "Created user #{user.name} #{user.email}"
       end
       users = User.all
-      
+
       ### Subforum
       ##################
       subforum = Subforum.create!(url: 'http://www.factorioforums.com/forum/viewforum.php?f=91')
@@ -68,6 +68,7 @@ class FakeDataGenerator
       rand(30..50).times do |i|
         github_url = Forgery(:lorem_ipsum).words(1, random: true) + '/' + Forgery(:lorem_ipsum).words(1, random: true)
         mod = Mod.create! name: Forgery(:lorem_ipsum).words(rand(3..6), random: true),
+                          info_json_name: Forgery(:lorem_ipsum).words(rand(1..2), random: true),
                           authors: users.sample(8),
                           owner: [nil, nil].concat(users).sample,
                           categories: categories.sample(rand(1..4)),

@@ -1,6 +1,6 @@
 class ModsController < ApplicationController
   load_and_authorize_resource
-  
+
   respond_to :html, :json, only: [:index, :show]
 
   def index
@@ -11,6 +11,11 @@ class ModsController < ApplicationController
       .visible
       .page(params[:page]).per(20)
 
+    if params[:names].present?
+      @mods = @mods.filter_by_names(params[:names])
+    end
+
+    # This #to_sym is not a DDoS concern since the value is constrained in the router
     @sort = params[:sort].to_sym
     case @sort
     when :alpha
@@ -27,7 +32,7 @@ class ModsController < ApplicationController
       @mods = @mods.sort_by_alpha
     end
 
-    unless params[:v].blank?
+    if params[:v].present?
       @game_version = GameVersion.find_by_number(params[:v])
       if @game_version
         @mods = @mods.filter_by_game_version @game_version
@@ -36,14 +41,14 @@ class ModsController < ApplicationController
       end
     end
 
-    unless params[:q].blank?
+    if params[:q].present?
       @query = params[:q][0..30]
       @mods = @mods.filter_by_search_query(@query)
     end
-    
+
     @uncategorized_mods_total_count = @mods.total_count
     @all_mods_count = Mod.count
-    if params[:category_id]
+    if params[:category_id].present?
       @category = Category.find_by_slug params[:category_id]
       if @category
         @mods = @mods.filter_by_category @category
@@ -54,9 +59,9 @@ class ModsController < ApplicationController
 
     @game_versions = GameVersion.sort_by_newer_to_older
     @categories = Category.order_by_mods_count.order_by_name
-    
+
     @mods = @mods.decorate
-    
+
     respond_with @mods
   end
 
@@ -115,6 +120,8 @@ class ModsController < ApplicationController
       :summary,
       :imgur,
       :authors_list,
+      :contact,
+      :info_json_name,
       category_ids: [],
       versions_attributes: [
         :id,
@@ -135,20 +142,20 @@ class ModsController < ApplicationController
     (permitted << :author_id) if can? :set_owner, Mod
     (permitted << :visible) if can? :set_visibility, Mod
     (permitted << :slug) if can? :set_slug, Mod
-    
+
     permitted_params = params.require(:mod).permit(*permitted)
 
     if cannot?(:set_owner, Mod) and current_user
       permitted_params.merge! author_id: current_user.id
     end
-    
+
     if cannot?(:set_visibility, Mod)
       permitted_params.merge! visible: false
     end
-    
+
     permitted_params
   end
-  
+
   def fill_with_forum_post_data(mod, mod_version, mod_file)
     if params[:forum_post_id]
       forum_post = ForumPost.find params[:forum_post_id]

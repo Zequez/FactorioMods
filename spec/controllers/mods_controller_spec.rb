@@ -27,11 +27,11 @@ describe ModsController, type: :controller do
     get 'index', options
   end
 
-  describe "get_index" do
+  describe 'GET index' do
     context 'pagination, 25 mods' do
       it 'should load the first 20 mods on the first page' do
         first_page_mods = 20.times.map{ create :mod }
-        second_page_mods = 5.times.map{ create :mod }
+        5.times.map{ create :mod }
         get_index sort: :alpha
         expect(response).to be_success
         expect(response).to render_template 'index'
@@ -39,7 +39,7 @@ describe ModsController, type: :controller do
       end
 
       it 'should load the last 5 mods on the second page' do
-        first_page_mods = 20.times.map{ create :mod }
+        20.times.map{ create :mod }
         second_page_mods = 5.times.map{ create :mod }
         get_index sort: :alpha, page: 2
         expect(response).to be_success
@@ -141,9 +141,9 @@ describe ModsController, type: :controller do
           gv1 = create :game_version, number: '1.1.x'
           gv2 = create :game_version, number: '1.2.x'
           gv3 = create :game_version, number: '1.3.x'
-          mv1 = create :mod_version, game_versions: [gv1, gv2], mod: @m1
-          mv2 = create :mod_version, game_versions: [gv2, gv3], mod: @m2
-          mv3 = create :mod_version, game_versions: [gv3], mod: @m3
+          create :mod_version, game_versions: [gv1, gv2], mod: @m1
+          create :mod_version, game_versions: [gv2, gv3], mod: @m2
+          create :mod_version, game_versions: [gv3], mod: @m3
         end
 
         context 'version 1.1.x' do
@@ -171,7 +171,7 @@ describe ModsController, type: :controller do
         end
       end
     end
-    
+
     context 'some mods non-visible' do
       it 'should not load them' do
         mods[0].update! visible: false
@@ -182,9 +182,33 @@ describe ModsController, type: :controller do
         expect(assigns(:mods)).to match_array mods
       end
     end
+
+    context 'searching for specific mods in an API-wise way' do
+      before :each do
+        @category = create :category
+        @mods = []
+        @mods << create(:mod, name: 'ccc', info_json_name: 'banana', categories: [@category])
+        @mods << create(:mod, name: 'bbb', info_json_name: 'potato')
+        @mods << create(:mod, name: 'aaa', info_json_name: 'cabbage', categories: [@category])
+        @mods << create(:mod, name: 'ddd', info_json_name: 'watermelon')
+        @mods << create(:mod, name: 'kkk', info_json_name: 'orange')
+        @mods << create(:mod, name: 'zzz', info_json_name: 'pomegranate')
+        @mods << create(:mod, name: 'yyy', info_json_name: 'machine-gun')
+      end
+
+      it 'should get the correct list of mods' do
+        get_index names: 'banana,orange,machine-gun'
+        expect(assigns(:mods)).to match_array [@mods[0], @mods[4], @mods[6]]
+      end
+
+      it 'should with the other filter' do
+        get_index names: 'banana,cabbage,machine-gun', category_id: @category.to_param, sort: :alpha
+        expect(assigns(:mods)).to eq [@mods[2], @mods[0]]
+      end
+    end
   end
 
-  describe "GET 'show'" do
+  describe 'GET show' do
     context 'finds the mod' do
       before(:each) { get 'show', category_id: mod.categories.first.to_param, id: mod.to_param }
 
@@ -199,12 +223,12 @@ describe ModsController, type: :controller do
       it { expect(response.status).to eq 404 }
     end
   end
-  
-  describe 'POST create' do  
+
+  describe 'POST create' do
     def submit_basic(extra_params = {})
-      post :create, mod: {name: 'SuperMod', category_ids: [create(:category).id]}.merge(extra_params)
+      post :create, mod: {name: 'SuperMod', info_json_name: 'supermod', category_ids: [create(:category).id]}.merge(extra_params)
     end
-    
+
     def submit_blank(params = {})
       post :create, params
     end
@@ -215,21 +239,21 @@ describe ModsController, type: :controller do
         expect(response).to have_http_status :bad_request
       end
     end
-    
+
     context 'guest user (not registered)' do
       it 'should not allow it at all 401' do
         submit_blank mod: {name: 'SuperMod'}
         expect(response).to have_http_status :unauthorized
       end
     end
-    
+
     context 'user is registered' do
       it 'should allow it to create a mod' do
         sign_in create :user
         submit_basic
         expect(response).to have_http_status :redirect
       end
-      
+
       it 'should not allow it set #visible #owner or #slug' do
         first_user = create :user
         second_user = create :user
@@ -242,7 +266,7 @@ describe ModsController, type: :controller do
         expect(mod.slug).to eq 'supermod'
       end
     end
-    
+
     context 'user is a developer' do
       it 'should allow it set #visible but not #owner or #slug' do
         first_user = create :dev_user
@@ -255,15 +279,15 @@ describe ModsController, type: :controller do
         expect(mod.owner).to eq first_user
         expect(mod.slug).to eq 'supermod'
       end
-      
+
       it 'should also allow it to set visibility to false' do
         sign_in create(:dev_user)
         submit_basic visible: false
         expect(Mod.first.visible).to eq false
       end
     end
-    
-    
+
+
     context 'user is an admin' do
       it 'should allow it set #visible, #owner or #slug' do
         first_user = create :admin_user
@@ -276,7 +300,7 @@ describe ModsController, type: :controller do
         expect(mod.owner).to eq second_user
         expect(mod.slug).to eq 'rsarsarsa'
       end
-      
+
       it 'should also be able to allow those values to be default' do
         sign_in create(:admin_user)
         submit_basic visible: false, author_id: nil, slug: ''
@@ -287,7 +311,7 @@ describe ModsController, type: :controller do
     end
   end
 
-  
+
   describe "PATCH update"  do
     def submit_basic(mod, extra_params = {})
       put :update, id: mod.id, mod: extra_params
@@ -302,7 +326,7 @@ describe ModsController, type: :controller do
         expect(response).to have_http_status :bad_request
       end
     end
-    
+
     context 'guest user (not registered)' do
       it 'should not allow it at all 401' do
         mod = create :mod
@@ -310,7 +334,7 @@ describe ModsController, type: :controller do
         expect(response).to have_http_status :unauthorized
       end
     end
-    
+
     context 'user is registered' do
       it "should allow it to update a it's own mod" do
         user = create :user
@@ -319,7 +343,7 @@ describe ModsController, type: :controller do
         submit_basic mod, name: mod.name
         expect(response).to have_http_status :redirect
       end
-      
+
       it "should not allow it to update someone elses mod" do
         user = create :user
         mod = create :mod, owner: (create :user)
@@ -327,7 +351,7 @@ describe ModsController, type: :controller do
         submit_basic mod
         expect(response).to have_http_status :unauthorized
       end
-      
+
       it 'should not allow it set #visible #owner or #slug' do
         first_user = create :user
         second_user = create :user
@@ -341,7 +365,7 @@ describe ModsController, type: :controller do
         expect(mod.slug).to eq mod.slug
       end
     end
-    
+
     context 'user is a developer' do
       it 'should allow it set #visible but not #owner or #slug' do
         first_user = create :dev_user
@@ -355,7 +379,7 @@ describe ModsController, type: :controller do
         expect(mod.owner).to eq first_user
         expect(mod.slug).to eq mod.slug
       end
-      
+
       it 'should not allow it to update someone elses mod' do
         first_user = create :dev_user
         second_user = create :user
@@ -364,7 +388,7 @@ describe ModsController, type: :controller do
         submit_basic mod, visible: true, author_id: second_user.id, slug: 'rsarsarsa'
         expect(response).to have_http_status :unauthorized
       end
-      
+
       it 'should not allow it to update a mod without owner' do
         first_user = create :dev_user
         mod = create :mod, owner: nil
@@ -372,7 +396,7 @@ describe ModsController, type: :controller do
         submit_basic mod, visible: true, author_id: first_user.id, slug: 'rsarsarsa'
         expect(response).to have_http_status :unauthorized
       end
-      
+
       it 'should also allow it to set visibility to false' do
         user = create(:dev_user)
         sign_in user
@@ -381,7 +405,7 @@ describe ModsController, type: :controller do
         expect(Mod.first.visible).to eq false
       end
     end
-    
+
     context 'user is an admin' do
       it 'should allow it set #visible, #owner or #slug' do
         first_user = create :admin_user
@@ -395,7 +419,7 @@ describe ModsController, type: :controller do
         expect(mod.owner).to eq second_user
         expect(mod.slug).to eq 'rsarsarsa'
       end
-      
+
       it 'should also be able to allow those values to be default' do
         user = create(:admin_user)
         mod = create :mod, owner: user
@@ -405,7 +429,7 @@ describe ModsController, type: :controller do
         expect(Mod.first.owner).to eq nil
         expect(Mod.first.slug).to eq mod.slug
       end
-      
+
       it 'should also allow it to modify a mod with any owner' do
         first_user = create :admin_user
         second_user = create :user
@@ -418,7 +442,7 @@ describe ModsController, type: :controller do
         expect(mod.owner).to eq second_user
         expect(mod.slug).to eq 'rsarsarsa'
       end
-      
+
       it 'should not allow it to update a mod without owner' do
         first_user = create :admin_user
         second_user = create :user

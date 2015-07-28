@@ -6,7 +6,7 @@ $mods-list-size: 12-$filter-size
     background: none
     border-radius: none
     padding: 0
-    
+
     .query-info-box
       +span($mods-list-size omega of 12)
       margin-bottom: rhythm()
@@ -139,12 +139,12 @@ $mods-list-size: 12-$filter-size
       padding: space()
       text-align: right
       +nowrap
-      
+
       &-tag
         display: block
         position: relative
         padding-right: 20px
-        
+
         &-label
           position: relative
           display: block
@@ -157,7 +157,7 @@ $mods-list-size: 12-$filter-size
             overflow: visible
             display: inline
             z-index: 3
-        
+
         .fa
           position: absolute
           top: 3px // Sorry, magic pixel
@@ -172,9 +172,10 @@ $mods-list-size: 12-$filter-size
         bottom: space()
         right: space()
         z-index: 999
-        
+
+        &.mod-install-button
+          bottom: rhythm(1.6) // THE HORROR. No vertical rhythm compliant!
+
         // Add some spacing when the download button is shown
         & + .mod-info-tag
-          margin-bottom: rhythm(1)
-
-      
+          margin-bottom: rhythm(2.5)

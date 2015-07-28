@@ -12,8 +12,8 @@ feature 'Modder creates a new mod' do
 
       expect(page.status_code).to eq 401
     end
-    
-    
+
+
     scenario 'non-dev user visits the new mod page' do
       sign_in
       visit '/mods/new'
@@ -25,16 +25,16 @@ feature 'Modder creates a new mod' do
     scenario 'dev user visits new mod page' do
       sign_in_dev
       visit '/mods/new'
-      
+
       expect(page.status_code).to eq 200
       expect(page).to have_content 'Create new mod'
     end
-    
-    
+
+
     scenario 'admin user visits new mod page' do
       sign_in_admin
       visit '/mods/new'
-      
+
       expect(page.status_code).to eq 200
       expect(page).to have_content 'Create new mod'
     end
@@ -53,13 +53,12 @@ feature 'Modder creates a new mod' do
     scenario 'user submits a barebones form' do
       sign_in_dev
       visit '/mods/new'
-      fill_in 'mod_name', with: 'Super Mod'
-      select 'Terrain', from: 'Categories'
-      fill_in_first_version_and_file
+      fill_in_minimum 'Super Mod'
       submit_form
       expect(current_path).to eq '/mods/super-mod'
       mod = Mod.first
       expect(mod.name).to eq 'Super Mod'
+      expect(mod.info_json_name).to eq 'super mod'
       expect(mod.categories).to match_array [@category]
       expect(mod.author).to eq @user
     end
@@ -67,8 +66,7 @@ feature 'Modder creates a new mod' do
     scenario 'user submits a form without any mod version', js: true do
       sign_in_dev
       visit '/mods/new'
-      fill_in 'mod_name', with: 'Super Mod'
-      select 'Terrain', from: 'Categories'
+      fill_in_no_versions_minimum 'Super Mod'
       first('.remove_fields').click
       submit_form
       expect(current_path).to eq '/mods/super-mod'
@@ -85,6 +83,7 @@ feature 'Modder creates a new mod' do
       sign_in_dev
       visit '/mods/new'
       fill_in 'mod_name', with: 'ModName'
+      fill_in 'mod_info_json_name', with: 'mod-name'
       9.times{ |i| select "Cat#{i}", from: 'Categories' }
       fill_in_first_version_and_file
       submit_form
@@ -97,6 +96,7 @@ feature 'Modder creates a new mod' do
       sign_in_dev
       visit '/mods/new'
       fill_in 'mod_name', with: 'ModName'
+      fill_in 'mod_info_json_name', with: 'mod-name'
       7.times{ |i| select "Cat#{i}", from: 'Categories' }
       fill_in_first_version_and_file
       submit_form
@@ -125,8 +125,7 @@ feature 'Modder creates a new mod' do
     scenario 'user submits a mod with a mod_version with a perfectly fine number' do
       sign_in_dev
       visit '/mods/new'
-      fill_in 'mod_name', with: 'ModName'
-      select 'Terrain', from: 'Categories'
+      fill_in_no_versions_minimum 'ModName'
       within('.mod-version:nth-child(1)') do
         fill_in 'Number', with: '1.2.3_5-potato'
         fill_in 'Release day', with: 3.weeks.ago
@@ -142,17 +141,16 @@ feature 'Modder creates a new mod' do
   scenario 'user submits a mod with all the data but no versions' do
     sign_in_dev
     visit '/mods/new'
-    fill_in 'mod_name', with: 'Mah super mod'
-    select 'Terrain', from: 'Categories'
+    fill_in_minimum 'SuperMod'
     fill_in 'Github', with: 'http://github.com/factorio-mods/mah-super-mod'
     fill_in 'Forum post URL', with: 'http://www.factorioforums.com/forum/viewtopic.php?f=14&t=5971&sid=1786856d6a687e92f6a12ad9425aeb9e'
     fill_in 'Official URL', with: 'http://www.factorioforums.com/'
     fill_in 'Summary', with: 'This is a small mod for testing'
-    fill_in_first_version_and_file
     submit_form
-    expect(current_path).to eq '/mods/mah-super-mod'
+    expect(current_path).to eq '/mods/supermod'
     mod = Mod.first
-    expect(mod.name).to eq 'Mah super mod'
+    expect(mod.name).to eq 'SuperMod'
+    expect(mod.info_json_name).to eq 'supermod'
     expect(mod.categories).to match_array [Category.first]
     expect(mod.github).to eq 'factorio-mods/mah-super-mod'
     expect(mod.forum_url).to eq 'http://www.factorioforums.com/forum/viewtopic.php?f=14&t=5971&sid=1786856d6a687e92f6a12ad9425aeb9e'
@@ -168,11 +166,10 @@ feature 'Modder creates a new mod' do
     create :game_version, number: '1.2.x'
     attachment = File.new(Rails.root.join('spec', 'fixtures', 'test.zip'))
     visit '/mods/new'
-    fill_in 'mod_name', with: 'Valid mod name'
-    select 'Terrain', from: 'Categories'
+    fill_in_no_versions_minimum
     within('.mod-version:nth-child(1)') do
       fill_in 'Number', with: '123'
-      fill_in 'Release day', with: '2014-11-09'  
+      fill_in 'Release day', with: '2014-11-09'
       select '1.1.x', from: 'Game versions'
       select '1.2.x', from: 'Game versions'
       click_link 'Add file'
@@ -182,8 +179,8 @@ feature 'Modder creates a new mod' do
     end
     submit_form
     mod = Mod.first
-    expect(current_path).to eq '/mods/valid-mod-name'
-    expect(page).to have_content 'Valid mod name'
+    expect(current_path).to eq '/mods/supermod'
+    expect(page).to have_content 'SuperMod'
     expect(mod.versions[0].number).to eq '123'
     expect(mod.versions[0].released_at).to eq Time.zone.parse('2014-11-09')
     expect(mod.versions[0].game_versions[0].number).to eq '1.1.x'
@@ -194,10 +191,8 @@ feature 'Modder creates a new mod' do
   scenario 'admin user submits a mod selecting an owner' do
     sign_in_admin
     visit '/mods/new'
-    fill_in 'mod_name', with: 'Mod Name'
-    select 'Terrain', from: 'Categories'
+    fill_in_minimum 'Mod Name'
     fill_in 'mod_authors_list', with: 'MangoDev'
-    fill_in_first_version_and_file
     submit_form
     mod = Mod.first
     expect(current_path).to eq '/mods/mod-name'
@@ -230,9 +225,7 @@ feature 'Modder creates a new mod' do
     mod = create :mod, name: 'SuperMod'
 
     visit "/mods/new"
-    fill_in 'mod_name', with: 'SuperMod'
-    select 'Terrain', from: 'Categories'
-    fill_in_first_version_and_file
+    fill_in_minimum('SuperMod')
     submit_form
     expect(current_path).to eq '/mods/supermod-by-yeah'
   end
@@ -240,10 +233,8 @@ feature 'Modder creates a new mod' do
   scenario 'user submits a mod with valid names in the #authors_list' do
     sign_in_dev
     visit '/mods/new'
-    fill_in 'mod_name', with: 'SuperMod'
-    select 'Terrain', from: 'Categories'
+    fill_in_minimum
     fill_in 'mod_authors_list', with: 'Potato, SuperUser, Salad'
-    fill_in_first_version_and_file
     submit_form
     expect(current_path).to eq '/mods/supermod'
     expect(Mod.first.authors.map(&:name)).to eq %w{Potato SuperUser Salad}
@@ -252,10 +243,8 @@ feature 'Modder creates a new mod' do
   scenario 'user submits a mod with invalid names in the #authors_list' do
     sign_in_dev
     visit '/mods/new'
-    fill_in 'mod_name', with: 'SuperMod'
-    select 'Terrain', from: 'Categories'
+    fill_in_minimum
     fill_in 'mod_authors_list', with: 'Potato(), SuperUser, Salad'
-    fill_in_first_version_and_file
     submit_form
     expect(current_path).to eq '/mods'
     expect(page).to have_css '#mod_authors_list_input .inline-errors'
@@ -265,16 +254,14 @@ feature 'Modder creates a new mod' do
   scenario 'user submits a mod too many authors in the #authors_list' do
     sign_in_dev
     visit '/mods/new'
-    fill_in 'mod_name', with: 'SuperMod'
-    select 'Terrain', from: 'Categories'
+    fill_in_minimum
     fill_in 'mod_authors_list', with: 'Potato, SuperUser, Salad, Tururu, Papapa, Aaaaa, Bbbbb, Ccccc, Ddddd'
-    fill_in_first_version_and_file
     submit_form
     expect(current_path).to eq '/mods'
     expect(page).to have_css '#mod_authors_list_input .inline-errors'
     expect(page).to have_content /too many/i
   end
-  
+
   describe 'visibility toggle' do
     scenario 'should be hidden for non-dev, and false' do
       sign_in
@@ -284,7 +271,7 @@ feature 'Modder creates a new mod' do
       submit_form
       expect(Mod.first.visible).to eq false
     end
-    
+
     shared_examples 'admin or dev' do
       scenario 'should be visible and ON by default' do
         sign_in_admin_or_dev
@@ -295,7 +282,7 @@ feature 'Modder creates a new mod' do
         submit_form
         expect(Mod.first.visible).to eq true
       end
-      
+
       scenario 'should be visible it should be changeable' do
         sign_in_admin_or_dev
         visit '/mods/new'
@@ -307,19 +294,19 @@ feature 'Modder creates a new mod' do
         expect(Mod.first.visible).to eq false
       end
     end
-    
+
     context 'dev user' do
       it_behaves_like 'admin or dev' do
         let(:sign_in_admin_or_dev){ sign_in_dev }
       end
     end
-    
+
     context 'admin user' do
       it_behaves_like 'admin or dev' do
         let(:sign_in_admin_or_dev){ sign_in_admin }
       end
     end
-    
+
     # context 'dev or admin submits a mod' do
     #   scenario 'should be visible and ON by default' do
     #     sign_in_dev
@@ -330,7 +317,7 @@ feature 'Modder creates a new mod' do
     #     submit_form
     #     expect(Mod.first.visible).to eq true
     #   end
-      
+
     #   scenario 'should be visible it should be changeable' do
     #     sign_in_dev
     #     visit '/mods/new'
@@ -342,8 +329,8 @@ feature 'Modder creates a new mod' do
     #     expect(Mod.first.visible).to eq false
     #   end
     # end
-    
-    
+
+
     # scenario 'should be visible if an admin visits mods#new, and it should be ON by default' do
     #   sign_in
     #   visit '/mods/new'
@@ -354,11 +341,16 @@ feature 'Modder creates a new mod' do
     #   expect(Mod.first.visible).to eq true
     # end
   end
-  
-  def fill_in_minimum
-    fill_in 'mod_name', with: 'SuperMod'
-    select 'Terrain', from: 'Categories'
+
+  def fill_in_minimum(*name)
+    fill_in_no_versions_minimum(*name)
     fill_in_first_version_and_file
+  end
+
+  def fill_in_no_versions_minimum(name = 'SuperMod')
+    fill_in 'mod_name', with: name
+    fill_in 'mod_info_json_name', with: name.downcase
+    select 'Terrain', from: 'Categories'
   end
 
   def fill_in_first_version_and_file

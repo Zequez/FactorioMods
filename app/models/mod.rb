@@ -71,6 +71,11 @@ class Mod < ActiveRecord::Base
     where('mods.name ILIKE ? OR mods.summary ILIKE ? OR mods.description ILIKE ?', "%#{query}%", "%#{query}%", "%#{query}%")
   end
 
+  scope :filter_by_names, ->(names_list) do
+    names = names_list.split(',').map(&:strip)
+    where(info_json_name: names)
+  end
+
   # def self.filter_by_search_query(query)
   #   s1 = s2 = s3 = self
 
@@ -161,6 +166,7 @@ class Mod < ActiveRecord::Base
   validates :forum_url, allow_blank: true, format: { with: /\Ahttps?:\/\/.*\Z/ }
   validates :summary, length: { maximum: 1000 }
   validates :slug, uniqueness: true
+  validates :info_json_name, presence: true # we shouldn't validate uniqueness though
 
   # #categories.count limit
   validate do
@@ -272,6 +278,36 @@ class Mod < ActiveRecord::Base
 
   def authors_list
     @authors_list ||= authors.map(&:name).join(', ')
+  end
+
+  # We should eventually rename the mod attributes to match the ones in the API,
+  # we use these different attributes to roughly match the ones used in
+  # the mods info.json files
+  def as_json(options = {})
+    {
+      title: name,
+      name: info_json_name,
+      url: Rails.application.routes.url_helpers.mod_url(self), # Eww
+      description: summary,
+      homepage: official_url,
+      contact: contact,
+      authors: authors.map(&:name),
+      releases: versions.map do |version|
+        {
+          version: version.number,
+          released_at: version.released_at,
+          game_versions: version.game_versions_string.split('-'), # Ideally we should load the #game_versions
+          dependencies: [],
+          files: version.files.map do |file|
+            {
+              name: file.name,
+              url: file.download_url,
+              mirror: file.attachment.present? ? file.attachment.url : ''
+            }
+          end
+        }
+      end
+    }
   end
 
   private
