@@ -12,7 +12,7 @@
         = category_link nil do
           %i.fa.fa-cog
           = t('.all')
-          (#{uncategorized_mods_total_count})
+          (#{@mods.uncategorized_count})
       - @categories.each do |category|
         %li.category-filter
           = category_link category do

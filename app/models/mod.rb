@@ -39,6 +39,7 @@ class Mod < ActiveRecord::Base
   # has_many :tags
   has_many :favorites
   has_many :forum_posts
+  has_many :bookmarks
 
   has_many :mod_game_versions, -> { uniq }, dependent: :destroy
   has_many :game_versions, -> { uniq.sort_by_older_to_newer }, through: :mod_game_versions
@@ -56,24 +57,54 @@ class Mod < ActiveRecord::Base
   ### Scopes
   #################
 
-  scope :filter_by_category, ->(category) { joins(:categories_mods).where(categories_mods: { category_id: category }) }
-  scope :filter_by_game_version, ->(game_version) do
-    joins(:mod_game_versions).where(mod_game_versions: { game_version: game_version })
-  end
   scope :visible, ->{ where(visible: true) }
+
+  scope :sort_by, ->(sort_type) do
+    @sorted_by = sort_type.to_sym
+    case sort_type.to_sym
+    when :alpha then sort_by_alpha
+    when :most_recent then sort_by_most_recent
+    when :popular then sort_by_popular
+    when :forum_comments then sort_by_forum_comments
+    when :downloads then sort_by_downloads
+    else
+      @sorted_by = :alpha
+      sort_by_alpha
+    end
+  end
   scope :sort_by_most_recent, -> { order('mods.last_release_date desc NULLS LAST') }
   scope :sort_by_alpha, -> { order('LOWER(mods.name) asc') }
   scope :sort_by_forum_comments, -> { order('mods.forum_comments_count desc') }
   scope :sort_by_downloads, -> { order('mods.downloads_count desc') }
   scope :sort_by_popular, -> { includes(:forum_post).order('forum_posts.views_count desc NULLS LAST') }
 
+  scope :filter_by_category, ->(category) do
+    @uncategorized = all
+    if category.present?
+      @category = category.is_a?(String) ? Category.find(category) : category
+      joins(:categories_mods).where(categories_mods: { category: @category })
+    end
+  end
+
+  scope :filter_by_game_version, ->(gv) do
+    if gv.present?
+      @game_version = gv.is_a?(String) ? GameVersion.find_by_number!(gv) : gv
+      joins(:mod_game_versions).where(mod_game_versions: { game_version: @game_version })
+    end
+  end
+
   scope :filter_by_search_query, ->(query) do
-    where('mods.name ILIKE ? OR mods.summary ILIKE ? OR mods.description ILIKE ?', "%#{query}%", "%#{query}%", "%#{query}%")
+    if query.present?
+      query = query[0..30]
+      where('mods.name ILIKE ? OR mods.summary ILIKE ? OR mods.description ILIKE ?', "%#{query}%", "%#{query}%", "%#{query}%")
+    end
   end
 
   scope :filter_by_names, ->(names_list) do
-    names = names_list.split(',').map(&:strip)
-    where(info_json_name: names)
+    if names_list.present?
+      names = names_list.split(',').map(&:strip)
+      where(info_json_name: names)
+    end
   end
 
   # def self.filter_by_search_query(query)
@@ -91,6 +122,41 @@ class Mod < ActiveRecord::Base
 
   #   s1.all.concat s2.all.concat s3.all
   # end
+
+  ### Collection attributes
+  #################
+
+  class << self
+    attr_reader :game_version, :category, :uncategorized, :sorted_by
+  end
+
+  ### Builders
+  #################
+
+  def self.new_for_form(user, forum_post_id)
+    user = nil if user.is_admin?
+    mod = Mod.new owner: user, visible: true
+    mod_version = mod.versions.build
+    mod_version.files.build
+
+    if forum_post_id
+      forum_post = ForumPost.find forum_post_id
+      mod.name = forum_post.title
+
+      mod.authors_list = forum_post.author_name
+      mod.forum_url = forum_post.url
+
+      if forum_post.published_at
+        mod_version.released_at = forum_post.published_at
+      end
+
+      if forum_post.subforum and forum_post.subforum.game_version
+        mod_version.game_versions = [forum_post.subforum.game_version]
+      end
+    end
+
+    mod
+  end
 
   ### Callbacks
   #################

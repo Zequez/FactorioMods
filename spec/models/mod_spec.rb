@@ -23,12 +23,11 @@ RSpec.describe Mod, :type => :model do
     it { is_expected.to respond_to :imgur_normal }
 
     it { is_expected.to respond_to :last_release_date }
-
     it { is_expected.to respond_to :visible? }
     it { expect(mod.visible).to eq true }
-
     it { is_expected.to respond_to :contact }
     it { is_expected.to respond_to :info_json_name }
+    it { is_expected.to respond_to :bookmarks_count }
 
     # URLs
     it { is_expected.to respond_to :license_url }
@@ -55,6 +54,8 @@ RSpec.describe Mod, :type => :model do
     it { is_expected.to respond_to :files }
     it { is_expected.to respond_to :versions }
     it { expect(mod.versions.build).to be_kind_of ModVersion }
+    it { is_expected.to respond_to :bookmarks }
+    it { expect(mod.bookmarks.build).to be_kind_of Bookmark }
     # it { is_expected.to respond_to :tags }
     it { is_expected.to respond_to :favorites }
     it { is_expected.to respond_to :favorites_count }
@@ -480,6 +481,32 @@ RSpec.describe Mod, :type => :model do
     end
   end
 
+  describe 'builders' do
+    describe '.new_for_form' do
+      it 'should build the required associations and read the #forum_post' do
+        gv = create :game_version
+        subforum = create :subforum, game_version: gv
+        forum_post = create :forum_post,
+          title: 'rsarsarsarsa',
+          author_name: 'GuyGuy',
+          url: 'http://potatopotato.com.potato',
+          published_at: 1.day.ago,
+          subforum: subforum
+        current_user = create :user
+        mod = Mod.new_for_form(current_user, forum_post.id)
+        expect(mod.versions[0]).to be_kind_of ModVersion
+        expect(mod.versions[0].files[0]).to be_kind_of ModFile
+        expect(mod.name).to eq 'rsarsarsarsa'
+        expect(mod.authors_list).to eq 'GuyGuy'
+        expect(mod.forum_url).to eq 'http://potatopotato.com.potato'
+        expect(mod.versions[0].released_at).to eq forum_post.published_at
+        expect(mod.versions[0].game_versions).to eq [gv]
+        expect(mod.visible).to eq true
+        expect(mod.owner).to eq current_user
+      end
+    end
+  end
+
   describe 'scopes' do
     describe '.filter_by_names' do
       it 'should return a list of mods by #info_json_name' do
@@ -505,16 +532,47 @@ RSpec.describe Mod, :type => :model do
         create :mod, info_json_name: 'banana'
         expect(Mod.filter_by_names('potato')).to match_array [mod1, mod2]
       end
+
+      it "should return the whole scope with an empty argument" do
+        create :mod
+        create :mod
+        expect(Mod.filter_by_names('')).to eq Mod.all
+      end
     end
 
     describe '.filter_by_category' do
+      before :each do
+        @cat = create :category, name: 'Potato'
+        @mod1 = create :mod, categories: [@cat]
+        @mod2 = create :mod, categories: [@cat]
+        @mod3 = create :mod
+      end
+
       it 'should filter results by category' do
-        mod1 = create(:mod)
-        mod2 = create(:mod)
-        mod2.categories = [mod1.categories[0]]
-        mod2.save!
-        create(:mod)
-        Mod.filter_by_category(mod1.categories[0]).all.should eq [mod1, mod2]
+        expect(Mod.filter_by_category(@cat)).to eq [@mod1, @mod2]
+      end
+
+      it 'should work with the category slug' do
+        expect(Mod.filter_by_category('potato')).to eq [@mod1, @mod2]
+      end
+
+      it 'should raise an exception for a non-existant category' do
+        expect{ Mod.filter_by_category('rsarsasrasrt') }.to raise_error ActiveRecord::RecordNotFound
+      end
+
+      it 'should make the category available as a collection attribute' do
+        mods = Mod.filter_by_category(@cat)
+        expect(mods.category).to eq @cat
+      end
+
+      it 'should return the whole scope with an empty argument' do
+        expect(Mod.filter_by_category('')).to eq [@mod1, @mod2, @mod3]
+      end
+
+      it 'should make #uncategorized available with the previous scope' do
+        prev_scope = Mod.where(name: 'something')
+        mods = prev_scope.filter_by_category('potato')
+        expect(mods.uncategorized).to eq prev_scope
       end
     end
 
@@ -559,77 +617,147 @@ RSpec.describe Mod, :type => :model do
         expect(Mod.filter_by_game_version(gv2)).to match [m1, m2]
         expect(Mod.filter_by_game_version(gv3)).to match [m2, m3]
       end
+
+      it 'should work by poviding the game version number' do
+        m1 = create :mod
+        m2 = create :mod
+        m3 = create :mod
+        gv1 = create :game_version, number: '1.1.x'
+        gv2 = create :game_version, number: '1.2.x'
+        gv3 = create :game_version, number: '1.3.x'
+        create :mod_version, game_versions: [gv1, gv2], mod: m1
+        create :mod_version, game_versions: [gv2, gv3], mod: m2
+        create :mod_version, game_versions: [gv3], mod: m3
+
+        expect(Mod.filter_by_game_version('1.1.x')).to match [m1]
+        expect(Mod.filter_by_game_version('1.2.x')).to match [m1, m2]
+        expect(Mod.filter_by_game_version('1.3.x')).to match [m2, m3]
+      end
+
+      it 'returns the whole scope when empty' do
+        expect(Mod.filter_by_game_version('')).to eq Mod.all
+      end
+
+      it 'should raise an exception for a non-existant game version' do
+        expect{ Mod.filter_by_game_version('1.1.1.2.3') }.to raise_error ActiveRecord::RecordNotFound
+      end
+
+      it 'should make the game version available on the collection' do
+        m1 = create :mod
+        gv1 = create :game_version, number: '1.1.x'
+        create :mod_version, game_versions: [gv1], mod: m1
+        mods = Mod.filter_by_game_version('1.1.x')
+        expect(mods.game_version).to eq gv1
+      end
     end
 
-    describe '.sort_by_most_recent' do
-      context 'there are no mods' do
-        it 'should return empty' do
-          Mod.sort_by_most_recent.all.should be_empty
+    describe 'sorting' do
+      describe '.sort_by' do
+        it 'should work with :alpha' do
+          expect(Mod).to receive(:sort_by_alpha)
+          Mod.sort_by(:alpha)
+        end
+
+        it 'should work with :most_recent' do
+          expect(Mod).to receive(:sort_by_most_recent)
+          Mod.sort_by(:most_recent)
+        end
+
+        it 'should work with :popular' do
+          expect(Mod).to receive(:sort_by_popular)
+          Mod.sort_by(:popular)
+        end
+
+        it 'should work with :forum_comments' do
+          expect(Mod).to receive(:sort_by_forum_comments)
+          Mod.sort_by(:forum_comments)
+        end
+
+        it 'should work with :downloads' do
+          expect(Mod).to receive(:sort_by_downloads)
+          Mod.sort_by(:downloads)
+        end
+
+        it 'should add #sorted_by to the scope methods' do
+          expect(Mod.sort_by(:alpha).sorted_by).to eq :alpha
+          expect(Mod.sort_by(:most_recent).sorted_by).to eq :most_recent
+          expect(Mod.sort_by(:popular).sorted_by).to eq :popular
+          expect(Mod.sort_by(:forum_comments).sorted_by).to eq :forum_comments
+          expect(Mod.sort_by(:downloads).sorted_by).to eq :downloads
+          expect(Mod.sort_by('').sorted_by).to eq :alpha
         end
       end
 
-      context 'there are some mods' do
-        it 'should return them by versions#released_at date' do
-          mod1 = create(:mod)
-          mod2 = create(:mod)
-          mod3 = create(:mod)
-          create(:mod_version, released_at: 2.day.ago, mod: mod1)
-          create(:mod_version, released_at: 1.day.ago, mod: mod2)
-          create(:mod_version, released_at: 3.day.ago, mod: mod3)
+      describe '.sort_by_most_recent' do
+        context 'there are no mods' do
+          it 'should return empty' do
+            Mod.sort_by_most_recent.all.should be_empty
+          end
+        end
 
-          Mod.sort_by_most_recent.all.should eq [mod2, mod1, mod3]
+        context 'there are some mods' do
+          it 'should return them by versions#released_at date' do
+            mod1 = create(:mod)
+            mod2 = create(:mod)
+            mod3 = create(:mod)
+            create(:mod_version, released_at: 2.day.ago, mod: mod1)
+            create(:mod_version, released_at: 1.day.ago, mod: mod2)
+            create(:mod_version, released_at: 3.day.ago, mod: mod3)
+
+            Mod.sort_by_most_recent.all.should eq [mod2, mod1, mod3]
+          end
+        end
+
+        context 'multiple versions of the same mod' do
+          it 'shuold return only one copy of each mod in the correct order' do
+            mod1 = create(:mod)
+            mod2 = create(:mod)
+            mod3 = create(:mod)
+            create :mod_version, released_at: 3.days.ago, mod: mod1
+            create :mod_version, released_at: 1.days.ago, mod: mod1
+            create :mod_version, released_at: 2.days.ago, mod: mod2
+            create :mod_version, released_at: 4.days.ago, mod: mod3
+
+            Mod.sort_by_most_recent.all.should eq [mod1, mod2, mod3]
+          end
         end
       end
 
-      context 'multiple versions of the same mod' do
-        it 'shuold return only one copy of each mod in the correct order' do
-          mod1 = create(:mod)
-          mod2 = create(:mod)
-          mod3 = create(:mod)
-          create :mod_version, released_at: 3.days.ago, mod: mod1
-          create :mod_version, released_at: 1.days.ago, mod: mod1
-          create :mod_version, released_at: 2.days.ago, mod: mod2
-          create :mod_version, released_at: 4.days.ago, mod: mod3
+      describe '.sort_by_alpha' do
+        it 'should sort the results by #name' do
+          mods = []
+          mods << create(:mod, name: 'Banana')
+          mods << create(:mod, name: 'Avocado')
+          mods << create(:mod, name: 'Caca')
 
-          Mod.sort_by_most_recent.all.should eq [mod1, mod2, mod3]
+          expect(Mod.sort_by_alpha).to match [mods[1], mods[0], mods[2]]
         end
       end
-    end
 
-    describe '.sort_by_alpha' do
-      it 'should sort the results by #name' do
-        mods = []
-        mods << create(:mod, name: 'Banana')
-        mods << create(:mod, name: 'Avocado')
-        mods << create(:mod, name: 'Caca')
+      describe '.sort_by_forum_comments' do
+        it 'should sort the results by #forum_comments_count' do
+          mods = []
+          mods << create(:mod, forum_comments_count: 8)
+          mods << create(:mod, forum_comments_count: 1)
+          mods << create(:mod, forum_comments_count: 3)
+          mods << create(:mod, forum_comments_count: 5)
+          mods << create(:mod, forum_comments_count: 4)
 
-        expect(Mod.sort_by_alpha).to match [mods[1], mods[0], mods[2]]
+          expect(Mod.sort_by_forum_comments).to match [mods[0], mods[3], mods[4], mods[2], mods[1]]
+        end
       end
-    end
 
-    describe '.sort_by_forum_comments' do
-      it 'should sort the results by #forum_comments_count' do
-        mods = []
-        mods << create(:mod, forum_comments_count: 8)
-        mods << create(:mod, forum_comments_count: 1)
-        mods << create(:mod, forum_comments_count: 3)
-        mods << create(:mod, forum_comments_count: 5)
-        mods << create(:mod, forum_comments_count: 4)
+      describe '.sort_by_downloads' do
+        it 'should sort the results by #forum_comments_count' do
+          mods = []
+          mods << create(:mod, downloads_count: 2)
+          mods << create(:mod, downloads_count: 1)
+          mods << create(:mod, downloads_count: 3)
+          mods << create(:mod, downloads_count: 5)
+          mods << create(:mod, downloads_count: 4)
 
-        expect(Mod.sort_by_forum_comments).to match [mods[0], mods[3], mods[4], mods[2], mods[1]]
-      end
-    end
-
-    describe '.sort_by_downloads' do
-      it 'should sort the results by #forum_comments_count' do
-        mods = []
-        mods << create(:mod, downloads_count: 2)
-        mods << create(:mod, downloads_count: 1)
-        mods << create(:mod, downloads_count: 3)
-        mods << create(:mod, downloads_count: 5)
-        mods << create(:mod, downloads_count: 4)
-
-        expect(Mod.sort_by_downloads).to match [mods[3], mods[4], mods[2], mods[0], mods[1]]
+          expect(Mod.sort_by_downloads).to match [mods[3], mods[4], mods[2], mods[0], mods[1]]
+        end
       end
     end
 
@@ -664,6 +792,11 @@ RSpec.describe Mod, :type => :model do
         create(:mod, description: 'This is a coffee simulator')
 
         expect(Mod.filter_by_search_query('banana')).to eq [m2]
+      end
+
+      it 'should return the whole scope with an empty query' do
+        create(:mod, description: 'This is a potato simulator')
+        expect(Mod.filter_by_search_query('')).to eq Mod.all
       end
 
       # context 'find on name, summary and description' do

@@ -7,17 +7,9 @@ module ApplicationHelper
     end
   end
 
-  def uncategorized_mods_total_count
-    @uncategorized_mods_total_count ||= @uncategorized_mods.total_count
-  end
-
-  def all_mods_count
-    @all_mods_count ||= @all_mods.count
-  end
-
   def category_probabilistic_count(category)
-    if all_mods_count != uncategorized_mods_total_count
-      aproximate_count = (category.mods_count.to_f / all_mods_count * uncategorized_mods_total_count).round(1).to_s
+    if @mods.all_count != @mods.uncategorized_count
+      aproximate_count = (category.mods_count.to_f / @mods.all_count * @mods.uncategorized_count).round(1).to_s
       content_tag('span', "~#{aproximate_count}", title: 'Probabilistic quantity').html_safe
     else
       category.mods_count
