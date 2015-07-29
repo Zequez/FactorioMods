@@ -499,7 +499,7 @@ RSpec.describe Mod, :type => :model do
         expect(mod.name).to eq 'rsarsarsarsa'
         expect(mod.authors_list).to eq 'GuyGuy'
         expect(mod.forum_url).to eq 'http://potatopotato.com.potato'
-        expect(mod.versions[0].released_at).to eq forum_post.published_at
+        expect(mod.versions[0].released_at).to be_within(1.second).of 1.day.ago
         expect(mod.versions[0].game_versions).to eq [gv]
         expect(mod.visible).to eq true
         expect(mod.owner).to eq current_user
