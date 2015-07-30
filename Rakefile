@@ -32,3 +32,16 @@ desc 'Create fake data'
 task fake_data: :environment do
   FakeDataGenerator.new.generate
 end
+
+desc 'Fill info_json_name from file name'
+task fill_info_json_name: :environment do
+  Mod.where(info_json_name: '').each do |mod|
+    if ( file = mod.versions.map(&:files).flatten.detect(&:attachment_file_name) )
+      name = file.attachment_file_name.scan(/^.*(?=[_-][0-9])/)[0]
+      if name
+        mod.info_json_name = name
+        mod.save!
+      end
+    end
+  end
+end
