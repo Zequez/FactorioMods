@@ -9,7 +9,7 @@ en:
     '401':
       title: 401 Authentication error
       header: 401 Authentication error
-      content: "You need to log in (not open to the public for now, sorry)"
+      content: "You need to log in"
     '403':
       title: 403 Access denied
       header: 403 Access denied
