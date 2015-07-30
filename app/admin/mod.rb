@@ -70,7 +70,9 @@ ActiveAdmin.register Mod do
     end
 
     column :forum do |mod|
-      link_to "#{mod.forum_post.views_count}V / #{mod.forum_post.comments_count}C", [:edit, :admin, mod.forum_post]
+      if mod.forum_post
+        link_to "#{mod.forum_post.views_count}V / #{mod.forum_post.comments_count}C", [:edit, :admin, mod.forum_post]
+      end
     end
 
     # column 'Visits/Down' do |mod|
