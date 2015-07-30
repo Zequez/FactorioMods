@@ -27,6 +27,8 @@ ActiveAdmin.register Mod do
     end
   end
 
+  scope :without_info_json_name
+
   show do |mod|
     h2 link_to mod_path(mod), mod
 
@@ -54,6 +56,8 @@ ActiveAdmin.register Mod do
     column :name do |mod|
       link_to(mod.name, mod)
     end
+
+    column :info_json_name
 
     column :categories do |mod|
       mod.categories.map(&:name).join(', ')
@@ -101,6 +105,7 @@ ActiveAdmin.register Mod do
   end
 
   filter :name
+  filter :info_json_name
   filter :author
   filter :author_name
 
@@ -109,6 +114,7 @@ ActiveAdmin.register Mod do
 
     f.inputs do
       f.input :name
+      f.input :info_json_name
       f.input :categories
       f.input :slug
       f.input :owner

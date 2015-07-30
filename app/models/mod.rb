@@ -58,7 +58,7 @@ class Mod < ActiveRecord::Base
   #################
 
   scope :visible, ->{ where(visible: true) }
-
+  scope :without_info_json_name, ->{ where(info_json_name: '') }
   scope :sort_by, ->(sort_type) do
     @sorted_by = sort_type.to_sym
     case sort_type.to_sym
