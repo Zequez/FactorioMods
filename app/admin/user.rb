@@ -42,7 +42,7 @@ ActiveAdmin.register User do
     end
     column :give_ownership do |user|
       # Doesn't actually toggle, it's just a one way trip
-      toggler_status_tag validate_admin_user_path(user), user.is_dev
+      toggler_status_tag give_ownership_admin_user_path(user), user.is_dev
     end
     actions
   end
