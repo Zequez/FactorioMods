@@ -6,7 +6,9 @@
   .mod
     .mod-image= @mod.img_link
     .mod-info-container
-      %h2.mod-title= @mod.name
+      %h2.mod-title
+        = @mod.bookmark_link
+        = @mod.name
       .mod-subtitle
         = @mod.categories_links
         = @mod.edit_link

@@ -32,6 +32,7 @@ group :development, :test, :assets do
   gem 'bourbon', '~> 4.2'
   gem 'nprogress-rails'
   gem 'json_spec'
+  gem 'jquery-turbolinks'
 end
 
 # Views

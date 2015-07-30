@@ -1,0 +1,24 @@
+.mods-bookmark
+  .mods-bookmark-create
+    display: inline
+  .mods-bookmark-destroy
+    display: none
+  &.bookmarked
+    .mods-bookmark-create
+      display: none
+    .mods-bookmark-destroy
+      display: inline
+
+.bookmarks.index
+  .content
+    background: none
+    border-radius: 0
+    padding: 0
+
+.bookmarks-tools
+  @extend %content-block
+  padding: space()
+  +span(3 of 12)
+
+.bookmarks-index
+  +span(9 omega of 12)

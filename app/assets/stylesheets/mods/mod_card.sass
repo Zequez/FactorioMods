@@ -1,0 +1,92 @@
+.mod
+  @extend %content-block
+  +relative()
+  margin-bottom: rhythm()
+  +pie-clearfix
+  &:hover
+    z-index: 100
+  &:last-child
+    margin-bottom: 0
+
+  //-- Thumbnail --//
+  &-thumbnail
+    @extend %pretty-border
+    +span(2 of no-gutter $mods-list-size)
+    overflow: hidden
+
+    a
+      //@extend %thumbnail-hover
+      display: block
+      width: 100%
+      overflow: hidden
+
+    img
+      display: block
+      width: 100%
+
+
+  //-- Info --//
+  &-info-container
+    +span(5 of $mods-list-size wider no-gutter)
+    padding: space()
+
+  &-subtitle
+    +font-smaller
+    .tag
+      margin-right: space()
+      white-space: nowrap
+
+  &-tag
+    +inline-block
+    +font-x-smaller
+    padding: 0 0.25em
+    border-radius: 2px
+    background: $color-blue
+    line-height: rhythm(1, $font-x-smaller)*0.8
+
+  //-- Links --//
+  &-info
+    +span(2 omega of $mods-list-size)
+    padding: space()
+    text-align: right
+    +nowrap
+
+    &-tag
+      display: block
+      position: relative
+      padding-right: 20px
+
+      &-label
+        position: relative
+        display: block
+        background-color: $color-white
+        overflow: hidden
+        text-overflow: ellipsis
+        border-radius: 0 $border-radius $border-radius 0
+        z-index: 1
+        &:hover
+          overflow: visible
+          display: inline
+          z-index: 3
+
+      .fa
+        position: absolute
+        top: 3px // Sorry, magic pixel
+        right: 0
+        height: 100%
+        width: 16px
+        background: $color-white
+        z-index: 2
+
+    .btn-download
+      position: absolute
+      bottom: space()
+      right: space()
+      z-index: 999
+
+      &.mod-install-button
+        bottom: rhythm(1.6) // THE HORROR. No vertical rhythm compliant!
+
+      // Add some spacing when the download button is shown
+      & + .mod-info-tag
+        margin-bottom: rhythm(2.5)

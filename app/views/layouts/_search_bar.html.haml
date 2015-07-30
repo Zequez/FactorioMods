@@ -9,6 +9,9 @@
     %li.sorter<>
       = sort_link :popular do
         = icon 'star-o', t('.popular')
+    %li.sorter<>
+      = sort_link bookmarks_path do
+        = icon 'star', t('.bookmarked')
   .text-filter
     = search_form do
       %input.input.input-text.input-text-search#search-input{type: 'text', placeholder: t('.search'), name: 'q', value: params[:q], maxlength: 30}

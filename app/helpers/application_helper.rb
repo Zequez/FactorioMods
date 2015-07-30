@@ -95,7 +95,8 @@ module ApplicationHelper
   ####################
 
   def sort_link(sort, &block)
-    link_to sort_url(sort), class: sort_active_class(sort), &block
+    url = sort.is_a?(Symbol) ? sort_url(sort) : sort
+    link_to url, class: sort_active_class(sort), &block
   end
 
   def category_link(category, &block)
@@ -120,7 +121,8 @@ module ApplicationHelper
   ####################
 
   def sort_active_class(sort)
-    (@sort == sort) ? 'active' : nil
+    equal_to = sort.is_a?(Symbol) ? @sort : request.path
+    (sort == equal_to) ? 'active' : nil
   end
 
   def category_filter_active_class(category)

@@ -84,9 +84,31 @@ class ModDecorator < Draper::Decorator
     end
   end
 
+  def bookmark_link
+    if h.current_user
+      bookmarked = h.current_user.has_bookmarked_mod?(mod)
+      path = h.bookmarks_path(bookmark: { mod_id: mod.id })
+      h.content_tag :span, class: ['mods-bookmark', ('bookmarked' if bookmarked)] do
+        h.link_to(
+          h.icon('star-o'), path,
+          class: 'mods-bookmark-create',
+          method: :post,
+          remote: true
+        ) +
+        h.link_to(
+          h.icon('star'), path,
+          class: 'mods-bookmark-destroy',
+          method: :delete,
+          remote: true
+        )
+      end
+    else
+
+    end
+  end
+
   def title_link
-    h.link_to(mod.name, mod) +
-    (h.link_to h.t('mods.decorator.admin_edit'), [:edit, mod] if h.can? :edit, mod)
+    h.link_to(mod.name, mod)
   end
 
   def edit_link

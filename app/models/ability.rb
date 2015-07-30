@@ -5,12 +5,15 @@ class Ability
     # Define abilities for the passed in user here. For example:
 
     user ||= User.new # guest user (not logged in)
-    
+
     if user.is_admin?
       can :manage, :all
     else
       can(:read, Mod) { |mod| mod.visible }
       if user.is_registered?
+        can :read, Bookmark, user_id: user.id
+        can :create, Bookmark
+        can :destroy, Bookmark, user_id: user.id
         can :manage, Mod, author_id: user.id
         can(:read, Mod) { |mod| mod.visible || mod.author_id == user.id }
         cannot :set_slug, Mod

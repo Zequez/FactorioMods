@@ -66,6 +66,11 @@ class User < ActiveRecord::Base
     authored_mods.each{ |am| am.update!(owner: self) unless am.owner.present? }
   end
 
+  def has_bookmarked_mod?(mod)
+    @bookmarked_mods_ids ||= Bookmark.where(user: self).pluck(:mod_id)
+    @bookmarked_mods_ids.include? mod.id
+  end
+
   ### Attributes
   #################
 

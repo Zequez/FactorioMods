@@ -11,6 +11,9 @@ Rails.application.routes.draw do
   end
 
   resources :users, only: [:show]
+  resources :bookmarks, only: [:create, :index] do
+    delete :destroy, on: :collection
+  end
 
   # Routes examples
   #
@@ -62,6 +65,7 @@ Rails.application.routes.draw do
   # end
 
   resources :mods
+
   # This one is for the helper
   resources :categories, path: 'category', only: [] do
     resources :mods, path: '/', only: :index

@@ -1,5 +1,13 @@
 en:
   mods:
+    mod_card:
+      links:
+        last_version_date: "Date of the latest version of this mod %{date}"
+        game_version: Factorio versions this mod works with
+        authors:
+          one: The awesome person behind this mod
+          other: The awesome people behind this mod
+
     new:
       title: Create new mod
       title_edit: Edit %{name} # We use the same view
@@ -49,12 +57,6 @@ en:
         basic and plain for now. I apologize the inconvenience.
       admin_edit: Edit
       post_on_the_factorio_forum: Post on the official Factorio forums
-      links:
-        last_version_date: "Date of the latest version of this mod %{date}"
-        game_version: Factorio versions this mod works with
-        authors:
-          one: The awesome person behind this mod
-          other: The awesome people behind this mod
 
     mod_data_table:
       game_version: Factorio version

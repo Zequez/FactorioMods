@@ -1,6 +1,6 @@
 FactoryGirl.define do
   factory :bookmark do
-    mod nil
-    user nil
+    association :mod, factory: :mod
+    association :user, factory: :user
   end
 end

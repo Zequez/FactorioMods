@@ -91,6 +91,15 @@ $(document).on 'page:change', ->
       $(document).one 'page:change', ->
         $(document).off 'keyup', '.mods-edit .string.input input', setFieldsetLegend
 
+
+$ ->
+  # Mods bookmarking
+  do ->
+    $(document).on 'ajax:success', '.mods-bookmark > .mods-bookmark-create', ->
+      this.parentElement.classList.add('bookmarked')
+    $(document).on 'ajax:success', '.mods-bookmark > .mods-bookmark-destroy', ->
+      this.parentElement.classList.remove('bookmarked')
+
   # Edit mod textarea expansion
   # do ->
   #   li = $('#mod_description_input')

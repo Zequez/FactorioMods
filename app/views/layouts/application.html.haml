@@ -4,7 +4,6 @@
     %title= yield :title
     = stylesheet_link_tag 'http://fonts.googleapis.com/css?family=Titillium+Web:400,600'
     = stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true
-    %script(src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js")
     = csrf_meta_tags
     %link(rel="shortcut icon" href="/favicon.ico?v=2")
     = render partial: 'layouts/google_analytics'
@@ -21,4 +20,5 @@
       .footer-spacer
 
     = render partial: 'layouts/footer'
-    = javascript_include_tag 'application', 'data-turbolinks-track' => true
+    %script{src: "//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js", "data-turbolinks-eval" => false}
+    = javascript_include_tag 'application', 'data-turbolinks-eval' => false

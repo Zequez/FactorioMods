@@ -7,10 +7,10 @@ class ApplicationController < ActionController::Base
 
   rescue_from CanCan::AccessDenied, with: :authentication_error
   rescue_from ActiveRecord::RecordNotFound, with: :not_found
-  rescue_from ActionController::ParameterMissing, with: :wrong_parameres_error
+  rescue_from ActionController::ParameterMissing, with: :wrong_parameters_error
 
   before_action :configure_devise_permitted_parameters, if: :devise_controller?
-  
+
   # Ignore JSON requests by default
   # (Rails 4.1 tries to serve them by default)
   respond_to :html
@@ -35,8 +35,8 @@ class ApplicationController < ActionController::Base
     @error_code = 401
     render 'errors/base', status: 401
   end
-  
-  def wrong_parameres_error(exception = nil)
+
+  def wrong_parameters_error(exception = nil)
     render text: '', status: 400
   end
 

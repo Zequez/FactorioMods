@@ -23,7 +23,7 @@ FactoryGirl.define do
 
   factory :game_version do
     number '0.10.2'
-     sequence(:sort_order) { |n| n.to_i }
+    sequence(:sort_order) { |n| n.to_i }
   end
 
   factory :game_version_end do
