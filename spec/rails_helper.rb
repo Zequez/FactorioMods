@@ -122,6 +122,11 @@ RSpec.configure do |config|
   end
 
   def response_json
-    ActiveSupport::HashWithIndifferentAccess.new JSON.parse(response.body)
+    data = JSON.parse(response.body)
+    # if data.is_a? Array
+    #   data.map!{|d| ActiveSupport::HashWithIndifferentAccess.new d }
+    # else
+    #   ActiveSupport::HashWithIndifferentAccess.new data
+    # end
   end
 end

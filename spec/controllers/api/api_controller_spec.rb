@@ -29,15 +29,15 @@ describe API::APIController, type: :controller do
     it 'should return a list of valid URLs of the API' do
       get :root
       expect(response).to have_http_status :success
-      expect(response_json[:mods_url]).to           match %r{/mods}
-      expect(response_json[:mod_url]).to            match %r{/mods/{mod}}
-      expect(response_json[:categories_url]).to     match %r{/categories}
-      expect(response_json[:category_url]).to       match %r{/categories/}
-      expect(response_json[:category_mods_url]).to  match %r{/categories/{category}/mods}
-      expect(response_json[:authors_url]).to        match %r{/authors}
-      expect(response_json[:author_url]).to         match %r{/authors/{author}}
-      expect(response_json[:author_mods_url]).to    match %r{/authors/{author}/mods}
-      expect(response_json[:user_bookmarks_url]).to match %r{/users/{user}/bookmarks}
+      expect(response_json['mods_url']).to           match %r{/mods}
+      expect(response_json['mod_url']).to            match %r{/mods/{mod}}
+      expect(response_json['categories_url']).to     match %r{/categories}
+      expect(response_json['category_url']).to       match %r{/categories/}
+      expect(response_json['category_mods_url']).to  match %r{/categories/{category}/mods}
+      expect(response_json['authors_url']).to        match %r{/authors}
+      expect(response_json['author_url']).to         match %r{/authors/{author}}
+      expect(response_json['author_mods_url']).to    match %r{/authors/{author}/mods}
+      expect(response_json['user_bookmarks_url']).to match %r{/users/{user}/bookmarks}
     end
   end
 end

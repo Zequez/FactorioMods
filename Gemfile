@@ -13,6 +13,7 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw]
 gem 'pg'
 gem 'dotenv-rails'
 gem 'rails-api'
+gem 'active_model_serializers', '~> 0.8.0'
 
 # Assets
 ########################
