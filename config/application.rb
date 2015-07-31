@@ -22,7 +22,7 @@ module FactorioMods
 
     config.autoload_paths << Rails.root.join('lib')
     config.watchable_dirs['lib'] = [:rb]
-    
+
     config.ga_ua = ENV['GA_UA']
     config.ga_url = ENV['GA_URL']
   end

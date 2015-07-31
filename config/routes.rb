@@ -1,4 +1,8 @@
 Rails.application.routes.draw do
+  namespace :api, path: '/', constraints: { subdomain: 'api' } do
+    root to: 'api#root'
+  end
+
   devise_for :users,
               path_names: { sign_in: 'login', sign_out: 'logout', sign_up: 'register' },
               controllers: { registrations: 'users/registrations', sessions: 'users/sessions' }

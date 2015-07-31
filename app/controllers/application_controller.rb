@@ -11,6 +11,10 @@ class ApplicationController < ActionController::Base
 
   before_action :configure_devise_permitted_parameters, if: :devise_controller?
 
+  before_action do
+    L request.subdomain
+  end
+
   # Ignore JSON requests by default
   # (Rails 4.1 tries to serve them by default)
   respond_to :html
