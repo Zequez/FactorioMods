@@ -120,4 +120,8 @@ RSpec.configure do |config|
   def last_response
     page.source
   end
+
+  def response_json
+    ActiveSupport::HashWithIndifferentAccess.new JSON.parse(response.body)
+  end
 end

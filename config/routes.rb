@@ -1,5 +1,15 @@
 Rails.application.routes.draw do
   namespace :api, path: '/', constraints: { subdomain: 'api' } do
+    resources :mods, only: [:index, :show]
+    resources :categories, only: [:index, :show] do
+      resources :mods, only: :index
+    end
+    resources :authors, only: [:index, :show] do
+      resources :mods, only: :index
+    end
+    resources :users, only: [] do
+      resources :bookmarks, only: :index
+    end
     root to: 'api#root'
   end
 
