@@ -12,9 +12,11 @@
       .container
         = render partial: 'layouts/header'
         = render partial: 'layouts/search_bar'
-        - if content_for? :info_box
-          .info-box
-            = yield :info_box
+        - flash.each do |key, value|
+          - unless value.blank?
+            .flash{class: key}
+              .flash-value= value
+
         .content
           = yield
       .footer-spacer

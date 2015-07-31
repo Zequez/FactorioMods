@@ -6,15 +6,31 @@
 
 // 40.7 is perfect, just leave it.
 $gutterSize: ($base-line-height) / ($base-line-height*40.7 / 12) // One rhythm, trust me
-$susy: (gutters: $gutterSize*1.25)// Gutter size is wrong because it's calculated with percentage//, math: static, column-width: rhythm(1)*3)
+// Gutter size is wrong because it's calculated with percentage
+$susy: (gutters: $gutterSize*1.25)
 
 .container
   +container(12 $base-line-height*40.7) // Debug
   // +container(12 $base-line-height*40.7)
 
-.info-box
+.flash
   +span(full)
   margin-bottom: rhythm()
+  padding: 0 space()
+  border-radius: $border-radius
+  background-color: $color-blue
+  line-height: rhythm(2)
+  &:before
+    position: relative
+    margin-right: space($font-x-larger)
+    float: left
+    +font-x-larger
+  &.alert:before
+    +content-icon(exclamation-triangle)
+  &.notice:before
+    +content-icon(info-circle)
+  &.error:before
+    +content-icon(times-circle)
 
 .content
   +span(full)

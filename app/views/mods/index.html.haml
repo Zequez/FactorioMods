@@ -5,9 +5,6 @@
 - unless current_page? '/'
   = render partial: 'mods_filters_list'
 
-- if @query
-  .info-box.query-info-box= t('.search_notice')
-
 .mods-index
   = render partial: 'mod_card', collection: @mods, as: :mod
   = paginate @mods
