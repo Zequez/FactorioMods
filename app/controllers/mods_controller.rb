@@ -21,11 +21,14 @@ class ModsController < ApplicationController
     @game_versions = GameVersion.sort_by_newer_to_older
     @categories = Category.order_by_mods_count.order_by_name
 
+    flash.now[:notice] = I18n.t('mods.index.search_notice') if params[:q].present?
+
     respond_with @mods
   end
 
   def show
     @mod = Mod.includes(versions: :files).find(params[:id]).decorate
+    flash[:notice] = @mod.visibility_notice
     respond_with @mod
   end
 

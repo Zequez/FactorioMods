@@ -20,6 +20,8 @@ RSpec.describe User, :type => :model do
   it { is_expected.to respond_to :bookmarked_mods }
   it { expect(user.bookmarked_mods.build).to be_kind_of Mod }
 
+  it { is_expected.to respond_to :login }
+
   describe 'validations' do
     it 'should not allow user without name' do
       user = build :user, name: ''

@@ -108,7 +108,7 @@ feature 'Display full mod information' do
     scenario 'a non-registered user visits a non-visible mod' do
       mod = create :mod, visible: false
       visit mod_path mod
-      expect(page).to have_http_status :unauthorized
+      expect(current_path).to eq new_user_session_path
     end
 
     scenario 'a registered user visits a non-visible mod' do

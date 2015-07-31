@@ -26,6 +26,12 @@ class User < ActiveRecord::Base
       .uniq
   end
 
+  def self.find_for_database_authentication(conditions)
+    conditions[:login].downcase!
+    conditions[:login].strip!
+    where('lower(email) = :login or lower(name) = :login', conditions).first
+  end
+
   ### Callbacks
   #################
 
@@ -73,6 +79,8 @@ class User < ActiveRecord::Base
 
   ### Attributes
   #################
+
+  attr_accessor :login
 
   def non_owned_authored_mods
     authored_mods - owned_mods

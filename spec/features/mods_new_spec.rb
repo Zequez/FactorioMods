@@ -10,7 +10,7 @@ feature 'Modder creates a new mod' do
     scenario 'non-user visits the new mod page' do
       visit '/mods/new'
 
-      expect(page.status_code).to eq 401
+      expect(current_path).to eq new_user_session_path
     end
 
 

@@ -32,8 +32,14 @@ class ApplicationController < ActionController::Base
   def authentication_error(exception = nil)
     params[:controller] = 'errors'
     params[:action] = 'error-401'
-    @error_code = 401
-    render 'errors/base', status: 401
+    if request.get? and not current_user
+      # Turbolinks redirection doesn't change the referer for the next page
+      redirect_to new_user_session_path(redirect_to: request.path),
+         flash: { alert: I18n.t('devise.failure.unauthenticated') }
+    else
+      @error_code = 401
+      render 'errors/base', status: 401
+    end
   end
 
   def wrong_parameters_error(exception = nil)
@@ -41,7 +47,9 @@ class ApplicationController < ActionController::Base
   end
 
   def configure_devise_permitted_parameters
-    devise_parameter_sanitizer.for(:sign_up) << :name
+    devise_parameter_sanitizer.for(:sign_up).push(:name, :email)
+    devise_parameter_sanitizer.for(:sign_in).push(:login)
+    devise_parameter_sanitizer.for(:account_update)
   end
 
   def after_sign_in_path_for(resource)

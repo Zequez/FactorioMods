@@ -11,12 +11,16 @@ RSpec.describe BookmarksController, type: :controller do
       expect(response).to have_http_status :ok
       expect(assigns(:mods)).to eq [mod]
     end
+
+    it 'should redirect to login for non registered users' do
+      get :index
+      expect(response).to have_http_status :redirect
+    end
   end
 
   describe 'POST create' do
     it 'should be :unauthorized for non registered users' do
       mod = create :mod
-
       post :create, bookmark: { mod_id: mod.id }
       expect(response).to have_http_status :unauthorized
     end

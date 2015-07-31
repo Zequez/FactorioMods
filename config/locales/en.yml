@@ -9,11 +9,12 @@ en:
     '401':
       title: 401 Authentication error
       header: 401 Authentication error
-      content: "You need to log in"
+      content: "You need to login to continue."
+      flash: You need to login to continue
     '403':
       title: 403 Access denied
       header: 403 Access denied
-      content: "You are not supposed to be here"
+      content: "You don't have permissions to see this page."
     '404':
       title: 404 Not found
       header: 404
@@ -65,6 +66,10 @@ en:
 
       mod_file:
         download_url: Release download URL
+
+      user:
+        login: Email or username
+        name: Username
 
     hints:
       mod:

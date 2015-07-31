@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   devise_for :users,
               path_names: { sign_in: 'login', sign_out: 'logout', sign_up: 'register' },
-              controllers: { registrations: 'users/registrations' }
+              controllers: { registrations: 'users/registrations', sessions: 'users/sessions' }
 
   # It's open source so really no much obscurity,
   # but at least it will deter a few automated crawlers

@@ -10,3 +10,43 @@
 
     .devise-links
       text-align: right
+
+.identification-form
+  h2 label
+    cursor: pointer
+    padding: 0 10px
+    border-radius: 2px
+    &:hover, &:active
+      background: $color-washed-orange
+      color: $color-white
+      +white-text-shadow
+    &:active
+      box-shadow: inset 0px 3px 6px rgba(0,0,0,0.2)
+      +light-background-gradient
+
+  %checked-label
+    background: $color-washed-orange
+    box-shadow: inset 0px 3px 6px rgba(0,0,0,0.2)
+    +light-background-gradient
+    color: $color-white
+    +white-text-shadow
+
+  #identify_login
+    display: none
+    &:checked
+      & ~ h2 label[for="identify_login"]
+        @extend %checked-label
+      & ~ #new_session
+        display: block
+      & ~ #new_registration
+        display: none
+
+  #identify_register
+    display: none
+    &:checked
+      & ~ h2 label[for="identify_register"]
+        @extend %checked-label
+      & ~ #new_session
+        display: none
+      & ~ #new_registration
+        display: block
