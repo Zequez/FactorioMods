@@ -1,5 +1,3 @@
-require 'rails_helper'
-
 describe Scraper::BaseProcessor do
   it 'should initialize with 4 arguments' do
     doc = Nokogiri::HTML('<html></html>')

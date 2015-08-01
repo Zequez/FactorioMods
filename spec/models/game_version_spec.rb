@@ -1,6 +1,4 @@
-require 'rails_helper'
-
-RSpec.describe GameVersion, :type => :model do
+describe GameVersion, :type => :model do
   subject(:version) { build :game_version }
 
   describe '#game' do

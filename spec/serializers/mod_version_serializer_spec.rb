@@ -1,5 +1,3 @@
-require 'rails_helper'
-
 describe ModVersionSerializer do
   before :each do
     gv1 = create :game_version, number: '0.10.x'

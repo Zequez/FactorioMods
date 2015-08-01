@@ -1,5 +1,3 @@
-require 'rails_helper'
-
-RSpec.describe Tag, :type => :model do
+describe Tag, :type => :model do
 
 end

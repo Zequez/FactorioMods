@@ -1,5 +1,3 @@
-require 'rails_helper'
-
-RSpec.describe ModGameVersion, :type => :model do
+describe ModGameVersion, :type => :model do
 
 end

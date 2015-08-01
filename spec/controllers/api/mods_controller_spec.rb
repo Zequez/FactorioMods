@@ -1,5 +1,3 @@
-require 'rails_helper'
-
 describe API::ModsController, type: :controller do
   def serialized(mod)
     if mod.kind_of? Mod

@@ -1,3 +1,4 @@
+-r rails_helper
 --color
 --require spec_helper
 #--tag focus

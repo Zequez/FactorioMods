@@ -1,5 +1,3 @@
-require 'rails_helper'
-
 describe API::CategoriesController, type: :controller do
   describe 'GET index' do
     it 'should return all the categories' do

@@ -1,4 +1,3 @@
-require 'rails_helper'
 include Warden::Test::Helpers
 
 feature 'Display an index of mods in certain order' do

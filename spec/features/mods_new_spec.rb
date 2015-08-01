@@ -1,4 +1,3 @@
-require 'rails_helper'
 include Warden::Test::Helpers
 
 feature 'Modder creates a new mod' do

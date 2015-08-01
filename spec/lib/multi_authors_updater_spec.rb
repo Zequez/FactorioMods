@@ -1,5 +1,3 @@
-require 'rails_helper'
-
 describe MultiAuthorsUpdater do
   subject(:scraper){ MultiAuthorsUpdater.new }
 

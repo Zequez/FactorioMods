@@ -1,5 +1,3 @@
-require 'rails_helper'
-
 feature 'Common sign in and sign up form everywhere' do
   scenario '/users/login should have also a registration form', js: true do
     visit '/users/login'

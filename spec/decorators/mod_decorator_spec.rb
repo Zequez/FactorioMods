@@ -1,5 +1,3 @@
-require 'rails_helper'
-
 describe ModDecorator do
   def create_decorated(*args)
     create(*args).decorate

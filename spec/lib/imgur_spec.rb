@@ -1,6 +1,4 @@
-# require 'rails_helper'
-
-# describe Imgur do
+# last_version# describe Imgur do
 #   subject(:imgur) { Imgur.new }
 
 #   describe '#url', vcr: true do

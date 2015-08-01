@@ -1,6 +1,4 @@
-require 'rails_helper'
-
-RSpec.describe BookmarksController, type: :controller do
+describe BookmarksController, type: :controller do
   describe 'GET index' do
     it 'should assign the user bookmarked mods when visiting it' do
       user = create :user

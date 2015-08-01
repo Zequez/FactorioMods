@@ -1,5 +1,3 @@
-require 'rails_helper'
-
 describe FakeDataGenerator, vcr: { cassette_name: 'fake_data_generator', record: :new_episodes } do
   describe '#generate' do
     it 'should generate data on each table for testing purposes without failing' do

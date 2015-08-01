@@ -1,5 +1,3 @@
-require 'rails_helper'
-
 describe Scraper::Base do
   before(:all) do
     @previous_processors = Scraper::Base.class_variable_get :@@processors

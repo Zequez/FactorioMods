@@ -1,5 +1,3 @@
-require 'rails_helper'
-
 describe ModsController, type: :controller do
   include Devise::TestHelpers
 

@@ -1,5 +1,3 @@
-require 'rails_helper'
-
 describe ModFileSerializer do
   def serialized(params)
     @mf = create :mod_file, params

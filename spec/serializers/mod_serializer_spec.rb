@@ -1,5 +1,3 @@
-require 'rails_helper'
-
 describe ModSerializer do
   before :each do
     authors = [create(:user, name: 'John Snow Zombie'), create(:user, name: 'THAT Guy')]

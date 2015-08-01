@@ -1,6 +1,4 @@
-require 'rails_helper'
-
-RSpec.describe ForumPost, :type => :model do
+describe ForumPost, :type => :model do
   subject(:post) { create :forum_post }
 
   it { is_expected.to respond_to :comments_count }

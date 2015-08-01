@@ -1,6 +1,4 @@
-require 'rails_helper'
-
-RSpec.describe Mod, :type => :model do
+describe Mod do
   describe 'attributes' do
     subject(:mod) { build :mod }
 

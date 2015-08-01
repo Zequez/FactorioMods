@@ -1,6 +1,4 @@
-require 'rails_helper'
-
-RSpec.describe ModVersion, :type => :model do
+describe ModVersion, :type => :model do
   subject(:version) { build :mod_version }
 
   describe '#number' do

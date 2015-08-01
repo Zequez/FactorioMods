@@ -1,6 +1,4 @@
-require 'rails_helper'
-
-RSpec.describe Game, :type => :model do
+describe Game, :type => :model do
   subject(:game) { build :game }
   it { expect(game).to respond_to :versions }
   it { expect(game.versions.build).to be_kind_of GameVersion }

@@ -1,5 +1,3 @@
-require 'rails_helper'
-
 # The category list number of mods count is very misleading. As soon as you start filtering,
 # it displays wrong figures, since those values are cached for all the mods.
 # To fix this, we are going to display a probabilistic amount of mods in each category when the user

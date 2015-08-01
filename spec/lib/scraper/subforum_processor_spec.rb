@@ -1,5 +1,3 @@
-require 'rails_helper'
-
 describe Scraper::SubforumProcessor do
   single_page = 'http://www.factorioforums.com/forum/viewforum.php?f=91'
   multiple_pages = 'http://www.factorioforums.com/forum/viewforum.php?f=32'

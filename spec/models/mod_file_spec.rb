@@ -1,6 +1,4 @@
-require 'rails_helper'
-
-RSpec.describe ModFile, :type => :model do
+describe ModFile, :type => :model do
   def fixture(name)
     File.new(Rails.root.join('spec', 'fixtures', name))
   end

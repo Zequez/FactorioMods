@@ -1,5 +1,3 @@
-require 'rails_helper'
-
 describe Users::RegistrationsController, type: :controller do
   before :each do
     request.env['devise.mapping'] = Devise.mappings[:user]

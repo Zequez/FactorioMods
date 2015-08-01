@@ -1,4 +1,3 @@
-require 'rails_helper'
 include Warden::Test::Helpers
 
 feature 'The goddamn game version string should be updated after editing a mod' do

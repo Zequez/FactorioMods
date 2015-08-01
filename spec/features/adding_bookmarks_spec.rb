@@ -1,5 +1,3 @@
-require 'rails_helper'
-
 feature 'User creates and removes bookmarks' do
   include Warden::Test::Helpers
 

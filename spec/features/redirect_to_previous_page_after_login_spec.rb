@@ -1,5 +1,3 @@
-require 'rails_helper'
-
 include Warden::Test::Helpers
 
 feature 'Redirect to the previous page the user was after login' do

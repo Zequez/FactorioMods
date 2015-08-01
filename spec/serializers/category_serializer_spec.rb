@@ -1,5 +1,3 @@
-require 'rails_helper'
-
 describe CategorySerializer do
   def serialized(params)
     @c = create :category, params

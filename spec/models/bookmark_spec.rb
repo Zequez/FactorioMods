@@ -1,6 +1,4 @@
-require 'rails_helper'
-
-RSpec.describe Bookmark, type: :model do
+describe Bookmark, type: :model do
   subject(:bookmark){ create :bookmark }
 
   it { is_expected.to respond_to :user }

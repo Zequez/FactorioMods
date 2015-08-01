@@ -1,5 +1,3 @@
-require 'rails_helper'
-
 
 describe Users::SessionsController, type: :controller do
   before :each do

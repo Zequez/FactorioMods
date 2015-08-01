@@ -1,6 +1,4 @@
-require 'rails_helper'
-
-RSpec.describe AuthorsMod, type: :model do
+describe AuthorsMod, type: :model do
   subject(:authors_mod) { build :authors_mod }
 
   it { is_expected.to respond_to :mod }

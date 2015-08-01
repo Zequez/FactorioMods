@@ -1,6 +1,4 @@
-require 'rails_helper'
-
-RSpec.describe Subforum, type: :model do
+describe Subforum, type: :model do
   subject(:subforum) { build :subforum }
 
   it { is_expected.to respond_to :number }

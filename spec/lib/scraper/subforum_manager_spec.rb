@@ -1,5 +1,3 @@
-require 'rails_helper'
-
 describe Scraper::SubforumManager do
   manager_class = Scraper::SubforumManager
   scraper_class = Scraper::Base
