@@ -6,6 +6,7 @@ class API::ModsController < API::APIController
 
   def index
     @mods = Mod
+      .includes([:categories, :authors, versions: :files])
       .sort_by(:alpha)
       .filter_by_search_query(params[:q])
       .filter_by_category(params[:category])
