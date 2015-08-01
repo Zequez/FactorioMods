@@ -25,7 +25,9 @@ module FactorioMods
 
     config.ga_ua = ENV['GA_UA']
     config.ga_url = ENV['GA_URL']
-    
+
     config.active_support.escape_html_entities_in_json = false
+
+    config.api_only = false
   end
 end
