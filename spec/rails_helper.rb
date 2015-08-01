@@ -35,68 +35,65 @@ VCR.configure do |config|
   config.ignore_request do |request|
     URI(request.uri).host == '127.0.0.1'
   end
+  
+  # This is so we can read the response body text and
+  # maybe touch it a little for edge cases
   config.before_record do |i|
     i.response.body.force_encoding('UTF-8')
   end
+
   config.cassette_library_dir = "#{::Rails.root}/spec/fixtures/vcr_cassettes"
   config.hook_into :webmock # or :fakeweb
   config.configure_rspec_metadata!
 end
 
+# Load the Formtastic inputs
+# See https://github.com/rails/spring/issues/95
 Spring.after_fork do
   Dir["app/inputs/*_input.rb"].each { |f| require File.basename(f) }
 end
 
 RSpec.configure do |config|
+  # This is so the backtrace is shorter and only shows the project code
+  # You might need to comment this out if you're doing some really hardcore debugging
   config.backtrace_exclusion_patterns << /\/gems\//
 
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
   config.fixture_path = "#{::Rails.root}/spec/fixtures"
 
   config.include Paperclip::Shoulda::Matchers
-
-  # If you're not using ActiveRecord, or you'd prefer not to run each of your
-  # examples within a transaction, remove the following line or assign false
-  # instead of true.
-  config.use_transactional_fixtures = false
-
   config.include Devise::TestHelpers, type: :controller
 
-  config.before(:suite) do
+  # Transactions don't work with JS test drivers
+  # thus we need to change the cleaning strategy to
+  # truncation when we do that.
+
+  config.use_transactional_fixtures = false
+
+  config.before :suite do
     DatabaseCleaner.clean_with(:truncation)
   end
 
-  config.before(:each) do
+  config.before :each do
     DatabaseCleaner.strategy = :transaction
   end
 
-  config.before(:each, :js => true) do
+  config.before :each, js: true do
     DatabaseCleaner.strategy = :truncation
   end
 
-  config.before(:each) do
+  config.before :each do
     DatabaseCleaner.start
   end
 
-  config.after(:each) do
+  config.after :each do
     DatabaseCleaner.clean
   end
 
-  # RSpec Rails can automatically mix in different behaviours to your tests
-  # based on their file location, for example enabling you to call `get` and
-  # `post` in specs under `spec/controllers`.
-  #
-  # You can disable this behaviour by removing the line below, and instead
-  # explicitly tag your specs with their type, e.g.:
-  #
-  #     RSpec.describe UsersController, :type => :controller do
-  #       # ...
-  #     end
-  #
-  # The different available types are documented in the features, such as in
-  # https://relishapp.com/rspec/rspec-rails/docs
   config.infer_spec_type_from_file_location!
 
+  # Some extra helpers that are used in some places
+  # TODO: Remove the sign_in ones and use the proper build-in helpers
 
   def sign_in(user = nil)
     @user = user || create(:user)
@@ -113,20 +110,7 @@ RSpec.configure do |config|
     login_as @user
   end
 
-  def nfind(tag_name = '', input_name)
-    find("#{tag_name}[name^='#{input_name}']")
-  end
-
-  def last_response
-    page.source
-  end
-
   def response_json
-    data = JSON.parse(response.body)
-    # if data.is_a? Array
-    #   data.map!{|d| ActiveSupport::HashWithIndifferentAccess.new d }
-    # else
-    #   ActiveSupport::HashWithIndifferentAccess.new data
-    # end
+    JSON.parse(response.body)
   end
 end
