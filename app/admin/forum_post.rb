@@ -14,7 +14,7 @@ ActiveAdmin.register ForumPost do
   end
 
   collection_action :scrap, method: :post do
-    manager = Scraper::SubforumManager.new Subforum.for_scraping
+    manager = Scraper::SubforumScraper.new Subforum.for_scraping
     ForumPost.transaction do
       manager.run
     end

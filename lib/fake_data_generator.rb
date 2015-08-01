@@ -55,7 +55,7 @@ class FakeDataGenerator
       # Actually scrap the forum posts from the Factorio forum
       # in real time, I don't see why not, it's just a few pages.
       gputs "---------- Scraping real life forum posts! This make take a while..."
-      scraper_manager = Scraper::SubforumManager.new [subforum]
+      scraper_manager = Scraper::SubforumScraper.new [subforum]
       scraper_manager.run
       posts = subforum.forum_posts
 

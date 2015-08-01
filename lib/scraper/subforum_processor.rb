@@ -1,6 +1,5 @@
 module Scraper
   class SubforumProcessor < Scraper::BaseProcessor
-    Scraper::Base.register_processor(self)
     addition_method :concat
     regexp %r{\Ahttps?://(www\.)?factorioforums.com/forum/viewforum\.php\?f=[0-9]+(&start=[0-9]+)?\Z}
 

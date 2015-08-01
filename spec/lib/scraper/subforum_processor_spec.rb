@@ -2,17 +2,11 @@ describe Scraper::SubforumProcessor do
   single_page = 'http://www.factorioforums.com/forum/viewforum.php?f=91'
   multiple_pages = 'http://www.factorioforums.com/forum/viewforum.php?f=32'
 
-  it 'should accept a subforum URL as the first argument' do
-    expect{ Scraper::Base.new 'http://potato.com' }.to_not raise_error
-  end
-
   describe '#scrap' do
-    it { expect(Scraper::Base.new('http://potato.com')).to respond_to :scrap }
-
     context 'single page' do
       before(:all) do
         VCR.use_cassette(cassette_name: 'subforum_single_page', record: :new_episodes) do
-          @scraper = Scraper::Base.new single_page
+          @scraper = Scraper::Base.new single_page, Scraper::SubforumProcessor
           @result = @scraper.scrap
         end
       end
@@ -73,7 +67,7 @@ describe Scraper::SubforumProcessor do
     context 'multiple pages' do
       before(:all) do
         VCR.use_cassette(cassette_name: 'subforum_multiple_pages', record: :new_episodes) do
-          @scraper = Scraper::Base.new multiple_pages
+          @scraper = Scraper::Base.new multiple_pages, Scraper::SubforumProcessor
           @result = @scraper.scrap
         end
       end

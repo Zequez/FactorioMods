@@ -1,6 +1,16 @@
-describe Scraper::SubforumManager do
-  manager_class = Scraper::SubforumManager
+describe Scraper::SubforumScraper do
+  manager_class = Scraper::SubforumScraper
   scraper_class = Scraper::Base
+
+  def scraper_mock(scrap_result = nil)
+    @scraper_mock ||= begin
+      double = instance_double('ScraperClass')
+      if scrap_result
+        expect(double).to receive(:scrap).and_return(scrap_result)
+      end
+      double
+    end
+  end
 
   it 'should accept a collection of subforums as parameter' do
     create :subforum, url: 'http://www.factorioforums.com/forum/viewforum.php?f=32'
@@ -11,22 +21,14 @@ describe Scraper::SubforumManager do
   end
 
   describe '#run' do
-    def scraper_mock(scrap_result = nil)
-      @scraper_mock ||= begin
-        double = instance_double('ScraperClass')
-        if scrap_result
-          expect(double).to receive(:scrap).and_return(scrap_result)
-        end
-        double
-      end
-    end
-
     it 'should create a new instance of Scraper and call #scrap on it' do
       create :subforum, url: 'http://potato.com'
       create :subforum, url: 'http://cabbage.com'
 
       scraper_mock = instance_double('ScraperClass')
-      expect(scraper_class).to receive(:new).with(['http://potato.com', 'http://cabbage.com']).and_return(scraper_mock)
+      expect(scraper_class).to receive(:new)
+        .with(['http://potato.com', 'http://cabbage.com'], Scraper::SubforumProcessor)
+        .and_return(scraper_mock)
       expect(scraper_mock).to receive(:scrap).and_return({
         'http://potato.com' => [],
         'http://cabbage.com' => []

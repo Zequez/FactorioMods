@@ -1,19 +1,32 @@
 module Scraper
-  class SubforumManager
+  class SubforumScraper
+    attr_reader :forum_posts, :data
+
     def initialize(subforums)
       @subforums = subforums
+      @urls = @subforums.map(&:url)
+      @scraper = Scraper::Base.new(@urls, SubforumProcessor)
+      @forum_posts = []
     end
 
     def run
+      scrap
+      save!
+    end
+
+    def scrap
+      @data = @scraper.scrap
+    end
+
+    def save!
       @forum_posts = []
-      urls = @subforums.map(&:url)
-      scraper = Scraper::Base.new(urls)
-      posts_data = scraper.scrap
       @subforums.each do |subforum|
-        subforum_posts_data = posts_data[subforum.url]
+        subforum_posts_data = data[subforum.url]
         process_posts(subforum, subforum_posts_data)
       end
     end
+
+    private
 
     def process_posts(subforum, posts_data)
       forum_posts = posts_data.map do |post_data|

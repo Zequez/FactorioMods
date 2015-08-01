@@ -3,7 +3,7 @@ describe Scraper::BaseProcessor do
     doc = Nokogiri::HTML('<html></html>')
     request = Struct.new(:url).new('http://potato.com')
     response = Struct.new(:body).new('<html></html>')
-    scraper = Scraper::Base.new('http://purple.com')
+    scraper = Scraper::Base.new('http://purple.com', Scraper::BaseProcessor)
     initial_url = 'http://purple.com'
 
     Scraper::BaseProcessor.new(doc, request, response, scraper, initial_url)
@@ -34,7 +34,7 @@ describe Scraper::BaseProcessor do
     doc = Nokogiri::HTML('<html></html>')
     request = Struct.new(:url).new('http://purple.com/satrsat')
     response = Struct.new(:body).new('<html></html>')
-    scraper = Scraper::Base.new('http://rsarsa.com')
+    scraper = Scraper::Base.new('http://rsarsa.com', Scraper::BaseProcessor)
     initial_url = 'http://purple.com'
 
     expect(scraper).to receive(:add_to_queue).with('rsarsa', 'http://purple.com')
