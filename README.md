@@ -34,10 +34,11 @@ The structure of the mods given by the API is the following:
     "title": "Example Mod!",
     "name": "example-mod", // This is the name on the info.json file
     "url": "http://www.factoriomods.com/mods/example-mod",
-    "description": "The summary of what he mod does.",
+    "description": "The summary of what the mod does.",
     "homepage": "", // Official site
     "contact": "", // Authors contact information
     "authors": ["That guy", "That other guy"], // List of authors
+    "categories": ["logistics-network", "map", "player"]
     "releases": [{
         "version": "0.1.2",
         "released_at": "2015-07-22T00:00:00.000Z",
