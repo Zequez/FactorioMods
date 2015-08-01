@@ -1,6 +1,6 @@
 class API::ModsController < API::APIController
   def show
-    @mod = Mod.find_by_info_json_name(params[:id])
+    @mod = Mod.find_by_info_json_name!(params[:id])
     render json: @mod, serializer: ModSerializer
   end
 

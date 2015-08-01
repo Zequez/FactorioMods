@@ -80,5 +80,11 @@ describe API::ModsController, type: :controller do
       get :show, id: 'cc'
       expect(response_json).to eq serialized(@mods[2])
     end
+
+    it 'should return a :not_found with a non-existant mod' do
+      get :show, id: 'iarstneirsaotnrsa'
+      expect(response).to have_http_status :not_found
+      expect(response_json).to eq("message" => "Not Found")
+    end
   end
 end
