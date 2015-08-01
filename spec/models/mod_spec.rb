@@ -540,6 +540,16 @@ RSpec.describe Mod, :type => :model do
       end
     end
 
+    describe '.filter_by_ids' do
+      it 'should return a list of mods by comma-separated #id' do
+        m1 = create :mod
+        m2 = create :mod
+        create :mod
+        m4 = create :mod
+        expect(Mod.filter_by_ids("#{m1.id},#{m2.id},#{m4.id}")).to eq [m1,m2,m4]
+      end
+    end
+
     describe '.filter_by_category' do
       before :each do
         @cat = create :category, name: 'Potato'

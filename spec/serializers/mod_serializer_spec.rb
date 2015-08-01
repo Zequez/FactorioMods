@@ -9,7 +9,8 @@ describe ModSerializer do
       authors: authors,
       contact: 'Send a homing pigeon to Castle Black',
       official_url: 'http://castleblack.com',
-      summary: 'This mod adds the ability to farm potatoes on Factorio.'
+      summary: 'This mod adds the ability to farm potatoes on Factorio.',
+      categories: [create(:category, name: 'Potato'), create(:category, name: 'Apple')]
   end
 
   it 'should return the public API structure' do
@@ -22,6 +23,7 @@ describe ModSerializer do
       homepage: 'http://castleblack.com',
       contact: 'Send a homing pigeon to Castle Black',
       authors: ['John Snow Zombie', 'THAT Guy'],
+      categories: ['potato', 'apple'],
       releases: @mod.versions.map{|mv| ModVersionSerializer.new mv}.as_json
     })
 

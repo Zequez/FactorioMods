@@ -107,6 +107,13 @@ class Mod < ActiveRecord::Base
     end
   end
 
+  scope :filter_by_ids, ->(ids_list) do
+    if ids_list.present?
+      ids = ids_list.split(',').map(&:strip)
+      where(id: ids)
+    end
+  end
+
   # def self.filter_by_search_query(query)
   #   s1 = s2 = s3 = self
 
