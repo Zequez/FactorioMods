@@ -60,6 +60,18 @@ describe ModDecorator do
     end
   end
 
+  describe '#github_link' do
+    it 'should return a link to the project Github URL if available' do
+      mod = create_decorated(:mod, github: 'potato/salad')
+      expect(mod.github_link).to eq '<a href="http://github.com/potato/salad">http://github.com/potato/salad</a>'
+    end
+
+    it 'should return N/A if #github_path not present' do
+      mod = create_decorated(:mod, github: '')
+      expect(mod.github_link).to eq 'N/A'
+    end
+  end
+
   describe '#has_versions?' do
     it 'should return false if the mod has no versions' do
       mod = create_decorated :mod, versions: []

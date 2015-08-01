@@ -132,7 +132,7 @@ class ModDecorator < Draper::Decorator
   end
 
   def github_link
-    return na unless mod.github
+    return na unless mod.github.present?
     h.link_to mod.github_url, mod.github_url
   end
 
