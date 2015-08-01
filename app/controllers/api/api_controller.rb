@@ -1,4 +1,10 @@
 class API::APIController < ActionController::API
+  rescue_from ActiveRecord::RecordNotFound, with: :not_found
+
+  def not_found
+    render json: { message: 'Not Found' }, status: :not_found
+  end
+
   def root
     render json: JSON.pretty_generate({
       'mods_url' =>           doc_url(:mods, 'names,ids,page,sort,category,author,q=query'),
