@@ -18,10 +18,14 @@ that NexusModManager does it.
 
 ## API to get mods
 
-The API it's basically adding `.json` to the end of any URL. Not really a proper API but good enough.
+The API and the API documentation are a WIP, but some
+features are already working and some basic docs are already here:
 
-You can get a list of mods by calling [/mods.json](http://factoriomods.com/mods.json) or by calling [/mods/mod-name.json](http://www.factoriomods.com/mods/torches.json). The first one returns an array,
-and the later, a single object.
+The API lives in [api.factoriomods.com](http://api.factoriomods.com), going there
+you can see list of available URLs (authors and users APIs not working yet)
+
+You can get a list of mods by calling [/mods](http://api.factoriomods.com/mods) or by calling [/mods/{mod}](http://api.factoriomods.com/mods/torches). The first one returns an array,
+and the later, a single object. Or [/mods?names=mod-name,mod-name2,another-mod](http://api.factoriomods.com/mods?names=mod-name,mod-name2,another-mod)
 
 The structure of the mods given by the API is the following:
 
@@ -71,7 +75,7 @@ factoriomods://eyJ0aXRsZSI6IkN1cnNlZCBVbmRlcmdyb3VuZCBUcmFuc3BvcnQiLCJuYW1lIjoiI
 ```
 
 If it seems familiar, it's because it's a Base64 encoded JSON string, the same
-JSON string returned by /mods.json and /mods/name.json. Just check whether it's an array
+JSON string returned by the API /mods and /mods/{mod}. Just check whether it's an array
 or a single object, and install it.
 
 One thing consider is that the user can click a link to install an specific version, and when
