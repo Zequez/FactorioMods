@@ -7,6 +7,9 @@ class ModSerializer < ActiveModel::Serializer
   attribute :official_url,    key: :homepage
 
   has_many :versions, key: :releases
+  def versions
+    @options[:versions] || object.versions
+  end
 
   def categories
     object.categories.map(&:slug)
