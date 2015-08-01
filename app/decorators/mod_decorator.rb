@@ -1,5 +1,5 @@
 class ModDecorator < Draper::Decorator
-  delegate :id, :name, :forum_url, :subforum_url, :as_json
+  delegate :id, :name, :forum_url, :subforum_url
 
   def authors_count; mod.authors.size end
 
@@ -162,8 +162,9 @@ class ModDecorator < Draper::Decorator
     end
   end
 
-  def install_protocol_url(versions = nil)
-    'factoriomods://' + Base64.strict_encode64(mod.to_json(versions: versions)).to_s
+  def install_protocol_url(version = nil)
+    json_mod = ModSerializer.new(mod, versions: (version ? [version] : nil)).to_json
+    'factoriomods://' + Base64.strict_encode64(json_mod).to_s
   end
 
   ### Download button

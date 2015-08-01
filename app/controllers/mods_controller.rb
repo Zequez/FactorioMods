@@ -1,8 +1,6 @@
 class ModsController < ApplicationController
   load_and_authorize_resource
 
-  respond_to :html, :json, only: [:index, :show]
-
   def index
     @mods = Mod
       .includes([:categories, :authors, :owner, :forum_post, versions: :files])
@@ -22,14 +20,11 @@ class ModsController < ApplicationController
     @categories = Category.order_by_mods_count.order_by_name
 
     flash.now[:notice] = I18n.t('mods.index.search_notice') if params[:q].present?
-
-    respond_with @mods
   end
 
   def show
     @mod = Mod.includes(versions: :files).find(params[:id]).decorate
     flash[:notice] = @mod.visibility_notice
-    respond_with @mod
   end
 
   def new

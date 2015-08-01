@@ -353,37 +353,6 @@ class Mod < ActiveRecord::Base
     @authors_list ||= authors.map(&:name).join(', ')
   end
 
-  # We should eventually rename the mod attributes to match the ones in the API,
-  # we use these different attributes to roughly match the ones used in
-  # the mods info.json files
-  def as_json(options = {})
-    selected_versions = options[:versions] ? [options[:versions]].flatten : versions
-    {
-      title: name,
-      name: info_json_name,
-      url: Rails.application.routes.url_helpers.mod_url(self), # Eww
-      description: summary,
-      homepage: official_url,
-      contact: contact,
-      authors: authors.map(&:name),
-      releases: selected_versions.map do |version|
-        {
-          version: version.number,
-          released_at: version.released_at,
-          game_versions: version.game_versions_string.split('-'), # Ideally we should load the #game_versions
-          dependencies: [],
-          files: version.files.map do |file|
-            {
-              name: file.name,
-              url: file.download_url,
-              mirror: file.attachment.present? ? file.attachment.url : ''
-            }
-          end
-        }
-      end
-    }
-  end
-
   private
 
   def set_game_versions_string

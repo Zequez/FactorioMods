@@ -95,7 +95,7 @@ describe ModDecorator do
   describe '#install_protocol_url' do
     it 'should return the factoriomods:// protocol with the JSON-encoded mod' do
       mod = create(:mod)
-      encoded_json = Base64.strict_encode64 mod.to_json
+      encoded_json = Base64.strict_encode64 ModSerializer.new(mod).to_json
       expect(mod.decorate.install_protocol_url).to eq "factoriomods://#{encoded_json}"
     end
 
@@ -103,7 +103,7 @@ describe ModDecorator do
       mod = create(:mod)
       mv = create :mod_version, mod: mod
       create :mod_version, mod: mod
-      encoded_json = Base64.strict_encode64 mod.to_json(versions: mv)
+      encoded_json = Base64.strict_encode64 ModSerializer.new(mod, versions: [mv]).to_json
       expect(mod.decorate.install_protocol_url(mv)).to eq "factoriomods://#{encoded_json}"
     end
   end

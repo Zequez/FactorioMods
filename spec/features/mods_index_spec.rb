@@ -78,14 +78,6 @@ feature 'Display an index of mods in certain order' do
     end
   end
 
-  context 'when requesting JSON', driver: :rack_test_json do
-    it_behaves_like 'mod index' do
-      def mod_names
-        JSON.parse(last_response).map { |hash| hash["title"] }
-      end
-    end
-  end
-
   context 'with many authors' do
     scenario 'Mod with multiple authors and no owner' do
       authors = 5.times.map{ |i| create :user, name: "Au#{i}" }
