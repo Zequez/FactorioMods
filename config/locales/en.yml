@@ -74,7 +74,7 @@ en:
     hints:
       mod:
         info_json_name: The name in info.json
-        contact: How to get with you
+        contact: How to get in touch with you
         description: Markdown
         media_links_string: '<a href="http://imgur.com">Imgur.com</a> URLs of pictures of animated gifs. Maximum: 6 links.'
         forum_subforum_url: Big mods have their own subforum
