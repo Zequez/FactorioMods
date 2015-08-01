@@ -42,9 +42,6 @@ describe ModVersionSerializer do
       game_versions: ['0.10.x'],
       dependencies: [],
       files: @mv1.files.map{|mf| ModFileSerializer.new mf}.as_json
-      # files: [
-      #   { name: '', url: 'http://thepotatoexperience.com/1.2.1', mirror: '' }
-      # ]
     })
     expect(ModVersionSerializer.new(@mv2).as_json).to eq({
       id: @mv2.id,
@@ -61,33 +58,6 @@ describe ModVersionSerializer do
       game_versions: ['0.12.x'],
       dependencies: [],
       files: @mv3.files.map{|mf| ModFileSerializer.new mf}.as_json
-      #   {
-      #     name: '',
-      #     url: 'http://thepotatoexperience.com/1.2.3',
-      #     mirror: @mod.versions[0].files.first.attachment.url
-      #   }
-      # ]
     })
-      # {
-      #   id: @mod.versions[0].id,
-      #   version: '1.2.2',
-      #   released_at: @mod.versions[1].released_at,
-      #   game_versions: ['0.11.x', '0.12.x'],
-      #   dependencies: [],
-      #   files: [
-      #     { name: 'mac', url: 'http://thepotatoexperience.com/1.2.2', mirror: '' },
-      #     { name: 'win', url: 'http://thepotatoexperience.com/1.2.2', mirror: '' }
-      #   ]
-      # },
-      # {
-      #   id: @mod.versions[0].id,
-      #   version: '1.2.1',
-      #   released_at: @mod.versions[2].released_at,
-      #   game_versions: ['0.10.x'],
-      #   dependencies: [],
-      #   files: [
-      #     { name: '', url: 'http://thepotatoexperience.com/1.2.1', mirror: '' }
-      #   ]
-      # }
   end
 end
