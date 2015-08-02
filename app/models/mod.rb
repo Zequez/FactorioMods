@@ -60,7 +60,7 @@ class Mod < ActiveRecord::Base
   scope :visible, ->{ where(visible: true) }
   scope :without_info_json_name, ->{ where(info_json_name: '') }
   scope :sort_by, ->(sort_type) do
-    @sorted_by = sort_type.to_sym
+    self.sorted_by = sort_type.to_sym
     case sort_type.to_sym
     when :alpha then sort_by_alpha
     when :most_recent then sort_by_most_recent
@@ -68,7 +68,7 @@ class Mod < ActiveRecord::Base
     when :forum_comments then sort_by_forum_comments
     when :downloads then sort_by_downloads
     else
-      @sorted_by = :alpha
+      self.sorted_by = :alpha
       sort_by_alpha
     end
   end
@@ -78,18 +78,18 @@ class Mod < ActiveRecord::Base
   scope :sort_by_downloads, -> { order('mods.downloads_count desc') }
   scope :sort_by_popular, -> { includes(:forum_post).order('forum_posts.views_count desc NULLS LAST') }
 
-  scope :filter_by_category, ->(category) do
-    @uncategorized = all
-    if category.present?
-      @category = category.is_a?(String) ? Category.find(category) : category
-      joins(:categories_mods).where(categories_mods: { category: @category })
-    end
+  scope :filter_by_category, ->(cat) do
+    self.uncategorized = current_scope
+    if cat.present?
+      self.category = cat.is_a?(String) ? Category.find(cat) : cat
+      joins(:categories_mods).where(categories_mods: { category: category })
+    end || current_scope
   end
 
   scope :filter_by_game_version, ->(gv) do
     if gv.present?
-      @game_version = gv.is_a?(String) ? GameVersion.find_by_number!(gv) : gv
-      joins(:mod_game_versions).where(mod_game_versions: { game_version: @game_version })
+      self.game_version = gv.is_a?(String) ? GameVersion.find_by_number!(gv) : gv
+      joins(:mod_game_versions).where(mod_game_versions: { game_version: game_version })
     end
   end
 
@@ -134,7 +134,21 @@ class Mod < ActiveRecord::Base
   #################
 
   class << self
-    attr_reader :game_version, :category, :uncategorized, :sorted_by
+    # Scope variables
+    # You can only call these from a scope
+    # If you try to call them like Mod.method, you'll get
+    # an error since current_scope is nil
+    [:game_version, :category, :uncategorized, :sorted_by].each do |name|
+      instance_var = :"@_#{name}"
+
+      define_method name do
+        current_scope.instance_variable_get instance_var
+      end
+
+      define_method :"#{name}=" do |val|
+        current_scope.instance_variable_set instance_var, val
+      end
+    end
   end
 
   ### Builders
