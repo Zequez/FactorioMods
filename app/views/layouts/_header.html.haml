@@ -13,7 +13,7 @@
       |
       = link_to t('.sign_up'), new_user_registration_path
   .instructions
-    .instructions-button
+    .instructions-buttons
       = t('.how_to.start')
       %a{href: how_to_install_static_url}= t('.how_to.install')
       \/
@@ -21,4 +21,4 @@
       \/
       %a{href: how_to_submit_static_url}= t('.how_to.submit')
       = t('.how_to.end')
-    
+      %a{href: new_mod_path}= t('.submit_mod')
