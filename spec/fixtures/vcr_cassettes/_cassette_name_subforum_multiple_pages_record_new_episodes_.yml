@@ -649,7 +649,7 @@ http_interactions:
         by <a href=\"http://www.phpbb.com/\">phpBB</a>&reg; Forum Software &copy;
         phpBB Group\n\t\t\n\t</div>\n</div>\n\n</div>\n\n<div>\n\t<a id=\"bottom\"
         name=\"bottom\" accesskey=\"z\"></a>\n\t\n</div>\n\n</body>\n</html>"
-    http_version: 
+    http_version:
   recorded_at: Wed, 22 Jul 2015 18:35:13 GMT
 - request:
     method: get
@@ -1300,7 +1300,7 @@ http_interactions:
         by <a href=\"http://www.phpbb.com/\">phpBB</a>&reg; Forum Software &copy;
         phpBB Group\n\t\t\n\t</div>\n</div>\n\n</div>\n\n<div>\n\t<a id=\"bottom\"
         name=\"bottom\" accesskey=\"z\"></a>\n\t\n</div>\n\n</body>\n</html>"
-    http_version: 
+    http_version:
   recorded_at: Wed, 22 Jul 2015 18:35:14 GMT
 - request:
     method: get
@@ -1898,7 +1898,7 @@ http_interactions:
         by <a href=\"http://www.phpbb.com/\">phpBB</a>&reg; Forum Software &copy;
         phpBB Group\n\t\t\n\t</div>\n</div>\n\n</div>\n\n<div>\n\t<a id=\"bottom\"
         name=\"bottom\" accesskey=\"z\"></a>\n\t\n</div>\n\n</body>\n</html>"
-    http_version: 
+    http_version:
   recorded_at: Wed, 22 Jul 2015 18:35:15 GMT
 - request:
     method: get
@@ -2549,7 +2549,7 @@ http_interactions:
         by <a href=\"http://www.phpbb.com/\">phpBB</a>&reg; Forum Software &copy;
         phpBB Group\n\t\t\n\t</div>\n</div>\n\n</div>\n\n<div>\n\t<a id=\"bottom\"
         name=\"bottom\" accesskey=\"z\"></a>\n\t\n</div>\n\n</body>\n</html>"
-    http_version: 
+    http_version:
   recorded_at: Wed, 22 Jul 2015 18:35:15 GMT
 - request:
     method: get
@@ -3189,6 +3189,6 @@ http_interactions:
         by <a href=\"http://www.phpbb.com/\">phpBB</a>&reg; Forum Software &copy;
         phpBB Group\n\t\t\n\t</div>\n</div>\n\n</div>\n\n<div>\n\t<a id=\"bottom\"
         name=\"bottom\" accesskey=\"z\"></a>\n\t\n</div>\n\n</body>\n</html>"
-    http_version: 
+    http_version:
   recorded_at: Wed, 22 Jul 2015 18:35:15 GMT
 recorded_with: VCR 2.9.3
