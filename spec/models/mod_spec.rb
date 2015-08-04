@@ -550,7 +550,7 @@ describe Mod do
       end
 
       it 'should return the whole scope with an empty argument' do
-        expect(Mod.filter_by_category('')).to eq [@mod1, @mod2, @mod3]
+        expect(Mod.filter_by_category('')).to match_array [@mod1, @mod2, @mod3]
       end
 
       it 'should make #uncategorized available with the previous scope' do
