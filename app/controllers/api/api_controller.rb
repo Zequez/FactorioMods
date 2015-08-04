@@ -1,5 +1,6 @@
 class API::APIController < ActionController::API
   rescue_from ActiveRecord::RecordNotFound, with: :not_found
+  after_filter :set_access_control_headers
 
   def not_found
     render json: { message: 'Not Found' }, status: :not_found
@@ -25,5 +26,9 @@ class API::APIController < ActionController::API
     args.map!{|a| "{#{a}}"}
     url = send(:"api_#{type}_url", *args).gsub('%7B', '{').gsub('%7D', '}')
     params ? url + "{?#{params}}" : url
+  end
+
+  def set_access_control_headers
+    headers['Access-Control-Allow-Origin'] = 'http://' + Rails.application.routes.default_url_options[:host]
   end
 end
