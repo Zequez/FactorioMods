@@ -82,6 +82,7 @@ class User < ActiveRecord::Base
   #################
 
   attr_accessor :login
+  alias_attribute :factorio_name, :name
 
   def non_owned_authored_mods
     return [] unless author

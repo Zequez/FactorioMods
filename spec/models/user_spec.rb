@@ -2,6 +2,7 @@ describe User, :type => :model do
   subject(:user) { build :user }
 
   it { is_expected.to respond_to :name }
+  it { is_expected.to respond_to :factorio_name }
   it { is_expected.to respond_to :email }
   it { is_expected.to respond_to :is_dev? }
   it { is_expected.to respond_to :is_admin? }
