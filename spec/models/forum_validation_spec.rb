@@ -43,4 +43,16 @@ describe ForumValidation, type: :model do
       expect(fv.validated).to eq true
     end
   end
+
+  # describe '#send_pm' do
+  #   def send_pm
+  #     VCR.use_cassette('forum_validation', record: :new_episodes) do
+  #       subject.send_pm
+  #     end
+  #   end
+  #
+  #   it 'should authenticate and send a PM in the forum' do
+  #
+  #   end
+  # end
 end

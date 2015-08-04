@@ -8,6 +8,7 @@ class ApplicationController < ActionController::Base
   rescue_from CanCan::AccessDenied, with: :authentication_error
   rescue_from ActiveRecord::RecordNotFound, with: :not_found
   rescue_from ActionController::ParameterMissing, with: :wrong_parameters_error
+  rescue_from ActiveRecord::RecordInvalid, with: :wrong_parameters_error
 
   before_action :configure_devise_permitted_parameters, if: :devise_controller?
 

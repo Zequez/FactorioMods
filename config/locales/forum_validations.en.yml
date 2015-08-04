@@ -1,0 +1,17 @@
+en:
+  forum_validations:
+    flash:
+      update:
+        success: "You account have been successfully linked to your forum account! You can now manage all the mods!"
+        already_success: "You account has already been validated"
+
+    show:
+      validated: |
+        Your forum account has been validated!
+        These are the mods that were associated with that account, you can now
+        manage them yourself:
+      not_validated: |
+        Your forum account hasn't been validated yet, please
+        <a href="http://www.factorioforums.com/forum/ucp.php?i=pm&folder=inbox">check your PMs inbox</a>
+        and click the link we sent you.
+        After you validate the forum account, you'll be able to manage all these mods associated with it:

@@ -1,6 +1,4 @@
 Rails.application.routes.draw do
-  resources :forum_validations, except: [:new, :edit]
-
   namespace :api, path: '/', constraints: { subdomain: 'api' } do
     resources :mods, only: [:index, :show]
     resources :categories, only: [:index, :show] do
@@ -85,6 +83,12 @@ Rails.application.routes.draw do
   # This one is for the helper
   resources :categories, path: 'category', only: [] do
     resources :mods, path: '/', only: :index
+  end
+
+  resources :forum_validations, path: 'forum-validations', only: [:show, :create] do
+    member do
+      get '/validate', to: 'forum_validations#update'
+    end
   end
 
   get '/how-to-submit' => 'static#how_to_submit', as: :how_to_submit_static

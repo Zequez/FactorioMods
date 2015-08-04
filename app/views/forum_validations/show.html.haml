@@ -1,0 +1,12 @@
+%h1 Forum account validation
+
+- if @forum_validation.validated?
+  = t '.validated'
+- else
+  = raw t '.not_validated'
+
+%h2 Mods associated:
+
+- @forum_validation.author.mods.each do |mod|
+  = link_to mod.name, mod
+  = link_to '[Edit]', [:edit, mod]
