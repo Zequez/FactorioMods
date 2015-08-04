@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :forum_validations, except: [:new, :edit]
   resources :authors, except: [:new, :edit]
   namespace :api, path: '/', constraints: { subdomain: 'api' } do
     resources :mods, only: [:index, :show]

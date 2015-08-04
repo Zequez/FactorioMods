@@ -1,0 +1,2 @@
+class ForumValidationsController < ApplicationController
+end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150804093423) do
+ActiveRecord::Schema.define(version: 20150804093750) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -121,6 +121,18 @@ ActiveRecord::Schema.define(version: 20150804093423) do
   add_index "forum_posts", ["mod_id"], name: "index_forum_posts_on_mod_id", using: :btree
   add_index "forum_posts", ["post_number"], name: "index_forum_posts_on_post_number", using: :btree
   add_index "forum_posts", ["subforum_id"], name: "index_forum_posts_on_subforum_id", using: :btree
+
+  create_table "forum_validations", force: true do |t|
+    t.integer  "user_id"
+    t.integer  "author_id"
+    t.string   "vid"
+    t.boolean  "validated",  default: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "forum_validations", ["author_id"], name: "index_forum_validations_on_author_id", using: :btree
+  add_index "forum_validations", ["user_id"], name: "index_forum_validations_on_user_id", using: :btree
 
   create_table "game_versions", force: true do |t|
     t.string   "number"
