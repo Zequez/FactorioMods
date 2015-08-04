@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   resources :forum_validations, except: [:new, :edit]
-  resources :authors, except: [:new, :edit]
+
   namespace :api, path: '/', constraints: { subdomain: 'api' } do
     resources :mods, only: [:index, :show]
     resources :categories, only: [:index, :show] do
@@ -26,7 +26,7 @@ Rails.application.routes.draw do
     get '/', to: 'admin/dashboard#index'
   end
 
-  resources :users, only: [:show]
+  resources :authors, only: [:show]
   resources :bookmarks, only: [:create, :index] do
     delete :destroy, on: :collection
   end

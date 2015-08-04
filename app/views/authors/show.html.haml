@@ -1,9 +1,7 @@
-- title "#{@user.name} profile"
-
-%h2 Mods by #{@user.name}
+- title "Mods by #{@author.name}"
 
 Haven't gotten to properly do this page yet, so here is a quick list of mods by this author:
 
 %ul
-  - @user.authored_mods.each do |mod|
+  - @author.mods.each do |mod|
     %li= link_to mod.name, mod
