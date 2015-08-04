@@ -78,7 +78,7 @@ class FakeDataGenerator
         github_url = Forgery(:lorem_ipsum).words(1, random: true) + '/' + Forgery(:lorem_ipsum).words(1, random: true)
         mod = Mod.create! name: Forgery(:lorem_ipsum).words(rand(3..6), random: true),
                           info_json_name: Forgery(:lorem_ipsum).words(rand(1..2), random: true),
-                          authors: authors.sample(rand(0..3)),
+                          authors: authors.sample(rand(0..3)).uniq,
                           owner: [nil, nil].concat(users).sample,
                           categories: categories.sample(rand(1..4)),
                           github: rand > 50 ? nil : github_url,
