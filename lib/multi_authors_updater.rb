@@ -1,5 +1,7 @@
 class MultiAuthorsUpdater
   def update
+    raise 'No longer supported'
+    
     Mod.all.each do |mod|
       if mod.authors.empty?
         if mod.author

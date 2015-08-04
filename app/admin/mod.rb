@@ -106,7 +106,7 @@ ActiveAdmin.register Mod do
 
   filter :name
   filter :info_json_name
-  filter :author
+  filter :owner
   filter :author_name
 
   form do |f|

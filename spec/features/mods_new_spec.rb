@@ -221,10 +221,11 @@ feature 'Modder creates a new mod' do
     sign_in_dev
     @user.name = 'yeah'
     @user.save!
-    mod = create :mod, name: 'SuperMod'
+    create :mod, name: 'SuperMod'
 
     visit "/mods/new"
     fill_in_minimum('SuperMod')
+    fill_in 'mod_authors_list', with: 'yeah'
     submit_form
     expect(current_path).to eq '/mods/supermod-by-yeah'
   end
@@ -243,11 +244,11 @@ feature 'Modder creates a new mod' do
     sign_in_dev
     visit '/mods/new'
     fill_in_minimum
-    fill_in 'mod_authors_list', with: 'Potato(), SuperUser, Salad'
+    fill_in 'mod_authors_list', with: 'Potato, ----, Salad'
     submit_form
     expect(current_path).to eq '/mods'
     expect(page).to have_css '#mod_authors_list_input .inline-errors'
-    expect(page).to have_content /Potato\(\) is invalid/
+    expect(page).to have_content(/---- is invalid/)
   end
 
   scenario 'user submits a mod too many authors in the #authors_list' do
@@ -258,7 +259,7 @@ feature 'Modder creates a new mod' do
     submit_form
     expect(current_path).to eq '/mods'
     expect(page).to have_css '#mod_authors_list_input .inline-errors'
-    expect(page).to have_content /too many/i
+    expect(page).to have_content(/too many/i)
   end
 
   describe 'visibility toggle' do

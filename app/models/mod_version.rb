@@ -79,6 +79,7 @@ class ModVersion < ActiveRecord::Base
   private
 
   def set_game_versions_string
+    return if new_record?
     gvs = begin
       last_game_version = game_versions.last
       first_game_version = game_versions.first

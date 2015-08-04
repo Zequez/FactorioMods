@@ -34,7 +34,8 @@ ActiveAdmin.register User do
       user.owned_mods.map{ |m| link_to m.name, m }.join('<br/>').html_safe
     end
     column :authored_mods do |user|
-      user.owned_mods.map{ |m| link_to m.name, m }.join('<br/>').html_safe
+      return unless user.author
+      user.author.mods.map{ |m| link_to m.name, m }.join('<br/>').html_safe
     end
     column :validate do |user|
       # Doesn't actually toggle, it's just a one way trip

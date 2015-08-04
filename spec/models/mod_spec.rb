@@ -42,7 +42,6 @@ describe Mod do
     # it { is_expected.to respond_to :visits_count }
 
     # belongs_to
-    it { is_expected.to respond_to :author }
     it { is_expected.to respond_to :owner }
     it { expect(mod.build_owner).to be_kind_of User }
     it { is_expected.to respond_to :categories }
@@ -171,7 +170,7 @@ describe Mod do
       end
 
       it 'should not allow the "new" slug as it clashes with the controller action' do
-        mod = create :mod, name: 'New!', author_name: 'Potato'
+        mod = create :mod, name: 'New!', authors_list: 'Potato'
         expect(mod.slug).to eq 'new-by-potato'
       end
     end

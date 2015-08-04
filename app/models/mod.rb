@@ -8,12 +8,10 @@
 class Mod < ActiveRecord::Base
   extend FriendlyId
 
-  friendly_id :slug_candidates, use: [:slugged, :finders]
-
   def slug_candidates
     [
       :name,
-      [:name, 'by', :author_name]
+      authors.first && [:name, 'by', authors.first.name]
     ]
   end
 
@@ -25,7 +23,7 @@ class Mod < ActiveRecord::Base
   ### Relationships
   #################
 
-  belongs_to :author, class_name: 'User' # Deprecated
+  belongs_to :author, class_name: 'User' # Deprecated, but don't remove it yet tons of tests break
   belongs_to :owner, class_name: 'User', foreign_key: :author_id
   belongs_to :game_version_start, class_name: 'GameVersion'
   belongs_to :game_version_end, class_name: 'GameVersion'
@@ -45,7 +43,7 @@ class Mod < ActiveRecord::Base
   has_many :game_versions, -> { uniq.sort_by_older_to_newer }, through: :mod_game_versions
   has_many :categories, through: :categories_mods
   has_many :categories_mods, dependent: :destroy
-  has_many :authors, ->{ includes(:authors_mods).order('authors_mods.sort_order') } , through: :authors_mods, class_name: 'User'
+  has_many :authors, ->{ includes(:authors_mods).order('authors_mods.sort_order') }, through: :authors_mods
   has_many :authors_mods, dependent: :destroy
 
   # has_one :latest_version, -> { sort_by_newer_to_older.limit(1) }, class_name: 'ModVersion'
@@ -192,12 +190,6 @@ class Mod < ActiveRecord::Base
     end
   end
 
-  before_save do
-    if author
-      self.author_name = author.name
-    end
-  end
-
   after_save do
     if forum_post
       forum_post.mod = self
@@ -208,13 +200,23 @@ class Mod < ActiveRecord::Base
   # find or generate users from #authors_list
   before_validation do
     if authors_list.present?
-      authors_names = authors_list.split(',').map(&:strip).reject(&:blank?).take(10).uniq(&:downcase)
-      authors_index = User.where('lower(name) IN (?)', authors_names.map(&:downcase)).index_by{ |user| user.name.downcase }
-      self.authors = @reordered_authors = authors_names.each_with_index.map do |name, i|
-        authors_index[name.downcase] || User.autogenerate(name: name)
+      authors_names = authors_list.split(',')
+        .map(&:strip)
+        .reject(&:blank?)
+        .take(10)
+        .uniq{ |name| Author.normalize_friendly_id(name) }
+
+      self.authors = @reordered_authors = authors_names.map do |name|
+        Author.find_by_slugged_name(name) || Author.new(name: name, forum_name: name)
       end
     end
   end
+
+  # Yes, I have to move the authors_list parser to another file
+  # and move this again to the header. But for now, we need to access
+  # author.first to generate the alternative slug, and friendly_id
+  # adds the slug generation also before_validation
+  friendly_id :slug_candidates, use: [:slugged, :finders]
 
   # add the #authors errors to #authors_list
   after_validation do
@@ -346,11 +348,6 @@ class Mod < ActiveRecord::Base
     read_attribute(:game_versions_string) || set_game_versions_string
   end
 
-  def author_name
-    return super if super.present?
-    return author.name if author
-  end
-
   def github_url
     "http://github.com/#{github_path}" if github_path
   end
@@ -370,6 +367,7 @@ class Mod < ActiveRecord::Base
   private
 
   def set_game_versions_string
+    return if new_record?
     gvs = begin
       last_game_version = game_versions.last
       first_game_version = game_versions.first

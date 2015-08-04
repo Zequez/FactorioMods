@@ -57,7 +57,7 @@ class ModDecorator < Draper::Decorator
 
     mod.authors.map do |author, i|
       link = h.link_to(author.name, author)
-      if author == mod.owner and mod.authors.size > 1
+      if author.user_id == mod.author_id and mod.authors.size > 1
         maintainer = h.t('helpers.mods.maintainer')
         link + " (#{maintainer})"
       else
@@ -152,9 +152,9 @@ class ModDecorator < Draper::Decorator
 
   def visibility_notice
     if not mod.visible?
-      if h.current_user.is_admin?
+      if h.current_user and h.current_user.is_admin?
         h.t('mods.show.non_visible.admin')
-      elsif h.current_user.is_dev?
+      elsif h.current_user and h.current_user.is_dev?
         h.t('mods.show.non_visible.dev')
       else
         h.t('mods.show.non_visible.non_dev')

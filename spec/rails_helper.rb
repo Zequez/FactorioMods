@@ -35,7 +35,7 @@ VCR.configure do |config|
   config.ignore_request do |request|
     URI(request.uri).host == '127.0.0.1'
   end
-  
+
   # This is so we can read the response body text and
   # maybe touch it a little for edge cases
   config.before_record do |i|

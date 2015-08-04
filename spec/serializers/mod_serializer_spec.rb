@@ -1,6 +1,6 @@
 describe ModSerializer do
   before :each do
-    authors = [create(:user, name: 'John Snow Zombie'), create(:user, name: 'THAT Guy')]
+    authors = [create(:author, name: 'John Snow Zombie'), create(:author, name: 'THAT Guy')]
     @mod = create :mod,
       name: 'Potato Galaxy',
       info_json_name: 'potato-galaxy-mod',
