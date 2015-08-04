@@ -52,6 +52,7 @@ gem 'draper'
 gem 'paperclip'
 gem 'friendly_id'
 gem 'cocoon'
+gem 'auto_strip_attributes', '~> 2.0'
 
 # Users / Authentication / Administration
 ########################

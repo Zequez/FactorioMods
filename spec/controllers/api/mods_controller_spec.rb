@@ -69,7 +69,7 @@ describe API::ModsController, type: :controller do
     end
 
     context 'from a specific author' do
-      pending
+      
     end
   end
 

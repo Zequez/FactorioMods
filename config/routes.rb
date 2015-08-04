@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :authors, except: [:new, :edit]
   namespace :api, path: '/', constraints: { subdomain: 'api' } do
     resources :mods, only: [:index, :show]
     resources :categories, only: [:index, :show] do

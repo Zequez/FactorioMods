@@ -11,11 +11,10 @@ class User < ActiveRecord::Base
   friendly_id :name, use: [:slugged, :finders]
 
   has_many :mods, dependent: :nullify, foreign_key: :author_id
-  has_many :authors_mods, dependent: :destroy, foreign_key: :author_id
-  has_many :authored_mods, through: :authors_mods, class_name: 'Mod', source: :mod
   has_many :owned_mods, class_name: 'Mod', foreign_key: :author_id, dependent: :nullify # We'll change it to User#owner_id eventually
   has_many :bookmarks
   has_many :bookmarked_mods, through: :bookmarks, source: :mod
+  has_one :author
 
   ### Scopes
   #################
@@ -69,7 +68,9 @@ class User < ActiveRecord::Base
   end
 
   def give_ownership_of_authored!
-    authored_mods.each{ |am| am.update!(owner: self) unless am.owner.present? }
+    if author
+      author.mods.each.each{ |am| am.update!(owner: self) unless am.owner.present? }
+    end
   end
 
   def has_bookmarked_mod?(mod)
@@ -83,7 +84,8 @@ class User < ActiveRecord::Base
   attr_accessor :login
 
   def non_owned_authored_mods
-    authored_mods - owned_mods
+    return [] unless author
+    author.mods - owned_mods
   end
 
   def needs_validation?
