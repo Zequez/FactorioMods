@@ -116,6 +116,8 @@ GEM
       thread_safe (~> 0.1)
       warden (~> 1.2.3)
     diff-lcs (1.2.5)
+    domain_name (0.5.24)
+      unf (>= 0.0.5, < 1.0.0)
     dotenv (2.0.2)
     dotenv-rails (2.0.2)
       dotenv (= 2.0.2)
@@ -183,6 +185,14 @@ GEM
       haml (~> 4.0.0)
       nokogiri (~> 1.6.0)
       ruby_parser (~> 3.5)
+    http (0.9.0)
+      addressable (~> 2.3)
+      http-cookie (~> 1.0)
+      http-form_data (~> 1.0.1)
+      http_parser.rb (~> 0.6.0)
+    http-cookie (1.0.2)
+      domain_name (~> 0.5)
+    http-form_data (1.0.1)
     http_parser.rb (0.6.0)
     i18n (0.7.0)
     inherited_resources (1.6.0)
@@ -355,6 +365,9 @@ GEM
     uglifier (2.7.1)
       execjs (>= 0.3.0)
       json (>= 1.8.0)
+    unf (0.1.4)
+      unf_ext
+    unf_ext (0.0.7.1)
     unicorn (4.9.0)
       kgio (~> 2.6)
       rack
@@ -399,6 +412,7 @@ DEPENDENCIES
   guard-livereload
   guard-rspec
   haml-rails
+  http
   jquery-rails
   jquery-turbolinks
   json_spec

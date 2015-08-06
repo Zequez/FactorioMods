@@ -1,0 +1,318 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: http://www.factorioforums.com/forum/ucp.php?mode=login
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Connection:
+      - close
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Content-Length:
+      - '0'
+      Host:
+      - www.factorioforums.com
+      User-Agent:
+      - http.rb/0.9.0
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Wed, 05 Aug 2015 06:02:44 GMT
+      Server:
+      - Apache/2.2.29 (Unix) mod_ssl/2.2.29 OpenSSL/1.0.1e-fips mod_fcgid/2.3.7
+      X-Powered-By:
+      - PHP/5.4.37
+      Cache-Control:
+      - private, no-cache="set-cookie"
+      Expires:
+      - '0'
+      Pragma:
+      - no-cache
+      Set-Cookie:
+      - phpbb3_cobst_k=; expires=Thu, 04-Aug-2016 06:02:44 GMT; path=/; domain=factorioforums.com;
+        HttpOnly
+      - phpbb3_cobst_sid=5866b3f4ec2b3d3d18bd9ec70432cfa4; expires=Thu, 04-Aug-2016
+        06:02:44 GMT; path=/; domain=factorioforums.com; HttpOnly
+      - phpbb3_cobst_u=1; expires=Thu, 04-Aug-2016 06:02:44 GMT; path=/; domain=factorioforums.com;
+        HttpOnly
+      Connection:
+      - close
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - text/html; charset=UTF-8
+    body:
+      encoding: UTF-8
+      string: "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Strict//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd\">\n<html
+        xmlns=\"http://www.w3.org/1999/xhtml\" dir=\"ltr\" lang=\"en-gb\" xml:lang=\"en-gb\">\n<head>\n<link
+        href='http://fonts.googleapis.com/css?family=Titillium+Web:400,600,700&subset=latin,latin-ext'
+        rel='stylesheet' type='text/css'>\n<meta http-equiv=\"content-type\" content=\"text/html;
+        charset=UTF-8\" />\n<meta http-equiv=\"content-style-type\" content=\"text/css\"
+        />\n<meta http-equiv=\"content-language\" content=\"en-gb\" />\n<meta http-equiv=\"imagetoolbar\"
+        content=\"no\" />\n<meta name=\"resource-type\" content=\"document\" />\n<meta
+        name=\"distribution\" content=\"global\" />\n<meta name=\"keywords\" content=\"\"
+        />\n<meta name=\"description\" content=\"\" />\n\n<title>Forums &bull; User
+        Control Panel &bull; Login</title>\n\n<link rel=\"alternate\" type=\"application/atom+xml\"
+        title=\"Feed - Forums\" href=\"http://www.factorioforums.com/forum/feed.php\"
+        /><link rel=\"alternate\" type=\"application/atom+xml\" title=\"Feed - News\"
+        href=\"http://www.factorioforums.com/forum/feed.php?mode=news\" /><link rel=\"alternate\"
+        type=\"application/atom+xml\" title=\"Feed - New Topics\" href=\"http://www.factorioforums.com/forum/feed.php?mode=topics\"
+        />\n\n<!--\n\tphpBB style name: Factorio\n\tBased on style:   prosilver (this
+        is the default phpBB3 style)\n\tOriginal author:  Tom Beddard ( http://www.subBlue.com/
+        )\n\tModified by:      Graphic Albert (http://www.Factorio.com)\n-->\n\n<script
+        type=\"text/javascript\">\n// <![CDATA[\n\tvar jump_page = 'Enter the page
+        number you wish to go to:';\n\tvar on_page = '';\n\tvar per_page = '';\n\tvar
+        base_url = '';\n\tvar style_cookie = 'phpBBstyle';\n\tvar style_cookie_settings
+        = '; path=/; domain=factorioforums.com';\n\tvar onload_functions = new Array();\n\tvar
+        onunload_functions = new Array();\n\n\t\n\n\t/**\n\t* Find a member\n\t*/\n\tfunction
+        find_username(url)\n\t{\n\t\tpopup(url, 760, 570, '_usersearch');\n\t\treturn
+        false;\n\t}\n\n\t/**\n\t* New function for handling multiple calls to window.onload
+        and window.unload by pentapenguin\n\t*/\n\twindow.onload = function()\n\t{\n\t\tfor
+        (var i = 0; i < onload_functions.length; i++)\n\t\t{\n\t\t\teval(onload_functions[i]);\n\t\t}\n\t};\n\n\twindow.onunload
+        = function()\n\t{\n\t\tfor (var i = 0; i < onunload_functions.length; i++)\n\t\t{\n\t\t\teval(onunload_functions[i]);\n\t\t}\n\t};\n\n//
+        ]]>\n</script>\n<script type=\"text/javascript\" src=\"./styles/prosilver/template/styleswitcher.js\"></script>\n<script
+        type=\"text/javascript\" src=\"./styles/prosilver/template/forum_fn.js\"></script>\n\n<link
+        href=\"./styles/factorio/theme/print.css\" rel=\"stylesheet\" type=\"text/css\"
+        media=\"print\" title=\"printonly\" />\n<link href=\"./style.php?id=4&amp;lang=en&amp;sid=5866b3f4ec2b3d3d18bd9ec70432cfa4\"
+        rel=\"stylesheet\" type=\"text/css\" media=\"screen, projection\" />\n\n<link
+        href=\"./styles/factorio/theme/normal.css\" rel=\"stylesheet\" type=\"text/css\"
+        title=\"A\" />\n<link href=\"./styles/factorio/theme/medium.css\" rel=\"alternate
+        stylesheet\" type=\"text/css\" title=\"A+\" />\n<link href=\"./styles/factorio/theme/large.css\"
+        rel=\"alternate stylesheet\" type=\"text/css\" title=\"A++\" />\n\n<script
+        type=\"text/javascript\"><!--\n\tvar spoiler_show = \"[Reveal]\";\n\tvar spoiler_hide
+        = \"[Obscure]\";\n//--></script>\n<script type=\"text/javascript\" src=\"./styles/factorio/template/prime_bbcode_spoiler.js\"></script>\n<link
+        href=\"./styles/factorio/theme/prime_bbcode_spoiler.css\" rel=\"stylesheet\"
+        type=\"text/css\" />\n</head>\n\n<body id=\"phpbb\" class=\"section-ucp ltr\">\n<div
+        id=\"wrap\">\n<a id=\"top\" name=\"top\" accesskey=\"t\"></a>\n\t<div id=\"page-header\">\n\t\t<div
+        class=\"headerbar\">\n\t\t\t<div class=\"inner\"><span class=\"corners-top\"><span></span></span>\n\n\t\t\t<div
+        id=\"site-description\">\n\t\t\t\t<a href=\"./index.php?sid=5866b3f4ec2b3d3d18bd9ec70432cfa4\"
+        title=\"Board index\" id=\"logo\"><img src=\"./styles/factorio/imageset/factorio.png\"
+        width=\"625\" height=\"110\" alt=\"\" title=\"\" /></a>\n\t\t\t\t<h1>Forums</h1>\n\t\t\t\t<p><a
+        href=\"http://www.factorio.com\">www.factorio.com</a></p>\n\t\t\t\t<p class=\"skiplink\"><a
+        href=\"#start_here\">Skip to content</a></p>\n\t\t\t</div>\n\n\t\t\n\t\t\t<div
+        id=\"search-box\">\n\t\t\t\t<form action=\"./search.php?sid=5866b3f4ec2b3d3d18bd9ec70432cfa4\"
+        method=\"get\" id=\"search\">\n\t\t\t\t<fieldset>\n\t\t\t\t\t<input name=\"keywords\"
+        id=\"keywords\" type=\"text\" maxlength=\"128\" title=\"Search for keywords\"
+        class=\"inputbox search\" value=\"Search…\" onclick=\"if(this.value=='Search…')this.value='';\"
+        onblur=\"if(this.value=='')this.value='Search…';\" />\n\t\t\t\t\t<input class=\"button2\"
+        value=\"Search\" type=\"submit\" /><br />\n\t\t\t\t\t<a href=\"./search.php?sid=5866b3f4ec2b3d3d18bd9ec70432cfa4\"
+        title=\"View the advanced search options\">Advanced search</a> <input type=\"hidden\"
+        name=\"sid\" value=\"5866b3f4ec2b3d3d18bd9ec70432cfa4\" />\n\n\t\t\t\t</fieldset>\n\t\t\t\t</form>\n\t\t\t</div>\n\t\t\n\n\t\t\t<span
+        class=\"corners-bottom\"><span></span></span></div>\n\t\t</div>\n\n\t\t<div
+        class=\"navbar\">\n\t\t\t<div class=\"inner\"><span class=\"corners-top\"><span></span></span>\n\n\t\t\t<ul
+        class=\"linklist navlinks\">\n\t\t\t\t<li class=\"icon-home\"><a href=\"./index.php?sid=5866b3f4ec2b3d3d18bd9ec70432cfa4\"
+        accesskey=\"h\">Board index</a> </li>\n\n\t\t\t\t<li class=\"rightside\"><a
+        href=\"#\" onclick=\"fontsizeup(); return false;\" onkeypress=\"return fontsizeup(event);\"
+        class=\"fontsize\" title=\"Change font size\">Change font size</a></li>\n\n\t\t\t\t\n\t\t\t</ul>\n\n\t\t\t\n\n\t\t\t<ul
+        class=\"linklist rightside\">\n\t\t\t\t<li class=\"icon-faq\"><a href=\"./faq.php?sid=5866b3f4ec2b3d3d18bd9ec70432cfa4\"
+        title=\"Frequently Asked Questions\">FAQ</a></li>\n\t\t\t\t<li class=\"icon-register\"><a
+        href=\"./ucp.php?mode=register&amp;sid=5866b3f4ec2b3d3d18bd9ec70432cfa4\">Register</a></li>\n\t\t\t\t\t<li
+        class=\"icon-logout\"><a href=\"./ucp.php?mode=login&amp;sid=5866b3f4ec2b3d3d18bd9ec70432cfa4\"
+        title=\"Login\" accesskey=\"x\">Login</a></li>\n\t\t\t\t\n\t\t\t</ul>\n\n\t\t\t<span
+        class=\"corners-bottom\"><span></span></span></div>\n\t\t</div>\n\n\t</div>\n\n\t<a
+        name=\"start_here\"></a>\n\t<div id=\"page-body\">\n\t\t\n\n<script type=\"text/javascript\">\n//
+        <![CDATA[\n\tonload_functions.push('document.getElementById(\"username\").focus();');\n//
+        ]]>\n</script>\n\n<form action=\"./ucp.php?mode=login&amp;sid=5866b3f4ec2b3d3d18bd9ec70432cfa4\"
+        method=\"post\" id=\"login\">\n<div class=\"panel\">\n\t<div class=\"inner\"><span
+        class=\"corners-top\"><span></span></span>\n\n\t<div class=\"content\">\n\t\t<h2>Login</h2>\n\n\t\t<fieldset
+        class=\"fields1\">\n\t\t\n\t\t<dl>\n\t\t\t<dt><label for=\"username\">Username:</label></dt>\n\t\t\t<dd><input
+        type=\"text\" tabindex=\"1\" name=\"username\" id=\"username\" size=\"25\"
+        value=\"\" class=\"inputbox autowidth\" /></dd>\n\t\t</dl>\n\t\t<dl>\n\t\t\t<dt><label
+        for=\"password\">Password:</label></dt>\n\t\t\t<dd><input type=\"password\"
+        tabindex=\"2\" id=\"password\" name=\"password\" size=\"25\" class=\"inputbox
+        autowidth\" /></dd>\n\t\t\t<dd><a href=\"./ucp.php?mode=sendpassword&amp;sid=5866b3f4ec2b3d3d18bd9ec70432cfa4\">I
+        forgot my password</a></dd><dd><a href=\"./ucp.php?mode=resend_act&amp;sid=5866b3f4ec2b3d3d18bd9ec70432cfa4\">Resend
+        activation e-mail</a></dd>\n\t\t</dl>\n\t\t\n\t\t<dl>\n\t\t\t<dd><label for=\"autologin\"><input
+        type=\"checkbox\" name=\"autologin\" id=\"autologin\" tabindex=\"4\" /> Log
+        me on automatically each visit</label></dd>\n\t\t\t<dd><label for=\"viewonline\"><input
+        type=\"checkbox\" name=\"viewonline\" id=\"viewonline\" tabindex=\"5\" />
+        Hide my online status this session</label></dd>\n\t\t</dl>\n\t\t\n\n\t\t<input
+        type=\"hidden\" name=\"redirect\" value=\"./ucp.php?mode=login&amp;sid=5866b3f4ec2b3d3d18bd9ec70432cfa4\"
+        />\n\n\t\t<dl>\n\t\t\t<dt>&nbsp;</dt>\n\t\t\t<dd><input type=\"hidden\" name=\"sid\"
+        value=\"5866b3f4ec2b3d3d18bd9ec70432cfa4\" />\n<input type=\"hidden\" name=\"redirect\"
+        value=\"index.php\" />\n<input type=\"submit\" name=\"login\" tabindex=\"6\"
+        value=\"Login\" class=\"button1\" /></dd>\n\t\t</dl>\n\t\t</fieldset>\n\t</div>\n\t<span
+        class=\"corners-bottom\"><span></span></span></div>\n</div>\n\n\n\n\t<div
+        class=\"panel\">\n\t\t<div class=\"inner\"><span class=\"corners-top\"><span></span></span>\n\n\t\t<div
+        class=\"content\">\n\t\t\t<h3>Register</h3>\n\t\t\t<p>In order to login you
+        must be registered. Registering takes only a few moments but gives you increased
+        capabilities. The board administrator may also grant additional permissions
+        to registered users. Before you register please ensure you are familiar with
+        our terms of use and related policies. Please ensure you read any forum rules
+        as you navigate around the board.</p>\n\t\t\t<p><strong><a href=\"./ucp.php?mode=terms&amp;sid=5866b3f4ec2b3d3d18bd9ec70432cfa4\">Terms
+        of use</a> | <a href=\"./ucp.php?mode=privacy&amp;sid=5866b3f4ec2b3d3d18bd9ec70432cfa4\">Privacy
+        policy</a></strong></p>\n\t\t\t<hr class=\"dashed\" />\n\t\t\t<p><a href=\"./ucp.php?mode=register&amp;sid=5866b3f4ec2b3d3d18bd9ec70432cfa4\"
+        class=\"button2\">Register</a></p>\n\t\t</div>\n\n\t\t<span class=\"corners-bottom\"><span></span></span></div>\n\t</div>\n\n\n</form>\n\n</div>\n\n<div
+        id=\"page-footer\">\n\n\t<div class=\"navbar\">\n\t\t<div class=\"inner\"><span
+        class=\"corners-top\"><span></span></span>\n\n\t\t<ul class=\"linklist\">\n\t\t\t<li
+        class=\"icon-home\"><a href=\"./index.php?sid=5866b3f4ec2b3d3d18bd9ec70432cfa4\"
+        accesskey=\"h\">Board index</a></li>\n\t\t\t\t\n\t\t\t<li class=\"rightside\"><a
+        href=\"./memberlist.php?mode=leaders&amp;sid=5866b3f4ec2b3d3d18bd9ec70432cfa4\">The
+        team</a> &bull; <a href=\"./ucp.php?mode=delete_cookies&amp;sid=5866b3f4ec2b3d3d18bd9ec70432cfa4\">Delete
+        all board cookies</a> &bull; All times are UTC </li>\n\t\t</ul>\n\n\t\t<span
+        class=\"corners-bottom\"><span></span></span></div>\n\t</div>\n\n\t<div class=\"copyright\">Powered
+        by <a href=\"http://www.phpbb.com/\">phpBB</a>&reg; Forum Software &copy;
+        phpBB Group\n\t\t\n\t</div>\n</div>\n\n</div>\n\n<div>\n\t<a id=\"bottom\"
+        name=\"bottom\" accesskey=\"z\"></a>\n\t\n</div>\n\n</body>\n</html>"
+    http_version: 
+  recorded_at: Wed, 05 Aug 2015 06:02:44 GMT
+- request:
+    method: post
+    uri: http://www.factorioforums.com/forum/ucp.php?mode=login
+    body:
+      encoding: US-ASCII
+      string: username=invalid+user&password=invalid+password&autologin=on&viewonline=on&redirect=index.php&sid=5866&login=Login
+    headers:
+      Connection:
+      - close
+      Cookie:
+      - phpbb3_cobst_u=1; phpbb3_cobst_k=; phpbb3_cobst_sid=5866b3f4ec2b3d3d18bd9ec70432cfa4
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Content-Length:
+      - '114'
+      Host:
+      - www.factorioforums.com
+      User-Agent:
+      - http.rb/0.9.0
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Wed, 05 Aug 2015 06:02:44 GMT
+      Server:
+      - Apache/2.2.29 (Unix) mod_ssl/2.2.29 OpenSSL/1.0.1e-fips mod_fcgid/2.3.7
+      X-Powered-By:
+      - PHP/5.4.37
+      Cache-Control:
+      - private, no-cache="set-cookie"
+      Expires:
+      - '0'
+      Pragma:
+      - no-cache
+      Connection:
+      - close
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - text/html; charset=UTF-8
+    body:
+      encoding: UTF-8
+      string: "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Strict//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd\">\n<html
+        xmlns=\"http://www.w3.org/1999/xhtml\" dir=\"ltr\" lang=\"en-gb\" xml:lang=\"en-gb\">\n<head>\n<link
+        href='http://fonts.googleapis.com/css?family=Titillium+Web:400,600,700&subset=latin,latin-ext'
+        rel='stylesheet' type='text/css'>\n<meta http-equiv=\"content-type\" content=\"text/html;
+        charset=UTF-8\" />\n<meta http-equiv=\"content-style-type\" content=\"text/css\"
+        />\n<meta http-equiv=\"content-language\" content=\"en-gb\" />\n<meta http-equiv=\"imagetoolbar\"
+        content=\"no\" />\n<meta name=\"resource-type\" content=\"document\" />\n<meta
+        name=\"distribution\" content=\"global\" />\n<meta name=\"keywords\" content=\"\"
+        />\n<meta name=\"description\" content=\"\" />\n\n<title>Forums &bull; User
+        Control Panel &bull; Login</title>\n\n<link rel=\"alternate\" type=\"application/atom+xml\"
+        title=\"Feed - Forums\" href=\"http://www.factorioforums.com/forum/feed.php\"
+        /><link rel=\"alternate\" type=\"application/atom+xml\" title=\"Feed - News\"
+        href=\"http://www.factorioforums.com/forum/feed.php?mode=news\" /><link rel=\"alternate\"
+        type=\"application/atom+xml\" title=\"Feed - New Topics\" href=\"http://www.factorioforums.com/forum/feed.php?mode=topics\"
+        />\n\n<!--\n\tphpBB style name: Factorio\n\tBased on style:   prosilver (this
+        is the default phpBB3 style)\n\tOriginal author:  Tom Beddard ( http://www.subBlue.com/
+        )\n\tModified by:      Graphic Albert (http://www.Factorio.com)\n-->\n\n<script
+        type=\"text/javascript\">\n// <![CDATA[\n\tvar jump_page = 'Enter the page
+        number you wish to go to:';\n\tvar on_page = '';\n\tvar per_page = '';\n\tvar
+        base_url = '';\n\tvar style_cookie = 'phpBBstyle';\n\tvar style_cookie_settings
+        = '; path=/; domain=factorioforums.com';\n\tvar onload_functions = new Array();\n\tvar
+        onunload_functions = new Array();\n\n\t\n\n\t/**\n\t* Find a member\n\t*/\n\tfunction
+        find_username(url)\n\t{\n\t\tpopup(url, 760, 570, '_usersearch');\n\t\treturn
+        false;\n\t}\n\n\t/**\n\t* New function for handling multiple calls to window.onload
+        and window.unload by pentapenguin\n\t*/\n\twindow.onload = function()\n\t{\n\t\tfor
+        (var i = 0; i < onload_functions.length; i++)\n\t\t{\n\t\t\teval(onload_functions[i]);\n\t\t}\n\t};\n\n\twindow.onunload
+        = function()\n\t{\n\t\tfor (var i = 0; i < onunload_functions.length; i++)\n\t\t{\n\t\t\teval(onunload_functions[i]);\n\t\t}\n\t};\n\n//
+        ]]>\n</script>\n<script type=\"text/javascript\" src=\"./styles/prosilver/template/styleswitcher.js\"></script>\n<script
+        type=\"text/javascript\" src=\"./styles/prosilver/template/forum_fn.js\"></script>\n\n<link
+        href=\"./styles/factorio/theme/print.css\" rel=\"stylesheet\" type=\"text/css\"
+        media=\"print\" title=\"printonly\" />\n<link href=\"./style.php?id=4&amp;lang=en\"
+        rel=\"stylesheet\" type=\"text/css\" media=\"screen, projection\" />\n\n<link
+        href=\"./styles/factorio/theme/normal.css\" rel=\"stylesheet\" type=\"text/css\"
+        title=\"A\" />\n<link href=\"./styles/factorio/theme/medium.css\" rel=\"alternate
+        stylesheet\" type=\"text/css\" title=\"A+\" />\n<link href=\"./styles/factorio/theme/large.css\"
+        rel=\"alternate stylesheet\" type=\"text/css\" title=\"A++\" />\n\n<script
+        type=\"text/javascript\"><!--\n\tvar spoiler_show = \"[Reveal]\";\n\tvar spoiler_hide
+        = \"[Obscure]\";\n//--></script>\n<script type=\"text/javascript\" src=\"./styles/factorio/template/prime_bbcode_spoiler.js\"></script>\n<link
+        href=\"./styles/factorio/theme/prime_bbcode_spoiler.css\" rel=\"stylesheet\"
+        type=\"text/css\" />\n</head>\n\n<body id=\"phpbb\" class=\"section-ucp ltr\">\n<div
+        id=\"wrap\">\n<a id=\"top\" name=\"top\" accesskey=\"t\"></a>\n\t<div id=\"page-header\">\n\t\t<div
+        class=\"headerbar\">\n\t\t\t<div class=\"inner\"><span class=\"corners-top\"><span></span></span>\n\n\t\t\t<div
+        id=\"site-description\">\n\t\t\t\t<a href=\"./index.php\" title=\"Board index\"
+        id=\"logo\"><img src=\"./styles/factorio/imageset/factorio.png\" width=\"625\"
+        height=\"110\" alt=\"\" title=\"\" /></a>\n\t\t\t\t<h1>Forums</h1>\n\t\t\t\t<p><a
+        href=\"http://www.factorio.com\">www.factorio.com</a></p>\n\t\t\t\t<p class=\"skiplink\"><a
+        href=\"#start_here\">Skip to content</a></p>\n\t\t\t</div>\n\n\t\t\n\t\t\t<div
+        id=\"search-box\">\n\t\t\t\t<form action=\"./search.php\" method=\"get\" id=\"search\">\n\t\t\t\t<fieldset>\n\t\t\t\t\t<input
+        name=\"keywords\" id=\"keywords\" type=\"text\" maxlength=\"128\" title=\"Search
+        for keywords\" class=\"inputbox search\" value=\"Search…\" onclick=\"if(this.value=='Search…')this.value='';\"
+        onblur=\"if(this.value=='')this.value='Search…';\" />\n\t\t\t\t\t<input class=\"button2\"
+        value=\"Search\" type=\"submit\" /><br />\n\t\t\t\t\t<a href=\"./search.php\"
+        title=\"View the advanced search options\">Advanced search</a> \n\t\t\t\t</fieldset>\n\t\t\t\t</form>\n\t\t\t</div>\n\t\t\n\n\t\t\t<span
+        class=\"corners-bottom\"><span></span></span></div>\n\t\t</div>\n\n\t\t<div
+        class=\"navbar\">\n\t\t\t<div class=\"inner\"><span class=\"corners-top\"><span></span></span>\n\n\t\t\t<ul
+        class=\"linklist navlinks\">\n\t\t\t\t<li class=\"icon-home\"><a href=\"./index.php\"
+        accesskey=\"h\">Board index</a> </li>\n\n\t\t\t\t<li class=\"rightside\"><a
+        href=\"#\" onclick=\"fontsizeup(); return false;\" onkeypress=\"return fontsizeup(event);\"
+        class=\"fontsize\" title=\"Change font size\">Change font size</a></li>\n\n\t\t\t\t\n\t\t\t</ul>\n\n\t\t\t\n\n\t\t\t<ul
+        class=\"linklist rightside\">\n\t\t\t\t<li class=\"icon-faq\"><a href=\"./faq.php\"
+        title=\"Frequently Asked Questions\">FAQ</a></li>\n\t\t\t\t<li class=\"icon-register\"><a
+        href=\"./ucp.php?mode=register\">Register</a></li>\n\t\t\t\t\t<li class=\"icon-logout\"><a
+        href=\"./ucp.php?mode=login\" title=\"Login\" accesskey=\"x\">Login</a></li>\n\t\t\t\t\n\t\t\t</ul>\n\n\t\t\t<span
+        class=\"corners-bottom\"><span></span></span></div>\n\t\t</div>\n\n\t</div>\n\n\t<a
+        name=\"start_here\"></a>\n\t<div id=\"page-body\">\n\t\t\n\n<script type=\"text/javascript\">\n//
+        <![CDATA[\n\tonload_functions.push('document.getElementById(\"username\").focus();');\n//
+        ]]>\n</script>\n\n<form action=\"./ucp.php?mode=login\" method=\"post\" id=\"login\">\n<div
+        class=\"panel\">\n\t<div class=\"inner\"><span class=\"corners-top\"><span></span></span>\n\n\t<div
+        class=\"content\">\n\t\t<h2>Login</h2>\n\n\t\t<fieldset class=\"fields1\">\n\t\t<div
+        class=\"error\">You have specified an incorrect username. Please check your
+        username and try again. If you continue to have problems please contact the
+        <a href=\"mailto:factorio@factorio.com\">Board Administrator</a>.</div>\n\t\t<dl>\n\t\t\t<dt><label
+        for=\"username\">Username:</label></dt>\n\t\t\t<dd><input type=\"text\" tabindex=\"1\"
+        name=\"username\" id=\"username\" size=\"25\" value=\"\" class=\"inputbox
+        autowidth\" /></dd>\n\t\t</dl>\n\t\t<dl>\n\t\t\t<dt><label for=\"password\">Password:</label></dt>\n\t\t\t<dd><input
+        type=\"password\" tabindex=\"2\" id=\"password\" name=\"password\" size=\"25\"
+        class=\"inputbox autowidth\" /></dd>\n\t\t\t<dd><a href=\"./ucp.php?mode=sendpassword\">I
+        forgot my password</a></dd><dd><a href=\"./ucp.php?mode=resend_act\">Resend
+        activation e-mail</a></dd>\n\t\t</dl>\n\t\t\n\t\t<dl>\n\t\t\t<dd><label for=\"autologin\"><input
+        type=\"checkbox\" name=\"autologin\" id=\"autologin\" tabindex=\"4\" /> Log
+        me on automatically each visit</label></dd>\n\t\t\t<dd><label for=\"viewonline\"><input
+        type=\"checkbox\" name=\"viewonline\" id=\"viewonline\" tabindex=\"5\" />
+        Hide my online status this session</label></dd>\n\t\t</dl>\n\t\t\n\n\t\t<input
+        type=\"hidden\" name=\"redirect\" value=\"./ucp.php?mode=login\" />\n\n\t\t<dl>\n\t\t\t<dt>&nbsp;</dt>\n\t\t\t<dd><input
+        type=\"hidden\" name=\"sid\" value=\"5866b3f4ec2b3d3d18bd9ec70432cfa4\" />\n<input
+        type=\"hidden\" name=\"redirect\" value=\"index.php\" />\n<input type=\"submit\"
+        name=\"login\" tabindex=\"6\" value=\"Login\" class=\"button1\" /></dd>\n\t\t</dl>\n\t\t</fieldset>\n\t</div>\n\t<span
+        class=\"corners-bottom\"><span></span></span></div>\n</div>\n\n\n\n\t<div
+        class=\"panel\">\n\t\t<div class=\"inner\"><span class=\"corners-top\"><span></span></span>\n\n\t\t<div
+        class=\"content\">\n\t\t\t<h3>Register</h3>\n\t\t\t<p>In order to login you
+        must be registered. Registering takes only a few moments but gives you increased
+        capabilities. The board administrator may also grant additional permissions
+        to registered users. Before you register please ensure you are familiar with
+        our terms of use and related policies. Please ensure you read any forum rules
+        as you navigate around the board.</p>\n\t\t\t<p><strong><a href=\"./ucp.php?mode=terms\">Terms
+        of use</a> | <a href=\"./ucp.php?mode=privacy\">Privacy policy</a></strong></p>\n\t\t\t<hr
+        class=\"dashed\" />\n\t\t\t<p><a href=\"./ucp.php?mode=register\" class=\"button2\">Register</a></p>\n\t\t</div>\n\n\t\t<span
+        class=\"corners-bottom\"><span></span></span></div>\n\t</div>\n\n\n</form>\n\n</div>\n\n<div
+        id=\"page-footer\">\n\n\t<div class=\"navbar\">\n\t\t<div class=\"inner\"><span
+        class=\"corners-top\"><span></span></span>\n\n\t\t<ul class=\"linklist\">\n\t\t\t<li
+        class=\"icon-home\"><a href=\"./index.php\" accesskey=\"h\">Board index</a></li>\n\t\t\t\t\n\t\t\t<li
+        class=\"rightside\"><a href=\"./memberlist.php?mode=leaders\">The team</a>
+        &bull; <a href=\"./ucp.php?mode=delete_cookies\">Delete all board cookies</a>
+        &bull; All times are UTC </li>\n\t\t</ul>\n\n\t\t<span class=\"corners-bottom\"><span></span></span></div>\n\t</div>\n\n\t<div
+        class=\"copyright\">Powered by <a href=\"http://www.phpbb.com/\">phpBB</a>&reg;
+        Forum Software &copy; phpBB Group\n\t\t\n\t</div>\n</div>\n\n</div>\n\n<div>\n\t<a
+        id=\"bottom\" name=\"bottom\" accesskey=\"z\"></a>\n\t\n</div>\n\n</body>\n</html>"
+    http_version: 
+  recorded_at: Wed, 05 Aug 2015 06:02:45 GMT
+recorded_with: VCR 2.9.3

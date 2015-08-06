@@ -1,0 +1,491 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: http://www.factorioforums.com/forum/ucp.php?mode=login
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Connection:
+      - close
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Content-Length:
+      - '0'
+      Host:
+      - www.factorioforums.com
+      User-Agent:
+      - http.rb/0.9.0
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Wed, 05 Aug 2015 06:02:54 GMT
+      Server:
+      - Apache/2.2.29 (Unix) mod_ssl/2.2.29 OpenSSL/1.0.1e-fips mod_fcgid/2.3.7
+      X-Powered-By:
+      - PHP/5.4.37
+      Cache-Control:
+      - private, no-cache="set-cookie"
+      Expires:
+      - '0'
+      Pragma:
+      - no-cache
+      Set-Cookie:
+      - phpbb3_cobst_k=; expires=Thu, 04-Aug-2016 06:02:54 GMT; path=/; domain=factorioforums.com;
+        HttpOnly
+      - phpbb3_cobst_sid=af7430b6e48a68294a35a7436aa10978; expires=Thu, 04-Aug-2016
+        06:02:54 GMT; path=/; domain=factorioforums.com; HttpOnly
+      - phpbb3_cobst_u=1; expires=Thu, 04-Aug-2016 06:02:54 GMT; path=/; domain=factorioforums.com;
+        HttpOnly
+      Connection:
+      - close
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - text/html; charset=UTF-8
+    body:
+      encoding: UTF-8
+      string: "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Strict//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd\">\n<html
+        xmlns=\"http://www.w3.org/1999/xhtml\" dir=\"ltr\" lang=\"en-gb\" xml:lang=\"en-gb\">\n<head>\n<link
+        href='http://fonts.googleapis.com/css?family=Titillium+Web:400,600,700&subset=latin,latin-ext'
+        rel='stylesheet' type='text/css'>\n<meta http-equiv=\"content-type\" content=\"text/html;
+        charset=UTF-8\" />\n<meta http-equiv=\"content-style-type\" content=\"text/css\"
+        />\n<meta http-equiv=\"content-language\" content=\"en-gb\" />\n<meta http-equiv=\"imagetoolbar\"
+        content=\"no\" />\n<meta name=\"resource-type\" content=\"document\" />\n<meta
+        name=\"distribution\" content=\"global\" />\n<meta name=\"keywords\" content=\"\"
+        />\n<meta name=\"description\" content=\"\" />\n\n<title>Forums &bull; User
+        Control Panel &bull; Login</title>\n\n<link rel=\"alternate\" type=\"application/atom+xml\"
+        title=\"Feed - Forums\" href=\"http://www.factorioforums.com/forum/feed.php\"
+        /><link rel=\"alternate\" type=\"application/atom+xml\" title=\"Feed - News\"
+        href=\"http://www.factorioforums.com/forum/feed.php?mode=news\" /><link rel=\"alternate\"
+        type=\"application/atom+xml\" title=\"Feed - New Topics\" href=\"http://www.factorioforums.com/forum/feed.php?mode=topics\"
+        />\n\n<!--\n\tphpBB style name: Factorio\n\tBased on style:   prosilver (this
+        is the default phpBB3 style)\n\tOriginal author:  Tom Beddard ( http://www.subBlue.com/
+        )\n\tModified by:      Graphic Albert (http://www.Factorio.com)\n-->\n\n<script
+        type=\"text/javascript\">\n// <![CDATA[\n\tvar jump_page = 'Enter the page
+        number you wish to go to:';\n\tvar on_page = '';\n\tvar per_page = '';\n\tvar
+        base_url = '';\n\tvar style_cookie = 'phpBBstyle';\n\tvar style_cookie_settings
+        = '; path=/; domain=factorioforums.com';\n\tvar onload_functions = new Array();\n\tvar
+        onunload_functions = new Array();\n\n\t\n\n\t/**\n\t* Find a member\n\t*/\n\tfunction
+        find_username(url)\n\t{\n\t\tpopup(url, 760, 570, '_usersearch');\n\t\treturn
+        false;\n\t}\n\n\t/**\n\t* New function for handling multiple calls to window.onload
+        and window.unload by pentapenguin\n\t*/\n\twindow.onload = function()\n\t{\n\t\tfor
+        (var i = 0; i < onload_functions.length; i++)\n\t\t{\n\t\t\teval(onload_functions[i]);\n\t\t}\n\t};\n\n\twindow.onunload
+        = function()\n\t{\n\t\tfor (var i = 0; i < onunload_functions.length; i++)\n\t\t{\n\t\t\teval(onunload_functions[i]);\n\t\t}\n\t};\n\n//
+        ]]>\n</script>\n<script type=\"text/javascript\" src=\"./styles/prosilver/template/styleswitcher.js\"></script>\n<script
+        type=\"text/javascript\" src=\"./styles/prosilver/template/forum_fn.js\"></script>\n\n<link
+        href=\"./styles/factorio/theme/print.css\" rel=\"stylesheet\" type=\"text/css\"
+        media=\"print\" title=\"printonly\" />\n<link href=\"./style.php?id=4&amp;lang=en&amp;sid=af7430b6e48a68294a35a7436aa10978\"
+        rel=\"stylesheet\" type=\"text/css\" media=\"screen, projection\" />\n\n<link
+        href=\"./styles/factorio/theme/normal.css\" rel=\"stylesheet\" type=\"text/css\"
+        title=\"A\" />\n<link href=\"./styles/factorio/theme/medium.css\" rel=\"alternate
+        stylesheet\" type=\"text/css\" title=\"A+\" />\n<link href=\"./styles/factorio/theme/large.css\"
+        rel=\"alternate stylesheet\" type=\"text/css\" title=\"A++\" />\n\n<script
+        type=\"text/javascript\"><!--\n\tvar spoiler_show = \"[Reveal]\";\n\tvar spoiler_hide
+        = \"[Obscure]\";\n//--></script>\n<script type=\"text/javascript\" src=\"./styles/factorio/template/prime_bbcode_spoiler.js\"></script>\n<link
+        href=\"./styles/factorio/theme/prime_bbcode_spoiler.css\" rel=\"stylesheet\"
+        type=\"text/css\" />\n</head>\n\n<body id=\"phpbb\" class=\"section-ucp ltr\">\n<div
+        id=\"wrap\">\n<a id=\"top\" name=\"top\" accesskey=\"t\"></a>\n\t<div id=\"page-header\">\n\t\t<div
+        class=\"headerbar\">\n\t\t\t<div class=\"inner\"><span class=\"corners-top\"><span></span></span>\n\n\t\t\t<div
+        id=\"site-description\">\n\t\t\t\t<a href=\"./index.php?sid=af7430b6e48a68294a35a7436aa10978\"
+        title=\"Board index\" id=\"logo\"><img src=\"./styles/factorio/imageset/factorio.png\"
+        width=\"625\" height=\"110\" alt=\"\" title=\"\" /></a>\n\t\t\t\t<h1>Forums</h1>\n\t\t\t\t<p><a
+        href=\"http://www.factorio.com\">www.factorio.com</a></p>\n\t\t\t\t<p class=\"skiplink\"><a
+        href=\"#start_here\">Skip to content</a></p>\n\t\t\t</div>\n\n\t\t\n\t\t\t<div
+        id=\"search-box\">\n\t\t\t\t<form action=\"./search.php?sid=af7430b6e48a68294a35a7436aa10978\"
+        method=\"get\" id=\"search\">\n\t\t\t\t<fieldset>\n\t\t\t\t\t<input name=\"keywords\"
+        id=\"keywords\" type=\"text\" maxlength=\"128\" title=\"Search for keywords\"
+        class=\"inputbox search\" value=\"Search…\" onclick=\"if(this.value=='Search…')this.value='';\"
+        onblur=\"if(this.value=='')this.value='Search…';\" />\n\t\t\t\t\t<input class=\"button2\"
+        value=\"Search\" type=\"submit\" /><br />\n\t\t\t\t\t<a href=\"./search.php?sid=af7430b6e48a68294a35a7436aa10978\"
+        title=\"View the advanced search options\">Advanced search</a> <input type=\"hidden\"
+        name=\"sid\" value=\"af7430b6e48a68294a35a7436aa10978\" />\n\n\t\t\t\t</fieldset>\n\t\t\t\t</form>\n\t\t\t</div>\n\t\t\n\n\t\t\t<span
+        class=\"corners-bottom\"><span></span></span></div>\n\t\t</div>\n\n\t\t<div
+        class=\"navbar\">\n\t\t\t<div class=\"inner\"><span class=\"corners-top\"><span></span></span>\n\n\t\t\t<ul
+        class=\"linklist navlinks\">\n\t\t\t\t<li class=\"icon-home\"><a href=\"./index.php?sid=af7430b6e48a68294a35a7436aa10978\"
+        accesskey=\"h\">Board index</a> </li>\n\n\t\t\t\t<li class=\"rightside\"><a
+        href=\"#\" onclick=\"fontsizeup(); return false;\" onkeypress=\"return fontsizeup(event);\"
+        class=\"fontsize\" title=\"Change font size\">Change font size</a></li>\n\n\t\t\t\t\n\t\t\t</ul>\n\n\t\t\t\n\n\t\t\t<ul
+        class=\"linklist rightside\">\n\t\t\t\t<li class=\"icon-faq\"><a href=\"./faq.php?sid=af7430b6e48a68294a35a7436aa10978\"
+        title=\"Frequently Asked Questions\">FAQ</a></li>\n\t\t\t\t<li class=\"icon-register\"><a
+        href=\"./ucp.php?mode=register&amp;sid=af7430b6e48a68294a35a7436aa10978\">Register</a></li>\n\t\t\t\t\t<li
+        class=\"icon-logout\"><a href=\"./ucp.php?mode=login&amp;sid=af7430b6e48a68294a35a7436aa10978\"
+        title=\"Login\" accesskey=\"x\">Login</a></li>\n\t\t\t\t\n\t\t\t</ul>\n\n\t\t\t<span
+        class=\"corners-bottom\"><span></span></span></div>\n\t\t</div>\n\n\t</div>\n\n\t<a
+        name=\"start_here\"></a>\n\t<div id=\"page-body\">\n\t\t\n\n<script type=\"text/javascript\">\n//
+        <![CDATA[\n\tonload_functions.push('document.getElementById(\"username\").focus();');\n//
+        ]]>\n</script>\n\n<form action=\"./ucp.php?mode=login&amp;sid=af7430b6e48a68294a35a7436aa10978\"
+        method=\"post\" id=\"login\">\n<div class=\"panel\">\n\t<div class=\"inner\"><span
+        class=\"corners-top\"><span></span></span>\n\n\t<div class=\"content\">\n\t\t<h2>Login</h2>\n\n\t\t<fieldset
+        class=\"fields1\">\n\t\t\n\t\t<dl>\n\t\t\t<dt><label for=\"username\">Username:</label></dt>\n\t\t\t<dd><input
+        type=\"text\" tabindex=\"1\" name=\"username\" id=\"username\" size=\"25\"
+        value=\"\" class=\"inputbox autowidth\" /></dd>\n\t\t</dl>\n\t\t<dl>\n\t\t\t<dt><label
+        for=\"password\">Password:</label></dt>\n\t\t\t<dd><input type=\"password\"
+        tabindex=\"2\" id=\"password\" name=\"password\" size=\"25\" class=\"inputbox
+        autowidth\" /></dd>\n\t\t\t<dd><a href=\"./ucp.php?mode=sendpassword&amp;sid=af7430b6e48a68294a35a7436aa10978\">I
+        forgot my password</a></dd><dd><a href=\"./ucp.php?mode=resend_act&amp;sid=af7430b6e48a68294a35a7436aa10978\">Resend
+        activation e-mail</a></dd>\n\t\t</dl>\n\t\t\n\t\t<dl>\n\t\t\t<dd><label for=\"autologin\"><input
+        type=\"checkbox\" name=\"autologin\" id=\"autologin\" tabindex=\"4\" /> Log
+        me on automatically each visit</label></dd>\n\t\t\t<dd><label for=\"viewonline\"><input
+        type=\"checkbox\" name=\"viewonline\" id=\"viewonline\" tabindex=\"5\" />
+        Hide my online status this session</label></dd>\n\t\t</dl>\n\t\t\n\n\t\t<input
+        type=\"hidden\" name=\"redirect\" value=\"./ucp.php?mode=login&amp;sid=af7430b6e48a68294a35a7436aa10978\"
+        />\n\n\t\t<dl>\n\t\t\t<dt>&nbsp;</dt>\n\t\t\t<dd><input type=\"hidden\" name=\"sid\"
+        value=\"af7430b6e48a68294a35a7436aa10978\" />\n<input type=\"hidden\" name=\"redirect\"
+        value=\"index.php\" />\n<input type=\"submit\" name=\"login\" tabindex=\"6\"
+        value=\"Login\" class=\"button1\" /></dd>\n\t\t</dl>\n\t\t</fieldset>\n\t</div>\n\t<span
+        class=\"corners-bottom\"><span></span></span></div>\n</div>\n\n\n\n\t<div
+        class=\"panel\">\n\t\t<div class=\"inner\"><span class=\"corners-top\"><span></span></span>\n\n\t\t<div
+        class=\"content\">\n\t\t\t<h3>Register</h3>\n\t\t\t<p>In order to login you
+        must be registered. Registering takes only a few moments but gives you increased
+        capabilities. The board administrator may also grant additional permissions
+        to registered users. Before you register please ensure you are familiar with
+        our terms of use and related policies. Please ensure you read any forum rules
+        as you navigate around the board.</p>\n\t\t\t<p><strong><a href=\"./ucp.php?mode=terms&amp;sid=af7430b6e48a68294a35a7436aa10978\">Terms
+        of use</a> | <a href=\"./ucp.php?mode=privacy&amp;sid=af7430b6e48a68294a35a7436aa10978\">Privacy
+        policy</a></strong></p>\n\t\t\t<hr class=\"dashed\" />\n\t\t\t<p><a href=\"./ucp.php?mode=register&amp;sid=af7430b6e48a68294a35a7436aa10978\"
+        class=\"button2\">Register</a></p>\n\t\t</div>\n\n\t\t<span class=\"corners-bottom\"><span></span></span></div>\n\t</div>\n\n\n</form>\n\n</div>\n\n<div
+        id=\"page-footer\">\n\n\t<div class=\"navbar\">\n\t\t<div class=\"inner\"><span
+        class=\"corners-top\"><span></span></span>\n\n\t\t<ul class=\"linklist\">\n\t\t\t<li
+        class=\"icon-home\"><a href=\"./index.php?sid=af7430b6e48a68294a35a7436aa10978\"
+        accesskey=\"h\">Board index</a></li>\n\t\t\t\t\n\t\t\t<li class=\"rightside\"><a
+        href=\"./memberlist.php?mode=leaders&amp;sid=af7430b6e48a68294a35a7436aa10978\">The
+        team</a> &bull; <a href=\"./ucp.php?mode=delete_cookies&amp;sid=af7430b6e48a68294a35a7436aa10978\">Delete
+        all board cookies</a> &bull; All times are UTC </li>\n\t\t</ul>\n\n\t\t<span
+        class=\"corners-bottom\"><span></span></span></div>\n\t</div>\n\n\t<div class=\"copyright\">Powered
+        by <a href=\"http://www.phpbb.com/\">phpBB</a>&reg; Forum Software &copy;
+        phpBB Group\n\t\t\n\t</div>\n</div>\n\n</div>\n\n<div>\n\t<a id=\"bottom\"
+        name=\"bottom\" accesskey=\"z\"></a>\n\t\n</div>\n\n</body>\n</html>"
+    http_version: 
+  recorded_at: Wed, 05 Aug 2015 06:02:54 GMT
+- request:
+    method: post
+    uri: http://www.factorioforums.com/forum/ucp.php?mode=login
+    body:
+      encoding: US-ASCII
+      string: username=<USERNAME>&password=<PASSWORD>&autologin=on&viewonline=on&redirect=index.php&sid=0&login=Login
+    headers:
+      Connection:
+      - close
+      Cookie:
+      - phpbb3_cobst_u=1; phpbb3_cobst_k=; phpbb3_cobst_sid=af7430b6e48a68294a35a7436aa10978
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Content-Length:
+      - '104'
+      Host:
+      - www.factorioforums.com
+      User-Agent:
+      - http.rb/0.9.0
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Wed, 05 Aug 2015 06:02:55 GMT
+      Server:
+      - Apache/2.2.29 (Unix) mod_ssl/2.2.29 OpenSSL/1.0.1e-fips mod_fcgid/2.3.7
+      X-Powered-By:
+      - PHP/5.4.37
+      Cache-Control:
+      - private, no-cache="set-cookie"
+      Expires:
+      - '0'
+      Pragma:
+      - no-cache
+      Set-Cookie:
+      - phpbb3_cobst_k=5059ba63723dac7c; expires=Thu, 04-Aug-2016 06:02:55 GMT; path=/;
+        domain=factorioforums.com; HttpOnly
+      - phpbb3_cobst_sid=ff324167224e210adb0761066e186048; expires=Thu, 04-Aug-2016
+        06:02:55 GMT; path=/; domain=factorioforums.com; HttpOnly
+      - phpbb3_cobst_u=1553; expires=Thu, 04-Aug-2016 06:02:55 GMT; path=/; domain=factorioforums.com;
+        HttpOnly
+      Connection:
+      - close
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - text/html; charset=UTF-8
+    body:
+      encoding: UTF-8
+      string: "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Strict//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd\">\n<html
+        xmlns=\"http://www.w3.org/1999/xhtml\" dir=\"ltr\" lang=\"en-gb\" xml:lang=\"en-gb\">\n<head>\n<link
+        href='http://fonts.googleapis.com/css?family=Titillium+Web:400,600,700&subset=latin,latin-ext'
+        rel='stylesheet' type='text/css'>\n<meta http-equiv=\"content-type\" content=\"text/html;
+        charset=UTF-8\" />\n<meta http-equiv=\"content-style-type\" content=\"text/css\"
+        />\n<meta http-equiv=\"content-language\" content=\"en-gb\" />\n<meta http-equiv=\"imagetoolbar\"
+        content=\"no\" />\n<meta name=\"resource-type\" content=\"document\" />\n<meta
+        name=\"distribution\" content=\"global\" />\n<meta name=\"keywords\" content=\"\"
+        />\n<meta name=\"description\" content=\"\" />\n<meta http-equiv=\"refresh\"
+        content=\"3;url=http://www.factorioforums.com/forum/index.php?sid=ff324167224e210adb0761066e186048\"
+        />\n<title>Forums &bull; User Control Panel &bull; Information</title>\n\n<link
+        rel=\"alternate\" type=\"application/atom+xml\" title=\"Feed - Forums\" href=\"http://www.factorioforums.com/forum/feed.php\"
+        /><link rel=\"alternate\" type=\"application/atom+xml\" title=\"Feed - News\"
+        href=\"http://www.factorioforums.com/forum/feed.php?mode=news\" /><link rel=\"alternate\"
+        type=\"application/atom+xml\" title=\"Feed - New Topics\" href=\"http://www.factorioforums.com/forum/feed.php?mode=topics\"
+        />\n\n<!--\n\tphpBB style name: Factorio\n\tBased on style:   prosilver (this
+        is the default phpBB3 style)\n\tOriginal author:  Tom Beddard ( http://www.subBlue.com/
+        )\n\tModified by:      Graphic Albert (http://www.Factorio.com)\n-->\n\n<script
+        type=\"text/javascript\">\n// <![CDATA[\n\tvar jump_page = 'Enter the page
+        number you wish to go to:';\n\tvar on_page = '';\n\tvar per_page = '';\n\tvar
+        base_url = '';\n\tvar style_cookie = 'phpBBstyle';\n\tvar style_cookie_settings
+        = '; path=/; domain=factorioforums.com';\n\tvar onload_functions = new Array();\n\tvar
+        onunload_functions = new Array();\n\n\t\n\n\t/**\n\t* Find a member\n\t*/\n\tfunction
+        find_username(url)\n\t{\n\t\tpopup(url, 760, 570, '_usersearch');\n\t\treturn
+        false;\n\t}\n\n\t/**\n\t* New function for handling multiple calls to window.onload
+        and window.unload by pentapenguin\n\t*/\n\twindow.onload = function()\n\t{\n\t\tfor
+        (var i = 0; i < onload_functions.length; i++)\n\t\t{\n\t\t\teval(onload_functions[i]);\n\t\t}\n\t};\n\n\twindow.onunload
+        = function()\n\t{\n\t\tfor (var i = 0; i < onunload_functions.length; i++)\n\t\t{\n\t\t\teval(onunload_functions[i]);\n\t\t}\n\t};\n\n//
+        ]]>\n</script>\n<script type=\"text/javascript\" src=\"./styles/prosilver/template/styleswitcher.js\"></script>\n<script
+        type=\"text/javascript\" src=\"./styles/prosilver/template/forum_fn.js\"></script>\n\n<link
+        href=\"./styles/factorio/theme/print.css\" rel=\"stylesheet\" type=\"text/css\"
+        media=\"print\" title=\"printonly\" />\n<link href=\"./style.php?id=4&amp;lang=en&amp;sid=ff324167224e210adb0761066e186048\"
+        rel=\"stylesheet\" type=\"text/css\" media=\"screen, projection\" />\n\n<link
+        href=\"./styles/factorio/theme/normal.css\" rel=\"stylesheet\" type=\"text/css\"
+        title=\"A\" />\n<link href=\"./styles/factorio/theme/medium.css\" rel=\"alternate
+        stylesheet\" type=\"text/css\" title=\"A+\" />\n<link href=\"./styles/factorio/theme/large.css\"
+        rel=\"alternate stylesheet\" type=\"text/css\" title=\"A++\" />\n\n<script
+        type=\"text/javascript\"><!--\n\tvar spoiler_show = \"[Reveal]\";\n\tvar spoiler_hide
+        = \"[Obscure]\";\n//--></script>\n<script type=\"text/javascript\" src=\"./styles/factorio/template/prime_bbcode_spoiler.js\"></script>\n<link
+        href=\"./styles/factorio/theme/prime_bbcode_spoiler.css\" rel=\"stylesheet\"
+        type=\"text/css\" />\n</head>\n\n<body id=\"phpbb\" class=\"section-ucp ltr\">\n<div
+        id=\"wrap\">\n<a id=\"top\" name=\"top\" accesskey=\"t\"></a>\n\t<div id=\"page-header\">\n\t\t<div
+        class=\"headerbar\">\n\t\t\t<div class=\"inner\"><span class=\"corners-top\"><span></span></span>\n\n\t\t\t<div
+        id=\"site-description\">\n\t\t\t\t<a href=\"./index.php?sid=ff324167224e210adb0761066e186048\"
+        title=\"Board index\" id=\"logo\"><img src=\"./styles/factorio/imageset/factorio.png\"
+        width=\"625\" height=\"110\" alt=\"\" title=\"\" /></a>\n\t\t\t\t<h1>Forums</h1>\n\t\t\t\t<p><a
+        href=\"http://www.factorio.com\">www.factorio.com</a></p>\n\t\t\t\t<p class=\"skiplink\"><a
+        href=\"#start_here\">Skip to content</a></p>\n\t\t\t</div>\n\n\t\t\n\t\t\t<div
+        id=\"search-box\">\n\t\t\t\t<form action=\"./search.php?sid=ff324167224e210adb0761066e186048\"
+        method=\"get\" id=\"search\">\n\t\t\t\t<fieldset>\n\t\t\t\t\t<input name=\"keywords\"
+        id=\"keywords\" type=\"text\" maxlength=\"128\" title=\"Search for keywords\"
+        class=\"inputbox search\" value=\"Search…\" onclick=\"if(this.value=='Search…')this.value='';\"
+        onblur=\"if(this.value=='')this.value='Search…';\" />\n\t\t\t\t\t<input class=\"button2\"
+        value=\"Search\" type=\"submit\" /><br />\n\t\t\t\t\t<a href=\"./search.php?sid=ff324167224e210adb0761066e186048\"
+        title=\"View the advanced search options\">Advanced search</a> <input type=\"hidden\"
+        name=\"sid\" value=\"ff324167224e210adb0761066e186048\" />\n\n\t\t\t\t</fieldset>\n\t\t\t\t</form>\n\t\t\t</div>\n\t\t\n\n\t\t\t<span
+        class=\"corners-bottom\"><span></span></span></div>\n\t\t</div>\n\n\t\t<div
+        class=\"navbar\">\n\t\t\t<div class=\"inner\"><span class=\"corners-top\"><span></span></span>\n\n\t\t\t<ul
+        class=\"linklist navlinks\">\n\t\t\t\t<li class=\"icon-home\"><a href=\"./index.php?sid=ff324167224e210adb0761066e186048\"
+        accesskey=\"h\">Board index</a> </li>\n\n\t\t\t\t<li class=\"rightside\"><a
+        href=\"#\" onclick=\"fontsizeup(); return false;\" onkeypress=\"return fontsizeup(event);\"
+        class=\"fontsize\" title=\"Change font size\">Change font size</a></li>\n\n\t\t\t\t\n\t\t\t</ul>\n\n\t\t\t\n\t\t\t<ul
+        class=\"linklist leftside\">\n\t\t\t\t<li class=\"icon-ucp\">\n\t\t\t\t\t<a
+        href=\"./ucp.php?sid=ff324167224e210adb0761066e186048\" title=\"User Control
+        Panel\" accesskey=\"e\">User Control Panel</a>\n\t\t\t\t\t\t (<a href=\"./ucp.php?i=pm&amp;folder=inbox&amp;sid=ff324167224e210adb0761066e186048\"><strong>0</strong>
+        new messages</a>) &bull;\n\t\t\t\t\t<a href=\"./search.php?search_id=egosearch&amp;sid=ff324167224e210adb0761066e186048\">View
+        your posts</a>\n\t\t\t\t\t\n\t\t\t\t</li>\n\t\t\t</ul>\n\t\t\t\n\n\t\t\t<ul
+        class=\"linklist rightside\">\n\t\t\t\t<li class=\"icon-faq\"><a href=\"./faq.php?sid=ff324167224e210adb0761066e186048\"
+        title=\"Frequently Asked Questions\">FAQ</a></li>\n\t\t\t\t<li class=\"icon-members\"><a
+        href=\"./memberlist.php?sid=ff324167224e210adb0761066e186048\" title=\"View
+        complete list of members\">Members</a></li>\n\t\t\t\t\t<li class=\"icon-logout\"><a
+        href=\"./ucp.php?mode=logout&amp;sid=ff324167224e210adb0761066e186048\" title=\"Logout
+        [ <USERNAME> ]\" accesskey=\"x\">Logout [ <USERNAME> ]</a></li>\n\t\t\t\t\n\t\t\t</ul>\n\n\t\t\t<span
+        class=\"corners-bottom\"><span></span></span></div>\n\t\t</div>\n\n\t</div>\n\n\t<a
+        name=\"start_here\"></a>\n\t<div id=\"page-body\">\n\t\t\n\n<div class=\"panel\"
+        id=\"message\">\n\t<div class=\"inner\"><span class=\"corners-top\"><span></span></span>\n\t<h2>Information</h2>\n\t<p>You
+        have been successfully logged in.<br /><br /><a href=\"http://www.factorioforums.com/forum/index.php?sid=ff324167224e210adb0761066e186048\">Return
+        to the index page</a></p>\n\t\n\t<span class=\"corners-bottom\"><span></span></span></div>\n</div>\n\n</div>\n\n<div
+        id=\"page-footer\">\n\n\t<div class=\"navbar\">\n\t\t<div class=\"inner\"><span
+        class=\"corners-top\"><span></span></span>\n\n\t\t<ul class=\"linklist\">\n\t\t\t<li
+        class=\"icon-home\"><a href=\"./index.php?sid=ff324167224e210adb0761066e186048\"
+        accesskey=\"h\">Board index</a></li>\n\t\t\t\t\n\t\t\t<li class=\"rightside\"><a
+        href=\"./memberlist.php?mode=leaders&amp;sid=ff324167224e210adb0761066e186048\">The
+        team</a> &bull; <a href=\"./ucp.php?mode=delete_cookies&amp;sid=ff324167224e210adb0761066e186048\">Delete
+        all board cookies</a> &bull; All times are UTC - 3 hours </li>\n\t\t</ul>\n\n\t\t<span
+        class=\"corners-bottom\"><span></span></span></div>\n\t</div>\n\n\t<div class=\"copyright\">Powered
+        by <a href=\"http://www.phpbb.com/\">phpBB</a>&reg; Forum Software &copy;
+        phpBB Group\n\t\t\n\t</div>\n</div>\n\n</div>\n\n<div>\n\t<a id=\"bottom\"
+        name=\"bottom\" accesskey=\"z\"></a>\n\t\n</div>\n\n</body>\n</html>"
+    http_version: 
+  recorded_at: Wed, 05 Aug 2015 06:02:55 GMT
+- request:
+    method: post
+    uri: http://www.factorioforums.com/forum/memberlist.php?field=username_list&form=postform&mode=searchuser&select_single=
+    body:
+      encoding: US-ASCII
+      string: username=a&icq=&aim=&yahoo=&msn=&joined_select=lt&joined=&count_select=eq&count=&search_group_id=0&sk=c&sd=a&submit=Search
+    headers:
+      Connection:
+      - close
+      Cookie:
+      - phpbb3_cobst_u=1553; phpbb3_cobst_k=5059ba63723dac7c; phpbb3_cobst_sid=ff324167224e210adb0761066e186048
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Content-Length:
+      - '122'
+      Host:
+      - www.factorioforums.com
+      User-Agent:
+      - http.rb/0.9.0
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Wed, 05 Aug 2015 06:02:56 GMT
+      Server:
+      - Apache/2.2.29 (Unix) mod_ssl/2.2.29 OpenSSL/1.0.1e-fips mod_fcgid/2.3.7
+      X-Powered-By:
+      - PHP/5.4.37
+      Cache-Control:
+      - private, no-cache="set-cookie"
+      Expires:
+      - '0'
+      Pragma:
+      - no-cache
+      Connection:
+      - close
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - text/html; charset=UTF-8
+    body:
+      encoding: UTF-8
+      string: "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Strict//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd\">\n<html
+        xmlns=\"http://www.w3.org/1999/xhtml\" dir=\"ltr\" lang=\"en-gb\" xml:lang=\"en-gb\">\n<head>\n\n<meta
+        http-equiv=\"content-type\" content=\"text/html; charset=UTF-8\" />\n<meta
+        http-equiv=\"content-style-type\" content=\"text/css\" />\n<meta http-equiv=\"content-language\"
+        content=\"en-gb\" />\n<meta http-equiv=\"imagetoolbar\" content=\"no\" />\n<meta
+        name=\"resource-type\" content=\"document\" />\n<meta name=\"distribution\"
+        content=\"global\" />\n<meta name=\"keywords\" content=\"\" />\n<meta name=\"description\"
+        content=\"\" />\n\n<title>Forums &bull; Members</title>\n\n<script type=\"text/javascript\">\n//
+        <![CDATA[\n\n\tvar jump_page = 'Enter the page number you wish to go to:';\n\tvar
+        on_page = '1';\n\tvar per_page = '';\n\tvar base_url = '';\n\tvar style_cookie
+        = 'phpBBstyle';\n\tvar onload_functions = new Array();\n\tvar onunload_functions
+        = new Array();\n\tvar style_cookie_settings = '; path=/; domain=factorioforums.com';\n\n\t/**\n\t*
+        New function for handling multiple calls to window.onload and window.unload
+        by pentapenguin\n\t*/\n\twindow.onload = function()\n\t{\n\t\tfor (var i =
+        0; i < onload_functions.length; i++)\n\t\t{\n\t\t\teval(onload_functions[i]);\n\t\t}\n\t}\n\n\twindow.onunload
+        = function()\n\t{\n\t\tfor (var i = 0; i < onunload_functions.length; i++)\n\t\t{\n\t\t\teval(onunload_functions[i]);\n\t\t}\n\t}\n\n//
+        ]]>\n</script>\n<script type=\"text/javascript\" src=\"./styles/prosilver/template/styleswitcher.js\"></script>\n<script
+        type=\"text/javascript\" src=\"./styles/prosilver/template/forum_fn.js\"></script>\n\n<link
+        href=\"./styles/factorio/theme/print.css\" rel=\"stylesheet\" type=\"text/css\"
+        media=\"print\" title=\"printonly\" />\n<link href=\"./style.php?id=4&amp;lang=en\"
+        rel=\"stylesheet\" type=\"text/css\" media=\"screen, projection\" />\n\n<link
+        href=\"./styles/factorio/theme/normal.css\" rel=\"alternate stylesheet\" type=\"text/css\"
+        title=\"A\" />\n<link href=\"./styles/factorio/theme/medium.css\" rel=\"alternate
+        stylesheet\" type=\"text/css\" title=\"A+\" />\n<link href=\"./styles/factorio/theme/large.css\"
+        rel=\"alternate stylesheet\" type=\"text/css\" title=\"A++\" />\n\n<script
+        type=\"text/javascript\"><!--\n\tvar spoiler_show = \"[Reveal]\";\n\tvar spoiler_hide
+        = \"[Obscure]\";\n//--></script>\n<script type=\"text/javascript\" src=\"./styles/factorio/template/prime_bbcode_spoiler.js\"></script>\n<link
+        href=\"./styles/factorio/theme/prime_bbcode_spoiler.css\" rel=\"stylesheet\"
+        type=\"text/css\" />\n</head>\n\n<body id=\"phpbb\" class=\"ltr\">\n\n<div
+        id=\"simple-wrap\">\n<a id=\"top\" name=\"top\" accesskey=\"t\"></a>\n\t<div
+        id=\"page-body\"><!-- You should retain this javascript in your own template!
+        -->\n<script type=\"text/javascript\">\n// <![CDATA[\nfunction insert_user(user)\n{\n\topener.document.forms['postform'].username_list.value
+        = ( opener.document.forms['postform'].username_list.value.length && opener.document.forms['postform'].username_list.type
+        == \"textarea\" ) ? opener.document.forms['postform'].username_list.value
+        + \"\\n\" + user : user;\n}\n\nfunction insert_marked(users)\n{\n\tif (typeof(users.length)
+        == \"undefined\")\n\t{\n\t\tif (users.checked)\n\t\t{\n\t\t\tinsert_user(users.value);\n\t\t}\n\t}\n\telse
+        if (users.length > 0)\n\t{\n\t\tfor (i = 0; i < users.length; i++)\n\t\t{\n\t\t\tif
+        (users[i].checked)\n\t\t\t{\n\t\t\t\tinsert_user(users[i].value);\n\t\t\t}\n\t\t}\n\t}\n\n\tself.close();\n}\n\nfunction
+        insert_single(user)\n{\n\topener.document.forms['postform'].username_list.value
+        = user;\n\tself.close();\n}\n// ]]>\n</script>\n<script type=\"text/javascript\"
+        src=\"./styles/prosilver/template/forum_fn.js\"></script>\n\n\n<h2 class=\"solo\">Find
+        a member</h2>\n\n<form method=\"post\" action=\"./memberlist.php?sk=c&amp;sd=a&amp;form=postform&amp;field=username_list&amp;select_single=&amp;username=a&amp;icq=&amp;aim=&amp;yahoo=&amp;msn=&amp;search_group_id=0&amp;joined_select=lt&amp;count_select=eq&amp;joined=&amp;count=&amp;mode=searchuser\"
+        id=\"search_memberlist\">\n<div class=\"panel\">\n\t<div class=\"inner\"><span
+        class=\"corners-top\"><span></span></span>\n\n\t<p>Use this form to search
+        for specific members. You do not need to fill out all fields. To match partial
+        data use * as a wildcard. When entering dates use the format <kbd>YYYY-MM-DD</kbd>,
+        e.g. <samp>2004-02-29</samp>. Use the mark checkboxes to select one or more
+        usernames (several usernames may be accepted depending on the form itself)
+        and click the Select Marked button to return to the previous form.</p>\n\n\t<fieldset
+        class=\"fields1 column1\">\n\t<dl>\n\t\t<dt><label for=\"username\">Username:</label></dt>\n\t\t<dd><input
+        type=\"text\" name=\"username\" id=\"username\" value=\"a\" class=\"inputbox\"
+        /></dd>\n\t</dl>\n\n\t<dl>\n\t\t<dt><label for=\"icq\">ICQ:</label></dt>\n\t\t<dd><input
+        type=\"text\" name=\"icq\" id=\"icq\" value=\"\" class=\"inputbox\" /></dd>\n\t</dl>\n\t<dl>\n\t\t<dt><label
+        for=\"aim\">AIM:</label></dt>\n\t\t<dd><input type=\"text\" name=\"aim\" id=\"aim\"
+        value=\"\" class=\"inputbox\" /></dd>\n\t</dl>\n\t<dl>\n\t\t<dt><label for=\"yahoo\">YIM:</label></dt>\n\t\t<dd><input
+        type=\"text\" name=\"yahoo\" id=\"yahoo\" value=\"\" class=\"inputbox\" /></dd>\n\t</dl>\n\t<dl>\n\t\t<dt><label
+        for=\"msn\">MSNM/WLM:</label></dt>\n\t\t<dd><input type=\"text\" name=\"msn\"
+        id=\"msn\" value=\"\" class=\"inputbox\" /></dd>\n\t</dl>\n\t</fieldset>\n\n\t<fieldset
+        class=\"fields1 column2\">\n\t<dl>\n\t\t<dt><label for=\"joined\">Joined:</label></dt>\n\t\t<dd><select
+        name=\"joined_select\"><option value=\"lt\" selected=\"selected\">Before</option><option
+        value=\"gt\">After</option></select> <input class=\"inputbox medium\" type=\"text\"
+        name=\"joined\" id=\"joined\" value=\"\" /></dd>\n\t</dl>\n\n\t<dl>\n\t\t<dt><label
+        for=\"count\">Posts:</label></dt>\n\t\t<dd><select name=\"count_select\"><option
+        value=\"lt\">Less than</option><option value=\"eq\" selected=\"selected\">Equal
+        to</option><option value=\"gt\">More than</option></select> <input class=\"inputbox
+        medium\" type=\"text\" name=\"count\" id=\"count\" value=\"\" /></dd>\n\t</dl>\n\n\t<dl>\n\t\t<dt><label
+        for=\"search_group_id\">Group:</label></dt>\n\t\t<dd><select name=\"search_group_id\"
+        id=\"search_group_id\"><option value=\"0\" selected=\"selected\">&nbsp;</option><option
+        value=\"5\">Administrators</option><option value=\"6\">Bots</option><option
+        value=\"9\">Code Access</option><option value=\"4\">Global moderators</option><option
+        value=\"1\">Guests</option><option value=\"7\">Newly registered users</option><option
+        value=\"2\">Registered users</option></select></dd>\n\t</dl>\n\t<dl>\n\t\t<dt><label
+        for=\"sk\" class=\"label3\">Sort by:</label></dt>\n\t\t<dd><select name=\"sk\"
+        id=\"sk\"><option value=\"a\">Username</option><option value=\"b\">Location</option><option
+        value=\"c\" selected=\"selected\">Joined date</option><option value=\"d\">Post
+        count</option><option value=\"f\">Website</option><option value=\"g\">ICQ</option><option
+        value=\"h\">AIM</option><option value=\"i\">MSNM/WLM</option><option value=\"j\">YIM</option><option
+        value=\"k\">Jabber</option><option value=\"m\">Rank</option></select> <select
+        name=\"sd\"><option value=\"a\" selected=\"selected\">Ascending</option><option
+        value=\"d\">Descending</option></select></dd>\n\t</dl>\n\t</fieldset>\n\n\t<div
+        class=\"clear\"></div>\n\n\t<hr />\n\n\t<fieldset class=\"submit-buttons\">\n\t\t<input
+        type=\"reset\" value=\"Reset\" name=\"reset\" class=\"button2\" />&nbsp;\n\t\t<input
+        type=\"submit\" name=\"submit\" value=\"Search\" class=\"button1\" />\n\t\t\n\t</fieldset>\n\n\t<span
+        class=\"corners-bottom\"><span></span></span></div>\n</div>\n\n</form>\n\t<form
+        method=\"post\" id=\"results\" action=\"./memberlist.php?sk=c&amp;sd=a&amp;form=postform&amp;field=username_list&amp;select_single=&amp;username=a&amp;icq=&amp;aim=&amp;yahoo=&amp;msn=&amp;search_group_id=0&amp;joined_select=lt&amp;count_select=eq&amp;joined=&amp;count=&amp;mode=searchuser\"
+        onsubmit=\"insert_marked(this.user); return false\">\n\n\n\t\t<h2 class=\"solo\">Members</h2>\n\n\t\t<div
+        class=\"panel\">\n\t\t\t<div class=\"inner\"><span class=\"corners-top\"><span></span></span>\n\n\t\t\t<ul
+        class=\"linklist\">\n\t\t\t\t<li>\n\n\t\t\t\t\n\t\t\t\t<strong style=\"font-size:
+        0.95em;\">\n\t\t\t\t\n\t\t\t\t\t<a href=\"./memberlist.php?sk=c&amp;sd=a&amp;form=postform&amp;field=username_list&amp;select_single=&amp;username=a&amp;icq=&amp;aim=&amp;yahoo=&amp;msn=&amp;search_group_id=0&amp;joined_select=lt&amp;count_select=eq&amp;joined=&amp;count=&amp;mode=searchuser&amp;first_char=#memberlist\">All</a>&nbsp;
+        \n\t\t\t\t\n\t\t\t\t\t<a href=\"./memberlist.php?sk=c&amp;sd=a&amp;form=postform&amp;field=username_list&amp;select_single=&amp;username=a&amp;icq=&amp;aim=&amp;yahoo=&amp;msn=&amp;search_group_id=0&amp;joined_select=lt&amp;count_select=eq&amp;joined=&amp;count=&amp;mode=searchuser&amp;first_char=a#memberlist\">A</a>&nbsp;
+        \n\t\t\t\t\n\t\t\t\t\t<a href=\"./memberlist.php?sk=c&amp;sd=a&amp;form=postform&amp;field=username_list&amp;select_single=&amp;username=a&amp;icq=&amp;aim=&amp;yahoo=&amp;msn=&amp;search_group_id=0&amp;joined_select=lt&amp;count_select=eq&amp;joined=&amp;count=&amp;mode=searchuser&amp;first_char=b#memberlist\">B</a>&nbsp;
+        \n\t\t\t\t\n\t\t\t\t\t<a href=\"./memberlist.php?sk=c&amp;sd=a&amp;form=postform&amp;field=username_list&amp;select_single=&amp;username=a&amp;icq=&amp;aim=&amp;yahoo=&amp;msn=&amp;search_group_id=0&amp;joined_select=lt&amp;count_select=eq&amp;joined=&amp;count=&amp;mode=searchuser&amp;first_char=c#memberlist\">C</a>&nbsp;
+        \n\t\t\t\t\n\t\t\t\t\t<a href=\"./memberlist.php?sk=c&amp;sd=a&amp;form=postform&amp;field=username_list&amp;select_single=&amp;username=a&amp;icq=&amp;aim=&amp;yahoo=&amp;msn=&amp;search_group_id=0&amp;joined_select=lt&amp;count_select=eq&amp;joined=&amp;count=&amp;mode=searchuser&amp;first_char=d#memberlist\">D</a>&nbsp;
+        \n\t\t\t\t\n\t\t\t\t\t<a href=\"./memberlist.php?sk=c&amp;sd=a&amp;form=postform&amp;field=username_list&amp;select_single=&amp;username=a&amp;icq=&amp;aim=&amp;yahoo=&amp;msn=&amp;search_group_id=0&amp;joined_select=lt&amp;count_select=eq&amp;joined=&amp;count=&amp;mode=searchuser&amp;first_char=e#memberlist\">E</a>&nbsp;
+        \n\t\t\t\t\n\t\t\t\t\t<a href=\"./memberlist.php?sk=c&amp;sd=a&amp;form=postform&amp;field=username_list&amp;select_single=&amp;username=a&amp;icq=&amp;aim=&amp;yahoo=&amp;msn=&amp;search_group_id=0&amp;joined_select=lt&amp;count_select=eq&amp;joined=&amp;count=&amp;mode=searchuser&amp;first_char=f#memberlist\">F</a>&nbsp;
+        \n\t\t\t\t\n\t\t\t\t\t<a href=\"./memberlist.php?sk=c&amp;sd=a&amp;form=postform&amp;field=username_list&amp;select_single=&amp;username=a&amp;icq=&amp;aim=&amp;yahoo=&amp;msn=&amp;search_group_id=0&amp;joined_select=lt&amp;count_select=eq&amp;joined=&amp;count=&amp;mode=searchuser&amp;first_char=g#memberlist\">G</a>&nbsp;
+        \n\t\t\t\t\n\t\t\t\t\t<a href=\"./memberlist.php?sk=c&amp;sd=a&amp;form=postform&amp;field=username_list&amp;select_single=&amp;username=a&amp;icq=&amp;aim=&amp;yahoo=&amp;msn=&amp;search_group_id=0&amp;joined_select=lt&amp;count_select=eq&amp;joined=&amp;count=&amp;mode=searchuser&amp;first_char=h#memberlist\">H</a>&nbsp;
+        \n\t\t\t\t\n\t\t\t\t\t<a href=\"./memberlist.php?sk=c&amp;sd=a&amp;form=postform&amp;field=username_list&amp;select_single=&amp;username=a&amp;icq=&amp;aim=&amp;yahoo=&amp;msn=&amp;search_group_id=0&amp;joined_select=lt&amp;count_select=eq&amp;joined=&amp;count=&amp;mode=searchuser&amp;first_char=i#memberlist\">I</a>&nbsp;
+        \n\t\t\t\t\n\t\t\t\t\t<a href=\"./memberlist.php?sk=c&amp;sd=a&amp;form=postform&amp;field=username_list&amp;select_single=&amp;username=a&amp;icq=&amp;aim=&amp;yahoo=&amp;msn=&amp;search_group_id=0&amp;joined_select=lt&amp;count_select=eq&amp;joined=&amp;count=&amp;mode=searchuser&amp;first_char=j#memberlist\">J</a>&nbsp;
+        \n\t\t\t\t\n\t\t\t\t\t<a href=\"./memberlist.php?sk=c&amp;sd=a&amp;form=postform&amp;field=username_list&amp;select_single=&amp;username=a&amp;icq=&amp;aim=&amp;yahoo=&amp;msn=&amp;search_group_id=0&amp;joined_select=lt&amp;count_select=eq&amp;joined=&amp;count=&amp;mode=searchuser&amp;first_char=k#memberlist\">K</a>&nbsp;
+        \n\t\t\t\t\n\t\t\t\t\t<a href=\"./memberlist.php?sk=c&amp;sd=a&amp;form=postform&amp;field=username_list&amp;select_single=&amp;username=a&amp;icq=&amp;aim=&amp;yahoo=&amp;msn=&amp;search_group_id=0&amp;joined_select=lt&amp;count_select=eq&amp;joined=&amp;count=&amp;mode=searchuser&amp;first_char=l#memberlist\">L</a>&nbsp;
+        \n\t\t\t\t\n\t\t\t\t\t<a href=\"./memberlist.php?sk=c&amp;sd=a&amp;form=postform&amp;field=username_list&amp;select_single=&amp;username=a&amp;icq=&amp;aim=&amp;yahoo=&amp;msn=&amp;search_group_id=0&amp;joined_select=lt&amp;count_select=eq&amp;joined=&amp;count=&amp;mode=searchuser&amp;first_char=m#memberlist\">M</a>&nbsp;
+        \n\t\t\t\t\n\t\t\t\t\t<a href=\"./memberlist.php?sk=c&amp;sd=a&amp;form=postform&amp;field=username_list&amp;select_single=&amp;username=a&amp;icq=&amp;aim=&amp;yahoo=&amp;msn=&amp;search_group_id=0&amp;joined_select=lt&amp;count_select=eq&amp;joined=&amp;count=&amp;mode=searchuser&amp;first_char=n#memberlist\">N</a>&nbsp;
+        \n\t\t\t\t\n\t\t\t\t\t<a href=\"./memberlist.php?sk=c&amp;sd=a&amp;form=postform&amp;field=username_list&amp;select_single=&amp;username=a&amp;icq=&amp;aim=&amp;yahoo=&amp;msn=&amp;search_group_id=0&amp;joined_select=lt&amp;count_select=eq&amp;joined=&amp;count=&amp;mode=searchuser&amp;first_char=o#memberlist\">O</a>&nbsp;
+        \n\t\t\t\t\n\t\t\t\t\t<a href=\"./memberlist.php?sk=c&amp;sd=a&amp;form=postform&amp;field=username_list&amp;select_single=&amp;username=a&amp;icq=&amp;aim=&amp;yahoo=&amp;msn=&amp;search_group_id=0&amp;joined_select=lt&amp;count_select=eq&amp;joined=&amp;count=&amp;mode=searchuser&amp;first_char=p#memberlist\">P</a>&nbsp;
+        \n\t\t\t\t\n\t\t\t\t\t<a href=\"./memberlist.php?sk=c&amp;sd=a&amp;form=postform&amp;field=username_list&amp;select_single=&amp;username=a&amp;icq=&amp;aim=&amp;yahoo=&amp;msn=&amp;search_group_id=0&amp;joined_select=lt&amp;count_select=eq&amp;joined=&amp;count=&amp;mode=searchuser&amp;first_char=q#memberlist\">Q</a>&nbsp;
+        \n\t\t\t\t\n\t\t\t\t\t<a href=\"./memberlist.php?sk=c&amp;sd=a&amp;form=postform&amp;field=username_list&amp;select_single=&amp;username=a&amp;icq=&amp;aim=&amp;yahoo=&amp;msn=&amp;search_group_id=0&amp;joined_select=lt&amp;count_select=eq&amp;joined=&amp;count=&amp;mode=searchuser&amp;first_char=r#memberlist\">R</a>&nbsp;
+        \n\t\t\t\t\n\t\t\t\t\t<a href=\"./memberlist.php?sk=c&amp;sd=a&amp;form=postform&amp;field=username_list&amp;select_single=&amp;username=a&amp;icq=&amp;aim=&amp;yahoo=&amp;msn=&amp;search_group_id=0&amp;joined_select=lt&amp;count_select=eq&amp;joined=&amp;count=&amp;mode=searchuser&amp;first_char=s#memberlist\">S</a>&nbsp;
+        \n\t\t\t\t\n\t\t\t\t\t<a href=\"./memberlist.php?sk=c&amp;sd=a&amp;form=postform&amp;field=username_list&amp;select_single=&amp;username=a&amp;icq=&amp;aim=&amp;yahoo=&amp;msn=&amp;search_group_id=0&amp;joined_select=lt&amp;count_select=eq&amp;joined=&amp;count=&amp;mode=searchuser&amp;first_char=t#memberlist\">T</a>&nbsp;
+        \n\t\t\t\t\n\t\t\t\t\t<a href=\"./memberlist.php?sk=c&amp;sd=a&amp;form=postform&amp;field=username_list&amp;select_single=&amp;username=a&amp;icq=&amp;aim=&amp;yahoo=&amp;msn=&amp;search_group_id=0&amp;joined_select=lt&amp;count_select=eq&amp;joined=&amp;count=&amp;mode=searchuser&amp;first_char=u#memberlist\">U</a>&nbsp;
+        \n\t\t\t\t\n\t\t\t\t\t<a href=\"./memberlist.php?sk=c&amp;sd=a&amp;form=postform&amp;field=username_list&amp;select_single=&amp;username=a&amp;icq=&amp;aim=&amp;yahoo=&amp;msn=&amp;search_group_id=0&amp;joined_select=lt&amp;count_select=eq&amp;joined=&amp;count=&amp;mode=searchuser&amp;first_char=v#memberlist\">V</a>&nbsp;
+        \n\t\t\t\t\n\t\t\t\t\t<a href=\"./memberlist.php?sk=c&amp;sd=a&amp;form=postform&amp;field=username_list&amp;select_single=&amp;username=a&amp;icq=&amp;aim=&amp;yahoo=&amp;msn=&amp;search_group_id=0&amp;joined_select=lt&amp;count_select=eq&amp;joined=&amp;count=&amp;mode=searchuser&amp;first_char=w#memberlist\">W</a>&nbsp;
+        \n\t\t\t\t\n\t\t\t\t\t<a href=\"./memberlist.php?sk=c&amp;sd=a&amp;form=postform&amp;field=username_list&amp;select_single=&amp;username=a&amp;icq=&amp;aim=&amp;yahoo=&amp;msn=&amp;search_group_id=0&amp;joined_select=lt&amp;count_select=eq&amp;joined=&amp;count=&amp;mode=searchuser&amp;first_char=x#memberlist\">X</a>&nbsp;
+        \n\t\t\t\t\n\t\t\t\t\t<a href=\"./memberlist.php?sk=c&amp;sd=a&amp;form=postform&amp;field=username_list&amp;select_single=&amp;username=a&amp;icq=&amp;aim=&amp;yahoo=&amp;msn=&amp;search_group_id=0&amp;joined_select=lt&amp;count_select=eq&amp;joined=&amp;count=&amp;mode=searchuser&amp;first_char=y#memberlist\">Y</a>&nbsp;
+        \n\t\t\t\t\n\t\t\t\t\t<a href=\"./memberlist.php?sk=c&amp;sd=a&amp;form=postform&amp;field=username_list&amp;select_single=&amp;username=a&amp;icq=&amp;aim=&amp;yahoo=&amp;msn=&amp;search_group_id=0&amp;joined_select=lt&amp;count_select=eq&amp;joined=&amp;count=&amp;mode=searchuser&amp;first_char=z#memberlist\">Z</a>&nbsp;
+        \n\t\t\t\t\n\t\t\t\t\t<a href=\"./memberlist.php?sk=c&amp;sd=a&amp;form=postform&amp;field=username_list&amp;select_single=&amp;username=a&amp;icq=&amp;aim=&amp;yahoo=&amp;msn=&amp;search_group_id=0&amp;joined_select=lt&amp;count_select=eq&amp;joined=&amp;count=&amp;mode=searchuser&amp;first_char=other#memberlist\">Other</a>&nbsp;
+        \n\t\t\t\t\n\t\t\t\t</strong>\n\t\t\t\t</li>\n\t\t\t\t<li class=\"rightside
+        pagination\">\n\t\t\t\t\t0 users &bull; \n\t\t\t\t\tPage <strong>1</strong>
+        of <strong>1</strong>\n\t\t\t\t</li>\n\t\t\t</ul>\n\n\t\t\t<span class=\"corners-bottom\"><span></span></span></div>\n\t\t</div>\n\t\n\t<div
+        class=\"forumbg forumbg-table\">\n\t\t<div class=\"inner\"><span class=\"corners-top\"><span></span></span>\n\n\t\t<table
+        class=\"table1\" cellspacing=\"1\" id=\"memberlist\">\n\t\t<thead>\n\t\t<tr>\n\t\t\t<th
+        class=\"name\"><span class=\"rank-img\"><a href=\"./memberlist.php?form=postform&amp;field=username_list&amp;select_single=&amp;username=a&amp;icq=&amp;aim=&amp;yahoo=&amp;msn=&amp;search_group_id=0&amp;joined_select=lt&amp;count_select=eq&amp;joined=&amp;count=&amp;mode=searchuser&amp;sk=m&amp;sd=a\">Rank</a></span><a
+        href=\"./memberlist.php?form=postform&amp;field=username_list&amp;select_single=&amp;username=a&amp;icq=&amp;aim=&amp;yahoo=&amp;msn=&amp;search_group_id=0&amp;joined_select=lt&amp;count_select=eq&amp;joined=&amp;count=&amp;mode=searchuser&amp;sk=a&amp;sd=a\">Username</a></th>\n\t\t\t<th
+        class=\"posts\"><a href=\"./memberlist.php?form=postform&amp;field=username_list&amp;select_single=&amp;username=a&amp;icq=&amp;aim=&amp;yahoo=&amp;msn=&amp;search_group_id=0&amp;joined_select=lt&amp;count_select=eq&amp;joined=&amp;count=&amp;mode=searchuser&amp;sk=d&amp;sd=a#memberlist\">Posts</a></th>\n\t\t\t<th
+        class=\"info\"><a href=\"./memberlist.php?form=postform&amp;field=username_list&amp;select_single=&amp;username=a&amp;icq=&amp;aim=&amp;yahoo=&amp;msn=&amp;search_group_id=0&amp;joined_select=lt&amp;count_select=eq&amp;joined=&amp;count=&amp;mode=searchuser&amp;sk=f&amp;sd=a#memberlist\">Website</a>,
+        <a href=\"./memberlist.php?form=postform&amp;field=username_list&amp;select_single=&amp;username=a&amp;icq=&amp;aim=&amp;yahoo=&amp;msn=&amp;search_group_id=0&amp;joined_select=lt&amp;count_select=eq&amp;joined=&amp;count=&amp;mode=searchuser&amp;sk=b&amp;sd=a\">Location</a></th>\n\t\t\t<th
+        class=\"joined\"><a href=\"./memberlist.php?form=postform&amp;field=username_list&amp;select_single=&amp;username=a&amp;icq=&amp;aim=&amp;yahoo=&amp;msn=&amp;search_group_id=0&amp;joined_select=lt&amp;count_select=eq&amp;joined=&amp;count=&amp;mode=searchuser&amp;sk=c&amp;sd=d#memberlist\">Joined</a></th>\n\t\t\t\n\t\t</tr>\n\t\t</thead>\n\t\t<tbody>\n\t\n\t<tr
+        class=\"bg1\">\n\t\t<td colspan=\"4\">No members found for this search criterion.</td>\n\t</tr>\n\t\t\n\t</tbody>\n\t</table>\n\n\t<span
+        class=\"corners-bottom\"><span></span></span></div>\n</div>\n\n\n<fieldset
+        class=\"display-actions\">\n\t<input type=\"submit\" name=\"submit\" value=\"Select
+        marked\" class=\"button2\" />\n\t<div><a href=\"#\" onclick=\"marklist('results',
+        'user', true); return false;\">Mark all</a> &bull; <a href=\"#\" onclick=\"marklist('results',
+        'user', false); return false;\">Unmark all</a></div>\n</fieldset>\n\n</form>\n<form
+        method=\"post\" id=\"sort-results\" action=\"./memberlist.php?sk=c&amp;sd=a&amp;form=postform&amp;field=username_list&amp;select_single=&amp;username=a&amp;icq=&amp;aim=&amp;yahoo=&amp;msn=&amp;search_group_id=0&amp;joined_select=lt&amp;count_select=eq&amp;joined=&amp;count=&amp;mode=searchuser\">\n\n\n</form>\n\n<hr
+        />\n\n<ul class=\"linklist\">\n\t<li class=\"rightside pagination\">0 users
+        &bull; Page <strong>1</strong> of <strong>1</strong></li>\n</ul>\n\n</div>\n\n\t<div
+        class=\"copyright\">Powered by <a href=\"http://www.phpbb.com/\">phpBB</a>&reg;
+        Forum Software &copy; phpBB Group\n\t\t\n\t</div>\n</div>\n\n</body>\n</html>"
+    http_version: 
+  recorded_at: Wed, 05 Aug 2015 06:02:56 GMT
+recorded_with: VCR 2.9.3

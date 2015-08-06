@@ -42,6 +42,9 @@ VCR.configure do |config|
     i.response.body.force_encoding('UTF-8')
   end
 
+  config.filter_sensitive_data('<PASSWORD>') { ENV['FORUM_BOT_PASSWORD'] }
+  config.filter_sensitive_data('<USERNAME>') { ENV['FORUM_BOT_ACCOUNT'] }
+
   config.cassette_library_dir = "#{::Rails.root}/spec/fixtures/vcr_cassettes"
   config.hook_into :webmock # or :fakeweb
   config.configure_rspec_metadata!

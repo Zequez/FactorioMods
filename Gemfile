@@ -66,6 +66,7 @@ gem 'cancancan'                    # Authorization adapter
 gem 'reverse_markdown'
 gem 'nokogiri'                     # To parse HTML, for the scraper
 gem 'typhoeus'                     # Concurrent HTTP requests handler
+gem 'http'
 
 # Testing
 #######################
