@@ -36,8 +36,8 @@ class Author < ActiveRecord::Base
   #################
 
   validates :slug, uniqueness: true
-  validates :forum_name, uniqueness: true
-  validates :name, presence: true, format: { with: /[a-z]/ }
+  validates :forum_name, allow_blank: true, uniqueness: true
+  validates :name, presence: true, format: { with: /[a-z]/i }
 
   private
 

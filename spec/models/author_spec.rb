@@ -41,6 +41,17 @@ describe Author do
       expect(build :author, forum_name: 'rsarsa').to be_invalid
     end
 
+    it 'should allow an empty #forum_name' do
+      author = build :author, forum_name: ''
+      expect(author).to be_valid
+    end
+
+    it 'should not validate uniqueness with an empty forum name' do
+      create :author, forum_name: ''
+      author = build :author, forum_name: ''
+      expect(author).to be_valid
+    end
+
     it 'should not allow an empty #name' do
       author = build :author, name: ''
       expect(author).to be_invalid
@@ -61,6 +72,12 @@ describe Author do
 
     it 'the name should have at least a letter' do
       author = build :author, name: '-0-a-0-'
+      expect(author).to be_valid
+      expect(author.errors[:name]).to be_empty
+    end
+    
+    it 'should allow a single uppercase letter' do
+      author = build :author, name: '-0-A-0-'
       expect(author).to be_valid
       expect(author.errors[:name]).to be_empty
     end
