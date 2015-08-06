@@ -167,6 +167,14 @@ class ModDecorator < Draper::Decorator
     'factoriomods://' + Base64.strict_encode64(json_mod).to_s
   end
 
+  def form_title
+    if mod.new_record?
+      I18n.t('mods.new.new')
+    else
+      h.raw(I18n.t('mods.new.edit') + ' ' + h.link_to(mod.name, mod))
+    end
+  end
+
   ### Download button
   ###################
 

@@ -1,11 +1,6 @@
 - title @mod.new_record? ? t('.title') : t('.title_edit', name: @mod.name)
 .mods-edit
-  - if @mod.new_record?
-    %h2= t('.new')
-  - else
-    %h2
-      = t('.edit')
-      = link_to @mod.name, @mod
+  %h1= @mod.decorate.form_title
   = semantic_form_for @mod do |f|
     = f.inputs do
       = f.input :name
