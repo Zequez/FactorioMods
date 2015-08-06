@@ -168,4 +168,27 @@ describe AuthorsUsersSeparationUpdater do
     expect(a2.mods).to match_array [m1]
     expect(a3.mods).to match_array [m3]
   end
+
+  it 'should not mess up with newly created AuthorsMod' do
+    # This will ensure us that IDs start at 1
+    DatabaseCleaner.strategy = :truncation
+    DatabaseCleaner.clean
+
+    u1 = create :user, name: 'Potato'
+    u2 = create :user, name: 'Galaxy'
+
+    # We create and destroy a new author so the next one starts with ID=2
+    # and we can break this thing!
+    Author.create!(name: 'Whatever').destroy!
+
+    m1 = create :mod, owner: nil, authors: []
+
+    create :authors_mod, mod_id: m1.id, author_id: u1.id
+
+    updater.run
+
+    expect(Author.count).to eq 1
+    a1 = Author.last
+    expect(a1.mods).to match_array [m1]
+  end
 end
