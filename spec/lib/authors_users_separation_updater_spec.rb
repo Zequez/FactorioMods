@@ -102,6 +102,12 @@ describe AuthorsUsersSeparationUpdater do
     expect(User.find_by_id u2.id).to eq u2
   end
 
+  it "should not create an author for a user that doesn't have any associated mod" do
+    create :user, name: 'Potato'
+    updater.run
+    expect(Author.all).to be_empty
+  end
+
   it 'should associate the user and the author if the user is owner of the mod' do
     u1 = create :user, name: 'Potato'
     u2 = create :user, name: 'Galaxy'
