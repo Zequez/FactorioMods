@@ -146,8 +146,8 @@ describe AuthorsUsersSeparationUpdater do
     expect(a2.user).to eq nil
     expect(a3.user).to eq nil
 
-    expect(a1.mods).to eq [m1, m2]
-    expect(a2.mods).to eq [m1]
-    expect(a3.mods).to eq [m3]
+    expect(a1.mods).to match_array [m1, m2]
+    expect(a2.mods).to match_array [m1]
+    expect(a3.mods).to match_array [m3]
   end
 end
