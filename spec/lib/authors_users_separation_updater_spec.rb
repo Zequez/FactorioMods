@@ -117,11 +117,11 @@ describe AuthorsUsersSeparationUpdater do
     create :authors_mod, mod_id: m2.id, author_id: u1.id
     create :authors_mod, mod_id: m3.id, author_id: u3.id
 
-    expect(User.pluck(:name)).to eq %w{Potato Galaxy Simulator}
-    expect(Author.pluck(:name)).to eq []
+    expect(User.pluck(:name)).to match_array %w{Potato Galaxy Simulator}
+    expect(Author.pluck(:name)).to match_array []
     updater.run
-    expect(User.pluck(:name)).to eq %w{Potato Galaxy}
-    expect(Author.pluck(:name)).to eq %w{Potato Galaxy Simulator}
+    expect(User.pluck(:name)).to match_array %w{Potato Galaxy}
+    expect(Author.pluck(:name)).to match_array %w{Potato Galaxy Simulator}
 
     m1.reload
     m2.reload
