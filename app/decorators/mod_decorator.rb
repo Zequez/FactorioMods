@@ -57,7 +57,7 @@ class ModDecorator < Draper::Decorator
 
     mod.authors.map do |author, i|
       link = h.link_to(author.name, author)
-      if author.user_id == mod.author_id and mod.authors.size > 1
+      if mod.author_id and (author.user_id == mod.author_id) and mod.authors.size > 1
         maintainer = h.t('helpers.mods.maintainer')
         link + " (#{maintainer})"
       else

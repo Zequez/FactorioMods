@@ -38,6 +38,13 @@ describe ModDecorator do
       mod.reload
       expect(mod.decorate.authors_links_list).to eq '<a href="/authors/au2">Au2</a>, <a href="/authors/au1">Au1</a>, <a href="/authors/au0">Au0</a>'
     end
+
+    it 'should not add maintainer if both the author user and the mod owner are nil' do
+      authors = 3.times.map{ |i| create :author, name: "Au#{i}" }
+      create :user
+      mod = create_decorated :mod, authors: authors, owner: nil
+      expect(mod.authors_links_list).to eq '<a href="/authors/au0">Au0</a>, <a href="/authors/au1">Au1</a>, <a href="/authors/au2">Au2</a>'
+    end
   end
 
   describe '#forum_link' do
