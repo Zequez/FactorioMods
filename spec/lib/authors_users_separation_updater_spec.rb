@@ -1,6 +1,11 @@
 describe AuthorsUsersSeparationUpdater do
   subject(:updater){ AuthorsUsersSeparationUpdater.new }
 
+  # This will ensure us that IDs start at 1
+  before :each do
+    DatabaseCleaner.clean_with(:truncation)
+  end
+
   # users and mods are currently associated with the authors_mods table
   # now the authors_mods table is used by the authors table instead of the users
 
@@ -170,10 +175,6 @@ describe AuthorsUsersSeparationUpdater do
   end
 
   it 'should not mess up with newly created AuthorsMod' do
-    # This will ensure us that IDs start at 1
-    DatabaseCleaner.strategy = :truncation
-    DatabaseCleaner.clean
-
     u1 = create :user, name: 'Potato'
     u2 = create :user, name: 'Galaxy'
 
