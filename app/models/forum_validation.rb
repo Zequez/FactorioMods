@@ -22,7 +22,7 @@ class ForumValidation < ActiveRecord::Base
     if bot.authenticated? || authenticate_bot
       if user_forum_id = bot.get_user_id(author.forum_name)
         this_pm_sent = bot.send_pm(user_forum_id, I18n.t('forum_validations.pm.subject'), pm_message)
-        self.pm_sent = pm_sent || this_pm_sent
+        update_column(:pm_sent, true) if this_pm_sent
         this_pm_sent
       else
         # User that we're trying to send a PM to wasn't found. This shouldn't
@@ -46,16 +46,16 @@ class ForumValidation < ActiveRecord::Base
     part_1 = I18n.t 'forum_validations.pm.message',
       author_name: author.forum_name,
       email: user.email,
-      url: Rails.application.routes.url_helpers.validate_forum_validation_url(self, vid: vid)
+      url: Rails.application.routes.url_helpers.update_forum_validation_url(self, vid: vid)
 
     mods_list = author.mods.where(owner: nil).map do |mod|
       url = Rails.application.routes.url_helpers.mod_url(mod)
       "- [url=#{url}]#{mod.name}[/url]"
-    end.join('\n')
+    end.join("\n")
 
     part_2 = I18n.t 'forum_validations.pm.notice'
 
-    part_1 + "\n" + mods_list + "\n" + part_2
+    part_1 + "\n\n" + mods_list + "\n\n" + part_2
   end
 
   def self.bot
