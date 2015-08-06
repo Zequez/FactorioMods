@@ -55,11 +55,11 @@ describe ForumValidation, type: :model do
       @u = create :user, name: 'Potato'
       @a = create :author, name: 'Salatto', forum_name: 'Salatto' # Italian salad
       @fv = create :forum_validation, user: @u, author: @a
-      @m1 = create :mod, authors: [@a], owner: nil, name: 'lalalalalalalala'
-      @m2 = create :mod, authors: [@a], owner: nil, name: 'lelelelelelelele'
+      @m1 = create :mod, authors: [@a], owner: nil, name: 'lalala'
+      @m2 = create :mod, authors: [@a], owner: nil, name: 'lelele'
     end
 
-    it 'should create a new forum bot if not logged in' do
+    it 'should create a new forum bot if not authenticated' do
       bot = double('ForumBot')
       expect(ForumBot).to receive(:new).once.and_return(bot)
 
@@ -67,7 +67,7 @@ describe ForumValidation, type: :model do
       expect(bot).to receive(:authenticate).with(ENV['FORUM_BOT_ACCOUNT'], ENV['FORUM_BOT_PASSWORD']).and_return true
       expect(bot).to receive(:get_user_id).with('Salatto').and_return(1234)
       expect(bot).to receive(:send_pm)
-        .with(1234, /validation/, %r{/forum-validations/#{@fv.id}/validate\?vid=#{@fv.vid}.*lelelelelelelele.*lalalalalalalala}m)
+        .with(1234, /validation/, %r{/forum-validations/#{@fv.id}/validate\?vid=#{@fv.vid}.*(lalala.*lelele|lelele.*lalala)}m)
         .and_return(true)
 
       expect(@fv.send_pm).to eq true
@@ -82,7 +82,7 @@ describe ForumValidation, type: :model do
       expect(bot).to receive(:authenticate).with(ENV['FORUM_BOT_ACCOUNT'], ENV['FORUM_BOT_PASSWORD']).and_return true
       expect(bot).to receive(:get_user_id).twice.with('Salatto').and_return(1234)
       expect(bot).to receive(:send_pm).twice
-        .with(1234, /validation/, %r{/forum-validations/#{@fv.id}/validate\?vid=#{@fv.vid}.*lelelelelelelele.*lalalalalalalala}m)
+        .with(1234, /validation/, %r{/forum-validations/#{@fv.id}/validate\?vid=#{@fv.vid}.*(lalala.*lelele|lelele.*lalala)}m)
         .and_return(true)
 
       expect(@fv.send_pm).to eq true
@@ -113,7 +113,7 @@ describe ForumValidation, type: :model do
       expect(bot).to receive(:authenticate).with(ENV['FORUM_BOT_ACCOUNT'], ENV['FORUM_BOT_PASSWORD']).and_return true
       expect(bot).to receive(:get_user_id).with('Salatto').and_return(1234)
       expect(bot).to receive(:send_pm)
-        .with(1234, /validation/, %r{/forum-validations/#{@fv.id}/validate\?vid=#{@fv.vid}.*lelelelelelelele.*lalalalalalalala}m)
+        .with(1234, /validation/, %r{/forum-validations/#{@fv.id}/validate\?vid=#{@fv.vid}.*(lalala.*lelele|lelele.*lalala)}m)
         .and_return(false)
 
       expect(@fv.send_pm).to eq false
@@ -126,7 +126,7 @@ describe ForumValidation, type: :model do
       expect(bot).to receive(:authenticated?).and_return true
       expect(bot).to receive(:get_user_id).with('Salatto').and_return(1234)
       expect(bot).to receive(:send_pm)
-        .with(1234, /validation/, %r{/forum-validations/#{@fv.id}/validate\?vid=#{@fv.vid}.*lelelelelelelele.*lalalalalalalala}m)
+        .with(1234, /validation/, %r{/forum-validations/#{@fv.id}/validate\?vid=#{@fv.vid}.*(lalala.*lelele|lelele.*lalala)}m)
         .and_return(true)
 
       expect(@fv.send_pm).to eq true

@@ -155,7 +155,7 @@ describe ForumValidationsController, type: :controller do
     context 'logged in user' do
       it 'should just render the new form if it can be validated' do
         author = create :author, forum_name: 'Potato', name: 'Potato'
-        sign_in create(:user, forum_name: 'Potato')
+        sign_in create(:user, name: 'Potato')
         get :new
         expect(assigns(:forum_validation).author).to eq author
         expect(response).to render_template :new
@@ -163,7 +163,7 @@ describe ForumValidationsController, type: :controller do
 
       it 'should redirect to the root if the user is already validated' do
         author = create :author, forum_name: 'Potato', name: 'Potato'
-        user = create :user, forum_name: 'Potato'
+        user = create :user, name: 'Potato'
         create :forum_validation, author: author, user: user, validated: true
         sign_in user
         get :new
@@ -172,7 +172,7 @@ describe ForumValidationsController, type: :controller do
 
       it 'should redirect to the forum_validations#show if the user has a pending validation' do
         author = create :author, forum_name: 'Potato', name: 'Potato'
-        user = create :user, forum_name: 'Potato'
+        user = create :user, name: 'Potato'
         fv = create :forum_validation, author: author, user: user, validated: false
         sign_in user
         get :new
@@ -183,7 +183,7 @@ describe ForumValidationsController, type: :controller do
     context 'logged out user' do
       it 'should redirect to login form' do
         create :author, forum_name: 'Potato', name: 'Potato'
-        create :user, forum_name: 'Potato'
+        create :user, name: 'Potato'
         get :new
         expect(response).to have_http_status :redirect
         expect(response.location).to match new_user_session_path

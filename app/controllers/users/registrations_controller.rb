@@ -25,7 +25,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # end
 
   def after_sign_up_path_for(user)
-    if user.forum_name.present? and Author.find_for_forum_validation(user.forum_name)
+    if Author.find_for_forum_validation(user.name)
       new_forum_validation_path
     else
       super(user)

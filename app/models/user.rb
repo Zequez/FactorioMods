@@ -10,7 +10,7 @@ class User < ActiveRecord::Base
 
   friendly_id :name, use: [:slugged, :finders]
 
-  auto_strip_attributes :forum_name, squish: true, nullify: false
+  auto_strip_attributes :name, squish: true, nullify: false
 
   has_many :mods, dependent: :nullify, foreign_key: :author_id
   has_many :owned_mods, class_name: 'Mod', foreign_key: :author_id, dependent: :nullify # We'll change it to User#owner_id eventually
@@ -40,10 +40,10 @@ class User < ActiveRecord::Base
   ### Validations
   #################
 
-  # validates :name, presence: true,
-  #                  format: { with: /\A[[:alnum:]\-_\. ]+\Z/i },
-  #                  uniqueness: { case_sensitive: false },
-  #                  length: { minimum: 2, maximum: 50 }
+  validates :name, presence: true,
+                   format: { with: /\A[[:alnum:]\-_\. ]+\Z/i },
+                   uniqueness: { case_sensitive: false },
+                   length: { minimum: 2, maximum: 50 }
 
   validates :forum_name, allow_blank: true, uniqueness: { case_sensitive: false }
 

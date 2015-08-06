@@ -10,7 +10,7 @@ feature 'New user forum account validation' do
     visit new_user_registration_path
     within '#new_registration' do
       fill_in 'user_email', with: 'potato@universe.com'
-      fill_in 'user_forum_name', with: 'FactorioModsBot'
+      fill_in 'user_name', with: 'FactorioModsBot'
       fill_in 'user_password', with: '12345678'
       find('#user_submit_action input').click
     end
@@ -19,7 +19,7 @@ feature 'New user forum account validation' do
 
     user = User.last
     expect(user.email).to eq 'potato@universe.com'
-    expect(user.forum_name).to eq 'FactorioModsBot'
+    expect(user.name).to eq 'FactorioModsBot'
 
     VCR.use_cassette("features/forum_validation", record: :new_episodes) do
       find('#forum_validation_submit_action input').click
@@ -49,7 +49,7 @@ feature 'New user forum account validation' do
     visit new_user_registration_path
     within '#new_registration' do
       fill_in 'user_email', with: 'potato@universe.com'
-      fill_in 'user_forum_name', with: 'FactorioModsBot'
+      fill_in 'user_name', with: 'FactorioModsBot'
       fill_in 'user_password', with: '12345678'
       find('#user_submit_action input').click
     end

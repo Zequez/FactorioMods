@@ -40,7 +40,7 @@ class ForumValidationsController < ApplicationController
         redirect_to forum_validation_url(current_user.forum_validation)
       end
     else
-      @forum_validation.author = Author.find_for_forum_validation(current_user.forum_name)
+      @forum_validation.author = Author.find_for_forum_validation(current_user.name)
     end
   end
 
