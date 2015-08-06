@@ -87,3 +87,7 @@ en:
     placeholders:
       mod:
         authors_list: 'Author1, Author2, Author3, etc'
+
+    actions:
+      forum_validation:
+        create: Send me a PM

@@ -67,6 +67,13 @@ module ApplicationHelper
     @title = page_title_section.to_s + @title
   end
 
+  def content_layout(type = nil) # :wide / :slim / :none
+    if type and not [:wide, :slim, :none].include?(type)
+      raise "#{type} given, :wide, :slim, or :none available"
+    end
+    @content_layout ||= type || :slim
+  end
+
   ### Urls helpers:
   ####################
 

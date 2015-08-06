@@ -1,12 +1,16 @@
+- title 'Forum validation'
+
 %h1 Forum account validation
 
-The #{@forum_validation.author.forum_name} forum account has the following mods associated:
+%p
+  The #{@forum_validation.author.forum_name} forum account has the following mods associated:
 
-- @forum_validation.author.mods.each do |mod|
-  = mod.name
+%ul
+  - @forum_validation.author.mods.each do |mod|
+    %li= link_to mod.name, mod
 
 = semantic_form_for @forum_validation do |f|
   = f.inputs do
     = f.input :author_id, as: :hidden
   = f.actions do
-    = f.action :submit
+    = f.action :submit, data: { disable_with: 'Sending...' }

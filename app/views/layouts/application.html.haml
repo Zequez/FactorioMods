@@ -17,7 +17,7 @@
             .flash{class: key}
               .flash-value= value
 
-        .content
+        .content{class: "content-#{content_layout}"}
           = yield
       .footer-spacer
 

@@ -34,16 +34,24 @@ $susy: (gutters: $gutterSize*1.25)
 
 .content
   +span(full)
+  padding: 0
+  margin-bottom: rhythm()
   border-radius: $border-radius
   background: $color-white
-  margin-bottom: rhythm()
-  padding: space()
+
   +pie-clearfix
-  code
-    font-family: monospace
-    background: rgba(#000, 0.1)
-    border-radius: 2px
-    vertical-align: bottom
+
+//.content-wide
+
+.content-slim
+  +pad(2 2 of 12 no-gutters)
+  h1
+    text-align: center
+    margin: $base-line-height 0
+
+.content-none
+  background: none
+
 
   // +clearfix
 

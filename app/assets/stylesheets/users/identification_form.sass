@@ -1,18 +1,5 @@
-.devise
-  .content
-    +pad(3 3 of 12)
-
-    h2
-      margin-bottom: $base-line-height
-      +font-xx-larger
-      font-weight: bold
-      text-align: center
-
-    .devise-links
-      text-align: right
-
 .identification-form
-  h2 label
+  h1 label
     cursor: pointer
     padding: 0 10px
     border-radius: 2px
@@ -34,7 +21,7 @@
   #identify_login
     display: none
     &:checked
-      & ~ h2 label[for="identify_login"]
+      & ~ h1 label[for="identify_login"]
         @extend %checked-label
       & ~ #new_session
         display: block
@@ -44,7 +31,7 @@
   #identify_register
     display: none
     &:checked
-      & ~ h2 label[for="identify_register"]
+      & ~ h1 label[for="identify_register"]
         @extend %checked-label
       & ~ #new_session
         display: none

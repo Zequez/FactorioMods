@@ -50,7 +50,7 @@ class ApplicationController < ActionController::Base
   def configure_devise_permitted_parameters
     devise_parameter_sanitizer.for(:sign_up).push(:email, :name)
     devise_parameter_sanitizer.for(:sign_in).push(:login)
-    devise_parameter_sanitizer.for(:account_update)
+    devise_parameter_sanitizer.for(:account_update) { |u| u.permit :password, :password_confirmation, :current_password }
   end
 
   def after_sign_in_path_for(resource)

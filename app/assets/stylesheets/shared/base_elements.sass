@@ -1,9 +1,12 @@
 +border-box-sizing
 
 h1
-  +font-xxx-larger
+  +font-xx-larger
+  margin-bottom: $base-line-height
+  font-weight: bold
 h2
   +font-larger
+  font-weight: bold
 h3
   +font-larger
 
@@ -22,3 +25,19 @@ a
 body
   font-family: "Titillium Web", sans-serif
   color: $color-black
+
+code
+  font-family: monospace
+  background: rgba(#000, 0.1)
+  border-radius: 2px
+  vertical-align: bottom
+
+p, ul, ol
+  margin-bottom: rhythm()
+
+ul.dash-list
+  li
+    padding-left: space()
+    &:before
+      content: "»"
+      margin-right: space()

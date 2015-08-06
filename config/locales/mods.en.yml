@@ -13,6 +13,8 @@ en:
       title_edit: Edit %{name} # We use the same view
       edit: Edit
       new: Create new mod
+    
+    form:
       add_version: Add version
 
     show:

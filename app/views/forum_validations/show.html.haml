@@ -1,15 +1,20 @@
+- title 'Forum validation'
+  
 - unless @forum_validation.pm_sent?
   = raw I18n.t('forum_validations.show.pm_not_sent')
 
 %h1 Forum account validation
 
-- if @forum_validation.validated?
-  = t '.validated'
-- else
-  = raw t '.not_validated'
+%p
+  - if @forum_validation.validated?
+    = t '.validated'
+  - else
+    = raw t '.not_validated'
 
 %h2 Mods associated:
 
-- @forum_validation.author.mods.each do |mod|
-  = link_to mod.name, mod
-  = link_to '[Edit]', [:edit, mod]
+%ul.dash-list
+  %li
+    - @forum_validation.author.mods.each do |mod|
+      = link_to mod.name, mod
+      = link_to '[Edit]', [:edit, mod] if can?(:edit, mod)
