@@ -108,6 +108,18 @@ describe AuthorsUsersSeparationUpdater do
     expect(Author.all).to be_empty
   end
 
+  it 'should reset the authors #mods_count' do
+    u1 = create :user, name: 'Potato'
+    m1 = create :mod, owner: u1
+    create :authors_mod, mod_id: m1.id, author_id: u1.id
+
+    updater.run
+
+    a = Author.first
+    expect(a.name).to eq 'Potato'
+    expect(a.mods_count).to eq 1
+  end
+
   it 'should associate the user and the author if the user is owner of the mod' do
     u1 = create :user, name: 'Potato'
     u2 = create :user, name: 'Galaxy'
