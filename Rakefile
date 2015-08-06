@@ -45,3 +45,19 @@ task fill_info_json_name: :environment do
     end
   end
 end
+
+namespace :production_db do
+  desc 'Fetch real production DB from Heroku'
+  task :fetch do
+    Bundler.with_clean_env{ system 'heroku pg:backups capture' }
+    Bundler.with_clean_env{ system 'curl -o db/production.dump `heroku pg:backups public-url`' }
+  end
+
+  desc 'Import real production DB to postgres'
+  task import: ['db:drop', 'db:create'] do
+    config = Rails.configuration.database_configuration[Rails.env]
+    db_name = config['database']
+    username = config['username']
+    `pg_restore --verbose --clean --no-acl --no-owner -U #{username} -d #{db_name} db/production.dump`
+  end
+end
