@@ -85,7 +85,7 @@ Rails.application.routes.draw do
     resources :mods, path: '/', only: :index
   end
 
-  resources :forum_validations, path: 'forum-validations', only: [:show, :create] do
+  resources :forum_validations, path: 'forum-validations', only: [:new, :show, :create] do
     member do
       get '/validate', to: 'forum_validations#update'
     end

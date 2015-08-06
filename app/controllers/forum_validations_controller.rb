@@ -1,10 +1,15 @@
 class ForumValidationsController < ApplicationController
+  load_and_authorize_resource :forum_validation, except: :update
+
   def create
-    @forum_validation = ForumValidation.new resource_params
-    @forum_validation.save! # server error if it fails, shouldn't happen
-    pm_sent =  @forum_validation.send_pm
-    flash[:error] = I18n.t('forum_validations.flash.create.pm_error') unless pm_sent
-    redirect_to @forum_validation
+    if current_user.forum_validation
+      redirect_to current_user.forum_validation
+    else
+      @forum_validation.save! # server error if it fails, shouldn't happen
+      pm_sent =  @forum_validation.send_pm
+      flash[:error] = I18n.t('forum_validations.flash.create.pm_error') unless pm_sent
+      redirect_to @forum_validation
+    end
   end
 
   def update
@@ -27,9 +32,24 @@ class ForumValidationsController < ApplicationController
 
   end
 
+  def new
+    if current_user.forum_validation
+      if current_user.forum_validation.validated?
+        redirect_to root_url
+      else
+        redirect_to forum_validation_url(current_user.forum_validation)
+      end
+    else
+      @forum_validation.author = Author.find_for_forum_validation(current_user.forum_name)
+    end
+  end
+
   private
 
   def resource_params
-    params.require(:forum_validation).permit(:author_id, :user_id)
+    params
+      .require(:forum_validation)
+      .permit(:author_id)
+      .merge(user_id: (current_user.id if current_user))
   end
 end

@@ -42,9 +42,7 @@ feature 'Redirect to the previous page the user was after login' do
     expect(current_path).to eq '/users/register'
     within('#new_registration') do
       fill_in 'user_email', with: 'banana@split.com'
-      fill_in 'user_name', with: 'PotatoHead'
       fill_in 'user_password', with: 'rsarsarsa'
-      fill_in 'user_password_confirmation', with: 'rsarsarsa'
       click_button 'Register'
     end
     expect(current_path).to eq '/mods/hey'
@@ -56,20 +54,14 @@ feature 'Redirect to the previous page the user was after login' do
     click_link 'Register'
     expect(current_path).to eq '/users/register'
     within('#new_registration') do
-      fill_in 'user_email', with: 'banana@split.com'
-      fill_in 'user_name', with: 'INVALID USERNAME!!!'
+      fill_in 'user_email', with: 'bansplit.com'
       fill_in 'user_password', with: 'rsarsarsa'
-      fill_in 'user_password_confirmation', with: 'rsarsarsa'
-      fill_in 'user_email', with: 'banana@split.com'
       click_button 'Register'
     end
     expect(current_path).to eq '/users'
     within('#new_registration') do
       fill_in 'user_email', with: 'banana@split.com'
-      fill_in 'user_name', with: 'PotatoHead'
       fill_in 'user_password', with: 'rsarsarsa'
-      fill_in 'user_password_confirmation', with: 'rsarsarsa'
-      fill_in 'user_email', with: 'banana@split.com'
       click_button 'Register'
     end
     expect(current_path).to eq '/mods/hey'

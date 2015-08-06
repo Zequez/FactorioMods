@@ -18,6 +18,10 @@ class Author < ActiveRecord::Base
     find_by_slug normalize_friendly_id(name)
   end
 
+  def self.find_for_forum_validation(forum_name)
+    where.not(forum_name: '').find_by_slugged_name(forum_name)
+  end
+
   ### Callbacks
   #################
 

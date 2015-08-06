@@ -1,0 +1,12 @@
+%h1 Forum account validation
+
+The #{@forum_validation.author.forum_name} forum account has the following mods associated:
+
+- @forum_validation.author.mods.each do |mod|
+  = mod.name
+
+= semantic_form_for @forum_validation do |f|
+  = f.inputs do
+    = f.input :author_id, as: :hidden
+  = f.actions do
+    = f.action :submit

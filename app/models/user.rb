@@ -10,11 +10,14 @@ class User < ActiveRecord::Base
 
   friendly_id :name, use: [:slugged, :finders]
 
+  auto_strip_attributes :forum_name, squish: true, nullify: false
+
   has_many :mods, dependent: :nullify, foreign_key: :author_id
   has_many :owned_mods, class_name: 'Mod', foreign_key: :author_id, dependent: :nullify # We'll change it to User#owner_id eventually
   has_many :bookmarks
   has_many :bookmarked_mods, through: :bookmarks, source: :mod
   has_one :author
+  has_one :forum_validation
 
   ### Scopes
   #################
@@ -34,17 +37,15 @@ class User < ActiveRecord::Base
   ### Callbacks
   #################
 
-  before_validation do
-    self.name = name.strip.squeeze(' ')
-  end
-
   ### Validations
   #################
 
-  validates :name, presence: true,
-                   format: { with: /\A[[:alnum:]\-_\. ]+\Z/i },
-                   uniqueness: { case_sensitive: false },
-                   length: { minimum: 2, maximum: 50 }
+  # validates :name, presence: true,
+  #                  format: { with: /\A[[:alnum:]\-_\. ]+\Z/i },
+  #                  uniqueness: { case_sensitive: false },
+  #                  length: { minimum: 2, maximum: 50 }
+
+  validates :forum_name, allow_blank: true, uniqueness: { case_sensitive: false }
 
   ### Initializers
   #################

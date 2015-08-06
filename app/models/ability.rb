@@ -11,6 +11,7 @@ class Ability
     else
       can(:read, Mod) { |mod| mod.visible }
       if user.is_registered?
+        can :manage, ForumValidation, user_id: user.id
         can :read, Bookmark, user_id: user.id
         can :create, Bookmark
         can :destroy, Bookmark, user_id: user.id

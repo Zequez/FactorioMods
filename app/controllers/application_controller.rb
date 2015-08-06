@@ -48,7 +48,7 @@ class ApplicationController < ActionController::Base
   end
 
   def configure_devise_permitted_parameters
-    devise_parameter_sanitizer.for(:sign_up).push(:name, :email)
+    devise_parameter_sanitizer.for(:sign_up).push(:email, :forum_name)
     devise_parameter_sanitizer.for(:sign_in).push(:login)
     devise_parameter_sanitizer.for(:account_update)
   end

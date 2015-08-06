@@ -68,8 +68,9 @@ en:
         download_url: Release download URL
 
       user:
-        login: Email or username
+        login: Email
         name: Username
+        forum_name: Factorio Forum account name
 
     hints:
       mod:
@@ -81,6 +82,8 @@ en:
         imgur: "For an individual picture, not and album"
       mod_file:
         download_url: "Please use this instead of the attachment when possible, specially for large files"
+      users:
+        forum_name: If there are any mods associated with the account, we'll transfer them to you
 
     placeholders:
       mod:
