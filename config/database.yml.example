@@ -9,7 +9,7 @@ development:
 test:
   adapter: postgresql
   encoding: unicode
-  database: factorio_mods_test
+  database: factorio_mods_test<%= ENV['TEST_ENV_NUMBER'] %>
   pool: 5
   username: factorio_mods
   password:

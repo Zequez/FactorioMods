@@ -1,6 +1,5 @@
 # This file is copied to spec/ when you run 'rails generate rspec:install'
 ENV["RAILS_ENV"] ||= 'test'
-require 'spec_helper'
 require File.expand_path("../../config/environment", __FILE__)
 require 'rspec/rails'
 require 'capybara/rspec'
@@ -9,6 +8,10 @@ require 'webmock/rspec'
 require 'vcr'
 require 'paperclip/matchers'
 require 'rspec/its'
+require 'factory_girl'
+require 'custom_logger'
+
+include ActionDispatch::TestProcess
 
 WebMock.disable_net_connect!(allow_localhost: true)
 # Capybara.default_driver = :selenium_phantomjs
@@ -56,7 +59,16 @@ Spring.after_fork do
   Dir["app/inputs/*_input.rb"].each { |f| require File.basename(f) }
 end
 
+
 RSpec.configure do |config|
+  LL.info '############################################################################################'
+  config.include FactoryGirl::Syntax::Methods
+  config.include JsonSpec::Helpers
+  config.before(:suite) { FactoryGirl.reload }
+  config.expect_with :rspec do |c|
+    c.syntax = [:should, :expect]
+  end
+
   # This is so the backtrace is shorter and only shows the project code
   # You might need to comment this out if you're doing some really hardcore debugging
   config.backtrace_exclusion_patterns << /\/gems\//

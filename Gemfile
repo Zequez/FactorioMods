@@ -75,6 +75,7 @@ group :development do
   gem 'spring'                  # Spring speeds up development by keeping your application running in the background
   gem 'rack-livereload'         # Insert live reload script into the page
   gem 'guard-livereload', require: false  # Guard plugin for a livereload server
+  gem 'parallel_tests'
 end
 
 group :development, :test do
