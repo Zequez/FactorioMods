@@ -10,10 +10,12 @@ en:
 
     new:
       title: Create new mod
-      title_edit: Edit %{name} # We use the same view
-      edit: Edit
-      new: Create new mod
-    
+      header: Create new mod
+
+    edit:
+      title: Edit %{name}
+      header: Edit
+
     form:
       add_version: Add version
 

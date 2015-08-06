@@ -64,4 +64,8 @@ module ModsHelper
       title
     end
   end
+
+  def mods_authors_list
+    @mods_authors_list ||= Author.pluck(:name)
+  end
 end

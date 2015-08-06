@@ -29,7 +29,6 @@ class ModsController < ApplicationController
 
   def new
     @mod = Mod.new_for_form(current_user, params[:forum_post_id])
-    render_form
   end
 
   def create
@@ -37,13 +36,12 @@ class ModsController < ApplicationController
     if @mod.save
       redirect_to mod_url(@mod)
     else
-      render_form
+      render :new
     end
   end
 
   def edit
     @mod = Mod.find params[:id]
-    render_form
   end
 
   def update
@@ -51,16 +49,11 @@ class ModsController < ApplicationController
     if @mod.update mod_params
       redirect_to mod_url(@mod)
     else
-      render_form
+      render :edit
     end
   end
 
   private
-
-  def render_form
-    @existing_authors_names = User.pluck(:name)
-    render :new
-  end
 
   def mod_params
     permitted = [

@@ -1,0 +1,5 @@
+- title t('.title', name: @mod.name)
+%h1
+  = t('.header')
+  = link_to(@mod.name, @mod)
+= render partial: 'form', locals: { mod: @mod }
