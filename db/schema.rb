@@ -276,7 +276,7 @@ ActiveRecord::Schema.define(version: 20150806060622) do
 
   create_table "subforums", force: true do |t|
     t.string   "url"
-    t.string   "name"
+    t.string   "name",              default: "", null: false
     t.integer  "game_version_id"
     t.boolean  "scrap"
     t.integer  "number"
