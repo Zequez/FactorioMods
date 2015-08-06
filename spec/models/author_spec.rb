@@ -75,7 +75,7 @@ describe Author do
       expect(author).to be_valid
       expect(author.errors[:name]).to be_empty
     end
-    
+
     it 'should allow a single uppercase letter' do
       author = build :author, name: '-0-A-0-'
       expect(author).to be_valid
@@ -88,6 +88,12 @@ describe Author do
       it 'should by slug by slugging the query first' do
         author = create :author, name: '  PoTa Tooó     123_44 Tucutuc       '
         expect(Author.find_by_slugged_name('pota-tooo 123_44 Tucutúc')).to eq author
+      end
+    end
+
+    describe '#find_by_slugged_name!' do
+      it 'should raise an ActiveRecord::NotFound error when not found' do
+        expect{ Author.find_by_slugged_name! 'rsarsa' }.to raise_error ActiveRecord::RecordNotFound
       end
     end
   end
