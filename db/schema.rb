@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150804093750) do
+ActiveRecord::Schema.define(version: 20150806015412) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -129,6 +129,7 @@ ActiveRecord::Schema.define(version: 20150804093750) do
     t.boolean  "validated",  default: false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "pm_sent",    default: false, null: false
   end
 
   add_index "forum_validations", ["author_id"], name: "index_forum_validations_on_author_id", using: :btree

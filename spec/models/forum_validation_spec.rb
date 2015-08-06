@@ -1,4 +1,8 @@
 describe ForumValidation, type: :model do
+  # We force-clean the persistant bot
+  before(:each) { ForumValidation.instance_variable_set :@bot, nil }
+  after(:each) { ForumValidation.instance_variable_set :@bot, nil }
+
   subject(:forum_validation) { create :forum_validation }
 
   it { is_expected.to respond_to :vid }
@@ -6,6 +10,8 @@ describe ForumValidation, type: :model do
   its(:validated) { is_expected.to eq false }
   it { is_expected.to respond_to :created_at }
   it { is_expected.to respond_to :updated_at }
+  it { is_expected.to respond_to :pm_sent }
+  its(:pm_sent) { is_expected.to eq false }
 
   it { is_expected.to respond_to :user }
   it { is_expected.to respond_to :author }
@@ -44,15 +50,97 @@ describe ForumValidation, type: :model do
     end
   end
 
-  # describe '#send_pm' do
-  #   def send_pm
-  #     VCR.use_cassette('forum_validation', record: :new_episodes) do
-  #       subject.send_pm
-  #     end
-  #   end
-  #
-  #   it 'should authenticate and send a PM in the forum' do
-  #
-  #   end
-  # end
+  describe '#send_pm' do
+    before :each do
+      @u = create :user, name: 'Potato'
+      @a = create :author, name: 'Salatto', forum_name: 'Salatto' # Italian salad
+      @fv = create :forum_validation, user: @u, author: @a
+      @m1 = create :mod, authors: [@a], owner: nil, name: 'lalalalalalalala'
+      @m2 = create :mod, authors: [@a], owner: nil, name: 'lelelelelelelele'
+    end
+
+    it 'should create a new forum bot if not logged in' do
+      bot = double('ForumBot')
+      expect(ForumBot).to receive(:new).once.and_return(bot)
+
+      expect(bot).to receive(:authenticated?).and_return false
+      expect(bot).to receive(:authenticate).with(ENV['FORUM_BOT_ACCOUNT'], ENV['FORUM_BOT_PASSWORD']).and_return true
+      expect(bot).to receive(:get_user_id).with('Salatto').and_return(1234)
+      expect(bot).to receive(:send_pm)
+        .with(1234, /validation/, %r{/forum-validations/#{@fv.id}/validate\?vid=#{@fv.vid}.*lelelelelelelele.*lalalalalalalala}m)
+        .and_return(true)
+
+      expect(@fv.send_pm).to eq true
+      expect(@fv.pm_sent?).to eq true
+    end
+
+    it 'should use the same instance for multiple forum validations' do
+      bot = double('ForumBot')
+      expect(ForumBot).to receive(:new).once.and_return(bot)
+
+      expect(bot).to receive(:authenticated?).and_return false
+      expect(bot).to receive(:authenticate).with(ENV['FORUM_BOT_ACCOUNT'], ENV['FORUM_BOT_PASSWORD']).and_return true
+      expect(bot).to receive(:get_user_id).twice.with('Salatto').and_return(1234)
+      expect(bot).to receive(:send_pm).twice
+        .with(1234, /validation/, %r{/forum-validations/#{@fv.id}/validate\?vid=#{@fv.vid}.*lelelelelelelele.*lalalalalalalala}m)
+        .and_return(true)
+
+      expect(@fv.send_pm).to eq true
+      expect(@fv.pm_sent?).to eq true
+      @fv = ForumValidation.first
+
+      expect(bot).to receive(:authenticated?).and_return true
+
+      expect(@fv.send_pm).to eq true
+      expect(@fv.pm_sent?).to eq true
+    end
+
+    it "should return false if the author wasn't found" do
+      bot = double('ForumBot')
+      expect(ForumBot).to receive(:new).once.and_return(bot)
+      expect(bot).to receive(:authenticated?).and_return false
+      expect(bot).to receive(:authenticate).with(ENV['FORUM_BOT_ACCOUNT'], ENV['FORUM_BOT_PASSWORD']).and_return true
+      expect(bot).to receive(:get_user_id).with('Salatto').and_return(nil)
+
+      expect(@fv.send_pm).to eq false
+      expect(@fv.pm_sent?).to eq false
+    end
+
+    it 'should return false if sending the PM fails for unknown reasons' do
+      bot = double('ForumBot')
+      expect(ForumBot).to receive(:new).once.and_return(bot)
+      expect(bot).to receive(:authenticated?).and_return false
+      expect(bot).to receive(:authenticate).with(ENV['FORUM_BOT_ACCOUNT'], ENV['FORUM_BOT_PASSWORD']).and_return true
+      expect(bot).to receive(:get_user_id).with('Salatto').and_return(1234)
+      expect(bot).to receive(:send_pm)
+        .with(1234, /validation/, %r{/forum-validations/#{@fv.id}/validate\?vid=#{@fv.vid}.*lelelelelelelele.*lalalalalalalala}m)
+        .and_return(false)
+
+      expect(@fv.send_pm).to eq false
+      expect(@fv.pm_sent?).to eq false
+    end
+
+    it 'should not authenticate if its already authenticated' do
+      bot = double('ForumBot')
+      expect(ForumBot).to receive(:new).once.and_return(bot)
+      expect(bot).to receive(:authenticated?).and_return true
+      expect(bot).to receive(:get_user_id).with('Salatto').and_return(1234)
+      expect(bot).to receive(:send_pm)
+        .with(1234, /validation/, %r{/forum-validations/#{@fv.id}/validate\?vid=#{@fv.vid}.*lelelelelelelele.*lalalalalalalala}m)
+        .and_return(true)
+
+      expect(@fv.send_pm).to eq true
+      expect(@fv.pm_sent?).to eq true
+    end
+
+    it 'should return false if authentication fails' do
+      bot = double('ForumBot')
+      expect(ForumBot).to receive(:new).once.and_return(bot)
+      expect(bot).to receive(:authenticated?).and_return false
+      expect(bot).to receive(:authenticate).with(ENV['FORUM_BOT_ACCOUNT'], ENV['FORUM_BOT_PASSWORD']).and_return false
+
+      expect(@fv.send_pm).to eq false
+      expect(@fv.pm_sent?).to eq false
+    end
+  end
 end

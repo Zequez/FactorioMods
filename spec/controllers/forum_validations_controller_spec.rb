@@ -3,6 +3,7 @@ describe ForumValidationsController, type: :controller do
     it 'should create a new ForumValidation with the corresponding author and user' do
       user = create :user
       author = create :author
+      expect_any_instance_of(ForumValidation).to receive(:send_pm).and_return true
       post :create, forum_validation: { user_id: user.id, author_id: author.id }
       fv = ForumValidation.first
       expect(fv.user).to eq user
@@ -15,6 +16,16 @@ describe ForumValidationsController, type: :controller do
     it 'should throw a server error with invalid parameters' do
       post :create, forum_validation: { user_id: 1234, author_id: 4321 }
       expect(response).to have_http_status :bad_request
+    end
+
+    it 'should redirect with an error flash message if the validation fails' do
+      user = create :user
+      author = create :author
+      expect_any_instance_of(ForumValidation).to receive(:send_pm).and_return false
+      post :create, forum_validation: { user_id: user.id, author_id: author.id }
+      fv = ForumValidation.first
+      expect(flash[:error]).to eq I18n.t('forum_validations.flash.create.pm_error')
+      expect(response).to redirect_to fv
     end
   end
 

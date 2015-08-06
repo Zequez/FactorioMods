@@ -1,3 +1,6 @@
+- unless @forum_validation.pm_sent?
+  = raw I18n.t('forum_validations.show.pm_not_sent')
+
 %h1 Forum account validation
 
 - if @forum_validation.validated?

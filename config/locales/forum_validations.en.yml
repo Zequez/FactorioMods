@@ -1,11 +1,40 @@
 en:
   forum_validations:
     flash:
+      create:
+        pm_error: |
+          Oops, it seems that the automated bot that sends PMs is not working for some reason!
+          You'll have to <a href="http://www.factorioforums.com/forum/ucp.php?i=pm&mode=compose&u=1553">send Zequez a PM manually</a>! Sorry!
       update:
         success: "You account have been successfully linked to your forum account! You can now manage all the mods!"
         already_success: "You account has already been validated"
 
+    pm:
+      subject: FactorioMods.com forum account validation
+      message: |
+        Beep, boop! I'm a bot!
+
+        Hi %{author_name},
+
+        You have requested to associate this forum account with your FactorioMods account, %{email}.
+        Clicking the following link will give the account %{email} permission to manage the mods.
+
+        [url=%{url}]%{url}[/url]
+
+        The mods currently associated with this account are:
+
+      notice: |
+        If you didn't ask for this validation, please ignore
+        this message, or reply to this PM indicating so, so Zequez can investigate the issue.
+
+        Thanks, the FactorioMods forum bot.
+
     show:
+      pm_not_sent: |
+        It seems we couldn't send you a PM with the link to validate your forum account!
+        We are sorry this happened, you'll have to
+        <a href="http://www.factorioforums.com/forum/ucp.php?i=pm&mode=compose&u=1553">send Zequez a PM manually</a>
+        and he'll set everything up. Sorry!
       validated: |
         Your forum account has been validated!
         These are the mods that were associated with that account, you can now

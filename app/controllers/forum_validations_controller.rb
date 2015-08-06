@@ -2,6 +2,8 @@ class ForumValidationsController < ApplicationController
   def create
     @forum_validation = ForumValidation.new resource_params
     @forum_validation.save! # server error if it fails, shouldn't happen
+    pm_sent =  @forum_validation.send_pm
+    flash[:error] = I18n.t('forum_validations.flash.create.pm_error') unless pm_sent
     redirect_to @forum_validation
   end
 
@@ -22,7 +24,7 @@ class ForumValidationsController < ApplicationController
   end
 
   def show
-    
+
   end
 
   private
