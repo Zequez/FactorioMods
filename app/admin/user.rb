@@ -3,7 +3,7 @@ ActiveAdmin.register User do
 
   controller do
     def scoped_collection
-      User.includes(:owned_mods, :authored_mods)
+      User.includes(:owned_mods, author: [:mods])
     end
   end
 
@@ -34,8 +34,9 @@ ActiveAdmin.register User do
       user.owned_mods.map{ |m| link_to m.name, m }.join('<br/>').html_safe
     end
     column :authored_mods do |user|
-      return unless user.author
-      user.author.mods.map{ |m| link_to m.name, m }.join('<br/>').html_safe
+      if user.author
+        user.author.mods.map{ |m| link_to m.name, m }.join('<br/>').html_safe
+      end
     end
     column :validate do |user|
       # Doesn't actually toggle, it's just a one way trip
