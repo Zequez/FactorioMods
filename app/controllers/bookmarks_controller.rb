@@ -5,7 +5,7 @@ class BookmarksController < ApplicationController
   def index
     @mods = current_user
       .bookmarked_mods
-      .includes([:categories, :authors, :owner, :forum_post, versions: :files])
+      .includes([:categories, :author, :owner, :forum_post, versions: :files])
       .decorate
   end
 

@@ -15,50 +15,50 @@ describe ModDecorator do
     end
   end
 
-  describe '#authors_links_list' do
-
-    it 'should return a comma separated authors list links' do
-      mod = create_decorated :mod, authors: 3.times.map{ |i| create :author, name: "Au#{i}" }
-      expect(mod.authors_links_list).to eq '<a href="/authors/au0">Au0</a>, <a href="/authors/au1">Au1</a>, <a href="/authors/au2">Au2</a>'
-    end
-
-    it 'should add the (maintainer) text if the author is also the owner' do
-      authors = 3.times.map{ |i| create :author, name: "Au#{i}" }
-      user = create :user
-      authors[1].update! user: user
-      mod = create_decorated :mod, authors: authors, owner: user
-      expect(mod.authors_links_list).to eq '<a href="/authors/au0">Au0</a>, <a href="/authors/au1">Au1</a> (maintainer), <a href="/authors/au2">Au2</a>'
-    end
-
-    it 'should not add the (maintainer) text if there is only 1 author' do
-      user = create :user
-      author = create :author, name: "Au0", user: user
-      mod = create_decorated :mod, authors: [author], owner: user
-      expect(mod.authors_links_list).to eq '<a href="/authors/au0">Au0</a>'
-    end
-
-    it 'should return N/A if the mod has no authors associated' do
-      mod = create_decorated :mod, authors: []
-      expect(mod.authors_links_list).to eq 'N/A'
-    end
-
-    it 'should show them in the correct sorting order' do
-      authors = 3.times.map{ |i| create :author, name: "Au#{i}" }
-      mod = create :mod, name: 'SuperMod', authors: authors
-      mod.authors_mods[0].update_column :sort_order, 3
-      mod.authors_mods[1].update_column :sort_order, 2
-      mod.authors_mods[2].update_column :sort_order, 1
-      mod.reload
-      expect(mod.decorate.authors_links_list).to eq '<a href="/authors/au2">Au2</a>, <a href="/authors/au1">Au1</a>, <a href="/authors/au0">Au0</a>'
-    end
-
-    it 'should not add maintainer if both the author user and the mod owner are nil' do
-      authors = 3.times.map{ |i| create :author, name: "Au#{i}" }
-      create :user
-      mod = create_decorated :mod, authors: authors, owner: nil
-      expect(mod.authors_links_list).to eq '<a href="/authors/au0">Au0</a>, <a href="/authors/au1">Au1</a>, <a href="/authors/au2">Au2</a>'
-    end
-  end
+  # describe '#authors_links_list' do
+  #
+  #   it 'should return a comma separated authors list links' do
+  #     mod = create_decorated :mod, authors: 3.times.map{ |i| create :author, name: "Au#{i}" }
+  #     expect(mod.authors_links_list).to eq '<a href="/authors/au0">Au0</a>, <a href="/authors/au1">Au1</a>, <a href="/authors/au2">Au2</a>'
+  #   end
+  #
+  #   it 'should add the (maintainer) text if the author is also the owner' do
+  #     authors = 3.times.map{ |i| create :author, name: "Au#{i}" }
+  #     user = create :user
+  #     authors[1].update! user: user
+  #     mod = create_decorated :mod, authors: authors, owner: user
+  #     expect(mod.authors_links_list).to eq '<a href="/authors/au0">Au0</a>, <a href="/authors/au1">Au1</a> (maintainer), <a href="/authors/au2">Au2</a>'
+  #   end
+  #
+  #   it 'should not add the (maintainer) text if there is only 1 author' do
+  #     user = create :user
+  #     author = create :author, name: "Au0", user: user
+  #     mod = create_decorated :mod, authors: [author], owner: user
+  #     expect(mod.authors_links_list).to eq '<a href="/authors/au0">Au0</a>'
+  #   end
+  #
+  #   it 'should return N/A if the mod has no authors associated' do
+  #     mod = create_decorated :mod, authors: []
+  #     expect(mod.authors_links_list).to eq 'N/A'
+  #   end
+  #
+  #   it 'should show them in the correct sorting order' do
+  #     authors = 3.times.map{ |i| create :author, name: "Au#{i}" }
+  #     mod = create :mod, name: 'SuperMod', authors: authors
+  #     mod.authors_mods[0].update_column :sort_order, 3
+  #     mod.authors_mods[1].update_column :sort_order, 2
+  #     mod.authors_mods[2].update_column :sort_order, 1
+  #     mod.reload
+  #     expect(mod.decorate.authors_links_list).to eq '<a href="/authors/au2">Au2</a>, <a href="/authors/au1">Au1</a>, <a href="/authors/au0">Au0</a>'
+  #   end
+  #
+  #   it 'should not add maintainer if both the author user and the mod owner are nil' do
+  #     authors = 3.times.map{ |i| create :author, name: "Au#{i}" }
+  #     create :user
+  #     mod = create_decorated :mod, authors: authors, owner: nil
+  #     expect(mod.authors_links_list).to eq '<a href="/authors/au0">Au0</a>, <a href="/authors/au1">Au1</a>, <a href="/authors/au2">Au2</a>'
+  #   end
+  # end
 
   describe '#forum_link' do
     context 'only has forum post URL' do

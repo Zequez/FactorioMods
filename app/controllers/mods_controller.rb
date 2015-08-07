@@ -64,7 +64,6 @@ class ModsController < ApplicationController
       :forum_subforum_url,
       :summary,
       :imgur,
-      :authors_list,
       :contact,
       :info_json_name,
       :additional_contributors,

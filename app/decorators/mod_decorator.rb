@@ -1,8 +1,6 @@
 class ModDecorator < Draper::Decorator
   delegate :id, :name, :forum_url, :subforum_url, :additional_contributors
 
-  def authors_count; mod.authors.size end
-
   def game_versions_string
     return na if mod.game_versions_string.blank?
     "v" + mod.game_versions_string
@@ -57,19 +55,19 @@ class ModDecorator < Draper::Decorator
     h.link_to(mod.author.name, mod.author)
   end
 
-  def authors_links_list
-    return na if mod.authors.empty?
-
-    mod.authors.map do |author, i|
-      link = h.link_to(author.name, author)
-      if mod.owner_id and (author.user_id == mod.owner_id) and mod.authors.size > 1
-        maintainer = h.t('helpers.mods.maintainer')
-        link + " (#{maintainer})"
-      else
-        link
-      end
-    end.join(', ').html_safe
-  end
+  # def authors_links_list
+  #   return na if mod.authors.empty?
+  #
+  #   mod.authors.map do |author, i|
+  #     link = h.link_to(author.name, author)
+  #     if mod.owner_id and (author.user_id == mod.owner_id) and mod.authors.size > 1
+  #       maintainer = h.t('helpers.mods.maintainer')
+  #       link + " (#{maintainer})"
+  #     else
+  #       link
+  #     end
+  #   end.join(', ').html_safe
+  # end
 
   def categories_links
     mod.categories.map{ |cat| category_tag_link(cat) }.join.html_safe

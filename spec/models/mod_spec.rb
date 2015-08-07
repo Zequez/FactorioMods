@@ -57,10 +57,6 @@ describe Mod do
     # it { is_expected.to respond_to :tags }
     it { is_expected.to respond_to :favorites }
     it { is_expected.to respond_to :favorites_count }
-    it { is_expected.to respond_to :authors }
-    it { expect(mod.authors.build).to be_kind_of Author }
-    it { is_expected.to respond_to :authors_mods }
-    it { expect(mod.authors_mods.build).to be_kind_of AuthorsMod }
     it { is_expected.to respond_to :author }
     its(:build_author) { is_expected.to be_kind_of Author }
 
@@ -139,19 +135,6 @@ describe Mod do
         mod2 = build :mod, slug: 'potato', name: 'apple' # We are forcing this slug
         expect(mod2).to be_invalid
         expect(mod2.errors[:slug].size).to eq 1
-      end
-
-      it 'should be invalid with more than 8 authors' do
-        authors = 9.times.map{ create :author }
-        mod = build :mod, authors: authors
-        expect(mod).to be_invalid
-        expect(mod.errors[:authors].size).to eq 1
-      end
-
-      it 'should be valid with 8 authors' do
-        authors = 8.times.map{ create :author }
-        mod = build :mod, authors: authors
-        expect(mod).to be_valid
       end
 
       it 'should be invalid without #info_json_name' do

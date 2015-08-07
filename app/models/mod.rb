@@ -1,10 +1,3 @@
-# AutoHtml.add_filter(:simple_format_fix).with({}) do |text, html_options|
-#   require 'action_view'
-#   # text_array = text.match(/<div.*<\/div>/)
-
-#   ActionView::Base.new.simple_format(text, {class: 'p'}, sanitize: false, wrapper_tag: 'div' )
-# end
-
 class Mod < ActiveRecord::Base
   extend FriendlyId
 
@@ -43,8 +36,8 @@ class Mod < ActiveRecord::Base
   has_many :game_versions, -> { uniq.sort_by_older_to_newer }, through: :mod_game_versions
   has_many :categories, through: :categories_mods
   has_many :categories_mods, dependent: :destroy
-  has_many :authors, ->{ includes(:authors_mods).order('authors_mods.sort_order') }, through: :authors_mods
-  has_many :authors_mods, dependent: :destroy
+  # has_many :authors, ->{ includes(:authors_mods).order('authors_mods.sort_order') }, through: :authors_mods
+  # has_many :authors_mods, dependent: :destroy
 
   # has_one :latest_version, -> { sort_by_newer_to_older.limit(1) }, class_name: 'ModVersion'
   # has_one :second_latest_version, -> { sort_by_newer_to_older.limit(1).offset(1) }, class_name: 'ModVersion'
@@ -197,21 +190,6 @@ class Mod < ActiveRecord::Base
     end
   end
 
-  # find or generate users from #authors_list
-  before_validation do
-    if authors_list.present?
-      authors_names = authors_list.split(',')
-        .map(&:strip)
-        .reject(&:blank?)
-        .take(10)
-        .uniq{ |name| Author.normalize_friendly_id(name) }
-
-      self.authors = @reordered_authors = authors_names.map do |name|
-        Author.find_by_slugged_name(name) || Author.new(name: name, forum_name: name)
-      end
-    end
-  end
-
   # Find or generate author from #author_name or from #owner.name
   before_validation do
     if owner
@@ -226,42 +204,15 @@ class Mod < ActiveRecord::Base
     end
   end
 
-  # Yes, I have to move the authors_list parser to another file
+  # Yes, I have to move the author_name parser to another file
   # and move this again to the header. But for now, we need to access
-  # author.first to generate the alternative slug, and friendly_id
+  # author to generate the alternative slug, and friendly_id
   # adds the slug generation also before_validation
   friendly_id :slug_candidates, use: [:slugged, :finders]
 
   after_validation do
     if author_name.present?
       errors[:author_name].concat author.errors[:name]
-    end
-  end
-
-  # add the #authors errors to #authors_list
-  after_validation do
-    if authors_list.present?
-      authors.each do |author|
-        author.errors[:name].each do |error|
-          self.errors[:authors_list].push(author.name + ' ' + error)
-        end
-      end
-
-      # We can't do this because errors[:authors] also holds
-      # the individual authors errors without any information
-      # about the user
-      # errors[:authors_list].concat errors[:authors]
-    end
-  end
-
-  # Set the #sort_order of the #authors_mods
-  # We cannot use self.authors because it you cannot change
-  # the order of the association
-  after_save do
-    if @reordered_authors
-      @reordered_authors.each_with_index do |author, i|
-        authors_mods.where(author: author).update_all(sort_order: i)
-      end
     end
   end
 
@@ -281,15 +232,6 @@ class Mod < ActiveRecord::Base
   validate do
     if categories.size > 8
       errors[:categories].push I18n.t('activerecord.errors.models.mod.attributes.categories.too_many')
-    end
-  end
-
-  # #authors.count limit
-  validate do
-    if authors.size > 8
-      error_msg = I18n.t('activerecord.errors.models.mod.attributes.authors.too_many')
-      errors[:authors].push error_msg
-      errors[:authors_list].push error_msg if authors_list.present?
     end
   end
 
@@ -313,7 +255,6 @@ class Mod < ActiveRecord::Base
   attr_accessor :imgur_url
   attr_accessor :imgur_thumbnail
   attr_accessor :imgur_normal
-  attr_accessor :authors_list
   attr_accessor :author_name
   alias_attribute :github_path, :github
   alias_attribute :subforum_url, :forum_subforum_url
@@ -379,10 +320,6 @@ class Mod < ActiveRecord::Base
 
   def slug=(val)
     super(val.present? ? val : nil)
-  end
-
-  def authors_list
-    @authors_list ||= authors.map(&:name).join(', ')
   end
 
   def author_name
