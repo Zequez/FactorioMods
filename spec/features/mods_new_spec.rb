@@ -59,7 +59,7 @@ feature 'Modder creates a new mod' do
       expect(mod.name).to eq 'Super Mod'
       expect(mod.info_json_name).to eq 'super mod'
       expect(mod.categories).to match_array [@category]
-      expect(mod.author).to eq @user
+      expect(mod.owner).to eq @user
     end
 
     scenario 'user submits a form without any mod version', js: true do
@@ -72,7 +72,7 @@ feature 'Modder creates a new mod' do
       mod = Mod.first
       expect(mod.name).to eq 'Super Mod'
       expect(mod.categories).to match_array [@category]
-      expect(mod.author).to eq @user
+      expect(mod.owner).to eq @user
     end
   end
 
@@ -155,7 +155,7 @@ feature 'Modder creates a new mod' do
     expect(mod.forum_url).to eq 'http://www.factorioforums.com/forum/viewtopic.php?f=14&t=5971&sid=1786856d6a687e92f6a12ad9425aeb9e'
     expect(mod.official_url).to eq 'http://www.factorioforums.com/'
     expect(mod.summary).to eq 'This is a small mod for testing'
-    expect(mod.author).to eq @user
+    expect(mod.owner).to eq @user
   end
 
 
