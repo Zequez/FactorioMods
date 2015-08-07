@@ -1,5 +1,5 @@
 class ModDecorator < Draper::Decorator
-  delegate :id, :name, :forum_url, :subforum_url
+  delegate :id, :name, :forum_url, :subforum_url, :additional_contributors
 
   def authors_count; mod.authors.size end
 

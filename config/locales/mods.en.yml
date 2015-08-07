@@ -69,6 +69,7 @@ en:
       last_version: Last version
       source: Source
       forum_url: Forum URL
+      additional_contributors: Additional contributors
 
     download_button:
       download: Download

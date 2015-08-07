@@ -9,6 +9,7 @@ describe Mod do
     it { is_expected.to respond_to :github }
     it { is_expected.to respond_to :github_url }
     it { is_expected.to respond_to :license }
+    it { is_expected.to respond_to :additional_contributors }
 
     it { is_expected.to respond_to :first_version_date }
     it { is_expected.to respond_to :last_version_date }

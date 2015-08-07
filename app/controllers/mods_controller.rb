@@ -67,6 +67,7 @@ class ModsController < ApplicationController
       :authors_list,
       :contact,
       :info_json_name,
+      :additional_contributors,
       category_ids: [],
       versions_attributes: [
         :id,
