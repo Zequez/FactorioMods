@@ -6,7 +6,7 @@ feature 'Redirect to the previous page the user was after login' do
     create :mod, name: 'Hey'
     visit '/mods/hey'
     click_link 'Login'
-    expect(current_path).to eq '/users/login'
+    expect(current_path).to eq new_user_session_path
     within('#new_session') do
       fill_in 'user_login', with: 'banana@split.com'
       fill_in 'user_password', with: 'rsarsarsa'
@@ -20,13 +20,13 @@ feature 'Redirect to the previous page the user was after login' do
     create :mod, name: 'Hey'
     visit '/mods/hey'
     click_link 'Login'
-    expect(current_path).to eq '/users/login'
+    expect(current_path).to eq new_user_session_path
     within('#new_session') do
       fill_in 'user_login', with: 'banana@split.com'
       fill_in 'user_password', with: 'nooooooooooooo'
       click_button 'Login'
     end
-    expect(current_path).to eq '/users/login'
+    expect(current_path).to eq new_user_session_path
     within('#new_session') do
       fill_in 'user_login', with: 'banana@split.com'
       fill_in 'user_password', with: 'rsarsarsa'
@@ -39,7 +39,7 @@ feature 'Redirect to the previous page the user was after login' do
     create :mod, name: 'Hey'
     visit '/mods/hey'
     click_link 'Register'
-    expect(current_path).to eq '/users/register'
+    expect(current_path).to eq new_user_registration_path
     within('#new_registration') do
       fill_in 'user_email', with: 'banana@split.com'
       fill_in 'user_name', with: 'Potato'
@@ -53,14 +53,14 @@ feature 'Redirect to the previous page the user was after login' do
     create :mod, name: 'Hey'
     visit '/mods/hey'
     click_link 'Register'
-    expect(current_path).to eq '/users/register'
+    expect(current_path).to eq new_user_registration_path
     within('#new_registration') do
       fill_in 'user_email', with: 'bansplit.com'
       fill_in 'user_name', with: '----'
       fill_in 'user_password', with: 'rsarsarsa'
       click_button 'Register'
     end
-    expect(current_path).to eq '/users'
+    expect(current_path).to eq user_registration_path
     within('#new_registration') do
       fill_in 'user_email', with: 'banana@split.com'
       fill_in 'user_name', with: 'Potato'

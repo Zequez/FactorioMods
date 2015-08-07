@@ -1,6 +1,6 @@
 feature 'Common sign in and sign up form everywhere' do
-  scenario '/users/login should have also a registration form', js: true do
-    visit '/users/login'
+  scenario 'login should have also a registration form', js: true do
+    visit new_user_session_path
     expect(page).to     have_field 'user_login'
     expect(page).to_not have_field 'user_email'
     expect(page).to_not have_field 'user_name'

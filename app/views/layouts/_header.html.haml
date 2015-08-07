@@ -5,7 +5,7 @@
       M<i class="fa fa-cog"></i><span>o</span>ds
   .user-session
     - if user_signed_in?
-      = link_to current_user.name, edit_user_registration_path(current_user)
+      = link_to current_user.name, edit_user_registration_path
       |
       = link_to t('.sign_out'), destroy_user_session_path
     - else
