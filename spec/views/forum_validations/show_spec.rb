@@ -1,15 +1,17 @@
 describe 'forum_validations/show', type: :view do
   before :each do
     @fv = create :forum_validation
-    @m1 = create :mod, authors: [@fv.author], name: 'Potato'
-    @m2 = create :mod, authors: [@fv.author], name: 'Salad'
-    @m3 = create :mod, authors: [@fv.author], name: 'Simulator'
+    @m1 = create :mod, author: @fv.author, name: 'Potato'
+    @m2 = create :mod, author: @fv.author, name: 'Salad'
+    @m3 = create :mod, author: @fv.author, name: 'Simulator'
   end
 
   it 'display the list of mods associated with the author' do
     assign(:forum_validation, @fv)
     render
-    expect(rendered).to match(/Potato.*Salad.*Simulator/m)
+    expect(rendered).to match(/Potato/)
+    expect(rendered).to match(/Salad/)
+    expect(rendered).to match(/Simulator/)
   end
 
   context '#validated = false' do

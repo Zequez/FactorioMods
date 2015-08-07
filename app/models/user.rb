@@ -70,7 +70,7 @@ class User < ActiveRecord::Base
 
   def give_ownership_of_authored!
     if author
-      author.mods.each.each{ |am| am.update!(owner: self) unless am.owner.present? }
+      author.mods.each{ |am| am.update!(owner: self) unless am.owner.present? }
     end
   end
 

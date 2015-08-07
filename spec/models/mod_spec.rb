@@ -168,13 +168,13 @@ describe Mod do
 
       it 'should use the author name as the second part of the slug when clashing' do
         mod1 = create :mod, name: 'Potato!'
-        mod2 = create :mod, name: 'Potato?', authors_list: 'Salad'
+        mod2 = create :mod, name: 'Potato?', author_name: 'Salad'
         expect(mod1.slug).to eq 'potato'
         expect(mod2.slug).to eq 'potato-by-salad'
       end
 
       it 'should not allow the "new" slug as it clashes with the controller action' do
-        mod = create :mod, name: 'New!', authors_list: 'Potato'
+        mod = create :mod, name: 'New!', author_name: 'Potato'
         expect(mod.slug).to eq 'new-by-potato'
       end
     end
@@ -354,175 +354,179 @@ describe Mod do
       end
     end
 
-    describe '#author_name' do
-      it 'should create new author with the name' do
-        mod = create :mod, author_name: 'Potato', owner: nil
-        expect(mod.author.name).to eq 'Potato'
+    describe 'before validation #author_name, #author and #owner' do
+      describe '#author_name' do
+        it 'should create new author with the name' do
+          mod = create :mod, author_name: 'Potato', owner: nil
+          expect(mod.author.name).to eq 'Potato'
+        end
+
+        it 'should use an existing author if it already exists' do
+          create :author, name: 'Potato Garch'
+          mod = create :mod, author_name: 'potato-garch', owner: nil
+          expect(mod.author.name).to eq 'Potato Garch'
+        end
+
+        it 'should add author#name validation error to #author_name' do
+          mod = build :mod, author_name: '0-0', owner: nil
+          expect(mod).to be_invalid
+          expect(mod.errors[:author_name].size).to be > 0
+        end
+
+        it 'should allow a blank #author_name' do
+          mod = build :mod, author_name: '', owner: nil
+          expect(mod).to be_valid
+        end
       end
 
-      it 'should use an existing author if it already exists' do
-        create :author, name: 'Potato Garch'
-        mod = create :mod, author_name: 'potato-garch', owner: nil
-        expect(mod.author.name).to eq 'Potato Garch'
-      end
+      describe '#author' do
+        it 'should be generated automatically if the mod has an owner' do
+          user = create :user, name: 'PotatoGalaxy2015'
+          mod = create :mod, owner: user
+          expect(mod.author.name).to eq 'PotatoGalaxy2015'
+          expect(mod.author.user).to eq user
+        end
 
-      it 'should add author#name validation error to #author_name' do
-        mod = build :mod, author_name: '0-0', owner: nil
-        expect(mod).to be_invalid
-        expect(mod.errors[:author_name].size).to be > 0
-      end
+        it 'should not associate the new author with the user if it already exists and has an user' do
+          previous_user = create :user
+          author = create :author, name: 'PotatoGalaxy2015', user: previous_user
+          user = create :user, name: 'PotatoGalaxy2015'
+          mod = create :mod, owner: user
+          expect(mod.author).to eq author
+          expect(mod.author.name).to eq 'PotatoGalaxy2015'
+          expect(mod.author.user).to eq previous_user
+        end
 
-      it 'should allow a blank #author_name' do
-        mod = build :mod, author_name: '', owner: nil
-        expect(mod).to be_valid
-      end
-    end
+        it 'should be set to the new owner if we change the owner' do
+          u1 = create :user, name: 'PotatoGalaxy2015'
+          u2 = create :user, name: 'ChoripanCrudoDeLaCostanera'
+          mod = create :mod, owner: u1
+          expect(mod.author.name).to eq 'PotatoGalaxy2015'
+          expect(mod.author.user).to eq u1
+          mod.update! owner: u2
+          mod.reload
+          expect(mod.author.name).to eq 'ChoripanCrudoDeLaCostanera'
+          expect(mod.author.user).to eq u2
+        end
 
-    describe '#author' do
-      it 'should be generated and associated automatically if the mod has an owner' do
-        user = create :user, name: 'PotatoGalaxy2015'
-        mod = create :mod, owner: user
-        expect(mod.author.name).to eq 'PotatoGalaxy2015'
-        expect(mod.author.user).to eq user
-      end
-
-      it 'should not associate the new author if it already exists' do
-        create :author, name: 'PotatoGalaxy2015', user: nil
-        user = create :user, name: 'PotatoGalaxy2015'
-        mod = create :mod, owner: user
-        expect(mod.author.name).to eq 'PotatoGalaxy2015'
-        expect(mod.author.user).to eq nil
-      end
-
-      it 'should be set to the new owner if we change the owner' do
-        u1 = create :user, name: 'PotatoGalaxy2015'
-        u2 = create :user, name: 'ChoripanCrudoDeLaCostanera'
-        mod = create :mod, owner: u1
-        expect(mod.author.name).to eq 'PotatoGalaxy2015'
-        expect(mod.author.user).to eq u1
-        mod.update! owner: u2
-        mod.reload
-        expect(mod.author.name).to eq 'ChoripanCrudoDeLaCostanera'
-        expect(mod.author.user).to eq u2
-      end
-
-      it "should set it to the new owner even if author_name was also set" do
-        u1 = create :user, name: 'PotatoGalaxy2015'
-        u2 = create :user, name: 'ChoripanCrudoDeLaCostanera'
-        mod = create :mod, owner: u1
-        expect(mod.author.name).to eq 'PotatoGalaxy2015'
-        expect(mod.author.user).to eq u1
-        mod.update! owner: u2, author_name: 'Potato'
-        mod.reload
-        expect(Author.find_by_slugged_name 'potato').to eq nil
-        expect(mod.author.name).to eq 'ChoripanCrudoDeLaCostanera'
-        expect(mod.author.user).to eq u2
-      end
-    end
-
-    describe '#authors_list' do
-      it { is_expected.to respond_to :authors_list }
-
-      it 'associate the #authors by name separated by commas' do
-        create :author, name: 'Apple'
-        u2 = create :author, name: 'Potato'
-        u3 = create :author, name: 'Orange'
-        u4 = create :author, name: 'Banana'
-        mod.authors_list = 'Orange,Potato,Banana'
-        mod.save!
-        expect(mod.authors).to eq [u3, u2, u4]
-      end
-
-      it 'should order them correctly' do
-        create :author, name: 'Apple'
-        u2 = create :author, name: 'Potato'
-        u3 = create :author, name: 'Orange'
-        u4 = create :author, name: 'Banana'
-        mod.authors_list = 'Orange,Potato,Banana'
-        mod.save!
-        mod = Mod.first
-        expect(mod.authors).to eq [u3, u2, u4]
-        mod.authors_list = 'Potato,Banana,Orange'
-        mod.save!
-        mod = Mod.first
-        expect(mod.authors).to eq [u2, u4, u3]
-      end
-
-      it 'should work with random spaces everywhere' do
-        create :author, name: 'Apple'
-        u2 = create :author, name: 'Potato'
-        u3 = create :author, name: 'Orange'
-        u4 = create :author, name: 'Banana'
-        mod.authors_list = '      Orange     , Potato , Banana         '
-        mod.save!
-        expect(mod.authors).to eq [u3, u2, u4]
-      end
-
-      it 'should work with different cases' do
-        create :author, name: 'Apple'
-        u2 = create :author, name: 'Potato'
-        u3 = create :author, name: 'Orange'
-        u4 = create :author, name: 'Banana'
-        mod.authors_list = 'orange,potato,banana'
-        mod.save!
-        expect(mod.authors).to eq [u3, u2, u4]
-      end
-
-      it "should create a new author if it doesn't exist" do
-        u1 = create :author, name: 'Apple'
-        mod.authors_list = 'Apple,Watermelon'
-        mod.save!
-        u2 = Author.last
-        expect(u2.name).to eq 'Watermelon'
-        expect(u2.forum_name).to eq 'Watermelon'
-        expect(mod.authors).to eq [u1, u2]
-      end
-
-      it 'should be invalid if the user to be generated is invalid' do
-        mod.authors_list = 'Bi$cuit,1234'
-        expect(mod).to be_invalid
-        expect(mod.errors[:authors_list]).to eq ['1234 is invalid']
-      end
-
-      it 'should be invalid with more than 8 authors' do
-        mod.authors_list = 'Apple,Potato,Watermelon,Orange,Clementine,Fennel,Banana,Melon,Strawberry'
-        expect(mod).to be_invalid
-        expect(mod.errors[:authors_list].first).to match(/too many authors/i)
-      end
-
-      it 'should not create the users if the validation fails' do
-        mod = build :mod, authors_list: 'Apple,---,Fennel'
-        expect(mod.save).to eq false
-        expect(User.all).to eq [mod.owner]
-      end
-
-      it 'should ignore duplicated names and use the first apparition' do
-        mod = build :mod, authors_list: 'Apple, Potato, Apple'
-        expect(mod).to be_valid
-        mod.save!
-        expect(mod.authors.map(&:name)).to eq %w{Apple Potato}
-      end
-
-      it 'should ignore empty authors' do
-        mod = build :mod, authors_list: 'Apple,,Potato'
-        expect(mod).to be_valid
-        mod.save!
-        expect(mod.authors.map(&:name)).to eq %w{Apple Potato}
-      end
-
-      # This is some top-notch DDoS protection
-      it 'should disregard everything after the tenth author' do
-        mod = build :mod, authors_list: "Au0, Au1, Au2, Au4, Au5, Au6, Au7, Au8, Au9, Au10, Au11, Au12"
-        expect(mod).to be_invalid
-        expect(mod.authors.size).to eq 10
-      end
-
-      it 'return a list of names if called after the mod loads' do
-        authors = 5.times.map{ |i| create :author, name: "Au#{i}" }
-        mod = create :mod, authors: authors
-        expect(mod.authors_list).to eq 'Au0, Au1, Au2, Au3, Au4'
+        it "should set it to the new owner even if author_name was also set" do
+          u1 = create :user, name: 'PotatoGalaxy2015'
+          u2 = create :user, name: 'ChoripanCrudoDeLaCostanera'
+          mod = create :mod, owner: u1
+          expect(mod.author.name).to eq 'PotatoGalaxy2015'
+          expect(mod.author.user).to eq u1
+          mod.update! owner: u2, author_name: 'Potato'
+          mod.reload
+          expect(Author.find_by_slugged_name 'potato').to eq nil
+          expect(mod.author.name).to eq 'ChoripanCrudoDeLaCostanera'
+          expect(mod.author.user).to eq u2
+        end
       end
     end
+
+    # describe '#authors_list' do
+    #   it { is_expected.to respond_to :authors_list }
+    #
+    #   it 'associate the #authors by name separated by commas' do
+    #     create :author, name: 'Apple'
+    #     u2 = create :author, name: 'Potato'
+    #     u3 = create :author, name: 'Orange'
+    #     u4 = create :author, name: 'Banana'
+    #     mod.authors_list = 'Orange,Potato,Banana'
+    #     mod.save!
+    #     expect(mod.authors).to eq [u3, u2, u4]
+    #   end
+    #
+    #   it 'should order them correctly' do
+    #     create :author, name: 'Apple'
+    #     u2 = create :author, name: 'Potato'
+    #     u3 = create :author, name: 'Orange'
+    #     u4 = create :author, name: 'Banana'
+    #     mod.authors_list = 'Orange,Potato,Banana'
+    #     mod.save!
+    #     mod = Mod.first
+    #     expect(mod.authors).to eq [u3, u2, u4]
+    #     mod.authors_list = 'Potato,Banana,Orange'
+    #     mod.save!
+    #     mod = Mod.first
+    #     expect(mod.authors).to eq [u2, u4, u3]
+    #   end
+    #
+    #   it 'should work with random spaces everywhere' do
+    #     create :author, name: 'Apple'
+    #     u2 = create :author, name: 'Potato'
+    #     u3 = create :author, name: 'Orange'
+    #     u4 = create :author, name: 'Banana'
+    #     mod.authors_list = '      Orange     , Potato , Banana         '
+    #     mod.save!
+    #     expect(mod.authors).to eq [u3, u2, u4]
+    #   end
+    #
+    #   it 'should work with different cases' do
+    #     create :author, name: 'Apple'
+    #     u2 = create :author, name: 'Potato'
+    #     u3 = create :author, name: 'Orange'
+    #     u4 = create :author, name: 'Banana'
+    #     mod.authors_list = 'orange,potato,banana'
+    #     mod.save!
+    #     expect(mod.authors).to eq [u3, u2, u4]
+    #   end
+    #
+    #   it "should create a new author if it doesn't exist" do
+    #     u1 = create :author, name: 'Apple'
+    #     mod.authors_list = 'Apple,Watermelon'
+    #     mod.save!
+    #     u2 = Author.last
+    #     expect(u2.name).to eq 'Watermelon'
+    #     expect(u2.forum_name).to eq 'Watermelon'
+    #     expect(mod.authors).to eq [u1, u2]
+    #   end
+    #
+    #   it 'should be invalid if the user to be generated is invalid' do
+    #     mod.authors_list = 'Bi$cuit,1234'
+    #     expect(mod).to be_invalid
+    #     expect(mod.errors[:authors_list]).to eq ['1234 is invalid']
+    #   end
+    #
+    #   it 'should be invalid with more than 8 authors' do
+    #     mod.authors_list = 'Apple,Potato,Watermelon,Orange,Clementine,Fennel,Banana,Melon,Strawberry'
+    #     expect(mod).to be_invalid
+    #     expect(mod.errors[:authors_list].first).to match(/too many authors/i)
+    #   end
+    #
+    #   it 'should not create the users if the validation fails' do
+    #     mod = build :mod, authors_list: 'Apple,---,Fennel'
+    #     expect(mod.save).to eq false
+    #     expect(User.all).to eq [mod.owner]
+    #   end
+    #
+    #   it 'should ignore duplicated names and use the first apparition' do
+    #     mod = build :mod, authors_list: 'Apple, Potato, Apple'
+    #     expect(mod).to be_valid
+    #     mod.save!
+    #     expect(mod.authors.map(&:name)).to eq %w{Apple Potato}
+    #   end
+    #
+    #   it 'should ignore empty authors' do
+    #     mod = build :mod, authors_list: 'Apple,,Potato'
+    #     expect(mod).to be_valid
+    #     mod.save!
+    #     expect(mod.authors.map(&:name)).to eq %w{Apple Potato}
+    #   end
+    #
+    #   # This is some top-notch DDoS protection
+    #   it 'should disregard everything after the tenth author' do
+    #     mod = build :mod, authors_list: "Au0, Au1, Au2, Au4, Au5, Au6, Au7, Au8, Au9, Au10, Au11, Au12"
+    #     expect(mod).to be_invalid
+    #     expect(mod.authors.size).to eq 10
+    #   end
+    #
+    #   it 'return a list of names if called after the mod loads' do
+    #     authors = 5.times.map{ |i| create :author, name: "Au#{i}" }
+    #     mod = create :mod, authors: authors
+    #     expect(mod.authors_list).to eq 'Au0, Au1, Au2, Au3, Au4'
+    #   end
+    # end
   end
 
   describe 'builders' do
@@ -541,7 +545,7 @@ describe Mod do
         expect(mod.versions[0]).to be_kind_of ModVersion
         expect(mod.versions[0].files[0]).to be_kind_of ModFile
         expect(mod.name).to eq 'rsarsarsarsa'
-        expect(mod.authors_list).to eq 'GuyGuy'
+        expect(mod.author_name).to eq 'GuyGuy'
         expect(mod.forum_url).to eq 'http://potatopotato.com.potato'
         expect(mod.versions[0].released_at).to be_within(1.second).of 1.day.ago
         expect(mod.versions[0].game_versions).to eq [gv]

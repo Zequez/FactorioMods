@@ -15,6 +15,7 @@ class ForumValidation < ActiveRecord::Base
   def associate_user_and_author!
     author.user = user
     author.save!
+    user.reload
     update_column :validated, true
   end
 

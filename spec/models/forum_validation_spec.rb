@@ -55,8 +55,8 @@ describe ForumValidation, type: :model do
       @u = create :user, name: 'Potato'
       @a = create :author, name: 'Salatto', forum_name: 'Salatto' # Italian salad
       @fv = create :forum_validation, user: @u, author: @a
-      @m1 = create :mod, authors: [@a], owner: nil, name: 'lalala'
-      @m2 = create :mod, authors: [@a], owner: nil, name: 'lelele'
+      @m1 = create :mod, author: @a, owner: nil, name: 'lalala'
+      @m2 = create :mod, author: @a, owner: nil, name: 'lelele'
     end
 
     it 'should create a new forum bot if not authenticated' do

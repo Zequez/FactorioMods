@@ -195,8 +195,8 @@ describe User, :type => :model do
     it 'should set the user as owner of the mods associated with his author' do
       user = create :user
       author = create :author, user: user
-      m1 = create :mod, authors: [author], owner: nil
-      m2 = create :mod, authors: [author], owner: nil
+      m1 = create :mod, author: author, owner: nil
+      m2 = create :mod, author: author, owner: nil
       user.reload
       user.give_ownership_of_authored!
       m1.reload
@@ -209,8 +209,8 @@ describe User, :type => :model do
       user = create :user
       author = create :author, user: user
       other_guy = create :user
-      m1 = create :mod, authors: [author], owner: other_guy
-      m2 = create :mod, authors: [author], owner: nil
+      m1 = create :mod, author: author, owner: other_guy
+      m2 = create :mod, author: author, owner: nil
       user.reload
       user.give_ownership_of_authored!
       m1.reload
@@ -223,12 +223,12 @@ describe User, :type => :model do
   describe '#non_owned_authored_mods' do
     it 'should give the #authored_mods that arent #owned_mods' do
       user = create :user
-      author = create :author, user: user
-      create :mod, authors: [author], owner: user
+      author = create :author, user: nil
+      create :mod, author: author, owner: user
       create :mod, owner: user
-      m1 = create :mod, authors: [author]
-      m2 = create :mod, authors: [author]
-      user.reload
+      m1 = create :mod, author: author, owner: nil
+      m2 = create :mod, author: author, owner: nil
+      author.update! user: user
       expect(user.non_owned_authored_mods).to match_array [m1, m2]
     end
   end

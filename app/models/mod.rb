@@ -23,7 +23,7 @@ class Mod < ActiveRecord::Base
   ### Relationships
   #################
 
-  belongs_to :author, validate: true
+  belongs_to :author, validate: true, autosave: true
   belongs_to :owner, class_name: 'User'
   belongs_to :game_version_start, class_name: 'GameVersion'
   belongs_to :game_version_end, class_name: 'GameVersion'
@@ -214,11 +214,15 @@ class Mod < ActiveRecord::Base
 
   # Find or generate author from #author_name or from #owner.name
   before_validation do
-    name = (owner.name.presence if owner_id_changed? && owner) || @author_name
-    if name.present?
-      author = Author.find_by_slugged_name(name) || Author.new(name: name)
-      author.user = owner if owner && author.new_record?
-      self.author = author
+    if owner
+      if owner.author
+        self.author = owner.author
+      else
+        self.author = Author.find_or_initialize_by_slugged_name(owner.name)
+        self.author.user = owner if self.author.new_record?
+      end
+    elsif @author_name.present?
+      self.author = Author.find_or_initialize_by_slugged_name(@author_name)
     end
   end
 

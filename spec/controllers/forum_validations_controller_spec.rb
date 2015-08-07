@@ -54,8 +54,8 @@ describe ForumValidationsController, type: :controller do
     before(:each) do
       @user = create :user
       @author = create :author
-      create :mod, authors: [@author], owner: nil
-      create :mod, authors: [@author], owner: nil
+      create :mod, author: @author
+      create :mod, author: @author
       @fv = create :forum_validation, user: @user, author: @author
     end
 
@@ -140,8 +140,8 @@ describe ForumValidationsController, type: :controller do
   describe 'GET show' do
     it 'should render the show template' do
       @fv = create :forum_validation
-      @m1 = create :mod, authors: [@fv.author]
-      @m2 = create :mod, authors: [@fv.author]
+      @m1 = create :mod, author: @fv.author
+      @m2 = create :mod, author: @fv.author
       @fv.associate_user_and_author!
       @fv.user.give_ownership_of_authored!
       sign_in @fv.user

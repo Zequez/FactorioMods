@@ -15,7 +15,7 @@ feature 'Modder edits an existing mod' do
     sign_in_admin
     create_category 'potato'
     author = create :author
-    create :mod, name: 'Hey', categories: [@category], owner: @user, authors: [author]
+    create :mod, name: 'Hey', categories: [@category], author: author
     visit '/mods/hey/edit'
     expect(find('#mod_author_name').value).to eq author.name
   end

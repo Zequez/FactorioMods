@@ -2,9 +2,9 @@ feature 'New user forum account validation' do
   scenario 'user registers, submits the validation form, then visits the link' do
     author = create :author, name: 'FactorioModsBot', forum_name: 'FactorioModsBot'
     another_dude = create :user
-    m1 = create :mod, authors: [author], owner: nil
-    m2 = create :mod, authors: [author], owner: nil
-    create :mod, authors: [author], owner: another_dude
+    m1 = create :mod, author: author, owner: nil
+    m2 = create :mod, author: author, owner: nil
+    create :mod, author: author, owner: another_dude
     create :mod, owner: nil
 
     visit new_user_registration_path
