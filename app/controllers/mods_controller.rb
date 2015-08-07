@@ -3,7 +3,7 @@ class ModsController < ApplicationController
 
   def index
     @mods = Mod
-      .includes([:categories, :authors, :owner, :forum_post, versions: :files])
+      .includes([:categories, :author, :owner, :forum_post, versions: :files])
       .visible
       .sort_by(params[:sort])
       .filter_by_names(params[:names])
