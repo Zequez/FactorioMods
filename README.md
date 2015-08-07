@@ -36,8 +36,8 @@ The structure of the mods given by the API is the following:
     "url": "http://www.factoriomods.com/mods/example-mod",
     "description": "The summary of what the mod does.",
     "homepage": "", // Official site
-    "contact": "", // Authors contact information
-    "authors": ["That guy", "That other guy"], // List of authors
+    "contact": "", // Author contact information
+    "author": "That guy", // Main author
     "categories": ["logistics-network", "map", "player"]
     "releases": [{
         "version": "0.1.2",
@@ -72,7 +72,7 @@ can use the mirror hosted on the project S3 bucket.
 The URIs look like the following:
 
 ```
-factoriomods://eyJ0aXRsZSI6IkN1cnNlZCBVbmRlcmdyb3VuZCBUcmFuc3BvcnQiLCJuYW1lIjoiIiwidXJsIjoiaHR0cDovL3d3dy5mYWN0b3Jpb21vZHMuY29tL21vZHMvY3Vyc2VkLXVuZGVyZ3JvdW5kLXRyYW5zcG9ydCIsImRlc2NyaXB0aW9uIjoiTm8gb25lIGxpa2VzIGEgdHJhaW4gY3Jhc2hpbmcgeW91LCBubyBvbmUgZGl2aWRlIHRoZSBmYWN0b3J5IGp1c3QgZm9yIGEgdHJhaW4sIHdpdGggdGhpcyBtb2QgeW91IGNhbiBwdXQgdGhlIHRyYWluIHVuZGVyIHRoZSBmYWN0b3J5ISA6RCIsImhvbWVwYWdlIjoiIiwiY29udGFjdCI6IiIsImF1dGhvcnMiOlsiTDA3NzEiXSwicmVsZWFzZXMiOlt7InZlcnNpb24iOiIwLjAuMyIsInJlbGVhc2VkX2F0IjoiMjAxNS0wNy0yN1QwMDowMDowMC4wMDBaIiwiZ2FtZV92ZXJzaW9ucyI6WyIwLjEyLngiXSwiZGVwZW5kZW5jaWVzIjpbXSwiZmlsZXMiOlt7Im5hbWUiOiIiLCJ1cmwiOiJodHRwczovL2dpdGh1Yi5jb20vTDA3NzEvQ3Vyc2VkLVVHL3JlbGVhc2VzL2Rvd25sb2FkL3YwLjAuMy9DdXJzZWQtVUdfMC4wLjMuemlwIiwibWlycm9yIjoiIn1dfSx7InZlcnNpb24iOiIwLjAuMiIsInJlbGVhc2VkX2F0IjoiMjAxNS0wNi0xMFQwMDowMDowMC4wMDBaIiwiZ2FtZV92ZXJzaW9ucyI6WyIwLjExLngiXSwiZGVwZW5kZW5jaWVzIjpbXSwiZmlsZXMiOlt7Im5hbWUiOiIiLCJ1cmwiOiJodHRwczovL2dpdGh1Yi5jb20vTDA3NzEvQ3Vyc2VkLVVHL3JlbGVhc2VzL2Rvd25sb2FkL3YwLjAuMi9DdXJzZWQtVUdfMC4wLjIuemlwIiwibWlycm9yIjoiIn1dfV19
+factoriomods://eyJpZCI6NDYsInVybCI6Imh0dHA6Ly93d3cuZmFjdG9yaW9tb2RzLmNvbS9tb2RzL3VwZGF0ZWQtZ3JhcGhpY3MiLCJjYXRlZ29yaWVzIjpbInRleHR1cmUtcGFja3MiXSwiYXV0aG9ycyI6WyJ5LnBldHJlbWFubiJdLCJjb250YWN0IjoiIiwidGl0bGUiOiJVcGRhdGVkIEdyYXBoaWNzIiwibmFtZSI6InVwZGF0ZWQtZ3JhcGhpY3MiLCJkZXNjcmlwdGlvbiI6IlRoaXMgbW9kIHVwZGF0ZSBzb21lIGdyYXBoaWNzIHRvIG9mZmljaWFsIGFuZCB1bm9mZmljaWFsIGZhbmNpZXIgZ3JhcGhpY3MuXHJcblxyXG5JdCB1c2VzIGEgdGV4dHVyZSBwYWNrIHRvb2xraXQgSSd2ZSBtYWRlIHdoaWNoIHBlcm1pdCB0byB1cGRhdGUgYWxsIHVzZSBvZiBzcGVjaWZpYyBncmFwaGljcyB3aXRob3V0IGtub3dpbmcgd2hlcmUgdGhleSdyZSB1c2VkLiIsImhvbWVwYWdlIjoiIiwicmVsZWFzZXMiOlt7ImlkIjoyNDUsInZlcnNpb24iOiIwLjEyLjEiLCJyZWxlYXNlZF9hdCI6IjIwMTUtMDgtMDZUMDA6MDA6MDAuMDAwWiIsImdhbWVfdmVyc2lvbnMiOlsiMC4xMS54IiwiMC4xMi54Il0sImRlcGVuZGVuY2llcyI6W10sImZpbGVzIjpbeyJpZCI6MjUxLCJuYW1lIjoiIiwibWlycm9yIjpudWxsLCJ1cmwiOiJodHRwczovL2dpdGh1Yi5jb20vWVBldHJlbWFubi91cGRhdGVkLWdyYXBoaWNzL3JlbGVhc2VzL2Rvd25sb2FkL3VwZGF0ZWQtZ3JhcGhpY3NfMC4xMi4xL3VwZGF0ZWQtZ3JhcGhpY3NfMC4xMi4xLnppcCJ9XX1dfQ==
 ```
 
 If it seems familiar, it's because it's a Base64 encoded JSON string, the same
