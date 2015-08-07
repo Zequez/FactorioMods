@@ -3,7 +3,7 @@ ActiveAdmin.register Mod do
                 :first_version_date, :last_version_date, :github, :forum_comments_count,
                 :license, :license_url, :official_url, :forum_subforum_url,
                 :forum_post_id, :forum_posts_ids,
-                :description, :summary, :slug, :imgur, :authors_list,
+                :description, :summary, :slug, :imgur, :author_name,
                 assets_attributes: [:id, :image, :sort_order, :_destroy],
                 versions_attributes: [:id, :number, :released_at,
                                       :sort_order, :precise_game_versions_string,
@@ -13,7 +13,7 @@ ActiveAdmin.register Mod do
 
   controller do
     def scoped_collection
-      Mod.includes(:categories, :owner, :authors, :forum_post)
+      Mod.includes(:categories, :owner, :author, :forum_post)
     end
 
     def resource
@@ -34,7 +34,7 @@ ActiveAdmin.register Mod do
 
     attributes_table :name,
                      :slug,
-                     :authors_list,
+                     :author_name,
                      :owner,
                      :first_version_date,
                      :last_version_date,
@@ -63,8 +63,8 @@ ActiveAdmin.register Mod do
       mod.categories.map(&:name).join(', ')
     end
 
-    column :authors do |mod|
-      mod.authors.map(&:name).join(', ')
+    column :author do |mod|
+      link_to mod.author.name, mod.author if mod.author
     end
 
     column :owner
@@ -109,64 +109,5 @@ ActiveAdmin.register Mod do
   filter :owner
   filter :author_name
 
-  form do |f|
-    f.semantic_errors *f.object.errors.keys
-
-    f.inputs do
-      f.input :name
-      f.input :info_json_name
-      f.input :categories
-      f.input :slug
-      f.input :owner
-      f.input :authors_list
-      f.input :github_url
-      f.input :official_url
-      f.input :forum_url
-      f.input :forum_subforum_url
-      # f.input :forum_post
-      # f.input :forum_posts, collection: ForumPost.order('title')
-      f.input :imgur
-      f.input :is_dev
-      f.input :summary, as: :text
-    end
-
-    f.actions
-
-    f.inputs do
-      game_versions = GameVersion.all
-      f.has_many :versions, allow_destroy: true, new_record: true, sortable: :sort_order do |a|
-        a.input :number
-        a.input :game_versions, collection: game_versions
-        a.input :precise_game_versions_string, placeholder: '1.1.3[-1.1.4]'
-        a.input :released_at, as: :datepicker, input_html: { value: (a.object.released_at.strftime('%Y-%m-%d') unless a.object.released_at.nil?) }
-      end
-    end
-
-    f.inputs do
-      mod_versions = f.object.versions.all
-      f.has_many :files, allow_destroy: true, new_record: true, sortable: :sort_order do |a|
-        a.input :name
-        a.input :attachment, as: :attachment
-        a.input :download_url
-        a.input :mod_version, collection: mod_versions
-      end
-    end
-
-    f.actions
-  end
-
-
-  # See permitted parameters documentation:
-  # https://github.com/gregbell/active_admin/blob/master/docs/2-resource-customization.md#setting-up-strong-parameters
-  #
-  # permit_params :list, :of, :attributes, :on, :model
-  #
-  # or
-  #
-  # permit_params do
-  #  permitted = [:permitted, :attributes]
-  #  permitted << :other if resource.something?
-  #  permitted
-  # end
-
+  form{ |f| } # Use the public editor, it's a waste to maintain 2 editors
 end
