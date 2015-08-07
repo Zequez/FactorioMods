@@ -85,14 +85,14 @@ class ModsController < ApplicationController
       ]
     ]
 
-    (permitted << :author_id) if can? :set_owner, Mod
+    (permitted << :owner_id) if can? :set_owner, Mod
     (permitted << :visible) if can? :set_visibility, Mod
     (permitted << :slug) if can? :set_slug, Mod
 
     permitted_params = params.require(:mod).permit(*permitted)
 
     if cannot?(:set_owner, Mod) and current_user
-      permitted_params.merge! author_id: current_user.id
+      permitted_params.merge! owner_id: current_user.id
     end
 
     if cannot?(:set_visibility, Mod)

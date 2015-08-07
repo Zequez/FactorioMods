@@ -24,7 +24,7 @@ class Mod < ActiveRecord::Base
   #################
 
   # belongs_to :author, class_name: 'User' # Deprecated, but don't remove it yet tons of tests break
-  belongs_to :owner, class_name: 'User', foreign_key: :author_id
+  belongs_to :owner, class_name: 'User'
   belongs_to :game_version_start, class_name: 'GameVersion'
   belongs_to :game_version_end, class_name: 'GameVersion'
   belongs_to :forum_post

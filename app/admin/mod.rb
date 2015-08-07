@@ -1,5 +1,5 @@
 ActiveAdmin.register Mod do
-  permit_params :name, :category_id, :author_id,
+  permit_params :name, :category_id, :owner_id,
                 :first_version_date, :last_version_date, :github, :forum_comments_count,
                 :license, :license_url, :official_url, :forum_subforum_url,
                 :forum_post_id, :forum_posts_ids,

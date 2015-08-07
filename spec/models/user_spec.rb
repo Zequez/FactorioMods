@@ -99,13 +99,13 @@ describe User, :type => :model do
   end
 
   describe 'deletion' do
-    it 'should blank the author_id of the mods belonging to this user if the user deletes the account' do
+    it 'should blank the owner_id of the mods belonging to this user if the user deletes the account' do
       user = create :user
       mod = create :mod, owner: user
-      expect(mod.author_id).to eq user.id
+      expect(mod.owner_id).to eq user.id
       user.destroy
       mod.reload
-      expect(mod.author_id).to eq nil
+      expect(mod.owner_id).to eq nil
     end
   end
 

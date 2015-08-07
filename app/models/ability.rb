@@ -15,8 +15,8 @@ class Ability
         can :read, Bookmark, user_id: user.id
         can :create, Bookmark
         can :destroy, Bookmark, user_id: user.id
-        can :manage, Mod, author_id: user.id
-        can(:read, Mod) { |mod| mod.visible || mod.author_id == user.id }
+        can :manage, Mod, owner_id: user.id
+        can(:read, Mod) { |mod| mod.visible || mod.owner_id == user.id }
         cannot :set_slug, Mod
         cannot :set_owner, Mod
         cannot :set_visibility, Mod unless user.is_dev?

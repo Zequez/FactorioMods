@@ -12,8 +12,8 @@ class User < ActiveRecord::Base
 
   auto_strip_attributes :name, squish: true, nullify: false
 
-  has_many :mods, dependent: :nullify, foreign_key: :author_id
-  has_many :owned_mods, class_name: 'Mod', foreign_key: :author_id, dependent: :nullify # We'll change it to User#owner_id eventually
+  has_many :mods, dependent: :nullify, foreign_key: :owner_id
+  has_many :owned_mods, class_name: 'Mod', foreign_key: :owner_id, dependent: :nullify # We'll change it to User#owner_id eventually
   has_many :bookmarks
   has_many :bookmarked_mods, through: :bookmarks, source: :mod
   has_one :author

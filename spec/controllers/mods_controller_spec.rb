@@ -256,7 +256,7 @@ describe ModsController, type: :controller do
         first_user = create :user
         second_user = create :user
         sign_in first_user
-        submit_basic visible: true, author_id: second_user.id, slug: 'rsarsarsa'
+        submit_basic visible: true, owner_id: second_user.id, slug: 'rsarsarsa'
         expect(response).to have_http_status :redirect
         mod = Mod.first
         expect(mod.visible).to eq false
@@ -270,7 +270,7 @@ describe ModsController, type: :controller do
         first_user = create :dev_user
         second_user = create :user
         sign_in first_user
-        submit_basic visible: true, author_id: second_user.id, slug: 'rsarsarsa'
+        submit_basic visible: true, owner_id: second_user.id, slug: 'rsarsarsa'
         expect(response).to have_http_status :redirect
         mod = Mod.first
         expect(mod.visible).to eq true
@@ -283,6 +283,17 @@ describe ModsController, type: :controller do
         submit_basic visible: false
         expect(Mod.first.visible).to eq false
       end
+
+      # it 'should set the developer as the sole author' do
+      #   user = create :dev_user
+      #   sign_in user
+      #   submit_basic
+      #   expect(response).to have_http_status :redirect
+      #   mod = Mod.first
+      #   expect(mod.authors.size).to eq 1
+      #   expect(mod.authors.first.name).to eq user.name
+      #   expect(mod.authors.first.user).to eq user
+      # end
     end
 
 
@@ -291,7 +302,7 @@ describe ModsController, type: :controller do
         first_user = create :admin_user
         second_user = create :user
         sign_in first_user
-        submit_basic visible: true, author_id: second_user.id, slug: 'rsarsarsa'
+        submit_basic visible: true, owner_id: second_user.id, slug: 'rsarsarsa'
         expect(response).to have_http_status :redirect
         mod = Mod.first
         expect(mod.visible).to eq true
@@ -301,11 +312,23 @@ describe ModsController, type: :controller do
 
       it 'should also be able to allow those values to be default' do
         sign_in create(:admin_user)
-        submit_basic visible: false, author_id: nil, slug: ''
+        submit_basic visible: false, owner_id: nil, slug: ''
         expect(Mod.first.visible).to eq false
         expect(Mod.first.owner).to eq nil
         expect(Mod.first.slug).to eq 'supermod'
       end
+
+      # it 'should set the owner as the sole author' do
+      #   admin = create :admin_user
+      #   user = create :dev_user
+      #   sign_in admin
+      #   submit_basic owner_id: user
+      #   expect(response).to have_http_status :redirect
+      #   mod = Mod.first
+      #   expect(mod.authors.size).to eq 1
+      #   expect(mod.authors.first.name).to eq user.name
+      #   expect(mod.authors.first.user).to eq user
+      # end
     end
   end
 
@@ -355,7 +378,7 @@ describe ModsController, type: :controller do
         second_user = create :user
         mod = create :mod, owner: first_user
         sign_in first_user
-        submit_basic mod, visible: true, author_id: second_user.id, slug: 'rsarsarsa'
+        submit_basic mod, visible: true, owner_id: second_user.id, slug: 'rsarsarsa'
         expect(response).to have_http_status :redirect
         mod = Mod.first
         expect(mod.visible).to eq false
@@ -370,7 +393,7 @@ describe ModsController, type: :controller do
         second_user = create :user
         mod = create :mod, owner: first_user
         sign_in first_user
-        submit_basic mod, visible: true, author_id: second_user.id, slug: 'rsarsarsa'
+        submit_basic mod, visible: true, owner_id: second_user.id, slug: 'rsarsarsa'
         expect(response).to have_http_status :redirect
         mod = Mod.first
         expect(mod.visible).to eq true
@@ -383,7 +406,7 @@ describe ModsController, type: :controller do
         second_user = create :user
         mod = create :mod, owner: second_user
         sign_in first_user
-        submit_basic mod, visible: true, author_id: second_user.id, slug: 'rsarsarsa'
+        submit_basic mod, visible: true, owner_id: second_user.id, slug: 'rsarsarsa'
         expect(response).to have_http_status :unauthorized
       end
 
@@ -391,7 +414,7 @@ describe ModsController, type: :controller do
         first_user = create :dev_user
         mod = create :mod, owner: nil
         sign_in first_user
-        submit_basic mod, visible: true, author_id: first_user.id, slug: 'rsarsarsa'
+        submit_basic mod, visible: true, owner_id: first_user.id, slug: 'rsarsarsa'
         expect(response).to have_http_status :unauthorized
       end
 
@@ -410,7 +433,7 @@ describe ModsController, type: :controller do
         second_user = create :user
         mod = create :mod, owner: first_user
         sign_in first_user
-        submit_basic mod, visible: true, author_id: second_user.id, slug: 'rsarsarsa'
+        submit_basic mod, visible: true, owner_id: second_user.id, slug: 'rsarsarsa'
         expect(response).to have_http_status :redirect
         mod = Mod.first
         expect(mod.visible).to eq true
@@ -422,7 +445,7 @@ describe ModsController, type: :controller do
         user = create(:admin_user)
         mod = create :mod, owner: user
         sign_in user
-        submit_basic mod, visible: false, author_id: nil, slug: ''
+        submit_basic mod, visible: false, owner_id: nil, slug: ''
         expect(Mod.first.visible).to eq false
         expect(Mod.first.owner).to eq nil
         expect(Mod.first.slug).to eq mod.slug
@@ -433,7 +456,7 @@ describe ModsController, type: :controller do
         second_user = create :user
         mod = create :mod, owner: second_user
         sign_in first_user
-        submit_basic mod, visible: true, author_id: second_user.id, slug: 'rsarsarsa'
+        submit_basic mod, visible: true, owner_id: second_user.id, slug: 'rsarsarsa'
         expect(response).to have_http_status :redirect
         mod = Mod.first
         expect(mod.visible).to eq true
@@ -446,7 +469,7 @@ describe ModsController, type: :controller do
         second_user = create :user
         mod = create :mod, owner: nil
         sign_in first_user
-        submit_basic mod, visible: true, author_id: second_user.id, slug: 'rsarsarsa'
+        submit_basic mod, visible: true, owner_id: second_user.id, slug: 'rsarsarsa'
         expect(response).to have_http_status :redirect
         mod = Mod.first
         expect(mod.visible).to eq true

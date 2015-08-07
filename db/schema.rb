@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150807093532) do
+ActiveRecord::Schema.define(version: 20150807095122) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -218,7 +218,7 @@ ActiveRecord::Schema.define(version: 20150807093532) do
 
   create_table "mods", force: true do |t|
     t.string   "name"
-    t.integer  "author_id"
+    t.integer  "owner_id"
     t.datetime "first_version_date"
     t.datetime "last_version_date"
     t.string   "github"
@@ -253,11 +253,11 @@ ActiveRecord::Schema.define(version: 20150807093532) do
     t.string   "additional_contributors", default: "",   null: false
   end
 
-  add_index "mods", ["author_id"], name: "index_mods_on_author_id", using: :btree
   add_index "mods", ["category_id"], name: "index_mods_on_category_id", using: :btree
   add_index "mods", ["forum_post_id"], name: "index_mods_on_forum_post_id", using: :btree
   add_index "mods", ["info_json_name"], name: "index_mods_on_info_json_name", using: :btree
   add_index "mods", ["last_version_id"], name: "index_mods_on_last_version_id", using: :btree
+  add_index "mods", ["owner_id"], name: "index_mods_on_owner_id", using: :btree
   add_index "mods", ["slug"], name: "index_mods_on_slug", unique: true, using: :btree
 
   create_table "mods_tags", force: true do |t|
