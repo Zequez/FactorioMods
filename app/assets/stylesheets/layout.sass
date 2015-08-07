@@ -14,16 +14,20 @@ $susy: (gutters: $gutterSize*1.25)
   // +container(12 $base-line-height*40.7)
 
 .flash
+  position: relative
   +span(full)
   margin-bottom: rhythm()
-  padding: 0 space()
+  padding: $base-line-height/2
+    left: $base-line-height*2
   border-radius: $border-radius
   background-color: $color-blue
-  line-height: rhythm(2)
   &:before
-    position: relative
-    margin-right: space($font-x-larger)
-    float: left
+    position: absolute
+    left: $base-line-height/2
+    top: 50%
+    margin-top: -$base-line-height
+    width: $base-line-height
+    text-align: center
     +font-x-larger
   &.alert:before
     +content-icon(exclamation-triangle)

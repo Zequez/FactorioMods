@@ -34,9 +34,7 @@ en:
       mod_forum_post: "Forum post: "
       non_visible:
         non_dev: |
-          This mod is currently not listed publicly. After your first submitted mod is validated by
-          an administrator, you'll be marked as dev and you'll be able to control your mods
-          visibility. This is a spam prevention measure, sorry!
+          This mod is currently being reviewed. The process it's only done once for new users.
         dev: |
           This mod is currently not listed publicly. To make this mod visible to everyone, go to edit
           and check the visibility checkbox.
