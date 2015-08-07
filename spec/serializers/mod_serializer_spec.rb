@@ -1,10 +1,10 @@
 describe ModSerializer do
   before :each do
-    authors = [create(:author, name: 'John Snow Zombie'), create(:author, name: 'THAT Guy')]
+    author = create(:author, name: 'John Snow Zombie')
     @mod = create :mod,
       name: 'Potato Galaxy',
       info_json_name: 'potato-galaxy-mod',
-      authors: authors,
+      author: author,
       contact: 'Send a homing pigeon to Castle Black',
       official_url: 'http://castleblack.com',
       summary: 'This mod adds the ability to farm potatoes on Factorio.',
@@ -24,7 +24,7 @@ describe ModSerializer do
       description: 'This mod adds the ability to farm potatoes on Factorio.',
       homepage: 'http://castleblack.com',
       contact: 'Send a homing pigeon to Castle Black',
-      authors: ['John Snow Zombie', 'THAT Guy'],
+      author: 'John Snow Zombie',
       categories: ['potato', 'apple'],
       releases: @mod.versions.map{|mv| ModVersionSerializer.new mv}.as_json
     })
@@ -40,7 +40,7 @@ describe ModSerializer do
       description: 'This mod adds the ability to farm potatoes on Factorio.',
       homepage: 'http://castleblack.com',
       contact: 'Send a homing pigeon to Castle Black',
-      authors: ['John Snow Zombie', 'THAT Guy'],
+      author: 'John Snow Zombie',
       categories: ['potato', 'apple'],
       releases: specific_versions.map{|mv| ModVersionSerializer.new mv}.as_json
     })

@@ -1,5 +1,5 @@
 class ModSerializer < ActiveModel::Serializer
-  attributes :id, :url, :categories, :authors, :contact
+  attributes :id, :url, :categories, :author, :contact
 
   attribute :name,            key: :title
   attribute :info_json_name,  key: :name
@@ -15,8 +15,8 @@ class ModSerializer < ActiveModel::Serializer
     object.categories.map(&:slug)
   end
 
-  def authors
-    object.authors.map(&:name)
+  def author
+    object.author && object.author.name
   end
 
   def url
