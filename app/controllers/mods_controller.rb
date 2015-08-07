@@ -33,6 +33,7 @@ class ModsController < ApplicationController
 
   def create
     @mod = Mod.new mod_params
+    # @mod.author_name = @mod.owner.name if @mod.owner && cannot?(:set_owner, Mod)
     if @mod.save
       redirect_to mod_url(@mod)
     else
@@ -85,7 +86,10 @@ class ModsController < ApplicationController
       ]
     ]
 
-    (permitted << :owner_id) if can? :set_owner, Mod
+    if can? :set_owner, Mod
+      permitted << :owner_id
+      permitted << :author_name
+    end
     (permitted << :visible) if can? :set_visibility, Mod
     (permitted << :slug) if can? :set_slug, Mod
 

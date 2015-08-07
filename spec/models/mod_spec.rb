@@ -10,6 +10,7 @@ describe Mod do
     it { is_expected.to respond_to :github_url }
     it { is_expected.to respond_to :license }
     it { is_expected.to respond_to :additional_contributors }
+    it { is_expected.to respond_to :author_name }
 
     it { is_expected.to respond_to :first_version_date }
     it { is_expected.to respond_to :last_version_date }
@@ -348,6 +349,42 @@ describe Mod do
       it 'should be invalid with an URL other than Imgur' do
         mod.imgur = 'https://lesserimagehost.com/5yc64LJ.png'
         expect(mod).to be_invalid
+      end
+    end
+
+    describe '#author_name' do
+      it 'should create new author with the name' do
+        mod = create :mod, author_name: 'Potato'
+        expect(mod.authors.first.name).to eq 'Potato'
+      end
+
+      it 'should use an existing author if it already exists' do
+        create :author, name: 'Potato Garch'
+        mod = create :mod, author_name: 'potato-garch'
+        expect(mod.authors.first.name).to eq 'Potato Garch'
+      end
+
+      it 'should add author#name validation error to #author_name' do
+        mod = build :mod, author_name: '0-0'
+        expect(mod).to be_invalid
+        expect(mod.errors[:author_name].size).to be > 0
+      end
+
+      it 'should allow a blank #author_name' do
+        mod = build :mod, author_name: ''
+        expect(mod).to be_valid
+      end
+
+      it 'should always leave #authors with just 1 author' do
+        mod = create :mod, author_name: 'Potato'
+        expect(mod.authors.size).to eq 1
+        expect(mod.authors.first.name).to eq 'Potato'
+        mod.reload
+        mod.author_name = 'Galaxy'
+        mod.save!
+        mod.reload
+        expect(mod.authors.size).to eq 1
+        expect(mod.authors.first.name).to eq 'Galaxy'
       end
     end
 

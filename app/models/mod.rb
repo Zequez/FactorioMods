@@ -212,11 +212,25 @@ class Mod < ActiveRecord::Base
     end
   end
 
+
   # Yes, I have to move the authors_list parser to another file
   # and move this again to the header. But for now, we need to access
   # author.first to generate the alternative slug, and friendly_id
   # adds the slug generation also before_validation
   friendly_id :slug_candidates, use: [:slugged, :finders]
+
+  before_validation do
+    if author_name.present?
+      author = Author.find_by_slugged_name(author_name) || Author.new(name: author_name)
+      self.authors = [author]
+    end
+  end
+
+  after_validation do
+    if author_name.present?
+      errors[:author_name].concat errors[:authors]
+    end
+  end
 
   # add the #authors errors to #authors_list
   after_validation do
@@ -294,6 +308,7 @@ class Mod < ActiveRecord::Base
   attr_accessor :imgur_thumbnail
   attr_accessor :imgur_normal
   attr_accessor :authors_list
+  attr_accessor :author_name
   alias_attribute :github_path, :github
   alias_attribute :subforum_url, :forum_subforum_url
 
@@ -362,6 +377,10 @@ class Mod < ActiveRecord::Base
 
   def authors_list
     @authors_list ||= authors.map(&:name).join(', ')
+  end
+
+  def author_name
+    @author_name ||= ( author = authors.first ) && author.name
   end
 
   private

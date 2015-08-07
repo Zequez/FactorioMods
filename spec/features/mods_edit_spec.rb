@@ -11,13 +11,13 @@ feature 'Modder edits an existing mod' do
     expect(page).to_not have_content('Edit Hey')
   end
 
-  scenario 'user edits a mod with a list of authors' do
-    sign_in_dev
+  scenario 'admin edits a mod with an author' do
+    sign_in_admin
     create_category 'potato'
-    authors = 5.times.map{ create :author }
-    create :mod, name: 'Hey', categories: [@category], owner: @user, authors: authors
+    author = create :author
+    create :mod, name: 'Hey', categories: [@category], owner: @user, authors: [author]
     visit '/mods/hey/edit'
-    expect(find('#mod_authors_list').value).to eq authors.map(&:name).join(', ')
+    expect(find('#mod_author_name').value).to eq author.name
   end
 
   def submit_form

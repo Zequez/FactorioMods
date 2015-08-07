@@ -211,7 +211,7 @@ feature 'Modder creates a new mod' do
 
     visit "/mods/new?forum_post_id=#{forum_post.id}"
     expect(find('#mod_name').value).to eq '[0.11.x] Potato mod'
-    expect(find('#mod_authors_list').value).to eq 'SuperGuy'
+    expect(find('#mod_author_name').value).to eq 'SuperGuy'
     expect(find('#mod_forum_url').value).to eq 'http://www.factorioforums.com/forum/viewtopic.php?f=14&t=6742'
     expect(find('[id$=game_version_ids]').value).to eq [game_version.id.to_s]
     expect(find('[id$=released_at]').value).to eq released_at.strftime('%Y-%m-%d')
@@ -225,41 +225,30 @@ feature 'Modder creates a new mod' do
 
     visit "/mods/new"
     fill_in_minimum('SuperMod')
-    fill_in 'mod_authors_list', with: 'yeah'
+    fill_in 'mod_author_name', with: 'yeah'
     submit_form
     expect(current_path).to eq '/mods/supermod-by-yeah'
   end
 
-  scenario 'user submits a mod with valid names in the #authors_list' do
+  scenario 'user submits a mod with a valid name in the #author_name' do
     sign_in_dev
     visit '/mods/new'
     fill_in_minimum
-    fill_in 'mod_authors_list', with: 'Potato, SuperUser, Salad'
+    fill_in 'mod_author_name', with: 'Potato, SuperUser, Salad'
     submit_form
     expect(current_path).to eq '/mods/supermod'
     expect(Mod.first.authors.map(&:name)).to eq %w{Potato SuperUser Salad}
   end
 
-  scenario 'user submits a mod with invalid names in the #authors_list' do
+  scenario 'user submits an mod with invalid names in the #author_name' do
     sign_in_dev
     visit '/mods/new'
     fill_in_minimum
-    fill_in 'mod_authors_list', with: 'Potato, ----, Salad'
+    fill_in 'mod_author_name', with: '----'
     submit_form
     expect(current_path).to eq '/mods'
-    expect(page).to have_css '#mod_authors_list_input .inline-errors'
+    expect(page).to have_css '#mod_author_name_input .inline-errors'
     expect(page).to have_content(/---- is invalid/)
-  end
-
-  scenario 'user submits a mod too many authors in the #authors_list' do
-    sign_in_dev
-    visit '/mods/new'
-    fill_in_minimum
-    fill_in 'mod_authors_list', with: 'Potato, SuperUser, Salad, Tururu, Papapa, Aaaaa, Bbbbb, Ccccc, Ddddd'
-    submit_form
-    expect(current_path).to eq '/mods'
-    expect(page).to have_css '#mod_authors_list_input .inline-errors'
-    expect(page).to have_content(/too many/i)
   end
 
   describe 'visibility toggle' do

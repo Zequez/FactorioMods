@@ -284,16 +284,17 @@ describe ModsController, type: :controller do
         expect(Mod.first.visible).to eq false
       end
 
-      # it 'should set the developer as the sole author' do
-      #   user = create :dev_user
-      #   sign_in user
-      #   submit_basic
-      #   expect(response).to have_http_status :redirect
-      #   mod = Mod.first
-      #   expect(mod.authors.size).to eq 1
-      #   expect(mod.authors.first.name).to eq user.name
-      #   expect(mod.authors.first.user).to eq user
-      # end
+      it 'should set the developer as the sole author' do
+        user = create :dev_user
+        sign_in user
+        submit_basic
+        expect(response).to have_http_status :redirect
+        mod = Mod.first
+        LA mod
+        expect(mod.authors.size).to eq 1
+        expect(mod.authors.first.name).to eq user.name
+        expect(mod.authors.first.user).to eq user
+      end
     end
 
 
@@ -304,7 +305,6 @@ describe ModsController, type: :controller do
         sign_in first_user
         submit_basic visible: true, owner_id: second_user.id, slug: 'rsarsarsa'
         expect(response).to have_http_status :redirect
-        mod = Mod.first
         expect(mod.visible).to eq true
         expect(mod.owner).to eq second_user
         expect(mod.slug).to eq 'rsarsarsa'
@@ -318,17 +318,17 @@ describe ModsController, type: :controller do
         expect(Mod.first.slug).to eq 'supermod'
       end
 
-      # it 'should set the owner as the sole author' do
-      #   admin = create :admin_user
-      #   user = create :dev_user
-      #   sign_in admin
-      #   submit_basic owner_id: user
-      #   expect(response).to have_http_status :redirect
-      #   mod = Mod.first
-      #   expect(mod.authors.size).to eq 1
-      #   expect(mod.authors.first.name).to eq user.name
-      #   expect(mod.authors.first.user).to eq user
-      # end
+      it 'should set the owner as the sole author' do
+        admin = create :admin_user
+        user = create :dev_user
+        sign_in admin
+        submit_basic owner_id: user
+        expect(response).to have_http_status :redirect
+        mod = Mod.first
+        expect(mod.authors.size).to eq 1
+        expect(mod.authors.first.name).to eq user.name
+        expect(mod.authors.first.user).to eq user
+      end
     end
   end
 
