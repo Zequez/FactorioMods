@@ -191,11 +191,11 @@ feature 'Modder creates a new mod' do
     sign_in_admin
     visit '/mods/new'
     fill_in_minimum 'Mod Name'
-    fill_in 'mod_authors_list', with: 'MangoDev'
+    fill_in 'mod_author_name', with: 'MangoDev'
     submit_form
     mod = Mod.first
     expect(current_path).to eq '/mods/mod-name'
-    expect(mod.authors.first.name).to eq 'MangoDev'
+    expect(mod.author.name).to eq 'MangoDev'
   end
 
   scenario 'admin tries to create a mod from the forum_posts dashboard, so it has pre-filled attributes' do
@@ -225,30 +225,8 @@ feature 'Modder creates a new mod' do
 
     visit "/mods/new"
     fill_in_minimum('SuperMod')
-    fill_in 'mod_author_name', with: 'yeah'
     submit_form
     expect(current_path).to eq '/mods/supermod-by-yeah'
-  end
-
-  scenario 'user submits a mod with a valid name in the #author_name' do
-    sign_in_dev
-    visit '/mods/new'
-    fill_in_minimum
-    fill_in 'mod_author_name', with: 'Potato, SuperUser, Salad'
-    submit_form
-    expect(current_path).to eq '/mods/supermod'
-    expect(Mod.first.authors.map(&:name)).to eq %w{Potato SuperUser Salad}
-  end
-
-  scenario 'user submits an mod with invalid names in the #author_name' do
-    sign_in_dev
-    visit '/mods/new'
-    fill_in_minimum
-    fill_in 'mod_author_name', with: '----'
-    submit_form
-    expect(current_path).to eq '/mods'
-    expect(page).to have_css '#mod_author_name_input .inline-errors'
-    expect(page).to have_content(/---- is invalid/)
   end
 
   describe 'visibility toggle' do
@@ -294,41 +272,28 @@ feature 'Modder creates a new mod' do
       it_behaves_like 'admin or dev' do
         let(:sign_in_admin_or_dev){ sign_in_admin }
       end
+
+      scenario 'admin submits a mod with a valid name in the #author_name' do
+        sign_in_admin
+        visit '/mods/new'
+        fill_in_minimum
+        fill_in 'mod_author_name', with: 'SuperUser'
+        submit_form
+        expect(current_path).to eq '/mods/supermod'
+        expect(Mod.first.author.name).to eq 'SuperUser'
+      end
+
+      scenario 'admin submits an mod with invalid names in the #author_name' do
+        sign_in_admin
+        visit '/mods/new'
+        fill_in_minimum
+        fill_in 'mod_author_name', with: '----'
+        submit_form
+        expect(current_path).to eq '/mods'
+        expect(page).to have_css '#mod_author_name_input .inline-errors'
+        expect(page).to have_content(/is invalid/)
+      end
     end
-
-    # context 'dev or admin submits a mod' do
-    #   scenario 'should be visible and ON by default' do
-    #     sign_in_dev
-    #     visit '/mods/new'
-    #     expect(page).to have_css '#mod_visible_input'
-    #     expect(find('#mod_visible_input').value).to eq true
-    #     fill_in_minimum
-    #     submit_form
-    #     expect(Mod.first.visible).to eq true
-    #   end
-
-    #   scenario 'should be visible it should be changeable' do
-    #     sign_in_dev
-    #     visit '/mods/new'
-    #     expect(page).to have_css '#mod_visible_input'
-    #     expect(find('#mod_visible_input').value).to eq true
-    #     uncheck 'mod_visible_input'
-    #     fill_in_minimum
-    #     submit_form
-    #     expect(Mod.first.visible).to eq false
-    #   end
-    # end
-
-
-    # scenario 'should be visible if an admin visits mods#new, and it should be ON by default' do
-    #   sign_in
-    #   visit '/mods/new'
-    #   expect(page).to have_css '#mod_visible_input'
-    #   expect(find('#mod_visible_input').value).to eq true
-    #   fill_in_minimum
-    #   submit_form
-    #   expect(Mod.first.visible).to eq true
-    # end
   end
 
   def fill_in_minimum(*name)

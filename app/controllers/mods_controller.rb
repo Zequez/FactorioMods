@@ -33,7 +33,6 @@ class ModsController < ApplicationController
 
   def create
     @mod = Mod.new mod_params
-    # @mod.author_name = @mod.owner.name if @mod.owner && cannot?(:set_owner, Mod)
     if @mod.save
       redirect_to mod_url(@mod)
     else

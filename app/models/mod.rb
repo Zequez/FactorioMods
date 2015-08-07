@@ -11,7 +11,7 @@ class Mod < ActiveRecord::Base
   def slug_candidates
     [
       :name,
-      authors.first && [:name, 'by', authors.first.name]
+      author && [:name, 'by', author.name]
     ]
   end
 
@@ -23,7 +23,7 @@ class Mod < ActiveRecord::Base
   ### Relationships
   #################
 
-  # belongs_to :author, class_name: 'User' # Deprecated, but don't remove it yet tons of tests break
+  belongs_to :author, validate: true
   belongs_to :owner, class_name: 'User'
   belongs_to :game_version_start, class_name: 'GameVersion'
   belongs_to :game_version_end, class_name: 'GameVersion'
@@ -162,7 +162,7 @@ class Mod < ActiveRecord::Base
       forum_post = ForumPost.find forum_post_id
       mod.name = forum_post.title
 
-      mod.authors_list = forum_post.author_name
+      mod.author_name = forum_post.author_name
       mod.forum_url = forum_post.url
 
       if forum_post.published_at
@@ -212,6 +212,15 @@ class Mod < ActiveRecord::Base
     end
   end
 
+  # Find or generate author from #author_name or from #owner.name
+  before_validation do
+    name = (owner.name.presence if owner_id_changed? && owner) || @author_name
+    if name.present?
+      author = Author.find_by_slugged_name(name) || Author.new(name: name)
+      author.user = owner if owner && author.new_record?
+      self.author = author
+    end
+  end
 
   # Yes, I have to move the authors_list parser to another file
   # and move this again to the header. But for now, we need to access
@@ -219,16 +228,9 @@ class Mod < ActiveRecord::Base
   # adds the slug generation also before_validation
   friendly_id :slug_candidates, use: [:slugged, :finders]
 
-  before_validation do
-    if author_name.present?
-      author = Author.find_by_slugged_name(author_name) || Author.new(name: author_name)
-      self.authors = [author]
-    end
-  end
-
   after_validation do
     if author_name.present?
-      errors[:author_name].concat errors[:authors]
+      errors[:author_name].concat author.errors[:name]
     end
   end
 
@@ -380,7 +382,7 @@ class Mod < ActiveRecord::Base
   end
 
   def author_name
-    @author_name ||= ( author = authors.first ) && author.name
+    @author_name || (author && author.name)
   end
 
   private

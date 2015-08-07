@@ -8,7 +8,6 @@
       = f.input :owner if can? :set_owner, mod
       = f.input :author_name, as: :datalist, collection: mods_authors_list if can? :set_owner, mod
       = f.input :additional_contributors
-      = f.input :authors_list, as: :multi_datalist, collection: mods_authors_list
       = f.input :github
       = f.input :official_url
       = f.input :contact

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150807095122) do
+ActiveRecord::Schema.define(version: 20150807104820) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -251,8 +251,10 @@ ActiveRecord::Schema.define(version: 20150807095122) do
     t.string   "info_json_name",          default: "",   null: false
     t.integer  "bookmarks_count",         default: 0,    null: false
     t.string   "additional_contributors", default: "",   null: false
+    t.integer  "author_id"
   end
 
+  add_index "mods", ["author_id"], name: "index_mods_on_author_id", using: :btree
   add_index "mods", ["category_id"], name: "index_mods_on_category_id", using: :btree
   add_index "mods", ["forum_post_id"], name: "index_mods_on_forum_post_id", using: :btree
   add_index "mods", ["info_json_name"], name: "index_mods_on_info_json_name", using: :btree

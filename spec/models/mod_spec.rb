@@ -61,6 +61,8 @@ describe Mod do
     it { expect(mod.authors.build).to be_kind_of Author }
     it { is_expected.to respond_to :authors_mods }
     it { expect(mod.authors_mods.build).to be_kind_of AuthorsMod }
+    it { is_expected.to respond_to :author }
+    its(:build_author) { is_expected.to be_kind_of Author }
 
     describe 'validation' do
       it 'should be valid by default from the factory' do
@@ -354,37 +356,67 @@ describe Mod do
 
     describe '#author_name' do
       it 'should create new author with the name' do
-        mod = create :mod, author_name: 'Potato'
-        expect(mod.authors.first.name).to eq 'Potato'
+        mod = create :mod, author_name: 'Potato', owner: nil
+        expect(mod.author.name).to eq 'Potato'
       end
 
       it 'should use an existing author if it already exists' do
         create :author, name: 'Potato Garch'
-        mod = create :mod, author_name: 'potato-garch'
-        expect(mod.authors.first.name).to eq 'Potato Garch'
+        mod = create :mod, author_name: 'potato-garch', owner: nil
+        expect(mod.author.name).to eq 'Potato Garch'
       end
 
       it 'should add author#name validation error to #author_name' do
-        mod = build :mod, author_name: '0-0'
+        mod = build :mod, author_name: '0-0', owner: nil
         expect(mod).to be_invalid
         expect(mod.errors[:author_name].size).to be > 0
       end
 
       it 'should allow a blank #author_name' do
-        mod = build :mod, author_name: ''
+        mod = build :mod, author_name: '', owner: nil
         expect(mod).to be_valid
       end
+    end
 
-      it 'should always leave #authors with just 1 author' do
-        mod = create :mod, author_name: 'Potato'
-        expect(mod.authors.size).to eq 1
-        expect(mod.authors.first.name).to eq 'Potato'
+    describe '#author' do
+      it 'should be generated and associated automatically if the mod has an owner' do
+        user = create :user, name: 'PotatoGalaxy2015'
+        mod = create :mod, owner: user
+        expect(mod.author.name).to eq 'PotatoGalaxy2015'
+        expect(mod.author.user).to eq user
+      end
+
+      it 'should not associate the new author if it already exists' do
+        create :author, name: 'PotatoGalaxy2015', user: nil
+        user = create :user, name: 'PotatoGalaxy2015'
+        mod = create :mod, owner: user
+        expect(mod.author.name).to eq 'PotatoGalaxy2015'
+        expect(mod.author.user).to eq nil
+      end
+
+      it 'should be set to the new owner if we change the owner' do
+        u1 = create :user, name: 'PotatoGalaxy2015'
+        u2 = create :user, name: 'ChoripanCrudoDeLaCostanera'
+        mod = create :mod, owner: u1
+        expect(mod.author.name).to eq 'PotatoGalaxy2015'
+        expect(mod.author.user).to eq u1
+        mod.update! owner: u2
         mod.reload
-        mod.author_name = 'Galaxy'
-        mod.save!
+        expect(mod.author.name).to eq 'ChoripanCrudoDeLaCostanera'
+        expect(mod.author.user).to eq u2
+      end
+
+      it "should set it to the new owner even if author_name was also set" do
+        u1 = create :user, name: 'PotatoGalaxy2015'
+        u2 = create :user, name: 'ChoripanCrudoDeLaCostanera'
+        mod = create :mod, owner: u1
+        expect(mod.author.name).to eq 'PotatoGalaxy2015'
+        expect(mod.author.user).to eq u1
+        mod.update! owner: u2, author_name: 'Potato'
         mod.reload
-        expect(mod.authors.size).to eq 1
-        expect(mod.authors.first.name).to eq 'Galaxy'
+        expect(Author.find_by_slugged_name 'potato').to eq nil
+        expect(mod.author.name).to eq 'ChoripanCrudoDeLaCostanera'
+        expect(mod.author.user).to eq u2
       end
     end
 

@@ -290,21 +290,20 @@ describe ModsController, type: :controller do
         submit_basic
         expect(response).to have_http_status :redirect
         mod = Mod.first
-        LA mod
-        expect(mod.authors.size).to eq 1
-        expect(mod.authors.first.name).to eq user.name
-        expect(mod.authors.first.user).to eq user
+        expect(mod.author.name).to eq user.name
+        expect(mod.author.user).to eq user
       end
     end
 
 
     context 'user is an admin' do
-      it 'should allow it set #visible, #owner or #slug' do
+      it 'should allow it set #visible, #owner or #slug', focus: true do
         first_user = create :admin_user
         second_user = create :user
         sign_in first_user
         submit_basic visible: true, owner_id: second_user.id, slug: 'rsarsarsa'
         expect(response).to have_http_status :redirect
+        mod = Mod.first
         expect(mod.visible).to eq true
         expect(mod.owner).to eq second_user
         expect(mod.slug).to eq 'rsarsarsa'
@@ -318,16 +317,15 @@ describe ModsController, type: :controller do
         expect(Mod.first.slug).to eq 'supermod'
       end
 
-      it 'should set the owner as the sole author' do
+      it 'should set the owner as the author' do
         admin = create :admin_user
         user = create :dev_user
         sign_in admin
-        submit_basic owner_id: user
+        submit_basic owner_id: user.id
         expect(response).to have_http_status :redirect
         mod = Mod.first
-        expect(mod.authors.size).to eq 1
-        expect(mod.authors.first.name).to eq user.name
-        expect(mod.authors.first.user).to eq user
+        expect(mod.author.name).to eq user.name
+        expect(mod.author.user).to eq user
       end
     end
   end
