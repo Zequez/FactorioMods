@@ -52,6 +52,11 @@ class ModDecorator < Draper::Decorator
     h.date_time_tag(last_version.released_at)
   end
 
+  def author_link
+    return na unless mod.author
+    h.link_to(mod.author.name, mod.author)
+  end
+
   def authors_links_list
     return na if mod.authors.empty?
 

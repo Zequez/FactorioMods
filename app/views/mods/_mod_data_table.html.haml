@@ -1,10 +1,10 @@
 %ul.mod-data
-  %li{class: ('wide' if @mod.authors_count > 2)}
+  %li
     .data-name= t('.game_version')
     .data-value= @mod.game_versions_string
-  %li{class: ('wide' if @mod.authors_count > 2)}
-    .data-name= t('.authors', count: @mod.authors_count)
-    .data-value= @mod.authors_links_list
+  %li
+    .data-name= t('.author')
+    .data-value= @mod.author_link
   - if @mod.additional_contributors.present?
     %li.wide
       .data-name= t('.additiona_contributors')

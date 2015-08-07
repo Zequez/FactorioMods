@@ -3,7 +3,20 @@ describe ModDecorator do
     create(*args).decorate
   end
 
+  describe '#author_link' do
+    it 'should return a link to the author page if the mod has an author' do
+      mod = create_decorated :mod, author: (create :author, name: "Au0")
+      expect(mod.author_link).to eq '<a href="/authors/au0">Au0</a>'
+    end
+
+    it 'should return N/A if the mod has no author' do
+      mod = create_decorated :mod, author: nil
+      expect(mod.author_link).to eq 'N/A'
+    end
+  end
+
   describe '#authors_links_list' do
+
     it 'should return a comma separated authors list links' do
       mod = create_decorated :mod, authors: 3.times.map{ |i| create :author, name: "Au#{i}" }
       expect(mod.authors_links_list).to eq '<a href="/authors/au0">Au0</a>, <a href="/authors/au1">Au1</a>, <a href="/authors/au2">Au2</a>'

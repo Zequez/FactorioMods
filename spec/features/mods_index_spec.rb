@@ -77,10 +77,10 @@ feature 'Display an index of mods in certain order' do
     end
   end
 
-  scenario 'Mod with multiple authors' do
-    authors = 5.times.map{ |i| create :author, name: "Au#{i}" }
-    mod = create :mod, name: 'SuperMod', authors: authors
+  scenario 'Mod with author authors' do
+    author = create :author, name: "rsatrsatrsatheniratshr"
+    mod = create :mod, name: 'SuperMod', author: author
     visit '/'
-    expect(page.html).to include(mod.decorate.authors_links_list)
+    expect(page.html).to include(mod.decorate.author_link)
   end
 end

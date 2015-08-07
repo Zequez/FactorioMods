@@ -4,9 +4,7 @@ en:
       links:
         last_version_date: "Date of the latest version of this mod %{date}"
         game_version: Factorio versions this mod works with
-        authors:
-          one: The awesome person behind this mod
-          other: The awesome people behind this mod
+        author: The awesome person behind this mod
 
     new:
       title: Create new mod
@@ -62,9 +60,7 @@ en:
 
     mod_data_table:
       game_version: Factorio version
-      authors:
-        one: Author
-        other: Authors
+      author: Author
       first_version: First version
       last_version: Last version
       source: Source

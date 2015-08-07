@@ -1,3 +1,3 @@
-describe "mods/show.html.erb", :type => :view do
+describe "mods/show.haml", type: :view do
 
 end

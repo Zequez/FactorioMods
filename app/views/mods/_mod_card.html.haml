@@ -22,7 +22,6 @@
       = icon 'cog'
     -# It's here in the middle so we can make some CSS magic
     = render partial: 'mods/download_button', locals: { mod: mod }
-    %span.mod-info-tag{title: t('.links.authors', count: mod.authors_count)}
-      .mod-info-tag-label
-        = mod.authors_links_list
+    %span.mod-info-tag{title: t('.links.author')}
+      .mod-info-tag-label= mod.author_link
       = icon 'user'
