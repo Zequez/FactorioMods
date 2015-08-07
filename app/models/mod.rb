@@ -23,7 +23,7 @@ class Mod < ActiveRecord::Base
   ### Relationships
   #################
 
-  belongs_to :author, validate: true, autosave: true
+  belongs_to :author, validate: true, autosave: true, counter_cache: :mods_count
   belongs_to :owner, class_name: 'User'
   belongs_to :game_version_start, class_name: 'GameVersion'
   belongs_to :game_version_end, class_name: 'GameVersion'

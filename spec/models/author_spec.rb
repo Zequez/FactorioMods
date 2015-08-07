@@ -97,4 +97,15 @@ describe Author do
       end
     end
   end
+
+  describe '#mods_count' do
+    it 'should increase with mods' do
+      a = create :author
+      create :mod, author: a
+      create :mod, author: a
+      create :mod, author: a
+      a.reload
+      expect(a.mods_count).to eq 3
+    end
+  end
 end
