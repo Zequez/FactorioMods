@@ -26,3 +26,6 @@
       = redirect_to_input(f)
     = f.actions do
       = f.action :submit, label: 'Register'
+
+  .devise-links
+    = link_to 'Forgot your password?', new_password_path(resource_name)
