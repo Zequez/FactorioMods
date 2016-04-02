@@ -6,7 +6,6 @@
     })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
     ga('create', '#{Rails.configuration.ga_ua}', '#{Rails.configuration.ga_url}');
-    $(document).on('page:change', function(){
+    document.addEventListener('page:change', function(ev){
       ga('send', 'pageview');
     });
-    
