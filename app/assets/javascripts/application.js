@@ -17,4 +17,5 @@
 //= require nprogress
 //= require nprogress-turbolinks
 //= require mods
+//= require official_app_banner
 //= require_tree ./inputs
