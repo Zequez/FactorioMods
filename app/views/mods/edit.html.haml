@@ -2,4 +2,7 @@
 %h1
   = t('.header')
   = link_to(@mod.name, @mod)
+%p.official-app-warning
+  Adding new releases is disabled!<br/>
+  Use the official app instead! <a href='http://mods.factorio.com'>http://mods.factorio.com</a>
 = render partial: 'form', locals: { mod: @mod }

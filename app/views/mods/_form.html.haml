@@ -19,8 +19,8 @@
       %li.nested-form.mod-versions
         = f.semantic_fields_for :versions do |ff|
           = render 'version_fields', f: ff
-        .nested-form-links.mod-versions-links
-          = link_to_add_association t('.add_version'), f, :versions
+        -# .nested-form-links.mod-versions-links
+        -#   = link_to_add_association t('.add_version'), f, :versions
     // Nested mod versions
     // Nested mod files
     // Nested mod files

@@ -9,5 +9,5 @@
     %li.nested-form.mod-version-files
       = f.semantic_fields_for :files do |ff|
         = render 'file_fields', f: ff
-      .nested-form-links.mod-version-files-links
-        = link_to_add_association "Add file", f, :files
+      -# .nested-form-links.mod-version-files-links
+      -#   = link_to_add_association "Add file", f, :files

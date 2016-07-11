@@ -32,12 +32,12 @@ class ModsController < ApplicationController
   end
 
   def create
-    @mod = Mod.new mod_params
-    if @mod.save
-      redirect_to mod_url(@mod)
-    else
-      render :new
-    end
+    # @mod = Mod.new mod_params
+    # if @mod.save
+    #   redirect_to mod_url(@mod)
+    # else
+    #   render :new
+    # end
   end
 
   def edit
