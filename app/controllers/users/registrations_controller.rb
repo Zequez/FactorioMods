@@ -1,5 +1,9 @@
 # https://github.com/plataformatec/devise/blob/master/app/controllers/devise/registrations_controller.rb
 class Users::RegistrationsController < Devise::RegistrationsController
+  def create
+
+  end
+
   # def create
     # super{ |res| @user = res }
 
