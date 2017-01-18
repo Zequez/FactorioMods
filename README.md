@@ -1,3 +1,12 @@
+# :warning: This project is deprecated :warning:
+
+There is now an official mod portal at http://mods.factorio.com
+
+Below is the old and obsolete README. You can still see [the old app running here](http://factorio-mods.herokuapp.com/), but FactorioMods.com now redirects to the
+official portal.
+
+--------
+
 # Factorio Mods [![Build Status](https://travis-ci.org/Zequez/FactorioMods.svg)](https://travis-ci.org/Zequez/FactorioMods)
 
 [FactorioMods.com](http://factoriomods.com) it's an open
